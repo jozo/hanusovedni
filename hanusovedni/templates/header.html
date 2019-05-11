@@ -1,0 +1,28 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+<header class="container-fluid site-header my-4">
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <div class="logo py-2 pr-4
+                  d-flex flex-column justify-content-center">
+        <img src="{{ settings.home.HeaderSettings.logo.url }}"
+             alt="Logo Hanusovich dní">
+      </div>
+      <div class="main-information py-2 pl-4
+                  d-flex flex-column justify-content-center">
+        {{ settings.home.HeaderSettings.title|richtext }}
+        <div>
+          <time datetime="{{ settings.home.HeaderSettings.start_date|date:'c' }}">
+            {{ settings.home.HeaderSettings.start_date|date:'j. E' }}
+          </time>
+          &mdash;
+          <time datetime="{{ settings.home.HeaderSettings.end_date|date:'c' }}">
+            {{ settings.home.HeaderSettings.end_date|date:'j. E Y' }}
+          </time>
+        </div>
+        <div class="place">{{ settings.home.HeaderSettings.place }}</div>
+      </div>
+    </div>
+  </div>
+</header>

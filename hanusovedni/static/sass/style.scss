@@ -1,0 +1,45 @@
+@font-face {
+  font-family: Adelle;
+  src: url('../fonts/AdelleBasic_Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Adelle;
+  src: url('../fonts/AdelleBasic_BoldItalic.otf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+
+body {
+  background: black;
+  color: white;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+header.site-header {
+  font-family: Adelle, serif;
+  text-transform: uppercase;
+
+  .logo img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .main-information {
+    border-left: 1px solid white;
+
+    h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .place, time {
+      font-size: 0.875rem;
+      color: #D3D3D3;
+    }
+  }
+}

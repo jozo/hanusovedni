@@ -1,0 +1,13 @@
+{
+  "name": "hanusovedni",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:jozo/hanusovedni.git",
+  "author": "jozo <hi@jozo.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.26.5",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2"
+  }
+}
