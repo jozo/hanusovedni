@@ -3,7 +3,7 @@ const sass = require('gulp-sass')
 const browserSync = require('browser-sync').create()
 
 function css() {
-  return src('./hanusovedni/static/sass/**/*.scss')
+  return src('./hanusovedni/static/sass/style.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(dest('./hanusovedni/static/css/'))
     .pipe(browserSync.stream())

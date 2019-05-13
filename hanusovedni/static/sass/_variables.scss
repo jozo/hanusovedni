@@ -1,0 +1,24 @@
+@font-face {
+  font-family: Adelle;
+  src: url('../fonts/AdelleBasic_Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Adelle;
+  src: url('../fonts/AdelleBasic_BoldItalic.otf');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Enriqueta:400,700&subset=latin-ext');
+
+$font-main: 'Enriqueta', serif;
+$font-special: Adelle, $font-main;
+
+$c-bg: #282828;
+$c-special: #EDA506;
+$c-blue: #23A0E5;
+$c-blue-light: #669DFF;
+$c-red-light: #CE3A56;
+$c-orange-light: #DD7E0B;

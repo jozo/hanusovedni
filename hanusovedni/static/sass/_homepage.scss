@@ -1,0 +1,111 @@
+.template-homepage {
+  section.hero {
+    margin-bottom: 2px;
+  }
+
+  .hero-text {
+    background: $c-bg;
+    font-family: $font-special;
+    font-size: 1.5rem;
+    line-height: 1.3;
+
+    > div {
+      padding: 3rem 3.2rem;
+    }
+
+    a {
+      color: $c-blue;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      &:hover,:focus {
+        color: darken($c-blue, 10)
+      }
+    }
+
+    .link-more {
+      > i {
+        color: $c-blue;
+        margin-top: 5px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .hero-carousel {
+    min-height: 380px;
+
+    // Pattern visible before images from carousel are loaded
+    // https://codepen.io/edmundojr/pen/xOYJGw
+    // Colors
+    $bg-color: $c-bg;
+    $dot-color: lighten($c-bg, 10);
+
+    // Dimensions
+    $dot-size: 2px;
+    $dot-space: 22px;
+
+    background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
+    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+    $dot-color;
+    background-size: $dot-space $dot-space;
+
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .call-to-action-container {
+    //padding-left: 14px;
+    //padding-right: 14px;
+  }
+
+  section.call-to-action {
+    margin-left: -1px;
+    margin-right: -1px;
+    font-family: $font-special;
+
+    > .col, [class*="col-"] {
+      padding-right: 1px;
+      padding-left: 1px;
+      padding-bottom: 2px;
+    }
+
+    .btn-full {
+      width: 100%;
+      height: 11rem;
+
+      a {
+        &.red {
+          background: $c-red-light;
+          &:hover,:focus { background: darken($c-red-light, 5)}
+        }
+        &.blue {
+          background: $c-blue-light;
+          &:hover,:focus { background: darken($c-blue-light, 5)}
+        }
+        &.orange {
+          background: $c-orange-light;
+          &:hover,:focus { background: darken($c-orange-light, 5)}
+        }
+        i {
+          color: $c-special;
+        }
+      }
+    }
+
+    a {
+      width: 100%;
+      height: 100%;
+      color: white;
+
+      &.big {
+        font-size: 2rem;
+      }
+    }
+  }
+}

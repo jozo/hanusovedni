@@ -2,13 +2,15 @@
 {% load wagtailimages_tags %}
 
 <header class="container-fluid site-header my-4">
-  <div class="row">
-    <div class="col d-flex justify-content-center">
+  <div class="row no-gutters">
+    <div class="col-6 d-flex justify-content-end">
       <div class="logo py-2 pr-4
                   d-flex flex-column justify-content-center">
         <img src="{{ settings.home.HeaderSettings.logo.url }}"
              alt="Logo Hanusovich dní">
       </div>
+    </div>
+    <div class="col-6d-flex justify-content-start">
       <div class="main-information py-2 pl-4
                   d-flex flex-column justify-content-center">
         {{ settings.home.HeaderSettings.title|richtext }}

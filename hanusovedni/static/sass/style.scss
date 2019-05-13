@@ -1,27 +1,26 @@
-@font-face {
-  font-family: Adelle;
-  src: url('../fonts/AdelleBasic_Bold.otf');
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: Adelle;
-  src: url('../fonts/AdelleBasic_BoldItalic.otf');
-  font-weight: bold;
-  font-style: italic;
-}
-
+@import "variables";
+@import "icons";
+@import "homepage";
 
 body {
   background: black;
   color: white;
+
+  font-family: $font-main;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased;
 }
 
+a {
+  text-decoration: none;
+  &:hover,:focus {
+    text-decoration: none;
+  }
+}
+
 header.site-header {
-  font-family: Adelle, serif;
+  font-family: $font-special;
   text-transform: uppercase;
 
   .logo img {
@@ -30,6 +29,7 @@ header.site-header {
   }
 
   .main-information {
+    height: 100%;
     border-left: 1px solid white;
 
     h2 {
