@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+from django.utils.translation import gettext_lazy as _
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -39,9 +41,12 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.settings',
+    'wagtail.contrib.modeladmin',
+    "wagtail.contrib.routable_page",
 
     'modelcluster',
     'taggit',
+    'django_extensions',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,6 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -93,8 +99,11 @@ WSGI_APPLICATION = 'hanusovedni.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hanusovedni',
+        'USER': 'hanusovedni',
+        'HOST': 'db',   # name of the service from docker-compose.yml
+        'PORT': '5432',
     }
 }
 
@@ -130,6 +139,11 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+  ('sk', _('Slovak')),
+  # ('en', _('English')),
+]
 
 
 # Static files (CSS, JavaScript, Images)

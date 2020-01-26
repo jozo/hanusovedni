@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+DATABASES['default']['PASSWORD'] = 'hanusovedni'
 
 try:
     from .local import *

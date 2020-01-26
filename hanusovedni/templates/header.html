@@ -6,8 +6,10 @@
     <div class="col-6 d-flex justify-content-end">
       <div class="logo py-2 pr-4
                   d-flex flex-column justify-content-center">
-        <img src="{{ settings.home.HeaderSettings.logo.url }}"
-             alt="Logo Hanusovich dní">
+        {% if settings.home.HeaderSettings.logo %}
+          <img src="{{ settings.home.HeaderSettings.logo.url }}"
+               alt="Logo Hanusove dni">
+        {% endif %}
       </div>
     </div>
     <div class="col-6d-flex justify-content-start">
