@@ -160,7 +160,7 @@ class Event(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name="kategória",
+        verbose_name=_("kategória"),
     )
     speakers = ParentalManyToManyField(
         "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
@@ -206,8 +206,8 @@ class Location(models.Model):
     panels = [FieldPanel("title"), FieldPanel("url_to_map")]
 
     class Meta:
-        verbose_name = "poloha"
-        verbose_name_plural = "polohy"
+        verbose_name = _("poloha")
+        verbose_name_plural = _("polohy")
 
     def __str__(self):
         return self.title
@@ -220,8 +220,8 @@ class Category(models.Model):
     panels = [FieldPanel("title")]
 
     class Meta:
-        verbose_name = "kategória"
-        verbose_name_plural = "kategórie"
+        verbose_name = _("kategória")
+        verbose_name_plural = _("kategórie")
 
     def __str__(self):
         return self.title
