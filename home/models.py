@@ -156,7 +156,9 @@ class Event(Page):
             mark_safe("</a>"),
         ),
     )
-    speakers = ParentalManyToManyField("home.Speaker", blank=True)
+    speakers = ParentalManyToManyField(
+        "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
+    )
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location")]),
@@ -168,9 +170,7 @@ class Event(Page):
             ],
             heading=_("Popis"),
         ),
-        FieldPanel("speakers"),
-        # FieldPanel('speakers', widget=forms.CheckboxSelectMultiple),
-        # PageChooserPanel('speakers', 'home.Speaker'),
+        AutocompletePanel("speakers"),
     ]
 
     parent_page_types = ["home.EventIndexPage"]
