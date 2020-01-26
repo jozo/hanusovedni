@@ -5,18 +5,21 @@ LABEL maintainer="hi@jozo.io"
 ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update \
-    && apt-get install -y build-essential \
+    && apt-get install -y build-essential libpq-dev \
     && pip install --upgrade pip \
     && pip install poetry
 
 COPY ["pyproject.toml", "poetry.lock", "/"]
 RUN poetry config virtualenvs.create false && poetry install
+# TODO install dev packages only during development, not in production
+# TODO consider using virtualenv
 
 COPY . /code/
 WORKDIR /code/
 
-RUN useradd wagtail
-RUN chown -R wagtail /code
+RUN useradd wagtail \
+    && mkdir /home/wagtail \
+    && chown -R wagtail /code /home/wagtail
 USER wagtail
 
 EXPOSE 8000
