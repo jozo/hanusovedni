@@ -122,15 +122,22 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class Event(Page):
-    # TODO subtitle - change to "short overview"
     # TODO youtube link
     # TODO topic
     # TODO icon (illustration)
-    subtitle = models.CharField(max_length=100, blank=True)
-    description = RichTextField(blank=True)
-    date_and_time = models.DateTimeField(default=timezone.now)
+    short_overview = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name=_("krátky popis"),
+        help_text=_("Zobrazuje sa na stránke s programom"),
+    )
+    description = RichTextField(blank=True, verbose_name=_("popis"))
+    date_and_time = models.DateTimeField(default=timezone.now, verbose_name=_("dátum a čas"))
     location = models.ForeignKey(
-        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
+        "home.Location",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         verbose_name="poloha",
     )
     speakers = ParentalManyToManyField("home.Speaker", blank=True)
@@ -138,7 +145,8 @@ class Event(Page):
     content_panels = Page.content_panels + [
         MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location")]),
         MultiFieldPanel(
-            [FieldPanel("subtitle"), FieldPanel("description")], heading=_("Popis")
+            [FieldPanel("short_overview"), FieldPanel("description")],
+            heading=_("Popis"),
         ),
         FieldPanel("speakers"),
         # FieldPanel('speakers', widget=forms.CheckboxSelectMultiple),
