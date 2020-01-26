@@ -124,7 +124,6 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class Event(Page):
-    # TODO topic
     # TODO icon (illustration)
     short_overview = models.CharField(
         max_length=100,
@@ -141,7 +140,7 @@ class Event(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name="poloha",
+        verbose_name=_("poloha"),
     )
     video_url = models.URLField(
         null=True,
@@ -155,6 +154,13 @@ class Event(Page):
             _("dalšie stránky"),
             mark_safe("</a>"),
         ),
+    )
+    category = models.ForeignKey(
+        "home.Category",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name="kategória",
     )
     speakers = ParentalManyToManyField(
         "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
@@ -171,6 +177,7 @@ class Event(Page):
             heading=_("Popis"),
         ),
         AutocompletePanel("speakers"),
+        FieldPanel("category"),
     ]
 
     parent_page_types = ["home.EventIndexPage"]
@@ -201,6 +208,20 @@ class Location(models.Model):
     class Meta:
         verbose_name = "poloha"
         verbose_name_plural = "polohy"
+
+    def __str__(self):
+        return self.title
+
+
+@register_snippet
+class Category(models.Model):
+    title = models.CharField(max_length=30)
+
+    panels = [FieldPanel("title")]
+
+    class Meta:
+        verbose_name = "kategória"
+        verbose_name_plural = "kategórie"
 
     def __str__(self):
         return self.title
