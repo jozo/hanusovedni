@@ -1,6 +1,8 @@
 from django.db import models
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 # TODO - gettext vs ugettext_lazy
@@ -122,7 +124,6 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class Event(Page):
-    # TODO youtube link
     # TODO topic
     # TODO icon (illustration)
     short_overview = models.CharField(
@@ -132,7 +133,9 @@ class Event(Page):
         help_text=_("Zobrazuje sa na stránke s programom"),
     )
     description = RichTextField(blank=True, verbose_name=_("popis"))
-    date_and_time = models.DateTimeField(default=timezone.now, verbose_name=_("dátum a čas"))
+    date_and_time = models.DateTimeField(
+        default=timezone.now, verbose_name=_("dátum a čas")
+    )
     location = models.ForeignKey(
         "home.Location",
         null=True,
@@ -140,12 +143,29 @@ class Event(Page):
         on_delete=models.SET_NULL,
         verbose_name="poloha",
     )
+    video_url = models.URLField(
+        null=True,
+        blank=True,
+        help_text=format_html(
+            _("Podporuje Youtube, Vimeo a {}{}{}"),
+            mark_safe(
+                "<a href='https://github.com/wagtail/wagtail/blob/master/"
+                "wagtail/embeds/oembed_providers.py' target='_blank'>"
+            ),
+            _("dalšie stránky"),
+            mark_safe("</a>"),
+        ),
+    )
     speakers = ParentalManyToManyField("home.Speaker", blank=True)
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location")]),
         MultiFieldPanel(
-            [FieldPanel("short_overview"), FieldPanel("description")],
+            [
+                FieldPanel("short_overview"),
+                FieldPanel("description"),
+                FieldPanel("video_url"),
+            ],
             heading=_("Popis"),
         ),
         FieldPanel("speakers"),
