@@ -1,17 +1,24 @@
-from django import forms
 from django.db import models
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.translation import gettext as _
+
+# TODO - gettext vs ugettext_lazy
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, FieldRowPanel, PageChooserPanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    MultiFieldPanel,
+)
+from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
 from wagtail.core.fields import RichTextField
-
-from wagtail.core.models import Page, Orderable
+from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.snippets.models import register_snippet
+from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 
 class HomePage(Page):
@@ -19,11 +26,11 @@ class HomePage(Page):
     video_text = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('hero_text', classname='full'),
-        InlinePanel('hero_images', label='Hero images'),
-        FieldPanel('video_text', classname='full'),
-        InlinePanel('video_invites'),
-        InlinePanel('partners'),
+        FieldPanel("hero_text", classname="full"),
+        InlinePanel("hero_images", label="Hero images"),
+        FieldPanel("video_text", classname="full"),
+        InlinePanel("video_invites"),
+        InlinePanel("partners"),
     ]
 
     @property
@@ -32,46 +39,46 @@ class HomePage(Page):
 
 
 class HeroImage(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name='hero_images')
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="hero_images")
     name = models.CharField(max_length=255)
     url = models.URLField()
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('url'),
+        FieldPanel("name"),
+        FieldPanel("url"),
     ]
 
 
 class VideoInvite(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name='video_invites')
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="video_invites")
     name = models.CharField(max_length=255)
     url = models.URLField()
 
     panels = [
-        FieldPanel('name'),
-        FieldPanel('url'),
+        FieldPanel("name"),
+        FieldPanel("url"),
     ]
 
 
 class Partner(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name='partners')
+    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="partners")
     url = models.URLField()
     logo = models.ForeignKey(
-        'wagtailimages.Image',
+        "wagtailimages.Image",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+'
+        related_name="+",
     )
 
     panels = [
-        ImageChooserPanel('logo'),
-        FieldPanel('url'),
+        ImageChooserPanel("logo"),
+        FieldPanel("url"),
     ]
 
 
 class SpeakerIndexPage(RoutablePageMixin, Page):
-    @route(r'^(\d+)/(\w+)')
+    @route(r"^(\d+)/(\w+)")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
         speaker = Speaker.objects.get(pk=speaker_id)
         if slug == speaker.slug:
@@ -85,29 +92,28 @@ class Speaker(Page):
     description = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldRowPanel([
-            FieldPanel('first_name'),
-            FieldPanel('last_name'),
-        ]),
-        FieldPanel('description'),
+        FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name"),]),
+        FieldPanel("description"),
     ]
 
     def get_url_parts(self, request=None):
         """Insert PK of object to url"""
         site_id, root_url, page_path = super().get_url_parts(request)
-        page_path = page_path.split('/')
+        page_path = page_path.split("/")
         page_path.insert(-2, str(self.pk))
-        return site_id, root_url, '/'.join(page_path)
+        return site_id, root_url, "/".join(page_path)
 
 
 class EventIndexPage(RoutablePageMixin, Page):
     intro = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('intro', classname='full')
-    ]
+    content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
+    subpage_types = ["home.Event"]
 
-    @route(r'^(\d+)/(\w+)')
+    class Meta:
+        verbose_name = _("program")
+
+    @route(r"^(\d+)/(\w+)")
     def event_with_id_in_url(self, request, event_id, slug):
         event = Event.objects.get(pk=event_id)
         if slug == event.slug:
@@ -116,45 +122,72 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class Event(Page):
+    # TODO subtitle - change to "short overview"
+    # TODO youtube link
+    # TODO topic
+    # TODO icon (illustration)
     subtitle = models.CharField(max_length=100, blank=True)
     description = RichTextField(blank=True)
     date_and_time = models.DateTimeField(default=timezone.now)
-    location = models.CharField(max_length=30)
-    speakers = ParentalManyToManyField('home.Speaker', blank=True)
+    location = models.ForeignKey(
+        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
+        verbose_name="poloha",
+    )
+    speakers = ParentalManyToManyField("home.Speaker", blank=True)
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel([
-            FieldPanel('subtitle'),
-            FieldPanel('date_and_time'),
-            FieldPanel('location'),
-        ]),
-        FieldPanel('description'),
-        FieldPanel('speakers'),
+        MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location")]),
+        MultiFieldPanel(
+            [FieldPanel("subtitle"), FieldPanel("description")], heading=_("Popis")
+        ),
+        FieldPanel("speakers"),
         # FieldPanel('speakers', widget=forms.CheckboxSelectMultiple),
         # PageChooserPanel('speakers', 'home.Speaker'),
     ]
 
-    parent_page_types = ['home.EventIndexPage']
+    parent_page_types = ["home.EventIndexPage"]
     subpage_types = []
+
+    class Meta:
+        verbose_name = _("podujatie")
+        verbose_name_plural = _("podujatia")
 
     def get_url_parts(self, request=None):
         """Insert PK of object to url"""
         site_id, root_url, page_path = super().get_url_parts(request)
-        page_path = page_path.split('/')
+        page_path = page_path.split("/")
         page_path.insert(-2, str(self.pk))
-        return site_id, root_url, '/'.join(page_path)
+        return site_id, root_url, "/".join(page_path)
+
+
+@register_snippet
+class Location(models.Model):
+    title = models.CharField(max_length=30)
+    url_to_map = models.URLField(
+        verbose_name=_("URL k mape"),
+        help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
+    )
+
+    panels = [FieldPanel("title"), FieldPanel("url_to_map")]
+
+    class Meta:
+        verbose_name = "poloha"
+        verbose_name_plural = "polohy"
+
+    def __str__(self):
+        return self.title
 
 
 @register_setting
 class HeaderSettings(BaseSetting):
     logo = models.FileField(null=True)
-    title = RichTextField(default='Bratislavské Hanusove dni')
+    title = RichTextField(default="Bratislavské Hanusove dni")
     start_date = models.DateField(default=timezone.now)
     end_date = models.DateField(default=timezone.now)
-    place = models.CharField(max_length=50, default='Malá scéna STU')
+    place = models.CharField(max_length=50, default="Malá scéna STU")
 
     content_panels = Page.content_panels + [
-        ImageChooserPanel('logo'),
-        FieldPanel('start_date'),
-        FieldPanel('end_date'),
+        ImageChooserPanel("logo"),
+        FieldPanel("start_date"),
+        FieldPanel("end_date"),
     ]

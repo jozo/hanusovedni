@@ -10,9 +10,11 @@ python = "^3.8"
 wagtail = "^2.7"
 uwsgi = "^2.0.18"
 psycopg2 = "^2.8.4"
+wagtail-autocomplete = "^0.4"
 
 [tool.poetry.dev-dependencies]
 django-extensions = "^2.2.6"
+black = "^19.10b0"
 
 [build-system]
 requires = ["poetry>=0.12"]
