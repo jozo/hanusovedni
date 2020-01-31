@@ -89,12 +89,21 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
 
 
 class Speaker(Page):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    description = RichTextField(blank=True)
+    first_name = models.CharField(max_length=30, verbose_name=_("meno"))
+    last_name = models.CharField(max_length=30, verbose_name=_("priezvisko"))
+    description = RichTextField(blank=True, verbose_name=_("popis"))
+    photo = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("fotka"),
+    )
 
-    content_panels = Page.content_panels + [
-        FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name"),]),
+    content_panels = [
+        FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name")]),
+        ImageChooserPanel("photo"),
         FieldPanel("description"),
     ]
 
@@ -104,6 +113,10 @@ class Speaker(Page):
         page_path = page_path.split("/")
         page_path.insert(-2, str(self.pk))
         return site_id, root_url, "/".join(page_path)
+
+    def save(self, *args, **kwargs):
+        self.draft_title = f"{self.first_name} {self.last_name}"
+        return super().save(*args, **kwargs)
 
 
 class EventIndexPage(RoutablePageMixin, Page):
@@ -167,15 +180,21 @@ class Event(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("ikona")
+        verbose_name=_("ikona"),
     )
     speakers = ParentalManyToManyField(
         "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
     )
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location"),
-                         FieldPanel("category"), ImageChooserPanel("icon")]),
+        MultiFieldPanel(
+            [
+                FieldPanel("date_and_time"),
+                AutocompletePanel("location"),
+                FieldPanel("category"),
+                ImageChooserPanel("icon"),
+            ]
+        ),
         MultiFieldPanel(
             [
                 FieldPanel("short_overview"),
