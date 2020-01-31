@@ -124,7 +124,6 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class Event(Page):
-    # TODO icon (illustration)
     short_overview = models.CharField(
         max_length=100,
         blank=True,
@@ -162,12 +161,21 @@ class Event(Page):
         on_delete=models.SET_NULL,
         verbose_name=_("kategória"),
     )
+    icon = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("ikona")
+    )
     speakers = ParentalManyToManyField(
         "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
     )
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location")]),
+        MultiFieldPanel([FieldPanel("date_and_time"), AutocompletePanel("location"),
+                         FieldPanel("category"), ImageChooserPanel("icon")]),
         MultiFieldPanel(
             [
                 FieldPanel("short_overview"),
@@ -177,7 +185,6 @@ class Event(Page):
             heading=_("Popis"),
         ),
         AutocompletePanel("speakers"),
-        FieldPanel("category"),
     ]
 
     parent_page_types = ["home.EventIndexPage"]
