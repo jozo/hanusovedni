@@ -4,8 +4,63 @@
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}template-events{% endblock %}
 
 {% block content %}
-  Archiv - zoznam vsetkych eventov
+  <div class="container-md">
+    {% for day, events in grouped_events.items %}
+      <div class="row">
+        <h2 class="col-12 event-index-header">
+          <time datetime="{{ day|date:'c' }}">
+            {{ day|date:'l'|upper }}
+            &nbsp;&mdash;&nbsp;
+            {{ day|date:'j. E' }}
+          </time>
+        </h2>
+      </div>
+
+      <div class="row justify-content-center">
+        {% for event in events %}
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex p-0 overflow-hidden">
+            <a href="{% pageurl event %}" class="d-flex w-100 m-1">
+              <article class="event d-flex flex-column"
+                       style="background-color: {{ event.category.color }}">
+                <div class="illustration d-flex justify-content-center align-items-center">
+                  {% image event.icon fill-65x65 %}
+                </div>
+
+                <div class="category">
+                  <div class="name">
+                    {{ event.category.title }}
+                  </div>
+                </div>
+
+                <div class="content">
+                  <h3>{{ event.title }}</h3>
+
+                  <ul class="speakers">
+                    {% for speaker in event.speakers.all %}
+                      <li>{{ speaker.title }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+                <footer>
+                  <time class="d-flex align-items-center" datetime="{{ event.date_and_time|date:'c' }}">
+                    {{ event.date_and_time|date:'j.n.' }}
+                    &nbsp;&mdash;&nbsp;
+                    {{ event.date_and_time|date:'l'|upper }}
+                    &nbsp;&mdash;&nbsp;
+                    {{ event.date_and_time|date:'G:i' }}
+                  </time>
+                  <address class="py-2">{{ event.location.title|richtext }}</address>
+                </footer>
+              </article>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      {#    TODO add text for empty #}
+    {% endfor %}
+  </div>
 {% endblock %}

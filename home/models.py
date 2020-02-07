@@ -1,7 +1,8 @@
+import itertools
 from django.db import models
 from django.shortcuts import redirect
 from django.utils import timezone
-from django.utils.html import format_html
+from django.utils.html import format_html, strip_tags
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -33,6 +34,11 @@ class HomePage(Page):
         FieldPanel("video_text", classname="full"),
         InlinePanel("video_invites"),
         InlinePanel("partners"),
+    ]
+    subpage_types = [
+        "home.EventIndexPage",
+        "home.SpeakerIndexPage",
+        "home.ProgramIndexPage",
     ]
 
     @property
@@ -80,6 +86,9 @@ class Partner(Orderable):
 
 
 class SpeakerIndexPage(RoutablePageMixin, Page):
+    class Meta:
+        verbose_name = _("rečníci")
+
     @route(r"^(\d+)/(\w+)")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
         speaker = Speaker.objects.get(pk=speaker_id)
@@ -106,6 +115,7 @@ class Speaker(Page):
         ImageChooserPanel("photo"),
         FieldPanel("description"),
     ]
+    parent_page_types = ["home.SpeakerIndexPage"]
 
     def get_url_parts(self, request=None):
         """Insert PK of object to url"""
@@ -116,17 +126,22 @@ class Speaker(Page):
 
     def save(self, *args, **kwargs):
         self.draft_title = f"{self.first_name} {self.last_name}"
+        self.title = self.draft_title
+        if "updated_fields" in kwargs:
+            kwargs["updated_fields"].append("title")
         return super().save(*args, **kwargs)
 
 
 class EventIndexPage(RoutablePageMixin, Page):
+    """Archive of all events"""
+
     intro = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
     subpage_types = ["home.Event"]
 
     class Meta:
-        verbose_name = _("program")
+        verbose_name = _("archív")
 
     @route(r"^(\d+)/(\w+)")
     def event_with_id_in_url(self, request, event_id, slug):
@@ -134,6 +149,41 @@ class EventIndexPage(RoutablePageMixin, Page):
         if slug == event.slug:
             return event.serve(request)
         return redirect(event.get_url(request))
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        events = Event.objects.live().order_by("date_and_time")
+        # TODO use iterator
+        context["grouped_events"] = {
+            k: list(v)
+            for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
+        }
+        return context
+
+
+class ProgramIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
+    subpage_types = []
+
+    class Meta:
+        verbose_name = _("program")
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        hs = HeaderSettings.objects.get()
+        events = (
+            Event.objects.live()
+                .filter(date_and_time__gte=hs.start_date, date_and_time__lt=hs.end_date)
+                .order_by("date_and_time")
+        )
+        # TODO use iterator
+        context["grouped_events"] = {
+            k: list(v)
+            for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
+        }
+        return context
 
 
 class Event(Page):
@@ -223,7 +273,7 @@ class Event(Page):
 
 @register_snippet
 class Location(models.Model):
-    title = models.CharField(max_length=30)
+    title = RichTextField(blank=True, verbose_name=_("názov"))
     url_to_map = models.URLField(
         verbose_name=_("URL k mape"),
         help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
@@ -236,14 +286,15 @@ class Location(models.Model):
         verbose_name_plural = _("polohy")
 
     def __str__(self):
-        return self.title
+        return strip_tags(self.title)
 
 
 @register_snippet
 class Category(models.Model):
     title = models.CharField(max_length=30)
+    color = models.CharField(max_length=20, verbose_name=_("farba"))
 
-    panels = [FieldPanel("title")]
+    panels = [FieldPanel("title"), FieldPanel("color")]
 
     class Meta:
         verbose_name = _("kategória")
