@@ -53,7 +53,9 @@
                     &nbsp;&mdash;&nbsp;
                     {{ event.date_and_time|date:'G:i' }}
                   </time>
-                  <address class="py-2">{{ event.location.title|richtext }}</address>
+                  <address class="py-2 d-flex align-items-center">
+                    {{ event.location.title|richtext }}
+                  </address>
                 </footer>
               </article>
             </a>
