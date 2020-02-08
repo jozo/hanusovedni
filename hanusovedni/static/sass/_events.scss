@@ -22,6 +22,14 @@
     box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.05);
   }
 
+  a {
+    color: white;
+
+    &:hover {
+      text-decoration: underline
+    }
+  }
+
   .illustration {
     width: 75px;
     height: 75px;
@@ -74,14 +82,6 @@
   .speakers {
     padding: 0;
     list-style: none;
-
-    a {
-      color: white;
-
-      &:hover {
-        text-decoration: underline
-      }
-    }
   }
 
   footer {
@@ -109,6 +109,10 @@
       p {
         margin: 0;
       }
+    }
+
+    .far {
+      width: 20px;
     }
   }
 }

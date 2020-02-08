@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
 
 {% block body_class %}template-event{% endblock %}
+
+{% block extra_js %}
+  <script src="https://kit.fontawesome.com/8a0d4a7b33.js" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block content %}
   <div class="container-md">
@@ -42,6 +47,7 @@
 
           <footer>
             <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
+              <i class="far fa-calendar-alt"></i>
               {{ page.date_and_time|date:'j.n.' }}
               &nbsp;&mdash;&nbsp;
               {{ page.date_and_time|date:'l'|upper }}
@@ -49,7 +55,12 @@
               {{ page.date_and_time|date:'G:i' }}
             </time>
             <address class="py-2 d-flex align-items-center">
-              {{ page.location.title|richtext }}
+              <i class="far fa-map"></i>
+              <a href="{{ page.location.url_to_map }}"
+                 target="_blank"
+                 title="{% trans "Mapa ku miestu konania" %}">
+                {{ page.location.title }}
+              </a>
             </address>
           </footer>
         </article>

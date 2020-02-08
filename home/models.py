@@ -143,6 +143,10 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
     class Meta:
         verbose_name = _("rečníci")
 
+    subpage_types = [
+        "home.Speaker",
+    ]
+
     @route(r"^(\d+)/(\w+)")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
         speaker = Speaker.objects.get(pk=speaker_id)
@@ -349,7 +353,7 @@ class Event(Page):
 
 @register_snippet
 class Location(models.Model):
-    title = RichTextField(blank=True, verbose_name=_("názov"))
+    title = models.CharField(default="", max_length=255, verbose_name=_("názov"))
     url_to_map = models.URLField(
         verbose_name=_("URL k mape"),
         help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),

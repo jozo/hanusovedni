@@ -32,6 +32,11 @@ a {
   font-family: $font-special;
   text-transform: uppercase;
 
+  a {
+    color: white;
+    display: block;
+  }
+
   .logo img {
     width: 8rem;
     height: 8rem;
