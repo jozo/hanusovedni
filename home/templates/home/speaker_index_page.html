@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{# TODO pozriet ci potebujem toto vsetko importovat #}
+{% load i18n %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-speakers{% endblock %}
+
+{% block content %}
+  <div class="container-md">
+    <div class="row">
+      {% for speaker in speakers %}
+        <div class="col-6 p-0">
+          <div class="speaker m-01">
+            <a href="{% pageurl speaker %}" class="d-flex flex-sm-row flex-column">
+              <div class="photo-small align-self-center mt-3 mt-sm-0">
+                {% image speaker.photo fill-150x150-c100 format-jpeg %}
+              </div>
+              <div class="d-flex align-items-center p-5">
+                <h3>{{ speaker.title }}</h3>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      {% empty %}
+        <div class="col-8 mx-auto text-center">
+          <div class="alert alert-warning mt-3" role="alert">
+            {% trans "Nenašli sa žiadni rečníci" %} 😥
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

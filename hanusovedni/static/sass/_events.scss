@@ -117,7 +117,7 @@
   }
 }
 
-.event-speaker {
+.speaker {
   background-color: $c-bg;
   font-size: 0.9rem;
 
@@ -126,6 +126,13 @@
       object-fit: cover;
       width: 350px;
       height: 350px;
+    }
+  }
+  .photo-small {
+    img {
+      object-fit: cover;
+      width: 150px;
+      height: 150px;
     }
   }
 
@@ -152,6 +159,29 @@
   .event {
     &:hover {
       box-shadow: none;
+    }
+  }
+}
+
+.template-speakers {
+  .speaker {
+    font-family: $font-special;
+    h3 {
+      color: white;
+      font-size: 1.4rem;
+    }
+
+    &:hover {
+      background-color: lighten($c-bg, 5);
+      transition: all 0.5s;
+
+      .photo-small {
+        filter: none;
+      }
+    }
+
+    .photo-small {
+      filter: grayscale(90%);
     }
   }
 }
