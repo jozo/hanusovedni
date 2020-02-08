@@ -227,12 +227,7 @@ class EventIndexPage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        events = Event.objects.live().order_by("date_and_time")
-        # TODO use iterator
-        context["grouped_events"] = {
-            k: list(v)
-            for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
-        }
+        context["events"] = Event.objects.live().order_by("-date_and_time")
         return context
 
 
