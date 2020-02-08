@@ -4,8 +4,73 @@
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block body_class %}template-event{% endblock %}
 
 {% block content %}
-  Detail eventu {{ content }}
+  <div class="container-md">
+    <div class="row">
+      <div class="col-md-6 col-12 d-flex p-0 overflow-hidden">
+        <article class="event d-flex flex-column w-100 m-01"
+                 style="background-color: {{ page.category.color }}">
+          <div class="illustration d-flex justify-content-center align-items-center">
+            {% image page.icon fill-65x65 %}
+          </div>
+
+          <div class="category">
+            <div class="name">
+              {{ page.category.title }}
+            </div>
+          </div>
+
+          <div class="content">
+            <h3>{{ page.title }}</h3>
+
+            <div class="short-overview mb-3">
+              {{ page.short_overview }}
+            </div>
+
+            <ul class="speakers">
+              {% for speaker in page.speakers.all %}
+                <li>
+                  <a href="{% pageurl speaker %}">
+                    {{ speaker.title }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <footer>
+            <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
+              {{ page.date_and_time|date:'j.n.' }}
+              &nbsp;&mdash;&nbsp;
+              {{ page.date_and_time|date:'l'|upper }}
+              &nbsp;&mdash;&nbsp;
+              {{ page.date_and_time|date:'G:i' }}
+            </time>
+            <address class="py-2 d-flex align-items-center">
+              {{ page.location.title|richtext }}
+            </address>
+          </footer>
+        </article>
+      </div>
+      <div class="col-md-6 col-12 d-flex p-0">
+        <article class="event-detail d-flex flex-column m-01 p-4 w-100"
+                 style="background-color: {{ page.category.color }}">
+          {% if page.video_url %}
+            <div class="video mb-3 d-flex justify-content-center">
+              {% embed page.video_url %}
+            </div>
+          {% endif %}
+          <div class="description">
+            {{ page.description|richtext }}
+          </div>
+          <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
+             role="button" target="_blank">
+            Kúpiť lístok
+          </a>
+        </article>
+      </div>
+    </div>
+  </div>
 {% endblock %}

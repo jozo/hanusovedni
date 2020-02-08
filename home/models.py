@@ -143,7 +143,7 @@ class EventIndexPage(RoutablePageMixin, Page):
     class Meta:
         verbose_name = _("archív")
 
-    @route(r"^(\d+)/(\w+)")
+    @route(r"^(\d+)/(.+)/")
     def event_with_id_in_url(self, request, event_id, slug):
         event = Event.objects.get(pk=event_id)
         if slug == event.slug:
@@ -175,8 +175,8 @@ class ProgramIndexPage(Page):
         hs = HeaderSettings.objects.get()
         events = (
             Event.objects.live()
-                .filter(date_and_time__gte=hs.start_date, date_and_time__lt=hs.end_date)
-                .order_by("date_and_time")
+            .filter(date_and_time__gte=hs.start_date, date_and_time__lt=hs.end_date)
+            .order_by("date_and_time")
         )
         # TODO use iterator
         context["grouped_events"] = {
@@ -188,7 +188,7 @@ class ProgramIndexPage(Page):
 
 class Event(Page):
     short_overview = models.CharField(
-        max_length=100,
+        max_length=255,
         blank=True,
         verbose_name=_("krátky popis"),
         help_text=_("Zobrazuje sa na stránke s programom"),
@@ -217,6 +217,7 @@ class Event(Page):
             mark_safe("</a>"),
         ),
     )
+    ticket_url = models.URLField(null=True, blank=True, verbose_name=_("Lístok URL"))
     category = models.ForeignKey(
         "home.Category",
         null=True,
@@ -250,6 +251,7 @@ class Event(Page):
                 FieldPanel("short_overview"),
                 FieldPanel("description"),
                 FieldPanel("video_url"),
+                FieldPanel("ticket_url"),
             ],
             heading=_("Popis"),
         ),

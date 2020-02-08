@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{# TODO pozriet ci potebujem toto vsetko importovat #}
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
@@ -22,7 +23,7 @@
       <div class="row justify-content-center">
         {% for event in events %}
           <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex p-0 overflow-hidden">
-            <a href="{% pageurl event %}" class="d-flex w-100 m-1">
+            <a href="{% pageurl event %}" class="d-flex w-100 m-01">
               <article class="event d-flex flex-column"
                        style="background-color: {{ event.category.color }}">
                 <div class="illustration d-flex justify-content-center align-items-center">

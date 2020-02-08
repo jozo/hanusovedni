@@ -4,6 +4,7 @@
   margin-top: 2.5rem;
   margin-bottom: 1.5rem;
 }
+
 .event {
   width: 100%;
   border-radius: 2px;
@@ -16,6 +17,7 @@
   color: white;
 
   background-image: url("../img/bg-polka-dots.png");
+
   &:hover {
     box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.05);
   }
@@ -72,6 +74,14 @@
   .speakers {
     padding: 0;
     list-style: none;
+
+    a {
+      color: white;
+
+      &:hover {
+        text-decoration: underline
+      }
+    }
   }
 
   footer {
@@ -96,19 +106,27 @@
       background-color: rgba(0, 0, 0, 0.7);
       text-transform: uppercase;
 
-      p {margin: 0;}
+      p {
+        margin: 0;
+      }
     }
   }
 }
 
-.px-1px {
-  padding: 0 1.5px;
-}
+.template-event {
+  .event-detail {
+    border-radius: 2px;
+    font-size: 0.9rem;
 
-.mx-n1px {
-  margin: 0 -1.5px;
-}
+    p {
+      margin-bottom: 0.5rem;
+    }
+  }
 
-.mx-1px {
-  margin: 0 1.5px;
+  // Disable hover effect on event page
+  .event {
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
