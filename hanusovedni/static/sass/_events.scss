@@ -124,8 +124,16 @@
   .photo {
     img {
       object-fit: cover;
-      width: 250px;
-      height: 250px;
+      width: 350px;
+      height: 350px;
+    }
+  }
+
+  a.speaker-heading {
+    color: white;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }

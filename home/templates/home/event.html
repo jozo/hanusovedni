@@ -91,10 +91,12 @@
         <div class="col-12 p-0">
           <div class="event-speaker d-flex flex-md-row flex-column m-01">
             <div class="photo align-self-center mt-3 mt-md-0">
-              {% image speaker.photo min-250x250 format-jpeg %}
+              {% image speaker.photo min-350x350 format-jpeg %}
             </div>
             <div class="m-5">
-              <h4 class="mb-4">{{ speaker.title }}</h4>
+              <a href="{% pageurl speaker %}" class="speaker-heading">
+                <h4 class="mb-4">{{ speaker.title }}</h4>
+              </a>
               {{ speaker.description|richtext }}
             </div>
           </div>
