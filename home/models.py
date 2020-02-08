@@ -173,6 +173,10 @@ class Speaker(Page):
         verbose_name=_("fotka"),
     )
 
+    class Meta:
+        verbose_name = _("rečník")
+        verbose_name_plural = _("rečníci")
+
     content_panels = [
         FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name")]),
         ImageChooserPanel("photo"),

@@ -117,6 +117,19 @@
   }
 }
 
+.event-speaker {
+  background-color: $c-bg;
+  font-size: 0.9rem;
+
+  .photo {
+    img {
+      object-fit: cover;
+      width: 250px;
+      height: 250px;
+    }
+  }
+}
+
 .template-event {
   .event-detail {
     border-radius: 2px;

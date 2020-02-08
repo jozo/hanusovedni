@@ -4,7 +4,7 @@
     display: block;
 
     &:hover {
-      background-color: lighten($c-bg, 5);
+      background-color: $c-bg;
     }
   }
 }
