@@ -1,8 +1,10 @@
 import itertools
+import re
+
 from django.db import models
 from django.shortcuts import redirect
 from django.utils import timezone
-from django.utils.html import format_html, strip_tags
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
@@ -24,11 +26,47 @@ from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 
+def replace_tags_with_space(value):
+    """Return the given HTML with spaces instead of tags."""
+    return re.sub(r"</?\w+>", " ", str(value))
+
+
+def last_festival():
+    return FestivalPage.objects.live().order_by("end_date").last()
+
+
 class HomePage(Page):
+    subpage_types = [
+        "home.EventIndexPage",
+        "home.SpeakerIndexPage",
+        "home.FestivalPage",
+    ]
+
+    @property
+    def festivals(self):
+        return FestivalPage.objects.live()
+
+
+class FestivalPage(Page):
+    formatted_title = RichTextField(default="", verbose_name=_("titulok"))
+    logo = models.FileField(null=True)
+    start_date = models.DateField(
+        default=timezone.now, verbose_name=_("začiatok festivalu")
+    )
+    end_date = models.DateField(
+        default=timezone.now, verbose_name=_("koniec festivalu")
+    )
+    place = models.CharField(
+        max_length=50, default="Malá scéna STU", verbose_name=_("miesto")
+    )
     hero_text = RichTextField(blank=True)
     video_text = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
+    content_panels = [
+        FieldPanel("formatted_title"),
+        FieldPanel("logo"),
+        FieldRowPanel([FieldPanel("start_date"), FieldPanel("end_date")]),
+        FieldPanel("place"),
         FieldPanel("hero_text", classname="full"),
         InlinePanel("hero_images", label="Hero images"),
         FieldPanel("video_text", classname="full"),
@@ -36,8 +74,6 @@ class HomePage(Page):
         InlinePanel("partners"),
     ]
     subpage_types = [
-        "home.EventIndexPage",
-        "home.SpeakerIndexPage",
         "home.ProgramIndexPage",
     ]
 
@@ -45,9 +81,25 @@ class HomePage(Page):
     def events(self):
         return Event.objects.all()
 
+    def save(self, *args, **kwargs):
+        self.draft_title = " ".join(
+            replace_tags_with_space(self.formatted_title).split()
+        )
+        self.title = self.draft_title
+        if "updated_fields" in kwargs:
+            kwargs["updated_fields"].append("title")
+        return super().save(*args, **kwargs)
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = self
+        return context
+
 
 class HeroImage(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="hero_images")
+    page = ParentalKey(
+        FestivalPage, on_delete=models.CASCADE, related_name="hero_images"
+    )
     name = models.CharField(max_length=255)
     url = models.URLField()
 
@@ -58,7 +110,9 @@ class HeroImage(Orderable):
 
 
 class VideoInvite(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="video_invites")
+    page = ParentalKey(
+        FestivalPage, on_delete=models.CASCADE, related_name="video_invites"
+    )
     name = models.CharField(max_length=255)
     url = models.URLField()
 
@@ -69,7 +123,7 @@ class VideoInvite(Orderable):
 
 
 class Partner(Orderable):
-    page = ParentalKey(HomePage, on_delete=models.CASCADE, related_name="partners")
+    page = ParentalKey(FestivalPage, on_delete=models.CASCADE, related_name="partners")
     url = models.URLField()
     logo = models.ForeignKey(
         "wagtailimages.Image",
@@ -95,6 +149,11 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
         if slug == speaker.slug:
             return speaker.serve(request)
         return redirect(speaker.get_url(request))
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
 
 
 class Speaker(Page):
@@ -131,6 +190,11 @@ class Speaker(Page):
             kwargs["updated_fields"].append("title")
         return super().save(*args, **kwargs)
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
+
 
 class EventIndexPage(RoutablePageMixin, Page):
     """Archive of all events"""
@@ -152,6 +216,7 @@ class EventIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
         events = Event.objects.live().order_by("date_and_time")
         # TODO use iterator
         context["grouped_events"] = {
@@ -172,10 +237,14 @@ class ProgramIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        hs = HeaderSettings.objects.get()
+        parent_festival = FestivalPage.objects.get(pk=self.get_parent().pk)
+        context["header_festival"] = parent_festival
         events = (
             Event.objects.live()
-            .filter(date_and_time__gte=hs.start_date, date_and_time__lt=hs.end_date)
+            .filter(
+                date_and_time__gte=parent_festival.start_date,
+                date_and_time__lt=parent_festival.end_date,
+            )
             .order_by("date_and_time")
         )
         # TODO use iterator
@@ -272,6 +341,11 @@ class Event(Page):
         page_path.insert(-2, str(self.pk))
         return site_id, root_url, "/".join(page_path)
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
+
 
 @register_snippet
 class Location(models.Model):
@@ -288,7 +362,7 @@ class Location(models.Model):
         verbose_name_plural = _("polohy")
 
     def __str__(self):
-        return strip_tags(self.title)
+        return " ".join(replace_tags_with_space(self.title).split())
 
 
 @register_snippet
@@ -304,18 +378,3 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
-
-
-@register_setting
-class HeaderSettings(BaseSetting):
-    logo = models.FileField(null=True)
-    title = RichTextField(default="Bratislavské Hanusove dni")
-    start_date = models.DateField(default=timezone.now)
-    end_date = models.DateField(default=timezone.now)
-    place = models.CharField(max_length=50, default="Malá scéna STU")
-
-    content_panels = Page.content_panels + [
-        ImageChooserPanel("logo"),
-        FieldPanel("start_date"),
-        FieldPanel("end_date"),
-    ]
