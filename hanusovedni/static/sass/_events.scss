@@ -137,6 +137,7 @@
   }
 
   a.speaker-heading {
+    font-family: $font-special;
     color: white;
 
     &:hover {
@@ -165,8 +166,8 @@
 
 .template-speakers {
   .speaker {
-    font-family: $font-special;
     h3 {
+      font-family: $font-special;
       color: white;
       font-size: 1.4rem;
     }

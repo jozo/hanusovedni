@@ -147,7 +147,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
         "home.Speaker",
     ]
 
-    @route(r"^(\d+)/(\w+)")
+    @route(r"^(\d+)/(.+)/")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
         speaker = Speaker.objects.get(pk=speaker_id)
         if slug == speaker.slug:
@@ -202,6 +202,7 @@ class Speaker(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
+        context["speaker"] = self
         return context
 
 
@@ -312,7 +313,7 @@ class Event(Page):
         verbose_name=_("ikona"),
     )
     speakers = ParentalManyToManyField(
-        "home.Speaker", blank=True, related_name="speakers", verbose_name=_("rečník")
+        "home.Speaker", blank=True, related_name="events", verbose_name=_("rečník")
     )
 
     content_panels = Page.content_panels + [

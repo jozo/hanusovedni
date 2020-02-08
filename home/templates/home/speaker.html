@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-speaker{% endblock %}
+
+{% block content %}
+  <div class="container-md px-5 px-md-3">
+    <div class="row">
+      <div class="col-12 p-0">
+        <div class="speaker d-flex flex-md-row flex-column m-01">
+          <div class="photo align-self-center mt-3 mt-md-0">
+            {% image speaker.photo min-350x350 format-jpeg %}
+          </div>
+          <div class="m-5">
+            <a href="{% pageurl speaker %}" class="speaker-heading">
+              <h4 class="mb-4">{{ speaker.title }}</h4>
+            </a>
+            {{ speaker.description|richtext }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-md px-5 px-md-3">
+      <div class="row">
+        {% for event in speaker.events.live %}
+          <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex p-0 overflow-hidden">
+            <a href="{% pageurl event %}" class="d-flex w-100 m-01">
+              <article class="event d-flex flex-column"
+                       style="background-color: {{ event.category.color }}">
+                <div class="illustration d-flex justify-content-center align-items-center">
+                  {% image event.icon fill-65x65 %}
+                </div>
+
+                <div class="category">
+                  <div class="name">
+                    {{ event.category.title }}
+                  </div>
+                </div>
+
+                <div class="content">
+                  <h3>{{ event.title }}</h3>
+
+                  <ul class="speakers">
+                    {% for speaker in event.speakers.all %}
+                      <li>{{ speaker.title }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+                <footer>
+                  <time class="d-flex align-items-center" datetime="{{ event.date_and_time|date:'c' }}">
+                    {{ event.date_and_time|date:'j.n.' }}
+                    &nbsp;&mdash;&nbsp;
+                    {{ event.date_and_time|date:'l'|upper }}
+                    &nbsp;&mdash;&nbsp;
+                    {{ event.date_and_time|date:'G:i' }}
+                  </time>
+                  <address class="py-2 d-flex align-items-center">
+                    {{ event.location.title }}
+                  </address>
+                </footer>
+              </article>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+  </div>
+
+{% endblock %}
