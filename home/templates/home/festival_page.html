@@ -8,9 +8,9 @@
 
 {% block content %}
   <div class="container">
-    <section class="hero row no-gutters">
-      <div class="col-lg-6 p-md-5 p-4 hero-text">
-        <div>
+    <section class="hero row mx-n02">
+      <div class="col-lg-6 px-02 mb-1 d-flex">
+        <div class="p-md-5 p-4 hero-text flex-grow-1">
           {{ page.hero_text|richtext }}
           <div class="link-more d-flex align-items-center">
             <i class="icon-arrow1"></i>
@@ -18,9 +18,12 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-6 hero-carousel">
-        <img src="https://i2.wp.com/www.hanusovedni.sk/assets/Stan-sa-dobrovo%C4%BEn%C3%ADkom-1.png?fit=600%2C400&ssl=1"
-             alt="">
+      <div class="col-lg-6 px-02 mb-1 d-flex">
+        <div class="hero-carousel flex-grow-1">
+          <img
+              src="https://i2.wp.com/www.hanusovedni.sk/assets/Stan-sa-dobrovo%C4%BEn%C3%ADkom-1.png?fit=600%2C400&ssl=1"
+              alt="">
+        </div>
       </div>
     </section>
   </div>

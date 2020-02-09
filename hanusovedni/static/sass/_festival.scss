@@ -9,10 +9,6 @@
     color: $c-light-grey;
   }
 
-  section.hero {
-    margin-bottom: 2px;
-  }
-
   .hero-text {
     background: $c-bg;
     font-family: $font-special;
@@ -40,8 +36,6 @@
   }
 
   .hero-carousel {
-    min-height: 380px;
-
     // Pattern visible before images from carousel are loaded
     // https://codepen.io/edmundojr/pen/xOYJGw
     // Colors

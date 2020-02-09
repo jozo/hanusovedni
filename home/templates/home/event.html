@@ -12,10 +12,10 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container-md px-5 px-md-3">
-    <div class="row">
-      <div class="col-md-6 col-12 d-flex p-0 overflow-hidden">
-        <article class="event d-flex flex-column w-100 m-01"
+  <div class="container">
+    <div class="row mx-n02">
+      <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
+        <article class="event d-flex flex-column w-100"
                  style="background-color: {{ page.category.color }}">
           <div class="illustration d-flex justify-content-center align-items-center">
             {% image page.icon fill-65x65 %}
@@ -65,8 +65,8 @@
           </footer>
         </article>
       </div>
-      <div class="col-md-6 col-12 d-flex p-0">
-        <article class="event-detail d-flex flex-column m-01 p-4 w-100"
+      <div class="col-md-6 col-12 d-flex px-02 mb-1">
+        <article class="event-detail d-flex flex-column p-4 w-100"
                  style="background-color: {{ page.category.color }}">
           {% if page.video_url %}
             <div class="video mb-3 d-flex justify-content-center">
@@ -85,11 +85,11 @@
     </div>
   </div>
 
-  <div class="container-md px-5 px-md-3">
+  <div class="container">
     {% for speaker in page.speakers.all %}
-      <div class="row">
-        <div class="col-12 p-0">
-          <div class="speaker d-flex flex-md-row flex-column m-01">
+      <div class="row mx-n02">
+        <div class="col-12 px-02 mb-1">
+          <div class="speaker d-flex flex-md-row flex-column">
             <div class="photo align-self-center mt-3 mt-md-0">
               {% image speaker.photo min-350x350 format-jpeg %}
             </div>

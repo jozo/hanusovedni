@@ -73,6 +73,7 @@ class FestivalPage(Page):
         InlinePanel("video_invites"),
         InlinePanel("partners"),
     ]
+    promote_panels = Page.promote_panels + [InlinePanel("menu_items", label=_("Menu"))]
     subpage_types = [
         "home.ProgramIndexPage",
     ]
@@ -137,6 +138,14 @@ class Partner(Orderable):
         ImageChooserPanel("logo"),
         FieldPanel("url"),
     ]
+
+
+class MenuItem(Orderable):
+    page = ParentalKey(
+        FestivalPage, on_delete=models.CASCADE, related_name="menu_items"
+    )
+    title = models.CharField(max_length=32, verbose_name=_("titulok"))
+    link = models.CharField(max_length=255)
 
 
 class SpeakerIndexPage(RoutablePageMixin, Page):
