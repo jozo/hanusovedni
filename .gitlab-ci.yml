@@ -1,0 +1,41 @@
+image: tmaier/docker-compose:latest
+services:
+  - docker:dind
+
+before_script:
+  - docker version
+  - docker-compose --version
+  - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} -f spolocenstvo_siloe/Dockerfile .
+    - docker push ${CI_REGISTRY_IMAGE}:latest
+    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+
+test:
+  stage: test
+  script:
+    - echo "Here will be tests"
+#    - docker-compose -f docker-compose.prod.yml run --rm web pytest
+
+deploy_to_production:
+  stage: deploy
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "${DEPLOY_SERVER_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H ${DEPLOY_SERVER_IP} >> ~/.ssh/known_hosts
+  script:
+    - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
+    - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
+    - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
+    - echo "Deployment done succesfully"

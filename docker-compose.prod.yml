@@ -1,0 +1,17 @@
+# Docker-compose file used on production
+
+version: "3"
+
+services:
+  web:
+    image: registry.gitlab.com/jozo/hanusovedni:latest
+    ports:
+    - "80:8000"
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 400M
+      restart_policy:
+        condition: on-failure
