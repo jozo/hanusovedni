@@ -11,6 +11,9 @@ services:
       - secrets.env
     environment:
       DJANGO_SETTINGS_MODULE: "hanusovedni.settings.production"
+    volumes:
+    - /var/www/static:/static_root
+    - /var/www/media:/media_root
     deploy:
       replicas: 2
       resources:

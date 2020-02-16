@@ -13,7 +13,7 @@ services:
     build: .
     ports:
       - 8000:8000
-    command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191
+    command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191 --static-map /static=/static_root --static-map /media=/media_root
     depends_on:
       - db
 
