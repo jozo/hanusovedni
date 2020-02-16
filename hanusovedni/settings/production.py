@@ -15,4 +15,4 @@ DATABASES["default"]["PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
 
 STATIC_ROOT = "/static_root"
 
-MEDIA_URL = "/media_root"
+MEDIA_ROOT = "/media_root"
