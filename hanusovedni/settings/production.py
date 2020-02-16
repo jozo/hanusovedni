@@ -16,3 +16,15 @@ DATABASES["default"]["PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
 STATIC_ROOT = "/static_root"
 
 MEDIA_ROOT = "/media_root"
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://ef973f216d8141d8845ca48d0479eeee@sentry.io/202767",
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    # send_default_pii=True
+)
