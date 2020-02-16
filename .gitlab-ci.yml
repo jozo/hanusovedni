@@ -9,7 +9,7 @@ before_script:
 
 stages:
   - build
-  - test
+#  - test
   - deploy
 
 build:

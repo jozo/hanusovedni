@@ -13,3 +13,4 @@ services:
     environment:
       - DJANGO_ENV=dev
     command: ./manage.py runserver 0:8000
+#    command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191 --static-map /static=/code/static --static-map /media=/code/media
