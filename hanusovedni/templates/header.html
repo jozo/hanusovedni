@@ -1,39 +1,41 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-<header>
-  <div class="container-fluid site-header my-5">
-    <div class="row no-gutters">
-      <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-end">
-        <a href="{% pageurl header_festival %}">
-          <div class="logo py-2 pr-4
+{% if header_festival is not None %}
+  <header>
+    <div class="container-fluid site-header my-5">
+      <div class="row no-gutters">
+        <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-end">
+          <a href="{% pageurl header_festival %}">
+            <div class="logo py-2 pr-4
                   d-flex flex-column justify-content-center">
-            {% if header_festival.logo %}
-              <img src="{{ header_festival.logo.url }}"
-                   alt="Logo {{ festival.title }}">
-            {% endif %}
-          </div>
-        </a>
-      </div>
-      <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-start">
-        <a href="{% pageurl header_festival %}">
-          <div class="main-information py-2 pl-4
-                  d-flex flex-column justify-content-center">
-            <h1>{{ header_festival.formatted_title|richtext }}</h1>
-            <div>
-              <time datetime="{{ header_festival.start_date|date:'c' }}">
-                {{ header_festival.start_date|date:'j. E' }}
-              </time>
-              &mdash;
-              <time datetime="{{ header_festival.end_date|date:'c' }}">
-                {{ header_festival.end_date|date:'j. E Y' }}
-              </time>
+              {% if header_festival.logo %}
+                <img src="{{ header_festival.logo.url }}"
+                     alt="Logo {{ festival.title }}">
+              {% endif %}
             </div>
-            <div class="place">{{ header_festival.place }}</div>
-          </div>
-        </a>
+          </a>
+        </div>
+        <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-start">
+          <a href="{% pageurl header_festival %}">
+            <div class="main-information py-2 pl-4
+                  d-flex flex-column justify-content-center">
+              <h1>{{ header_festival.formatted_title|richtext }}</h1>
+              <div>
+                <time datetime="{{ header_festival.start_date|date:'c' }}">
+                  {{ header_festival.start_date|date:'j. E' }}
+                </time>
+                &mdash;
+                <time datetime="{{ header_festival.end_date|date:'c' }}">
+                  {{ header_festival.end_date|date:'j. E Y' }}
+                </time>
+              </div>
+              <div class="place">{{ header_festival.place }}</div>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  {% include "navigation.html" %}
-</header>
+    {% include "navigation.html" %}
+  </header>
+{% endif %}
