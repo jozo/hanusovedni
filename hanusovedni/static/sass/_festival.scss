@@ -21,15 +21,21 @@
       text-transform: uppercase;
       text-decoration: none;
 
-      &:hover,:focus {
+      &:hover, :focus {
         color: darken($c-blue, 10)
       }
-    }
 
-    .link-more {
-      > i {
-        color: $c-blue;
-        margin-top: 5px;
+      &::before {
+        content:'\0041';
+        display: inline-block;
+        font-family: 'icons';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.5rem;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+        float: left;
         margin-right: 10px;
       }
     }
@@ -57,6 +63,16 @@
       height: 100%;
       object-fit: cover;
     }
+
+    .carousel-control-prev, .carousel-control-next {
+      visibility: hidden;
+    }
+
+    &:hover {
+      .carousel-control-prev, .carousel-control-next {
+        visibility: visible;
+      }
+    }
   }
 
   section.call-to-action {
@@ -77,16 +93,28 @@
       a {
         &.red {
           background: $c-red-light;
-          &:hover,:focus { background: darken($c-red-light, 5)}
+
+          &:hover, :focus {
+            background: darken($c-red-light, 5)
+          }
         }
+
         &.blue {
           background: $c-blue-light;
-          &:hover,:focus { background: darken($c-blue-light, 5)}
+
+          &:hover, :focus {
+            background: darken($c-blue-light, 5)
+          }
         }
+
         &.orange {
           background: lighten($c-orange-light, 5);
-          &:hover,:focus { background: $c-orange-light }
+
+          &:hover, :focus {
+            background: $c-orange-light
+          }
         }
+
         i {
           color: $c-special;
         }
@@ -105,15 +133,19 @@
 
     .about-slh {
       line-height: 1.1;
+
       .text {
         padding-left: 40px;
       }
+
       .logo {
         height: 110px;
       }
+
       .more {
         font-size: 0.8rem;
         text-transform: uppercase;
+
         i {
           color: white;
           font-size: 2rem;

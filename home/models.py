@@ -18,7 +18,6 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.contrib.settings.models import BaseSetting
-from wagtail.contrib.settings.registry import register_setting
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -101,11 +100,17 @@ class HeroImage(Orderable):
     page = ParentalKey(
         FestivalPage, on_delete=models.CASCADE, related_name="hero_images"
     )
-    name = models.CharField(max_length=255)
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
     url = models.URLField()
 
     panels = [
-        FieldPanel("name"),
+        ImageChooserPanel("image"),
         FieldPanel("url"),
     ]
 

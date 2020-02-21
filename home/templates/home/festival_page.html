@@ -12,17 +12,34 @@
       <div class="col-lg-6 px-02 mb-1 d-flex">
         <div class="p-md-5 p-4 hero-text flex-grow-1">
           {{ page.hero_text|richtext }}
-          <div class="link-more d-flex align-items-center">
-            <i class="icon-arrow1"></i>
-            <a href="">viac o festivale</a>
-          </div>
         </div>
       </div>
       <div class="col-lg-6 px-02 mb-1 d-flex">
-        <div class="hero-carousel flex-grow-1">
-          <img
-              src="https://i2.wp.com/www.hanusovedni.sk/assets/Stan-sa-dobrovo%C4%BEn%C3%ADkom-1.png?fit=600%2C400&ssl=1"
-              alt="">
+        <div class="hero-carousel d-flex flex-grow-1">
+          <div id="carouselHeroImages" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              {% for hero_image in page.hero_images.all %}
+                <li data-target="#carouselHeroImagesIndicators" data-slide-to="0"
+                    class="{% if forloop.first %}active{% endif %}"></li>
+              {% endfor %}
+            </ol>
+            <div class="carousel-inner h-100">
+              {% for hero_image in page.hero_images.all %}
+                <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
+                  {% image hero_image.image original format-jpeg as tmp_photo %}
+                  <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
+                </div>
+              {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselHeroImages" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselHeroImages" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
