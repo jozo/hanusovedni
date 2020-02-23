@@ -70,7 +70,7 @@ class FestivalPage(Page):
         InlinePanel("hero_images", label="Hero images"),
         FieldPanel("video_text", classname="full"),
         InlinePanel("video_invites"),
-        InlinePanel("partners"),
+        InlinePanel("partners", label=_("Partneri")),
     ]
     promote_panels = Page.promote_panels + [InlinePanel("menu_items", label=_("Menu"))]
     subpage_types = [
@@ -119,11 +119,9 @@ class VideoInvite(Orderable):
     page = ParentalKey(
         FestivalPage, on_delete=models.CASCADE, related_name="video_invites"
     )
-    name = models.CharField(max_length=255)
     url = models.URLField()
 
     panels = [
-        FieldPanel("name"),
         FieldPanel("url"),
     ]
 
