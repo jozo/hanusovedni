@@ -8,6 +8,8 @@ services:
     environment:
       - POSTGRES_USER=hanusovedni
       - POSTGRES_DB=hanusovedni
+    networks:
+      - hanus-net
 
   web:
     build: .
@@ -16,6 +18,13 @@ services:
     command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191 --static-map /static=/static_root --static-map /media=/media_root
     depends_on:
       - db
+    networks:
+      - hanus-net
 
 volumes:
   dbdata:
+
+networks:
+  hanus-net:
+    external:
+      name: hanus-net
