@@ -38,9 +38,9 @@ deploy_to_staging:
     - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
     - scp ${SECRETS_STAGING} root@${DEPLOY_SERVER_IP}:~/secrets.env
     - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
-    - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
     - ssh root@${DEPLOY_SERVER_IP} "docker run --rm --network hanus-net ${CI_REGISTRY_IMAGE}:latest python manage.py migrate"
     - ssh root@${DEPLOY_SERVER_IP} "docker run --rm -v /var/www/static:/static_root ${CI_REGISTRY_IMAGE}:latest python manage.py collectstatic"
+    - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
     - echo "Deployment done succesfully"
 
 
