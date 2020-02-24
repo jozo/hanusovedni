@@ -8,26 +8,27 @@
 {% block body_class %}template-speaker{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-12 mb-1">
-        <div class="speaker d-flex flex-md-row flex-column">
-          <div class="photo align-self-center mt-3 mt-md-0">
-            {% image speaker.photo min-350x350 format-jpeg %}
-          </div>
-          <div class="m-5">
-            <a href="{% pageurl speaker %}" class="speaker-heading">
-              <h4 class="mb-4">{{ speaker.title }}</h4>
-            </a>
-            {{ speaker.description|richtext }}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mb-1">
+          <div class="speaker d-flex flex-md-row flex-column">
+            <div class="photo align-self-center mt-3 mt-md-0">
+              {% image speaker.photo min-350x350 format-jpeg %}
+            </div>
+            <div class="m-5">
+              <a href="{% pageurl speaker %}" class="speaker-heading">
+                <h4 class="mb-4">{{ speaker.title }}</h4>
+              </a>
+              {{ speaker.description|richtext }}
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 
-  <div class="container">
+    <div class="container">
       <div class="row mx-n02">
         {% for event in speaker.events.live %}
           <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 mb-1 overflow-hidden">
@@ -71,6 +72,6 @@
           </div>
         {% endfor %}
       </div>
-  </div>
-
+    </div>
+  </main>
 {% endblock %}

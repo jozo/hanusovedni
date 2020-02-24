@@ -12,96 +12,98 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="row mx-n02">
-      <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
-        <article class="event d-flex flex-column w-100"
-                 style="background-color: {{ page.category.color }}">
-          <div class="illustration d-flex justify-content-center align-items-center">
-            {% image page.icon fill-65x65 %}
-          </div>
-
-          <div class="category">
-            <div class="name">
-              {{ page.category.title }}
-            </div>
-          </div>
-
-          <div class="content">
-            <h3>{{ page.title }}</h3>
-
-            <div class="short-overview mb-3">
-              {{ page.short_overview }}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row mx-n02">
+        <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
+          <article class="event d-flex flex-column w-100"
+                   style="background-color: {{ page.category.color }}">
+            <div class="illustration d-flex justify-content-center align-items-center">
+              {% image page.icon fill-65x65 %}
             </div>
 
-            <ul class="speakers">
-              {% for speaker in page.speakers.all %}
-                <li>
-                  <a href="{% pageurl speaker %}">
-                    {{ speaker.title }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          <footer>
-            <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
-              <i class="far fa-calendar-alt"></i>
-              {{ page.date_and_time|date:'j.n.' }}
-              &nbsp;&mdash;&nbsp;
-              {{ page.date_and_time|date:'l'|upper }}
-              &nbsp;&mdash;&nbsp;
-              {{ page.date_and_time|date:'G:i' }}
-            </time>
-            <address class="py-2 d-flex align-items-center">
-              <i class="far fa-map"></i>
-              <a href="{{ page.location.url_to_map }}"
-                 target="_blank"
-                 title="{% trans "Mapa ku miestu konania" %}">
-                {{ page.location.title }}
-              </a>
-            </address>
-          </footer>
-        </article>
-      </div>
-      <div class="col-md-6 col-12 d-flex px-02 mb-1">
-        <article class="event-detail d-flex flex-column p-4 w-100"
-                 style="background-color: {{ page.category.color }}">
-          {% if page.video_url %}
-            <div class="video mb-3 d-flex justify-content-center">
-              {% embed page.video_url %}
+            <div class="category">
+              <div class="name">
+                {{ page.category.title }}
+              </div>
             </div>
-          {% endif %}
-          <div class="description">
-            {{ page.description|richtext }}
-          </div>
-          <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
-             role="button" target="_blank">
-            Kúpiť lístok
-          </a>
-        </article>
+
+            <div class="content">
+              <h3>{{ page.title }}</h3>
+
+              <div class="short-overview mb-3">
+                {{ page.short_overview }}
+              </div>
+
+              <ul class="speakers">
+                {% for speaker in page.speakers.all %}
+                  <li>
+                    <a href="{% pageurl speaker %}">
+                      {{ speaker.title }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <footer>
+              <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
+                <i class="far fa-calendar-alt"></i>
+                {{ page.date_and_time|date:'j.n.' }}
+                &nbsp;&mdash;&nbsp;
+                {{ page.date_and_time|date:'l'|upper }}
+                &nbsp;&mdash;&nbsp;
+                {{ page.date_and_time|date:'G:i' }}
+              </time>
+              <address class="py-2 d-flex align-items-center">
+                <i class="far fa-map"></i>
+                <a href="{{ page.location.url_to_map }}"
+                   target="_blank"
+                   title="{% trans "Mapa ku miestu konania" %}">
+                  {{ page.location.title }}
+                </a>
+              </address>
+            </footer>
+          </article>
+        </div>
+        <div class="col-md-6 col-12 d-flex px-02 mb-1">
+          <article class="event-detail d-flex flex-column p-4 w-100"
+                   style="background-color: {{ page.category.color }}">
+            {% if page.video_url %}
+              <div class="video mb-3 d-flex justify-content-center">
+                {% embed page.video_url %}
+              </div>
+            {% endif %}
+            <div class="description">
+              {{ page.description|richtext }}
+            </div>
+            <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
+               role="button" target="_blank">
+              Kúpiť lístok
+            </a>
+          </article>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="container">
-    {% for speaker in page.speakers.all %}
-      <div class="row mx-n02">
-        <div class="col-12 px-02 mb-1">
-          <div class="speaker d-flex flex-md-row flex-column">
-            <div class="photo align-self-center mt-3 mt-md-0">
-              {% image speaker.photo min-350x350 format-jpeg %}
-            </div>
-            <div class="m-5">
-              <a href="{% pageurl speaker %}" class="speaker-heading">
-                <h4 class="mb-4">{{ speaker.title }}</h4>
-              </a>
-              {{ speaker.description|richtext }}
+    <div class="container">
+      {% for speaker in page.speakers.all %}
+        <div class="row mx-n02">
+          <div class="col-12 px-02 mb-1">
+            <div class="speaker d-flex flex-md-row flex-column">
+              <div class="photo align-self-center mt-3 mt-md-0">
+                {% image speaker.photo min-350x350 format-jpeg %}
+              </div>
+              <div class="m-5">
+                <a href="{% pageurl speaker %}" class="speaker-heading">
+                  <h4 class="mb-4">{{ speaker.title }}</h4>
+                </a>
+                {{ speaker.description|richtext }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
+  </main>
 {% endblock %}

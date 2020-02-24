@@ -7,218 +7,220 @@
 {% block body_class %}template-festival{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <section class="hero row mx-n02">
-      <div class="col-lg-6 px-02 mb-1 d-flex">
-        <div class="p-md-5 p-4 hero-text flex-grow-1">
-          {{ page.hero_text|richtext }}
+  <main class="flex-grow-1">
+    <div class="container">
+      <section class="hero row mx-n02">
+        <div class="col-lg-6 px-02 mb-1 d-flex">
+          <div class="p-md-5 p-4 hero-text flex-grow-1">
+            {{ page.hero_text|richtext }}
+          </div>
         </div>
-      </div>
-      <div class="col-lg-6 px-02 mb-1 d-flex">
-        <div class="hero-carousel d-flex flex-grow-1">
-          <div id="carouselHeroImages" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              {% for hero_image in page.hero_images.all %}
-                <li data-target="#carouselHeroImagesIndicators" data-slide-to="0"
-                    class="{% if forloop.first %}active{% endif %}"></li>
-              {% endfor %}
-            </ol>
-            <div class="carousel-inner h-100">
-              {% for hero_image in page.hero_images.all %}
-                <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
-                  {% image hero_image.image original format-jpeg as tmp_photo %}
-                  <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
-                </div>
-              {% endfor %}
+        <div class="col-lg-6 px-02 mb-1 d-flex">
+          <div class="hero-carousel d-flex flex-grow-1">
+            <div id="carouselHeroImages" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                {% for hero_image in page.hero_images.all %}
+                  <li data-target="#carouselHeroImagesIndicators" data-slide-to="0"
+                      class="{% if forloop.first %}active{% endif %}"></li>
+                {% endfor %}
+              </ol>
+              <div class="carousel-inner h-100">
+                {% for hero_image in page.hero_images.all %}
+                  <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
+                    {% image hero_image.image original format-jpeg as tmp_photo %}
+                    <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
+                  </div>
+                {% endfor %}
+              </div>
+              <a class="carousel-control-prev" href="#carouselHeroImages" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselHeroImages" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
             </div>
-            <a class="carousel-control-prev" href="#carouselHeroImages" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselHeroImages" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="container">
+      <section class="call-to-action row">
+        <div class="col-lg-4 col-md-6 small-gutter">
+          <div class="btn-full">
+            <a class="d-flex align-items-center justify-content-center red big" href="program/">
+              <i class="icon-arrow1 mt-2 mr-2"></i>
+              Pozrieť program
             </a>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="container">
-    <section class="call-to-action row">
-      <div class="col-lg-4 col-md-6 small-gutter">
-        <div class="btn-full">
-          <a class="d-flex align-items-center justify-content-center red big" href="program/">
-            <i class="icon-arrow1 mt-2 mr-2"></i>
-            Pozrieť program
-          </a>
+        <div class="col-lg-4 col-md-6 small-gutter">
+          <div class="btn-full">
+            <a class="d-flex align-items-center justify-content-center blue big" href="">
+              <i class="icon-arrow2 mt-2 mr-2"></i>
+              Kúpiť lístky
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-4 col-md-6 small-gutter">
-        <div class="btn-full">
-          <a class="d-flex align-items-center justify-content-center blue big" href="">
-            <i class="icon-arrow2 mt-2 mr-2"></i>
-            Kúpiť lístky
-          </a>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-12 small-gutter">
-        <div class="btn-full">
-          <a class="d-flex orange about-slh" href="">
-            <div class="row w-100">
-              <div class="col-7 mb-n4 text d-flex flex-column justify-content-center">
-                <div>Hanusove dni organizuje Spoločenstvo Ladislava Hanusa</div>
-                <div class="more d-flex align-items-center">
-                  <i class="icon-arrow3 mt-2 mr-2"></i>
-                  <span>Viac o SLH</span>
-                </div>
-              </div>
-              <div class="col-5 d-flex align-items-center justify-content-center">
-                <img src="/static/img/logo-slh.svg" alt="SLH logo" class="logo">
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="container">
-    <section class="video-invites">
-      <h2>Videopozvánka</h2>
-      <div class="row no-gutters">
-        <div class="col-lg-8">
-          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              {% for invite in page.video_invites.all %}
-                <li data-target="#carouselExampleIndicators" data-slide-to="0"
-                    class="{% if forloop.first %}active{% endif %}"></li>
-              {% endfor %}
-            </ol>
-            <div class="carousel-inner">
-              {% for invite in page.video_invites.all %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                  <div class="embed-container">
-                    {% embed invite.url %}
+        <div class="col-lg-4 col-md-12 small-gutter">
+          <div class="btn-full">
+            <a class="d-flex orange about-slh" href="">
+              <div class="row w-100">
+                <div class="col-7 mb-n4 text d-flex flex-column justify-content-center">
+                  <div>Hanusove dni organizuje Spoločenstvo Ladislava Hanusa</div>
+                  <div class="more d-flex align-items-center">
+                    <i class="icon-arrow3 mt-2 mr-2"></i>
+                    <span>Viac o SLH</span>
                   </div>
                 </div>
-              {% endfor %}
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-lg-4">
-          <div class="video-text p-md-5 p-4">
-            {{ page.video_text|richtext }}
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <div class="container">
-    <section class="events">
-      <h2>Program</h2>
-
-      <div class="row mx-n02 justify-content-center">
-        {% for event in page.events %}
-          <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 overflow-hidden">
-            <a href="{% pageurl event %}" class="d-flex w-100">
-              <article class="event d-flex flex-column"
-                       style="background-color: {{ event.category.color }}">
-                <div class="illustration d-flex justify-content-center align-items-center">
-                  {% image event.icon fill-65x65 %}
+                <div class="col-5 d-flex align-items-center justify-content-center">
+                  <img src="/static/img/logo-slh.svg" alt="SLH logo" class="logo">
                 </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
 
-                <div class="category">
-                  <div class="name">
-                    {{ event.category.title }}
+    <div class="container">
+      <section class="video-invites">
+        <h2>Videopozvánka</h2>
+        <div class="row no-gutters">
+          <div class="col-lg-8">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                {% for invite in page.video_invites.all %}
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                      class="{% if forloop.first %}active{% endif %}"></li>
+                {% endfor %}
+              </ol>
+              <div class="carousel-inner">
+                {% for invite in page.video_invites.all %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="embed-container">
+                      {% embed invite.url %}
+                    </div>
                   </div>
-                </div>
+                {% endfor %}
+              </div>
+              <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
 
-                <div class="content">
-                  <h3>{{ event.title }}</h3>
+          <div class="col-lg-4">
+            <div class="video-text p-md-5 p-4">
+              {{ page.video_text|richtext }}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
-                  <ul class="speakers">
-                    {% for speaker in event.speakers.all %}
-                      <li>{{ speaker.title }}</li>
-                    {% endfor %}
-                  </ul>
-                </div>
+    <div class="container">
+      <section class="events">
+        <h2>Program</h2>
 
-                <footer>
-                  <time class="d-flex align-items-center" datetime="{{ event.date_and_time|date:'c' }}">
-                    {{ event.date_and_time|date:'j.n.' }}
-                    &nbsp;&mdash;&nbsp;
-                    {{ event.date_and_time|date:'l'|upper }}
-                    &nbsp;&mdash;&nbsp;
-                    {{ event.date_and_time|date:'G:i' }}
-                  </time>
-                  <address class="py-2 d-flex align-items-center">
-                    {{ event.location.title }}
-                  </address>
-                </footer>
-              </article>
+        <div class="row mx-n02 justify-content-center">
+          {% for event in page.events %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 overflow-hidden">
+              <a href="{% pageurl event %}" class="d-flex w-100">
+                <article class="event d-flex flex-column"
+                         style="background-color: {{ event.category.color }}">
+                  <div class="illustration d-flex justify-content-center align-items-center">
+                    {% image event.icon fill-65x65 %}
+                  </div>
+
+                  <div class="category">
+                    <div class="name">
+                      {{ event.category.title }}
+                    </div>
+                  </div>
+
+                  <div class="content">
+                    <h3>{{ event.title }}</h3>
+
+                    <ul class="speakers">
+                      {% for speaker in event.speakers.all %}
+                        <li>{{ speaker.title }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+
+                  <footer>
+                    <time class="d-flex align-items-center" datetime="{{ event.date_and_time|date:'c' }}">
+                      {{ event.date_and_time|date:'j.n.' }}
+                      &nbsp;&mdash;&nbsp;
+                      {{ event.date_and_time|date:'l'|upper }}
+                      &nbsp;&mdash;&nbsp;
+                      {{ event.date_and_time|date:'G:i' }}
+                    </time>
+                    <address class="py-2 d-flex align-items-center">
+                      {{ event.location.title }}
+                    </address>
+                  </footer>
+                </article>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+
+    <div class="container">
+      <section class="social-media">
+        <h2>Sledujte nás na Facebooku</h2>
+
+        <div class="row mx-n02">
+          <div class="col-md-6 px-02">
+            <a href="https://www.facebook.com/BratislavskeHanusoveDni/"
+               class="d-flex justify-content-center align-content-center" target="_blank">
+              <i class="icon-arrow3 mr-2"></i>
+              BHD facebook
             </a>
           </div>
-        {% endfor %}
-      </div>
-    </section>
-  </div>
-
-  <div class="container">
-    <section class="social-media">
-      <h2>Sledujte nás na Facebooku</h2>
-
-      <div class="row mx-n02">
-        <div class="col-md-6 px-02">
-          <a href="https://www.facebook.com/BratislavskeHanusoveDni/"
-             class="d-flex justify-content-center align-content-center" target="_blank">
-            <i class="icon-arrow3 mr-2"></i>
-            BHD facebook
-          </a>
+          <div class="col-md-6 px-02">
+            <a href="https://www.facebook.com/kosickehanusovedni/"
+               class="d-flex justify-content-center align-content-center" target="_blank">
+              <i class="icon-arrow3 mr-2"></i>
+              KHD facebook
+            </a>
+          </div>
         </div>
-        <div class="col-md-6 px-02">
-          <a href="https://www.facebook.com/kosickehanusovedni/"
-             class="d-flex justify-content-center align-content-center" target="_blank">
-            <i class="icon-arrow3 mr-2"></i>
-            KHD facebook
-          </a>
+      </section>
+    </div>
+
+    <div class="container">
+      <section class="partners">
+        <h2>Partneri</h2>
+
+        <div class="d-flex flex-row justify-content-center">
+          {% for partner in page.partners.all %}
+            <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
+              {% image partner.logo height-50 %}
+            </a>
+          {% endfor %}
         </div>
-      </div>
-    </section>
-  </div>
 
-  <div class="container">
-    <section class="partners">
-      <h2>Partneri</h2>
+        <h2>Mediálni partneri</h2>
 
-      <div class="d-flex flex-row justify-content-center">
-        {% for partner in page.partners.all %}
-          <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
-            {% image partner.logo height-50 %}
-          </a>
-        {% endfor %}
-      </div>
-
-      <h2>Mediálni partneri</h2>
-
-      <div class="d-flex flex-row justify-content-center">
-        {% for partner in page.media_partners.all %}
-          <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
-            {% image partner.logo height-50 %}
-          </a>
-        {% endfor %}
-      </div>
-    </section>
-  </div>
+        <div class="d-flex flex-row justify-content-center">
+          {% for partner in page.media_partners.all %}
+            <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
+              {% image partner.logo height-50 %}
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </main>
 {% endblock %}
