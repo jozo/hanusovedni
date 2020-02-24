@@ -79,7 +79,11 @@ class FestivalPage(Page):
 
     @property
     def events(self):
-        return Event.objects.all()
+        return (
+            Event.objects.live()
+            .filter(date_and_time__gte=self.start_date, date_and_time__lt=self.end_date)
+            .order_by("date_and_time")
+        )
 
     def save(self, *args, **kwargs):
         self.draft_title = " ".join(
