@@ -70,7 +70,8 @@ class FestivalPage(Page):
         InlinePanel("hero_images", label="Hero images"),
         FieldPanel("video_text", classname="full"),
         InlinePanel("video_invites"),
-        InlinePanel("partners", label=_("Partneri")),
+        InlinePanel("partners", label=_("partneri")),
+        InlinePanel("media_partners", label=_("mediálni partneri")),
     ]
     promote_panels = Page.promote_panels + [InlinePanel("menu_items", label=_("Menu"))]
     subpage_types = [
@@ -132,6 +133,25 @@ class VideoInvite(Orderable):
 
 class Partner(Orderable):
     page = ParentalKey(FestivalPage, on_delete=models.CASCADE, related_name="partners")
+    url = models.URLField()
+    logo = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    panels = [
+        ImageChooserPanel("logo"),
+        FieldPanel("url"),
+    ]
+
+
+class MediaPartner(Orderable):
+    page = ParentalKey(
+        FestivalPage, on_delete=models.CASCADE, related_name="media_partners"
+    )
     url = models.URLField()
     logo = models.ForeignKey(
         "wagtailimages.Image",

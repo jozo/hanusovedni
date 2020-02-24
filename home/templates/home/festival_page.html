@@ -99,7 +99,7 @@
             <div class="carousel-inner">
               {% for invite in page.video_invites.all %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                  <div class='embed-container'>
+                  <div class="embed-container">
                     {% embed invite.url %}
                   </div>
                 </div>
@@ -125,7 +125,7 @@
     </section>
   </div>
 
-  <div class="container px-sm-1">
+  <div class="container">
     <section class="events">
       <h2>Program</h2>
 
@@ -172,7 +172,31 @@
           </div>
         {% endfor %}
       </div>
+    </section>
+  </div>
 
+
+  <div class="container">
+    <section class="partners">
+      <h2>Partneri</h2>
+
+      <div class="d-flex flex-row justify-content-center">
+        {% for partner in page.partners.all %}
+          <a href="{{ partner.url }}" class="mx-4 my-2">
+            {% image partner.logo height-50 %}
+          </a>
+        {% endfor %}
+      </div>
+
+      <h2>Mediálni partneri</h2>
+
+      <div class="d-flex flex-row justify-content-center">
+        {% for partner in page.media_partners.all %}
+          <a href="{{ partner.url }}" class="mx-4 my-2">
+            {% image partner.logo height-50 %}
+          </a>
+        {% endfor %}
+      </div>
     </section>
   </div>
 {% endblock %}

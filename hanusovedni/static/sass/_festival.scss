@@ -167,9 +167,10 @@
     }
   }
 
-  section.events {
-    .event {
-      background-color: orange;
-    }
-  }
+ section.partners {
+   img {
+     filter: grayscale(1);
+   }
+ }
+
 }
