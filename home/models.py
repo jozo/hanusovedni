@@ -82,7 +82,11 @@ class FestivalPage(Page):
     def events(self):
         return (
             Event.objects.live()
-            .filter(date_and_time__gte=self.start_date, date_and_time__lt=self.end_date)
+            .filter(
+                date_and_time__gte=self.start_date,
+                date_and_time__lt=self.end_date,
+                show_on_festivalpage=True,
+            )
             .order_by("date_and_time")
         )
 
@@ -346,6 +350,7 @@ class Event(Page):
     speakers = ParentalManyToManyField(
         "home.Speaker", blank=True, related_name="events", verbose_name=_("rečník")
     )
+    show_on_festivalpage = models.BooleanField(default=False)
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -366,6 +371,9 @@ class Event(Page):
             heading=_("Popis"),
         ),
         AutocompletePanel("speakers"),
+    ]
+    promote_panels = Page.promote_panels + [
+        FieldPanel("show_on_festivalpage"),
     ]
 
     parent_page_types = ["home.EventIndexPage"]
