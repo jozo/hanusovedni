@@ -175,6 +175,28 @@
     </section>
   </div>
 
+  <div class="container">
+    <section class="social-media">
+      <h2>Sledujte nás na Facebooku</h2>
+
+      <div class="row mx-n02">
+        <div class="col-md-6 px-02">
+          <a href="https://www.facebook.com/BratislavskeHanusoveDni/"
+             class="d-flex justify-content-center align-content-center" target="_blank">
+            <i class="icon-arrow3 mr-2"></i>
+            BHD facebook
+          </a>
+        </div>
+        <div class="col-md-6 px-02">
+          <a href="https://www.facebook.com/kosickehanusovedni/"
+             class="d-flex justify-content-center align-content-center" target="_blank">
+            <i class="icon-arrow3 mr-2"></i>
+            KHD facebook
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <div class="container">
     <section class="partners">
@@ -182,7 +204,7 @@
 
       <div class="d-flex flex-row justify-content-center">
         {% for partner in page.partners.all %}
-          <a href="{{ partner.url }}" class="mx-4 my-2">
+          <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
             {% image partner.logo height-50 %}
           </a>
         {% endfor %}
@@ -192,7 +214,7 @@
 
       <div class="d-flex flex-row justify-content-center">
         {% for partner in page.media_partners.all %}
-          <a href="{{ partner.url }}" class="mx-4 my-2">
+          <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
             {% image partner.logo height-50 %}
           </a>
         {% endfor %}

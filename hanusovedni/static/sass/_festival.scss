@@ -26,7 +26,7 @@
       }
 
       &::before {
-        content:'\0041';
+        content: '\0041';
         display: inline-block;
         font-family: 'icons';
         font-style: normal;
@@ -167,10 +167,31 @@
     }
   }
 
- section.partners {
-   img {
-     filter: grayscale(1);
-   }
- }
+  section.partners {
+    img {
+      filter: grayscale(1);
+    }
+  }
+
+  section.social-media {
+    a {
+      background: $c-blue-light;
+      color: white;
+      font-family: $font-special;
+      font-size: 2rem;
+      font-weight: bold;
+      line-height: 1;
+      padding: 40px 0;
+
+      &:hover, :focus {
+        background: darken($c-blue-light, 5)
+      }
+
+      i {
+        height: 1.7rem;
+        color: $c-special;
+      }
+    }
+  }
 
 }
