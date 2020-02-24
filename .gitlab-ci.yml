@@ -41,6 +41,7 @@ deploy_to_staging:
     - ssh root@${DEPLOY_SERVER_IP} "docker run --rm --network hanus-net ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} python manage.py migrate"
     - ssh root@${DEPLOY_SERVER_IP} "docker run --rm -v /var/www/static:/static_root ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} python manage.py collectstatic"
     - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
+    - ssh root@${DEPLOY_SERVER_IP} "docker system prune -a"
     - echo "Deployment done succesfully"
 
 
