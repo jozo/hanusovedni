@@ -4,6 +4,8 @@ services:
   db:
     environment:
       - POSTGRES_PASSWORD=hanusovedni
+    ports:
+    - "5432:5432"
 
   web:
     volumes:

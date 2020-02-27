@@ -2,6 +2,7 @@ import itertools
 import re
 
 from django.db import models
+from django.db.models import Max
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.html import format_html
@@ -189,7 +190,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
 
     @route(r"^(\d+)/(.+)/")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
-        speaker = Speaker.objects.get(pk=speaker_id)
+        speaker = Speaker.objects.get(speaker_id=speaker_id)
         if slug == speaker.slug:
             return speaker.serve(request)
         return redirect(speaker.get_url(request))
@@ -202,6 +203,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
 
 
 class Speaker(Page):
+    speaker_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
     first_name = models.CharField(max_length=30, verbose_name=_("meno"))
     last_name = models.CharField(max_length=30, verbose_name=_("priezvisko"))
     description = RichTextField(blank=True, verbose_name=_("popis"))
@@ -229,10 +231,13 @@ class Speaker(Page):
         """Insert PK of object to url"""
         site_id, root_url, page_path = super().get_url_parts(request)
         page_path = page_path.split("/")
-        page_path.insert(-2, str(self.pk))
+        page_path.insert(-2, str(self.speaker_id))
         return site_id, root_url, "/".join(page_path)
 
     def save(self, *args, **kwargs):
+        if self.speaker_id is None:
+            last_speaker_id = Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
+            self.speaker_id = last_speaker_id + 1
         self.draft_title = f"{self.first_name} {self.last_name}"
         self.title = self.draft_title
         if "updated_fields" in kwargs:
@@ -259,7 +264,7 @@ class EventIndexPage(RoutablePageMixin, Page):
 
     @route(r"^(\d+)/(.+)/")
     def event_with_id_in_url(self, request, event_id, slug):
-        event = Event.objects.get(pk=event_id)
+        event = Event.objects.get(event_id=event_id)
         if slug == event.slug:
             return event.serve(request)
         return redirect(event.get_url(request))
@@ -301,6 +306,7 @@ class ProgramIndexPage(Page):
 
 
 class Event(Page):
+    event_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
     short_overview = models.CharField(
         max_length=255,
         blank=True,
@@ -387,13 +393,19 @@ class Event(Page):
         """Insert PK of object to url"""
         site_id, root_url, page_path = super().get_url_parts(request)
         page_path = page_path.split("/")
-        page_path.insert(-2, str(self.pk))
+        page_path.insert(-2, str(self.event_id))
         return site_id, root_url, "/".join(page_path)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
         return context
+
+    def save(self, *args, **kwargs):
+        if self.event_id is None:
+            last_event_id = Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
+            self.event_id = last_event_id + 1
+        return super().save(*args, **kwargs)
 
 
 @register_snippet
