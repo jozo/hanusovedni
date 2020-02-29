@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:12.1-alpine
     volumes:
-    - dbdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=hanusovedni
       - POSTGRES_DB=hanusovedni
@@ -18,6 +18,12 @@ services:
     command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191 --static-map /static=/static_root --static-map /media=/media_root
     depends_on:
       - db
+      - redis
+    networks:
+      - hanus-net
+
+  redis:
+    image: redis:5.0.7-alpine
     networks:
       - hanus-net
 
