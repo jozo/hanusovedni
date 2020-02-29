@@ -3,6 +3,8 @@ import re
 
 from django.db import models
 from django.db.models import Max
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.html import format_html
@@ -17,10 +19,12 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
 )
+from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
+from wagtail.core.signals import page_published
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
@@ -236,7 +240,9 @@ class Speaker(Page):
 
     def save(self, *args, **kwargs):
         if self.speaker_id is None:
-            last_speaker_id = Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
+            last_speaker_id = (
+                Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
+            )
             self.speaker_id = last_speaker_id + 1
         self.draft_title = f"{self.first_name} {self.last_name}"
         self.title = self.draft_title
@@ -403,7 +409,9 @@ class Event(Page):
 
     def save(self, *args, **kwargs):
         if self.event_id is None:
-            last_event_id = Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
+            last_event_id = (
+                Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
+            )
             self.event_id = last_event_id + 1
         return super().save(*args, **kwargs)
 
@@ -439,3 +447,36 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def purge_cache_for_indexes(blog_page):
+    batch = PurgeBatch()
+    for event_index in EventIndexPage.objects.live():
+        batch.add_page(event_index)
+    for program_index in ProgramIndexPage.objects.live():
+        batch.add_page(program_index)
+    for festival_page in FestivalPage.objects.live():
+        batch.add_page(festival_page)
+    batch.add_page(HomePage.objects.get())
+    batch.add_page(blog_page)
+    batch.purge()
+
+
+@receiver(page_published, sender=Event)
+def event_published_handler(instance):
+    purge_cache_for_indexes(instance)
+
+
+@receiver(pre_delete, sender=Event)
+def event_deleted_handler(instance):
+    purge_cache_for_indexes(instance)
+
+
+@receiver(page_published, sender=Speaker)
+def speaker_published_handler(instance):
+    purge_cache_for_indexes(instance)
+
+
+@receiver(pre_delete, sender=Speaker)
+def speaker_deleted_handler(instance):
+    purge_cache_for_indexes(instance)

@@ -1,3 +1,6 @@
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from .base import *
 
 DEBUG = False
@@ -17,8 +20,15 @@ STATIC_ROOT = "/static_root"
 
 MEDIA_ROOT = "/media_root"
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+WAGTAILFRONTENDCACHE = {
+    'cloudflare': {
+        'BACKEND': 'wagtail.contrib.frontend_cache.backends.CloudflareBackend',
+        'BEARER_TOKEN': os.environ["CLOUDFLARE_ZONEID"],
+        'ZONEID': os.environ["CLOUDFLARE_BEARER_TOKEN"],
+    },
+}
+
+WAGTAILFRONTENDCACHE_LANGUAGES = [lang[0] for lang in LANGUAGES]
 
 sentry_sdk.init(
     dsn=os.environ["SENTRY_DSN"],

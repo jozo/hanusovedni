@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.settings",
     "wagtail.contrib.modeladmin",
     "wagtail.contrib.routable_page",
+    "wagtail.contrib.frontend_cache",
     "modelcluster",
     "taggit",
     "django_extensions",
