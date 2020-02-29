@@ -463,20 +463,20 @@ def purge_cache_for_indexes(blog_page):
 
 
 @receiver(page_published, sender=Event)
-def event_published_handler(instance):
-    purge_cache_for_indexes(instance)
+def event_published_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])
 
 
 @receiver(pre_delete, sender=Event)
-def event_deleted_handler(instance):
-    purge_cache_for_indexes(instance)
+def event_deleted_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])
 
 
 @receiver(page_published, sender=Speaker)
-def speaker_published_handler(instance):
-    purge_cache_for_indexes(instance)
+def speaker_published_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])
 
 
 @receiver(pre_delete, sender=Speaker)
-def speaker_deleted_handler(instance):
-    purge_cache_for_indexes(instance)
+def speaker_deleted_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])

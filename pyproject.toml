@@ -7,10 +7,10 @@ license = "GPL-3.0-or-later"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-wagtail = "^2.7"
+wagtail = "^2.8"
 uwsgi = "^2.0.18"
 psycopg2 = "^2.8.4"
-wagtail-autocomplete = "^0.4"
+wagtail-autocomplete = "^0.5"
 sentry-sdk = "^0.14.1"
 django-redis = "^4.11.0"
 
