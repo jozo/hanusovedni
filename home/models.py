@@ -44,6 +44,7 @@ class HomePage(Page):
         "home.EventIndexPage",
         "home.SpeakerIndexPage",
         "home.FestivalPage",
+        "home.ContactPage",
     ]
 
     @property
@@ -447,6 +448,41 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ContactPage(Page):
+    left_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="l_img+",
+    )
+    left_text = RichTextField()
+    right_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="r_img+",
+    )
+    right_text = RichTextField()
+
+    class Meta:
+        verbose_name = _("kontakt")
+        verbose_name_plural = _("kontakt")
+
+    content_panels = Page.content_panels + [
+        ImageChooserPanel("left_image"),
+        FieldPanel("left_text", classname="full"),
+        ImageChooserPanel("right_image"),
+        FieldPanel("right_text", classname="full"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
 
 
 def purge_cache_for_indexes(blog_page):

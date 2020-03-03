@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-contact{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row mx-n02">
+        <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
+          <article class="d-flex flex-column flex-grow-1">
+            <head class="d-flex">
+              {% image page.left_image width-555 format-jpeg as left_photo %}
+              <img src="{{ left_photo.url }}" alt="{{ left_photo.alt }}" class="top-photo"/>
+            </head>
+            <main class="p-5">
+              {{ page.left_text|richtext }}
+            </main>
+          </article>
+        </div>
+        <div class="col-md-6 col-12 d-flex px-02 mb-1">
+          <article class="d-flex flex-column flex-grow-1">
+            <head class="d-flex">
+              {% image page.right_image width-555 format-jpeg as right_photo %}
+              <img src="{{ right_photo.url }}" alt="{{ right_photo.alt }}" class="top-photo"/>
+            </head>
+            <main class="p-5">
+              {{ page.right_text|richtext }}
+            </main>
+          </article>
+        </div>
+      </div>
+    </div>
+{# TODO add rest of the elements from the design #}
+  </main>
+{% endblock %}
