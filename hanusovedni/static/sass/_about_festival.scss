@@ -1,0 +1,69 @@
+.template-about-festival {
+  h2 {
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-family: $font-special;
+
+    &:after {
+      content: "";
+      display: flex;
+      background-color: $c-orange-light;
+      width: 150px;
+      height: 4px;
+      margin: 25px auto;
+    }
+  }
+
+  .content {
+    background-color: $c-bg;
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    a {
+      color: $c-orange-light;
+
+      &:hover, &:active {
+        text-decoration: underline;
+      }
+    }
+
+  }
+
+  .first {
+    background: url("/static/img/bg-about.jpg");
+    padding-top: 100px;
+    min-height: 760px;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  .second {
+    .orange {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $c-orange-light;
+    }
+
+    .hanus {
+      max-width: 290px;
+    }
+  }
+
+  .third {
+    .logo {
+      max-height: 150px;
+    }
+
+    .logo-about {
+      font-size: 0.8rem;
+      font-family: $font-special;
+      color: $c-orange-light;
+
+      i {
+        font-size: 2rem;
+        margin-right: 7px;
+        margin-bottom: -10px;
+      }
+    }
+  }
+}

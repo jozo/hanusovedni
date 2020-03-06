@@ -18,11 +18,12 @@ from wagtail.admin.edit_handlers import (
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
-)
+    StreamFieldPanel)
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.contrib.settings.models import BaseSetting
-from wagtail.core.fields import RichTextField
+from wagtail.core import blocks
+from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.core.signals import page_published
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -45,6 +46,7 @@ class HomePage(Page):
         "home.SpeakerIndexPage",
         "home.FestivalPage",
         "home.ContactPage",
+        "home.AboutFestivalPage",
     ]
 
     @property
@@ -470,13 +472,31 @@ class ContactPage(Page):
 
     class Meta:
         verbose_name = _("kontakt")
-        verbose_name_plural = _("kontakt")
 
     content_panels = Page.content_panels + [
         ImageChooserPanel("left_image"),
         FieldPanel("left_text", classname="full"),
         ImageChooserPanel("right_image"),
         FieldPanel("right_text", classname="full"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
+
+
+class AboutFestivalPage(Page):
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="title")),
+        ('paragraph', blocks.RichTextBlock()),
+    ])
+
+    class Meta:
+        verbose_name = _("o festivale")
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel('body'),
     ]
 
     def get_context(self, request, *args, **kwargs):

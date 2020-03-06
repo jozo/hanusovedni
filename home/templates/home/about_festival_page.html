@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-about-festival{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="content text-center">
+            <section class="first d-flex justify-content-center">
+              <div class="col-md-8">
+                {% include_block page.body.0 %}
+              </div>
+            </section>
+
+            <section class="second d-flex justify-content-center">
+              <div class="col-md-8">
+                <h2>{% include_block page.body.1 %}</h2>
+                {% include_block page.body.2 %}
+                <div class="orange">
+                  {% include_block page.body.3 %}
+                </div>
+
+                <img src="{% static 'img/ladislav-hanus.jpg' %}" alt="Fotka Ladislava Hanusa"
+                     class="mt-5 mb-n4 hanus">
+                <h2>{% include_block page.body.4 %}</h2>
+                {% include_block page.body.5 %}
+              </div>
+            </section>
+
+            <img src="{% static 'img/slh-spolocenstvo.jpg' %}" alt="Fotka spoločenstva SLH"
+                 class="mt-5 img-fluid">
+
+            <section class="third d-flex flex-column align-items-center">
+              <div class="col-md-8">
+                <h2>{% include_block page.body.6 %}</h2>
+                {% include_block page.body.7 %}
+              </div>
+
+              <img src="{% static 'img/logo-slh.svg' %}" alt="Logo SLH"
+                   class="mt-5 logo">
+              <div class="logo-about d-flex align-items-center mb-5">
+                <i class="icon-arrow1 mr-2"></i>
+                <a href="https://slh.sk/" target="_blank">VIAC O SLH</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    {# TODO add rest of the elements from the design #}
+  </main>
+{% endblock %}
