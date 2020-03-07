@@ -132,22 +132,23 @@
 
         <div class="row mx-n02 justify-content-center">
           {% for headliner in page.headline %}
-            <div class="col-md-4 d-flex flex-column px-02">
+            <div class="col-md-6 col-lg-4 d-flex flex-column px-02 mb-1">
               <div class="headliner overflow-hidden">
-                {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo%}
+                {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo %}
                 <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
-                <a href="{{ headliner.value.link }}" class="stretched-link"></a>
-                <div class="name p-4">
-                  <i class="icon-arrow3 float-left mr-2"></i>
-                  <h4>
-                    {{ headliner.value.name }}
-                  </h4>
-                </div>
-                <div class="description px-4 pb-4">
-                  <div class="overflow-hidden">
-                    {{ headliner.value.description|richtext }}
+                <a href="{{ headliner.value.link }}" class="stretched-link d-block">
+                  <div class="name p-4">
+                    <i class="icon-arrow3 float-left mr-2"></i>
+                    <h4>
+                      {{ headliner.value.name }}
+                    </h4>
                   </div>
-                </div>
+                  <div class="description px-4 pb-4">
+                    <div class="overflow-hidden">
+                      {{ headliner.value.description|richtext }}
+                    </div>
+                  </div>
+                </a>
               </div>
             </div>
           {% endfor %}
