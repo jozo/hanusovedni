@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-partners{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          {% for partner in page.body %}
+            <section class="container partner mb-1">
+              <div class="row">
+                <div class="col-md-4 p-4 d-flex justify-content-center align-items-center">
+                    {% image partner.value.logo width-200 class='logo'%}
+                </div>
+                <div class="col-md-8 px-4 pb-4 pt-0 pt-md-4 d-flex align-items-center">
+                    {{ partner.value.description|richtext }}
+                </div>
+              </div>
+            </section>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

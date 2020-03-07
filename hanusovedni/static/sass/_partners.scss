@@ -1,0 +1,29 @@
+.template-partners {
+  h2 {
+    font-family: $font-special;
+    margin-bottom: 1rem;
+  }
+
+  .partner {
+    background: $c-bg;
+
+    a {
+      color: $c-orange-light;
+      font-weight: bold;
+
+      &:hover, &:active {
+        text-decoration: underline;
+      }
+    }
+
+    &:hover, &:active {
+      .logo {
+        filter: grayscale(0);
+      }
+    }
+  }
+
+  .logo {
+    filter: grayscale(1);
+  }
+}
