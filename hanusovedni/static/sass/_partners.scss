@@ -17,8 +17,11 @@
     }
 
     &:hover, &:active {
+      background-color: lighten($c-bg, 5);
+      transition: all 0.5s;
+
       .logo {
-        filter: grayscale(0);
+        filter: none;
       }
     }
   }
