@@ -47,6 +47,7 @@ class HomePage(Page):
         "home.FestivalPage",
         "home.ContactPage",
         "home.AboutFestivalPage",
+        "home.SupportPage",
     ]
 
     @property
@@ -494,6 +495,25 @@ class AboutFestivalPage(Page):
 
     class Meta:
         verbose_name = _("o festivale")
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel('body'),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
+        return context
+
+
+class SupportPage(Page):
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="title")),
+        ('paragraph', blocks.RichTextBlock()),
+    ])
+
+    class Meta:
+        verbose_name = _("podpora")
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body'),

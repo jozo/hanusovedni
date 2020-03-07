@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load wagtailembeds_tags %}
+
+{% block body_class %}template-support{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <section id="banner">
+            <div class="container">
+              <div class="row py-5">
+                <div class="col-lg-3 offset-lg-1">
+                  <div class="d-flex justify-content-center mb-4 mb-lg-0">
+                    <img src="{% static 'img/beer-philosoph.svg' %}" alt="Pivný filozof" class="img-responsive">
+                  </div>
+                </div>
+                <div class="col-lg-7">
+                  <div class="mx-3">
+                    {% include_block page.body.0 %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <section id="stats" class="my-1 py-5 text-center">
+        <div class="row">
+          <div class="col-12">
+            <h2>{% include_block page.body.1 %}</h2>
+          </div>
+          <div class="col-sm-5 offset-sm-1">
+            <img src="{% static 'img/icon-people.svg' %}" alt="Ikona ľudia" class="mx-auto mb-4 mt-5">
+            {% include_block page.body.2 %}
+          </div>
+          <div class="col-sm-5">
+            <img src="{% static 'img/icon-people.svg' %}" alt="Ikona káva" class="mx-auto mb-4 mt-5">
+            {% include_block page.body.3 %}
+          </div>
+          <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <div class="mx-3 mt-5">
+              {% include_block page.body.4 %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-support" class="my-1 py-5">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h2 class="mb-5">{% include_block page.body.5 %}</h2>
+          </div>
+          <div class="col-md-8 offset-md-2">
+            <div class="px-4">
+              {% include_block page.body.6 %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="support-how" class="my-1 py-5">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-4 px-md-5">
+              {% include_block page.body.7 %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="support-how-1" class="my-1 py-5">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-md-5">
+              <div class="d-flex px-3">
+                <div class="d-flex align-items-center">
+                  <i class="icon-arrow1 mr-4"></i>
+                </div>
+                <div class="d-flex align-items-center">
+                  {% include_block page.body.8 %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="support-how-2" class="my-1 py-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-md-5">
+              <div class="d-flex px-3">
+                <div class="d-flex align-items-center">
+                  <i class="icon-arrow1 mr-4"></i>
+                </div>
+                <div class="d-flex align-items-center">
+                  {% include_block page.body.9 %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 d-flex justify-content-center mt-3">
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+              <input type="hidden" name="cmd" value="_donations">
+              <input type="hidden" name="business" value="jfilko@slh.sk">
+              <input type="hidden" name="item_name" value="Finančná podpora pre Hanusove dni">
+              <input type="hidden" name="currency_code" value="EUR">
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit"
+                     title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" border="0">
+              <img alt="" src="https://www.paypal.com/en_SK/i/scr/pixel.gif" width="1" height="1" border="0">
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="thank-you" class="my-1 py-5 text-center">
+        <div class="row">
+          <div class="col-12">
+            <img src="{% static 'img/icon-heart.svg' %}" alt="Ikona srdce" class="mx-auto mb-4">
+            {% include_block page.body.10 %}
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+{% endblock %}

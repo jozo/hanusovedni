@@ -5,13 +5,9 @@
 @import "events";
 @import "contact";
 @import "about_festival";
-
-html {
-  //min-height: 100%;
-}
+@import "support";
 
 body {
-  //min-height: 100%;
   min-height: 100vh;
   background: url("../img/bg-stars.svg") no-repeat black;
   background-position-x: center;
@@ -224,5 +220,14 @@ body > footer {
   &x-02 {
     padding-left: 2px !important;
     padding-right: 2px !important;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .p {
+    &x-xl-2rem {
+      padding-left: 2rem !important;
+      padding-right: 2rem !important;
+    }
   }
 }
