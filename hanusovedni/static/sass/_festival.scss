@@ -167,6 +167,53 @@
     }
   }
 
+  section#headline {
+    .headliner {
+      height: 360px;
+
+      &:hover, &:active {
+        .name, .description {
+          transition: all 0.3s;
+          transform: translateY(-277px);
+          opacity: 0.9;
+        }
+      }
+
+      .name, .description {
+        background: $c-bg;
+        transform: translateY(-77px);
+      }
+
+      .description > div {
+        height: 190px;
+      }
+
+      .name {
+        i {
+          color: $c-red-light;
+          font-size: 1.8rem;
+          margin-top: -3px;
+        }
+
+      }
+
+      h4 {
+        margin: 0;
+        font-weight: bold;
+      }
+
+      a {
+        color: white;
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
   section.partners {
     img {
       filter: grayscale(1);

@@ -72,6 +72,22 @@ class FestivalPage(Page):
     )
     hero_text = RichTextField(blank=True)
     video_text = RichTextField(blank=True)
+    headline = StreamField(
+        [
+            (
+                "headliner",
+                blocks.StructBlock(
+                    [
+                        ("name", blocks.CharBlock()),
+                        ("photo", ImageChooserBlock()),
+                        ("link", blocks.PageChooserBlock(page_type="home.Speaker")),
+                        ("description", blocks.RichTextBlock()),
+                    ]
+                ),
+            ),
+        ],
+        null=True,
+    )
 
     content_panels = [
         FieldPanel("formatted_title"),
@@ -82,6 +98,7 @@ class FestivalPage(Page):
         InlinePanel("hero_images", label="Hero images"),
         FieldPanel("video_text", classname="full"),
         InlinePanel("video_invites"),
+        StreamFieldPanel("headline"),
         InlinePanel("partners", label=_("partneri")),
         InlinePanel("media_partners", label=_("mediálni partneri")),
     ]
@@ -538,7 +555,10 @@ class PartnersPage(Page):
             (
                 "partner",
                 blocks.StructBlock(
-                    [("logo", ImageChooserBlock()), ("description", blocks.RichTextBlock()),]
+                    [
+                        ("logo", ImageChooserBlock()),
+                        ("description", blocks.RichTextBlock()),
+                    ]
                 ),
             ),
         ]

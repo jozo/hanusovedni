@@ -127,6 +127,35 @@
     </div>
 
     <div class="container">
+      <section id="headline">
+        <h2>Headlineri</h2>
+
+        <div class="row mx-n02 justify-content-center">
+          {% for headliner in page.headline %}
+            <div class="col-md-4 d-flex flex-column px-02">
+              <div class="headliner overflow-hidden">
+                {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo%}
+                <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
+                <a href="{{ headliner.value.link }}" class="stretched-link"></a>
+                <div class="name p-4">
+                  <i class="icon-arrow3 float-left mr-2"></i>
+                  <h4>
+                    {{ headliner.value.name }}
+                  </h4>
+                </div>
+                <div class="description px-4 pb-4">
+                  <div class="overflow-hidden">
+                    {{ headliner.value.description|richtext }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+
+    <div class="container">
       <section class="events">
         <h2>Program</h2>
 
