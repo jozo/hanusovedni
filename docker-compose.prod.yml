@@ -15,6 +15,10 @@ services:
     - /var/www/static:/static_root
     - /var/www/media:/media_root
     - /etc/mime.types:/etc/mime.types
+    healthcheck:
+      test: python -c "import requests; requests.get('http://localhost:8000', timeout=5).ok" || exit 1
+      interval: 1m
+      timeout: 5s
     deploy:
       replicas: 2
       resources:
