@@ -39,3 +39,7 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     # send_default_pii=True
 )
+
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_AUTHORISATION = True  # User must have permissions
+SILKY_PERMISSIONS = lambda user: user.is_superuser
