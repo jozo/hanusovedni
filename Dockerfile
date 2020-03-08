@@ -23,3 +23,5 @@ RUN useradd wagtail \
 USER wagtail
 
 EXPOSE 8000
+HEALTHCHECK --interval=1m --timeout=5s \
+    CMD python -c "import requests; requests.get('http://localhost:8000', timeout=5).ok" || exit 1
