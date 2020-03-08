@@ -16,7 +16,7 @@ services:
     - /var/www/media:/media_root
     - /etc/mime.types:/etc/mime.types
     healthcheck:
-      test: python -c "import requests; requests.get('http://localhost:8000', timeout=5).ok" || exit 1
+      test: python -c "import requests; requests.get('http://localhost:8000', timeout=5).raise_for_status()"
       interval: 1m
       timeout: 5s
     deploy:
