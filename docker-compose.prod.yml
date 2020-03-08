@@ -14,6 +14,7 @@ services:
     volumes:
     - /var/www/static:/static_root
     - /var/www/media:/media_root
+    - /etc/mime.types:/etc/mime.types
     deploy:
       replicas: 2
       resources:
