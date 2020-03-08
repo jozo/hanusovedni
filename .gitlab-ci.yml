@@ -6,28 +6,17 @@ before_script:
   - docker version
   - docker-compose --version
   - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
-  - echo ${CI_PIPELINE_ID}
-  - echo ${CI_PIPELINE_IID}
-  - echo ${CI_JOB_ID}
-  - printenv
 
 stages:
   - build
-#  - test
   - deploy
 
 build:
   stage: build
   script:
-    - docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} .
-    - docker push ${CI_REGISTRY_IMAGE}:latest
-    - docker push ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}
+    - docker build -t ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} .
+    - docker push ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
 
-#test:
-#  stage: test
-#  script:
-#    - echo "Here will be tests"
-#    - docker-compose -f docker-compose.prod.yml run --rm web pytest
 
 deploy_to_staging:
   stage: deploy
@@ -42,17 +31,18 @@ deploy_to_staging:
   script:
     - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
     - scp ${SECRETS_STAGING} root@${DEPLOY_SERVER_IP}:~/secrets.env
+    - ssh root@${DEPLOY_SERVER_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
     - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
     - "ssh root@${DEPLOY_SERVER_IP} \"docker run --rm
         --network hanus-net
         --env-file secrets.env
         -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
-        ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} python manage.py migrate --no-input\""
+        ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py migrate --no-input\""
     - "ssh root@${DEPLOY_SERVER_IP} \"docker run --rm
         -v /var/www/static:/static_root
         --env-file secrets.env
         -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
-        ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} python manage.py collectstatic --no-input\""
+        ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py collectstatic --no-input\""
     - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
     - ssh root@${DEPLOY_SERVER_IP} "docker system prune --all --force"
     - echo "Deployment done succesfully"
@@ -60,23 +50,3 @@ deploy_to_staging:
         -H \"Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}\" \
         -H \"Content-Type: application/json\" \
         --data '{\"purge_everything\":true}'"
-
-
-deploy_to_production:
-  stage: deploy
-  when: manual
-  before_script:
-    - mkdir -p ~/.ssh
-    - echo "${DEPLOY_SERVER_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -H ${DEPLOY_SERVER_IP} >> ~/.ssh/known_hosts
-  script:
-    - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
-    - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
-    - ssh root@${DEPLOY_SERVER_IP} "docker stack deploy -c docker-compose.yml -c docker-compose.prod.yml --with-registry-auth hanusovedni"
-    - ssh root@${DEPLOY_SERVER_IP} "WEB_CONTAINER=$(docker ps | grep hanusovedni_web | head -n1 | cut -d " " -f1)"
-    - ssh root@${DEPLOY_SERVER_IP} "docker exec -it $WEB_CONTAINER python manage.py migrate"
-    - ssh root@${DEPLOY_SERVER_IP} "docker exec -it $WEB_CONTAINER python manage.py collectstatic"
-    - echo "Deployment done succesfully"
