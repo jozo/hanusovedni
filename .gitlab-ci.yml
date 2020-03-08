@@ -6,6 +6,10 @@ before_script:
   - docker version
   - docker-compose --version
   - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
+  - echo ${CI_PIPELINE_ID}
+  - echo ${CI_PIPELINE_IID}
+  - echo ${CI_JOB_ID}
+  - printenv
 
 stages:
   - build
