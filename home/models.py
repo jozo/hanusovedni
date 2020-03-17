@@ -226,7 +226,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["speakers"] = Speaker.objects.live().order_by("last_name")
+        context["speakers"] = Speaker.objects.live().select_related("photo").order_by("last_name")
         return context
 
 
@@ -303,7 +303,7 @@ class EventIndexPage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["events"] = Event.objects.live().order_by("-date_and_time")
+        context["events"] = Event.objects.live().select_related("category", "location").order_by("-date_and_time")
         return context
 
 
