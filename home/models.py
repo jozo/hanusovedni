@@ -232,9 +232,10 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
 
 class Speaker(Page):
     speaker_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
-    first_name = models.CharField(max_length=30, verbose_name=_("meno"))
-    last_name = models.CharField(max_length=30, verbose_name=_("priezvisko"))
+    first_name = models.CharField(max_length=64, verbose_name=_("meno"), blank=True)
+    last_name = models.CharField(max_length=64, verbose_name=_("priezvisko"))
     description = RichTextField(blank=True, verbose_name=_("popis"))
+    wordpress_id = models.IntegerField(default=0)
     photo = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -248,7 +249,7 @@ class Speaker(Page):
         verbose_name = _("rečník")
         verbose_name_plural = _("rečníci")
 
-    content_panels = [
+    content_panels = Page.content_panels + [
         FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name")]),
         ImageChooserPanel("photo"),
         FieldPanel("description"),

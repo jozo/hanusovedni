@@ -10,6 +10,7 @@ services:
   web:
     volumes:
       - .:/code:delegated
+      - /Users/jozo/d/bhd/assets:/bhd_images:delegated
     ports:
       - 9191:9191
     environment:
