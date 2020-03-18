@@ -11,6 +11,7 @@ services:
     volumes:
       - .:/code:delegated
       - /Users/jozo/d/bhd/assets:/bhd_images:delegated
+      - /Users/jozo/d/bhd/wp-content/themes/bhd/assets/img/illustrations:/bhd_illustrations:delegated
     ports:
       - 9191:9191
     environment:

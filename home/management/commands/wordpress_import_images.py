@@ -14,8 +14,12 @@ class Command(BaseCommand):
     help = "Imports images from Wordpress version of BHD"
 
     def add_arguments(self, parser):
-        parser.add_argument("--speakers_csv", "-s", type=str, help="Path to speakers CSV file")
-        parser.add_argument("--from_dir", "-f", type=str, help="Path to directory with images")
+        parser.add_argument(
+            "--speakers_csv", "-s", type=str, help="Path to speakers CSV file"
+        )
+        parser.add_argument(
+            "--from_dir", "-f", type=str, help="Path to directory with images"
+        )
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -24,12 +28,18 @@ class Command(BaseCommand):
         with open(options["speakers_csv"], "r") as file:
             for row in DictReader(file):
                 if not row["filename"]:
-                    self.stdout.write(self.style.WARNING(f"====> skipping {row['post_name']}, {row['post_title']}"))
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f"====> skipping {row['post_name']}, {row['post_title']}"
+                        )
+                    )
                     continue
                 image_path = os.path.join(options["from_dir"], row["filename"])
                 with open(image_path, "rb") as image_file:
-                    image = Image(title=row["post_title"], tags=["speaker"])
-                    if row["filename"].lower().endswith(".jpg") or row["filename"].lower().endswith(".jpeg"):
+                    image = Image(title=row["post_title"])
+                    if row["filename"].lower().endswith(".jpg") or row[
+                        "filename"
+                    ].lower().endswith(".jpeg"):
                         image_filename = f"{row['first_name']} {row['last_name']}.jpg"
                     elif row["filename"].lower().endswith(".png"):
                         image_filename = f"{row['first_name']} {row['last_name']}.png"
@@ -45,6 +55,7 @@ class Command(BaseCommand):
                     # Reindex the image to make sure all tags are indexed
                     search_index.insert_or_update_object(image)
                     image.save()
+                    image.tags.add("speaker")
 
                     speaker = Speaker.objects.get(wordpress_id=row["ID"])
                     speaker.photo = image

@@ -4,6 +4,7 @@ import pytz
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from wagtail.images.models import Image
 
 from home.models import (
     Category,
@@ -23,6 +24,9 @@ class Command(BaseCommand):
             "model", type=str, choices=["categories", "locations", "events", "speakers"]
         )
         parser.add_argument("input", type=str, help="Path to input CSV file")
+        parser.add_argument(
+            "--img-dir", "-f", type=str, help="Path to directory with images"
+        )
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -35,13 +39,13 @@ class Command(BaseCommand):
             elif options["model"] == "speakers":
                 self.import_speakers(reader)
             elif options["model"] == "events":
-                self.import_events(reader)
+                self.import_events(reader, options)
 
     def import_categories(self, reader):
         self.stdout.write(self.style.SUCCESS("Importing categories"))
 
         Category.objects.bulk_create(
-            Category(title=row["category"], color="blue") for row in reader
+            Category(title=row["category"], color=row["color"]) for row in reader
         )
 
         self.stdout.write(self.style.SUCCESS("Categories imported"))
@@ -50,7 +54,9 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS("Importing locations"))
 
         Location.objects.bulk_create(
-            Location(title=row["location"].strip().lower(), url_to_map="http://example.com")
+            Location(
+                title=row["location"].strip().lower(), url_to_map="http://example.com"
+            )
             for row in reader
         )
 
@@ -76,13 +82,17 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS("Speakers imported"))
 
-    def import_events(self, reader):
+    def import_events(self, reader, options):
         self.stdout.write(self.style.SUCCESS("Importing events"))
 
         events_page = EventIndexPage.objects.get()
         for row in reader:
             # bulk_create doesn't call save() method
             try:
+                if row["illustration"]:
+                    illustration = Image.objects.get(title=row["illustration"])
+                else:
+                    illustration = None
                 e = Event(
                     title=row["post_title"],
                     short_overview=row["overview"],
@@ -90,10 +100,13 @@ class Command(BaseCommand):
                     date_and_time=datetime.fromtimestamp(
                         int(row["datetime"]), pytz.timezone("Europe/Bratislava")
                     ),
-                    location=(Location.objects.get(title=row["location"].strip().lower())),
+                    location=(
+                        Location.objects.get(title=row["location"].strip().lower())
+                    ),
                     video_url=self.video_url(row["youtube_link"]),
                     # ticket_url=row["tickets_button_url"],
                     category=Category.objects.get(title=row["topic"]),
+                    icon=illustration,
                     speakers=Speaker.objects.filter(
                         wordpress_id__in=row["speakers"].split(",")
                         if row["speakers"]
