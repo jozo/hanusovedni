@@ -1,5 +1,6 @@
 from csv import DictReader
 from datetime import datetime
+
 import pytz
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand
@@ -8,12 +9,13 @@ from wagtail.images.models import Image
 
 from home.models import (
     Category,
+    Event,
+    EventIndexPage,
+    FestivalPage,
     Location,
     Speaker,
     SpeakerIndexPage,
-    Event,
-    EventIndexPage,
-    FestivalPage)
+)
 
 
 class Command(BaseCommand):

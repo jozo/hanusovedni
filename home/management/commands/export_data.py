@@ -4,7 +4,7 @@ import os
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from home.models import Location, Category, Speaker, Event, FestivalPage
+from home.models import Category, Event, FestivalPage, Location, Speaker
 
 
 class Command(BaseCommand):
@@ -149,7 +149,9 @@ class Command(BaseCommand):
                         "ticket_url": event.ticket_url,
                         "show_on_festivalpage": event.show_on_festivalpage,
                         "icon": event.icon.title + ".png" if event.icon else None,
-                        "related_festival": "bhd" if event.related_festival == bhd else "khd",
+                        "related_festival": "bhd"
+                        if event.related_festival == bhd
+                        else "khd",
                         "speakers": ",".join(
                             str(s.speaker_id) for s in event.speakers.all()
                         ),

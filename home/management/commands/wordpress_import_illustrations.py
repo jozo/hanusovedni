@@ -26,7 +26,7 @@ class Command(BaseCommand):
             with open(filepath, "rb") as image_file:
                 name = filepath.split("/")[-1][:-10]
                 image = Image(title=name)
-                image.file = ImageFile(file=image_file, name=name+".png")
+                image.file = ImageFile(file=image_file, name=name + ".png")
                 image.file_size = image.file.size
 
                 image.file.seek(0)

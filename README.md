@@ -26,10 +26,13 @@ DB console
 psql -U hanusovedni -d hanusovedni
 ```
 
-Import/export data from blank state
+Import data from blank state
 -----------------------------------
 ```shell script
 ./manage.py migrate
+./manage.py createsuperuser
+# create BHD, KHD, SpeakerIndex and EventIndex manually through Wagtail admin
+./manage.py import_data -c /media_root/ -i /media_root/imp_images/
 ```
 
 

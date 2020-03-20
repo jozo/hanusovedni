@@ -10,13 +10,13 @@ from wagtail.images.models import Image
 from wagtail.search import index as search_index
 
 from home.models import (
-    Location,
     Category,
-    Speaker,
     Event,
-    FestivalPage,
-    SpeakerIndexPage,
     EventIndexPage,
+    FestivalPage,
+    Location,
+    Speaker,
+    SpeakerIndexPage,
 )
 
 
