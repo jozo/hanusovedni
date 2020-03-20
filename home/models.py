@@ -19,6 +19,7 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     MultiFieldPanel,
     StreamFieldPanel,
+    PageChooserPanel,
 )
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -60,7 +61,7 @@ class HomePage(Page):
 
 class FestivalPage(Page):
     formatted_title = RichTextField(default="", verbose_name=_("titulok"))
-    logo = models.FileField(null=True)
+    logo = models.FileField(null=True, blank=True)
     start_date = models.DateField(
         default=timezone.now, verbose_name=_("začiatok festivalu")
     )
@@ -87,6 +88,7 @@ class FestivalPage(Page):
             ),
         ],
         null=True,
+        blank=True,
     )
 
     content_panels = [
@@ -237,7 +239,7 @@ class Speaker(Page):
     first_name = models.CharField(max_length=64, verbose_name=_("meno"), blank=True)
     last_name = models.CharField(max_length=64, verbose_name=_("priezvisko"))
     description = RichTextField(blank=True, verbose_name=_("popis"))
-    wordpress_id = models.IntegerField(default=0)
+    wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     photo = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -271,7 +273,7 @@ class Speaker(Page):
                 Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
             )
             self.speaker_id = last_speaker_id + 1
-        self.draft_title = f"{self.first_name} {self.last_name}"
+        self.draft_title = f"{self.first_name} {self.last_name}".strip()
         self.title = self.draft_title
         if "updated_fields" in kwargs:
             kwargs["updated_fields"].append("title")
@@ -394,6 +396,15 @@ class Event(Page):
         "home.Speaker", blank=True, related_name="events", verbose_name=_("rečník")
     )
     show_on_festivalpage = models.BooleanField(default=False)
+    wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    related_festival = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        verbose_name=_("festival"),
+    )
 
     content_panels = Page.content_panels + [
         MultiFieldPanel(
@@ -401,6 +412,7 @@ class Event(Page):
                 FieldPanel("date_and_time"),
                 AutocompletePanel("location"),
                 FieldPanel("category"),
+                PageChooserPanel("related_festival", "home.FestivalPage"),
                 ImageChooserPanel("icon"),
             ]
         ),

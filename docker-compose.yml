@@ -3,11 +3,12 @@ version: "3"
 services:
   db:
     image: postgres:12.1-alpine
-    volumes:
-      - dbdata:/var/lib/postgresql/data
+#    volumes:
+#      - dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=hanusovedni
       - POSTGRES_DB=hanusovedni
+      - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       - hanus-net
 

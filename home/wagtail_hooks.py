@@ -13,6 +13,7 @@ class EventAdmin(ModelAdmin):
     list_display = ["title", "live"]
     list_filter = ["live"]
     search_fields = ["title"]
+    list_per_page = 15
 
 
 class SpeakerAdmin(ModelAdmin):
@@ -25,6 +26,7 @@ class SpeakerAdmin(ModelAdmin):
     list_display = ["first_name", "last_name", "live"]
     list_filter = ["live"]
     search_fields = ["title"]
+    list_per_page = 15
 
 
 modeladmin_register(EventAdmin)

@@ -6,15 +6,15 @@ services:
   web:
     image: ${WEB_IMAGE}
     ports:
-    - "80:8000"
+      - "80:8000"
     env_file:
       - secrets.env
     environment:
       DJANGO_SETTINGS_MODULE: "hanusovedni.settings.production"
     volumes:
-    - /var/www/static:/static_root
-    - /var/www/media:/media_root
-    - /etc/mime.types:/etc/mime.types
+      - /var/www/static:/static_root
+      - /var/www/media:/media_root
+      - /etc/mime.types:/etc/mime.types
     healthcheck:
       test: python -c "import requests; requests.get('http://localhost:8000', timeout=5).raise_for_status()"
       interval: 1m
@@ -31,3 +31,6 @@ services:
   db:
     env_file:
       - secrets.env
+    volumes:
+      - /var/www/static:/static_root
+      - /var/www/pgdata:/var/lib/postgresql/data/pgdata

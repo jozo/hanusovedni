@@ -13,7 +13,7 @@ from home.models import (
     SpeakerIndexPage,
     Event,
     EventIndexPage,
-)
+    FestivalPage)
 
 
 class Command(BaseCommand):
@@ -21,7 +21,16 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "model", type=str, choices=["categories", "locations", "events", "speakers"]
+            "model",
+            type=str,
+            choices=[
+                "categories",
+                "locations",
+                "events",
+                "speakers",
+                "events_url",
+                "speakers_url",
+            ],
         )
         parser.add_argument("input", type=str, help="Path to input CSV file")
         parser.add_argument(
@@ -40,6 +49,10 @@ class Command(BaseCommand):
                 self.import_speakers(reader)
             elif options["model"] == "events":
                 self.import_events(reader, options)
+            elif options["model"] == "events_url":
+                self.import_events_url(reader, options)
+            elif options["model"] == "speakers_url":
+                self.import_speakers_url(reader, options)
 
     def import_categories(self, reader):
         self.stdout.write(self.style.SUCCESS("Importing categories"))
@@ -125,3 +138,53 @@ class Command(BaseCommand):
         if from_link:
             return "https://youtu.be/" + from_link.split("/")[-1]
         return ""
+
+    def import_events_url(self, reader, options):
+        self.stdout.write(self.style.SUCCESS("Add WP url to events started"))
+        bhd = FestivalPage.objects.order_by("pk").all()[0]
+        khd = FestivalPage.objects.order_by("pk").all()[1]
+
+        for row in reader:
+            try:
+                event = Event.objects.get(
+                    title=row["post_title"].strip(),
+                    # date_and_time=datetime.fromtimestamp(int(row["datetime"])),
+                )
+                event.wordpress_url = row["post_name"]
+                desc = ""
+                if row["questions"]:
+                    desc = f"{row['questions']}"
+                if row["post_content"]:
+                    if desc:
+                        desc = f"{desc}\n<br>\n{row['post_content']}"
+                    else:
+                        desc = f"{row['post_content']}"
+                if row["after_event_text"]:
+                    if desc:
+                        desc = f"{desc}\n<br>\n{row['after_event_text']}"
+                    else:
+                        desc = f"{row['after_event_text']}"
+                event.description = desc
+                event.date_and_time = datetime.utcfromtimestamp(int(row["datetime"]))
+                if 0 <= event.date_and_time.month <= 6:
+                    event.related_festival = bhd
+                else:
+                    event.related_festival = khd
+                event.save()
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f"error: {row['post_title']} | {e}"))
+
+        self.stdout.write(self.style.SUCCESS("Add WP url to events finished"))
+
+    def import_speakers_url(self, reader, options):
+        self.stdout.write(self.style.SUCCESS("Add WP url to speakers started"))
+
+        for row in reader:
+            try:
+                speaker = Speaker.objects.get(title=row["post_title"].strip())
+                speaker.wordpress_url = row["post_name"]
+                speaker.save()
+            except ObjectDoesNotExist as e:
+                self.stdout.write(self.style.ERROR(f"error: {row['post_title']} | {e}"))
+
+        self.stdout.write(self.style.SUCCESS("Add WP url to events finished"))

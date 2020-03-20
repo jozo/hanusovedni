@@ -10,6 +10,22 @@ s.save()
 from django.core.cache import cache
 cache.clear()
 
+DB backup
+---------
+```shell script
+pg_dump -U hanusovedni -d hanusovedni > /code/backup.sql
+psql -U hanusovedni -d hanusovedni < /code/backup.sql
+
+pg_dump -U hanusovedni -d hanusovedni | gzip > /code/backup.sql.gz
+gunzip -c /code/backup.sql.gz | psql -U hanusovedni -d hanusovedni
+```
+
+DB console
+----------
+```shell script
+psql -U hanusovedni -d hanusovedni
+```
+
 
 SQL to import data from WordPress
 ---------------------------------
