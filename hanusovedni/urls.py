@@ -13,7 +13,6 @@ from search import views as search_views
 
 urlpatterns = [
     url(r"^admin/django/", admin.site.urls),
-    url(r"^admin/silk/", include("silk.urls", namespace="silk")),
     url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
     url(r"^admin/", include(wagtailadmin_urls)),
     url(r"^documents/", include(wagtaildocs_urls)),
