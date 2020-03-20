@@ -91,6 +91,9 @@
       height: 11rem;
 
       a {
+        &:hover, &:focus {
+          text-decoration: none;
+        }
         &.red {
           background: $c-red-light;
 
@@ -159,10 +162,14 @@
       height: 100%;
       background-color: $c-bg;
       font-family: $font-special;
-      line-height: 1.3;
+      line-height: 1.5;
 
       p:last-child {
         margin-bottom: 0;
+      }
+
+      a {
+        color: $c-red-light;
       }
     }
   }

@@ -50,7 +50,7 @@ class HomePage(Page):
         "home.FestivalPage",
         "home.ContactPage",
         "home.AboutFestivalPage",
-        "home.SupportPage",
+        "home.DonatePage",
         "home.PartnersPage",
     ]
 
@@ -547,7 +547,7 @@ class AboutFestivalPage(Page):
         return context
 
 
-class SupportPage(Page):
+class DonatePage(Page):
     body = StreamField(
         [
             ("heading", blocks.CharBlock(classname="title")),

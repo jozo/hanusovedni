@@ -14,7 +14,7 @@
       <div class="row mx-n02 justify-content-center">
         {% for event in events %}
           <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 mb-1 overflow-hidden">
-            <a href="{% pageurl event %}" class="d-flex w-100">
+            <a href="{% pageurl event %}" class="d-flex w-100 text-decoration-none">
               <article class="event d-flex flex-column"
                        style="background-color: {{ event.category.color }}">
                 <div class="illustration d-flex justify-content-center align-items-center">

@@ -6,7 +6,7 @@
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
 
-{% block body_class %}template-support{% endblock %}
+{% block body_class %}template-donate{% endblock %}
 
 {% block content %}
   <main class="flex-grow-1">
@@ -42,7 +42,7 @@
             {% include_block page.body.2 %}
           </div>
           <div class="col-sm-5">
-            <img src="{% static 'img/icon-people.svg' %}" alt="Ikona káva" class="mx-auto mb-4 mt-5">
+            <img src="{% static 'img/icon-coffee.svg' %}" alt="Ikona káva" class="mx-auto mb-4 mt-5">
             {% include_block page.body.3 %}
           </div>
           <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">

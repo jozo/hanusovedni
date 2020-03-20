@@ -5,7 +5,7 @@
 @import "events";
 @import "contact";
 @import "about_festival";
-@import "support";
+@import "donate";
 @import "partners";
 
 body {
@@ -22,9 +22,10 @@ body {
 
 a {
   text-decoration: none;
+  color: $c-orange-light;
 
   &:hover, :focus {
-    text-decoration: none;
+    color: $c-orange-light;
   }
 }
 

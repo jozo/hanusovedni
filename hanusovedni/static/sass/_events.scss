@@ -127,6 +127,7 @@
       height: 350px;
     }
   }
+
   .photo-small {
     img {
       object-fit: cover;
@@ -174,6 +175,10 @@
     &:hover {
       background-color: lighten($c-bg, 5);
       transition: all 0.5s;
+
+      a {
+        text-decoration: none;
+      }
 
       .photo-small {
         filter: none;

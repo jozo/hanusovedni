@@ -30,8 +30,10 @@
   }
 
   .first {
-    background: url("/static/img/bg-about.jpg");
-    padding-top: 100px;
+    background: black url("/static/img/bg-about.jpg") no-repeat;
+    background-position-y: bottom;
+    padding-top: 50px;
+    padding-bottom: 450px;
     min-height: 720px;
     font-size: 1.3rem;
     font-weight: bold;
