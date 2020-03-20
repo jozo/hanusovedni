@@ -6,7 +6,7 @@
     <div class="container-fluid site-header my-5">
       <div class="row no-gutters">
         <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-end">
-          <a href="{% pageurl header_festival %}">
+          <a href="{% pageurl header_festival %}" class="text-decoration-none">
             <div class="logo py-2 pr-4
                   d-flex flex-column justify-content-center">
               {% if header_festival.logo %}
@@ -17,7 +17,7 @@
           </a>
         </div>
         <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-start">
-          <a href="{% pageurl header_festival %}">
+          <a href="{% pageurl header_festival %}" class="text-decoration-none">
             <div class="main-information py-2 pl-4
                   d-flex flex-column justify-content-center">
               <h1>{{ header_festival.formatted_title|richtext }}</h1>
