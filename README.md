@@ -26,6 +26,12 @@ DB console
 psql -U hanusovedni -d hanusovedni
 ```
 
+Import/export data from blank state
+-----------------------------------
+```shell script
+./manage.py migrate
+```
+
 
 SQL to import data from WordPress
 ---------------------------------
