@@ -9,12 +9,15 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtailautocomplete.urls.admin import urlpatterns as autocomplete_admin_urls
 
 from search import views as search_views
+from home import views
 
 
 urlpatterns = [
     url(r"^admin/django/", admin.site.urls),
     url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
     url(r"^admin/", include(wagtailadmin_urls)),
+    url(r"^recnici/(.*)/$", views.redirect_speakers),
+    url(r"^archiv/(.*)/$", views.redirect_events),
     url(r"^documents/", include(wagtaildocs_urls)),
 ]
 
