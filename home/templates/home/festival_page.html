@@ -244,7 +244,7 @@
         {% if page.partners.all %}
           <h2>Partneri</h2>
 
-          <div class="d-flex flex-row justify-content-center">
+          <div class="d-flex flex-row flex-wrap justify-content-center">
             {% for partner in page.partners.all %}
               <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
                 {% image partner.logo height-50 %}
@@ -256,7 +256,7 @@
         {% if page.media_partners.all %}
           <h2>Mediálni partneri</h2>
 
-          <div class="d-flex flex-row justify-content-center">
+          <div class="d-flex flex-row flex-wrap justify-content-center">
             {% for partner in page.media_partners.all %}
               <a href="{{ partner.url }}" target="_blank" class="mx-4 my-3">
                 {% image partner.logo height-50 %}
