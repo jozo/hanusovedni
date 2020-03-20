@@ -1,5 +1,6 @@
 import itertools
 import re
+from collections import defaultdict
 
 from django.db import models
 from django.db.models import Max
@@ -228,10 +229,44 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["speakers"] = (
-            Speaker.objects.live().select_related("photo").order_by("last_name")
-        )
+        context["speakers_by_year"] = self.get_speakers_by_year()
+        # disable defaultdict because Django Template can't work with it
+        context["speakers_by_year"].default_factory = None
         return context
+
+    def get_speakers_by_year(self):
+        speakers_by_year = defaultdict(dict)
+        min_year = (
+            Event.objects.live()
+            .only("date_and_time")
+            .earliest("date_and_time")
+            .date_and_time.year
+        )
+        max_year = (
+            Event.objects.live()
+            .only("date_and_time")
+            .latest("date_and_time")
+            .date_and_time.year
+        )
+
+        festivals = FestivalPage.objects.live().all()
+
+        for year in range(max_year, min_year - 1, -1):
+            for festival in festivals:
+                speakers = (
+                    Speaker.objects.live()
+                    .filter(
+                        events__related_festival=festival,
+                        events__date_and_time__year=year,
+                    )
+                    .select_related("photo")
+                    .order_by("last_name")
+                    .distinct()
+                )
+                if speakers.exists():
+                    speakers_by_year[year][festival] = speakers.all()
+
+        return speakers_by_year
 
 
 class Speaker(Page):
