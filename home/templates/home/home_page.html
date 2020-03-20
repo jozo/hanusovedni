@@ -14,7 +14,7 @@
     <div class="row w-100 justify-content-center">
       {% for festival in page.festivals %}
         <div class="col-md-6 my-5">
-          <a href="{% pageurl festival %}" class="py-3">
+          <a href="{% pageurl festival %}" class="py-3 text-decoration-none">
             <div class="container-fluid site-header my-3">
               <div class="row no-gutters">
                 <div class="col-sm-6 col d-flex justify-content-center justify-content-sm-end">
@@ -31,13 +31,23 @@
                   d-flex flex-column justify-content-center">
                     <h1>{{ festival.formatted_title|richtext }}</h1>
                     <div>
-                      <time datetime="{{ festival.start_date|date:'c' }}">
-                        {{ festival.start_date|date:'j. E' }}
-                      </time>
-                      &mdash;
-                      <time datetime="{{ festival.end_date|date:'c' }}">
-                        {{ festival.end_date|date:'j. E Y' }}
-                      </time>
+                      {% ifequal festival.start_date.month festival.end_date.month %}
+                        <time datetime="{{ festival.start_date|date:'c' }}">
+                          {{ festival.start_date|date:'j.' }}
+                        </time>
+                        &mdash;
+                        <time datetime="{{ festival.end_date|date:'c' }}">
+                          {{ festival.end_date|date:'j. E Y' }}
+                        </time>
+                      {% else %}
+                        <time datetime="{{ festival.start_date|date:'c' }}">
+                          {{ festival.start_date|date:'j. E' }}
+                        </time>
+                        &mdash;
+                        <time datetime="{{ festival.end_date|date:'c' }}">
+                          {{ festival.end_date|date:'j. E Y' }}
+                        </time>
+                      {% endifequal %}
                     </div>
                     <div class="place">{{ festival.place }}</div>
                   </div>

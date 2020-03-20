@@ -94,6 +94,7 @@
         &:hover, &:focus {
           text-decoration: none;
         }
+
         &.red {
           background: $c-red-light;
 
@@ -170,6 +171,18 @@
 
       a {
         color: $c-red-light;
+      }
+    }
+
+    .video-invites-carousel {
+      .carousel-control-prev, .carousel-control-next {
+        visibility: hidden;
+      }
+
+      &:hover {
+        .carousel-control-prev, .carousel-control-next {
+          visibility: visible;
+        }
       }
     }
   }
