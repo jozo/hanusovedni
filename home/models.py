@@ -627,3 +627,13 @@ def speaker_published_handler(**kwargs):
 @receiver(pre_delete, sender=Speaker)
 def speaker_deleted_handler(**kwargs):
     purge_cache_for_indexes(kwargs["instance"])
+
+
+@receiver(page_published, sender=FestivalPage)
+def festival_published_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])
+
+
+@receiver(pre_delete, sender=FestivalPage)
+def festival_deleted_handler(**kwargs):
+    purge_cache_for_indexes(kwargs["instance"])
