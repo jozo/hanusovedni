@@ -32,5 +32,4 @@ services:
     env_file:
       - secrets.env
     volumes:
-      - /var/www/static:/static_root
       - /var/www/pgdata:/var/lib/postgresql/data/pgdata

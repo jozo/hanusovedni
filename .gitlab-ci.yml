@@ -31,6 +31,7 @@ deploy_to_staging:
   script:
     - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
     - scp ${SECRETS_STAGING} root@${DEPLOY_SERVER_IP}:~/secrets.env
+    - ssh root@${DEPLOY_SERVER_IP} "docker system prune --all --force"
     - ssh root@${DEPLOY_SERVER_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
     - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
     - "ssh root@${DEPLOY_SERVER_IP} \"
@@ -51,7 +52,6 @@ deploy_to_staging:
         -c docker-compose.yml
         -c docker-compose.prod.yml
         --with-registry-auth hanusovedni\""
-    - ssh root@${DEPLOY_SERVER_IP} "docker system prune --all --force"
     - echo "Deployment done succesfully"
     - "curl -X POST \"https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONEID}/purge_cache\" \
         -H \"Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}\" \
