@@ -186,6 +186,27 @@ body > footer {
   .copy {
     background-color: $c-menu-bg;
   }
+
+  .cookie {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-family: $font-main;
+
+    .alert {
+      padding-right: 30px;
+      box-shadow: 0 3px 5px 0 rgba(50, 50, 50, 0.75);
+
+      > span {
+        opacity: 0.9;
+      }
+
+      button {
+        padding: 0 10px 0 5px;
+      }
+    }
+  }
 }
 
 .embed-container {
