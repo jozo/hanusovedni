@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 
+{% load static i18n %}
+
+{% block title %}Page not found{% endblock %}
 {% block body_class %}template-404{% endblock %}
 
 {% block content %}
-    <h1>Page not found</h1>
+  <main class="d-flex flex-grow-1 flex-column justify-content-center align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <img src="{% static 'img/beer-philosoph.svg' %}" alt="Beer philosopher" class="m-5">
+        </div>
+        <div class="col-md-7 d-flex flex-column justify-content-center text-center">
+          <h1>{% trans "Error 404" %}</h1>
 
-    <h2>Sorry, this page could not be found.</h2>
+          <h2 class="py-4">{% trans "We searched everywhere, but we couldn't find that page." %}</h2>
+        </div>
+      </div>
+    </div>
+  </main>
 {% endblock %}
