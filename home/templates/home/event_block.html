@@ -1,0 +1,48 @@
+{% load i18n wagtailcore_tags wagtailimages_tags %}
+
+<div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 mb-1 overflow-hidden">
+  <a href="{% pageurl event %}" class="d-flex w-100 text-decoration-none">
+    <article class="event d-flex flex-column"
+             style="background-color: {{ event.category.color }}">
+      <div class="illustration d-flex justify-content-center align-items-center">
+        {% image event.icon fill-65x65 %}
+      </div>
+
+      <div class="category">
+        <div class="name">
+          {{ event.category.title }}
+        </div>
+      </div>
+
+      <div class="content">
+        <h3>{{ event.title }}</h3>
+
+        <ul class="speakers">
+          {% for speaker in event.speakers_limited.under_limit %}
+            <li>
+              {{ speaker.title }}
+              {% if forloop.last and event.speakers_limited.over_limit_count %}
+                <span title="{{ event.speakers_limited.over_limit_names }}">
+                  + {{ event.speakers_limited.over_limit_count }} {% trans "ďalší" %}
+                </span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <footer>
+        <time class="d-flex align-items-center" datetime="{{ event.date_and_time|date:'c' }}">
+          {{ event.date_and_time|date:'j.n.' }}
+          &nbsp;&mdash;&nbsp;
+          {{ event.date_and_time|date:'l'|upper }}
+          &nbsp;&mdash;&nbsp;
+          {{ event.date_and_time|date:'G:i' }}
+        </time>
+        <address class="py-2 d-flex align-items-center">
+          {{ event.location.title }}
+        </address>
+      </footer>
+    </article>
+  </a>
+</div>

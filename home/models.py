@@ -1,6 +1,7 @@
 import itertools
 import re
 from collections import defaultdict
+from functools import cached_property
 
 from django.db import models
 from django.db.models import Max
@@ -361,6 +362,15 @@ class EventIndexPage(RoutablePageMixin, Page):
             Event.objects.live()
             .select_related("category", "location", "icon")
             .order_by("-date_and_time")
+            .only(
+                "category",
+                "location",
+                "icon",
+                "title",
+                "date_and_time",
+                "event_id",
+                "url_path",
+            )
         )
         return context
 
@@ -384,6 +394,7 @@ class ProgramIndexPage(Page):
                 date_and_time__gte=parent_festival.start_date,
                 date_and_time__lt=parent_festival.end_date,
             )
+            .select_related("category", "location", "icon")
             .order_by("date_and_time")
         )
         # TODO use iterator
@@ -507,6 +518,15 @@ class Event(Page):
             )
             self.event_id = last_event_id + 1
         return super().save(*args, **kwargs)
+
+    @cached_property
+    def speakers_limited(self):
+        speakers = list(self.speakers.all().only("title"))
+        return {
+            "under_limit": speakers[:3],
+            "over_limit_count": len(speakers[3:]),
+            "over_limit_names": ", ".join(s.title for s in speakers[3:]),
+        }
 
 
 @register_snippet
