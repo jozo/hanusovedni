@@ -5,7 +5,7 @@ from .base import *
 
 DEBUG = False
 
-WAGTAILAPI_BASE_URL = "http://hanusovedni.online"
+WAGTAILAPI_BASE_URL = "https://hanusovedni.online"
 
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
