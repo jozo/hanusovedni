@@ -73,6 +73,19 @@ class FestivalPage(Page):
         max_length=50, default="Malá scéna STU", verbose_name=_("miesto")
     )
     hero_text = RichTextField(blank=True)
+    hero_buttons = StreamField(
+        [
+            (
+                "hero_buttons",
+                blocks.StructBlock(
+                    [("title", blocks.CharBlock()), ("link", blocks.URLBlock()),]
+                ),
+            ),
+        ],
+        null=True,
+        blank=True,
+        help_text=_("Len prvé 2 tlacidla budú použité"),
+    )
     video_text = RichTextField(blank=True)
     headline = StreamField(
         [
@@ -99,6 +112,7 @@ class FestivalPage(Page):
         FieldPanel("place"),
         FieldPanel("hero_text", classname="full"),
         InlinePanel("hero_images", label="Hero images"),
+        StreamFieldPanel("hero_buttons"),
         FieldPanel("video_text", classname="full"),
         InlinePanel("video_invites"),
         StreamFieldPanel("headline"),
