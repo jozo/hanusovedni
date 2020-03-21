@@ -1,0 +1,108 @@
+.template-crowdfunding {
+  font-family: $font-special;
+
+  .help {
+    text-transform: uppercase;
+    font-size: 43px;
+    font-weight: bold;
+  }
+
+  .colorful {
+    color: #EDA605;
+    font-size: 35px;
+  }
+
+  footer {
+    border-top: 1px solid #EDA605;
+  }
+
+  .thermometer {
+    position: relative;
+    width: 150px;
+    height: 550px;
+  }
+
+  .scale {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    height: 500px;
+    width: 10px;
+    background-color: white;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .mercury {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    width: 10px;
+    background-color: #EDA605;
+  }
+
+  .number {
+    position: absolute;
+    color: white;
+    left: 15px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .n-1 {
+    bottom: 100px;
+  }
+
+  .n-2 {
+    bottom: 200px;
+  }
+
+  .n-3 {
+    bottom: 300px;
+  }
+
+  .n-4 {
+    bottom: 400px;
+  }
+
+  .n-5000 {
+    bottom: 505px;
+    left: -4px;
+    font-size: 34px;
+  }
+
+  .rocket {
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    height: 300px;
+  }
+
+  .darujme-iframe {
+    width: 100%;
+  }
+
+  @media (min-width: 576px) {
+    .darujme-iframe {
+      width: 360px;
+    }
+  }
+  @media (min-width: 992px) {
+    .rocket-wrapper {
+      position: absolute;
+      top: 101px;
+    }
+    .n-5000 {
+      left: 0px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .rocket-wrapper {
+      left: 100px;
+    }
+    .n-5000 {
+      left: -4px;
+    }
+  }
+}
