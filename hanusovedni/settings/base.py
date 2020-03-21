@@ -146,6 +146,8 @@ LANGUAGES = [
     # ('en', _('English')),
 ]
 
+# Disabled because of bug in Wagtail
+# WAGTAILFRONTENDCACHE_LANGUAGES = [lang[0] for lang in LANGUAGES]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

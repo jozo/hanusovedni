@@ -17,7 +17,6 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DATABASES["default"]["PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
 
-
 STATIC_ROOT = "/static_root"
 
 MEDIA_ROOT = "/media_root"
@@ -29,8 +28,6 @@ WAGTAILFRONTENDCACHE = {
         "ZONEID": os.environ["CLOUDFLARE_ZONEID"],
     },
 }
-
-WAGTAILFRONTENDCACHE_LANGUAGES = [lang[0] for lang in LANGUAGES]
 
 sentry_sdk.init(
     dsn=os.environ["SENTRY_DSN"],
