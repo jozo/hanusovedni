@@ -105,7 +105,7 @@ venv.bak/
 
 node_modules/
 .idea/
-media/
-static/
+/media/
+/static/
 pgdata/
-backup/
+/backup/

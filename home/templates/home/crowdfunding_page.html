@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block extra_js %}
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'js/home/crowdfunding.js' %}"></script>
+{% endblock %}
+
+{% block body_class %}template-crowdfunding{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <header>
+      {% include "logo_and_description.html" %}
+    </header>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 d-flex flex-column align-items-center">
+          <h2 class="help text-center mt-5 mt-md-0">
+            <span>{% include_block page.body.0 %}</span>
+            <br>
+            <span class="colorful">{% include_block page.body.1 %}</span>
+          </h2>
+
+          <iframe src="{% include_block page.body.2 %}"
+                  frameborder="0"
+                  scrolling="no"
+                  class="darujme-iframe"
+                  height="300px"
+                  id="darujme-widget"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="rocket-wrapper">
+      <div class="d-flex justify-content-center">
+        <div class="thermometer">
+          <div class="scale"></div>
+          <div class="mercury" id="mercury"></div>
+          <div class="number n-1">1</div>
+          <div class="number n-2">2</div>
+          <div class="number n-3">3</div>
+          <div class="number n-4">4</div>
+          <div class="number n-5000">5000€</div>
+          <img src="{% static 'img/rocket.gif' %}" class="rocket">
+        </div>
+      </div>
+    </div>
+
+    <footer class="container-fluid py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-4 text-center font-weight-bold">
+          <h3 class="font-weight-bold">{% include_block page.body.3 %}</h3>
+          <p>
+            {% include_block page.body.4 %}
+          </p>
+          <p>
+            <a href="/" class="btn btn-lg btn-outline-warning">{% include_block page.body.5 %}</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+{% endblock %}

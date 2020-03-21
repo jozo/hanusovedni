@@ -108,6 +108,7 @@ class FestivalPage(Page):
     promote_panels = Page.promote_panels + [InlinePanel("menu_items", label=_("Menu"))]
     subpage_types = [
         "home.ProgramIndexPage",
+        "home.CrowdfundingPage",
     ]
 
     @property
@@ -628,6 +629,19 @@ class PartnersPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
+        return context
+
+
+class CrowdfundingPage(Page):
+    body = StreamField([("text", blocks.TextBlock())])
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel("body"),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
         return context
 
 
