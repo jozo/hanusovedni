@@ -78,7 +78,7 @@ class FestivalPage(Page):
             (
                 "hero_buttons",
                 blocks.StructBlock(
-                    [("title", blocks.CharBlock()), ("link", blocks.URLBlock()),]
+                    [("title", blocks.CharBlock()), ("link", blocks.CharBlock())]
                 ),
             ),
         ],
