@@ -12,6 +12,8 @@ from search import views as search_views
 from home import views
 
 
+handler404 = views.handler404
+
 urlpatterns = [
     url(r"^admin/django/", admin.site.urls),
     url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
