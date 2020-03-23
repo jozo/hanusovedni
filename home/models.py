@@ -71,7 +71,7 @@ class FestivalPage(Page):
         default=timezone.now, verbose_name=_("koniec festivalu")
     )
     place = models.CharField(
-        max_length=50, default="Malá scéna STU", verbose_name=_("miesto")
+        max_length=50, null=True, blank=True, verbose_name=_("miesto")
     )
     hero_text = RichTextField(blank=True)
     hero_buttons = StreamField(

@@ -49,7 +49,7 @@
                         </time>
                       {% endifequal %}
                     </div>
-                    <div class="place">{{ festival.place }}</div>
+                    <div class="place">{{ festival.place|default_if_none:"" }}</div>
                   </div>
                 </div>
               </div>
