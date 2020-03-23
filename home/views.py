@@ -16,5 +16,5 @@ def redirect_events(request, slug):
 
 
 def handler404(request, exception):
-    capture_message(f"Error 404 {request.path}")
+    # capture_message(f"Error 404 {request.path}")
     return page_not_found(request, exception)
