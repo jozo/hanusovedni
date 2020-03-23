@@ -5,6 +5,7 @@ HanusoveDni.sk
 
 s = Site.objects.get()
 s.hostname = "hanusovedni.online"
+s.port = 443
 s.save()
 
 from django.core.cache import cache
