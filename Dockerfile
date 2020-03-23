@@ -21,11 +21,10 @@ COPY --from=compile-image ["/usr/lib/x86_64-linux-gnu/libpq.so.5", "/lib/x86_64-
 
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/opt/venv/bin:$PATH"
+EXPOSE 8000
 
 RUN useradd -m wagtail
 USER wagtail
 
 COPY --chown=wagtail:wagtail . /code/
 WORKDIR /code/
-
-EXPOSE 8000
