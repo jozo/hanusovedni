@@ -11,6 +11,7 @@ function css() {
 
 function watchFiles() {
   watch('./hanusovedni/static/sass/**/*.scss', {ignoreInitial: false}, css)
+  watch('./hanusovedni/static/js/**/*.js').on('change', browserSync.reload)
   watch(['./hanusovedni/templates/**/*.html', './home/templates/**/*.html']).on('change', browserSync.reload)
 }
 
