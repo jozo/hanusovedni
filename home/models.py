@@ -152,6 +152,11 @@ class FestivalPage(Page):
         context["header_festival"] = self
         return context
 
+    def get_template(self, request, *args, **kwargs):
+        if self.slug == "bhd-online":
+            return "home/festival_page_online.html"
+        return super().get_template(request, *args, **kwargs)
+
 
 class HeroImage(Orderable):
     page = ParentalKey(
@@ -402,6 +407,8 @@ class ProgramIndexPage(Page):
             k: list(v)
             for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
         }
+        if self.get_parent().slug == "bhd-online":
+            context["message_empty"] = "Program prvého BHD ONLINE už čoskoro…"
         return context
 
 
