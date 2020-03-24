@@ -27,7 +27,7 @@
               <div class="carousel-inner h-100">
                 {% for hero_image in page.hero_images.all %}
                   <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
-                    <a href="{{ hero_image.url }}">
+                    <a href="{{ hero_image.url }}" target="_blank">
                       {% image hero_image.image original format-jpeg as tmp_photo %}
                       <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
                     </a>
