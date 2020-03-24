@@ -26,10 +26,11 @@
           <h2 class="help text-center mt-5 mt-md-0">
             <span>{% include_block page.body.0 %}</span>
             <br>
-            <span class="colorful">{% include_block page.body.1 %}</span>
+            <span class="colorful yellow">{% include_block page.body.1 %}</span>
+            <span class="colorful red">{% include_block page.body.2 %}</span>
           </h2>
 
-          <iframe src="{% include_block page.body.2 %}"
+          <iframe src="{% include_block page.body.3 %}"
                   frameborder="0"
                   scrolling="no"
                   class="darujme-iframe"
@@ -57,12 +58,12 @@
     <footer class="container-fluid py-5">
       <div class="row justify-content-center">
         <div class="col-md-4 text-center font-weight-bold">
-          <h3 class="font-weight-bold">{% include_block page.body.3 %}</h3>
+          <h3 class="font-weight-bold">{% include_block page.body.4 %}</h3>
           <p>
-            {% include_block page.body.4 %}
+            {% include_block page.body.5 %}
           </p>
           <p>
-            <a href="/" class="btn btn-lg btn-outline-warning">{% include_block page.body.5 %}</a>
+            <a href="/" class="btn btn-lg btn-outline-warning">{% include_block page.body.6 %}</a>
           </p>
         </div>
       </div>

@@ -8,8 +8,13 @@
   }
 
   .colorful {
-    color: #EDA605;
-    font-size: 35px;
+    font-size: 1.85rem;
+    &.yellow {
+      color: $c-special;
+    }
+    &.red {
+      color: $c-red-light;
+    }
   }
 
   footer {
