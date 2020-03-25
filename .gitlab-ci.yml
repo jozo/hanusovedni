@@ -38,37 +38,79 @@ deploy_to_staging:
   before_script:
     - apk add curl
     - mkdir -p ~/.ssh
-    - echo "${DEPLOY_SERVER_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+    - echo "${STAGING_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
-    - ssh-keyscan -H ${DEPLOY_SERVER_IP} >> ~/.ssh/known_hosts
+    - ssh-keyscan -H ${STAGING_IP} >> ~/.ssh/known_hosts
   script:
-    - scp -r docker-compose.yml docker-compose.prod.yml root@${DEPLOY_SERVER_IP}:~/
-    - scp ${SECRETS_STAGING} root@${DEPLOY_SERVER_IP}:~/secrets.env
-    - ssh root@${DEPLOY_SERVER_IP} "docker system prune --all --force"
-    - ssh root@${DEPLOY_SERVER_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
-    - ssh root@${DEPLOY_SERVER_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
-    - "ssh root@${DEPLOY_SERVER_IP} \"
+    - scp -r docker-compose.yml docker-compose.prod.yml root@${STAGING_IP}:~/
+    - scp ${STAGING_SECRETS} root@${STAGING_IP}:~/secrets.env
+    - ssh root@${STAGING_IP} "docker system prune --all --force"
+    - ssh root@${STAGING_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
+    - ssh root@${STAGING_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
+    - "ssh root@${STAGING_IP} \"
         docker run --rm
         --network hanus-net
         --env-file secrets.env
         -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
         ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py migrate --no-input\""
-    - "ssh root@${DEPLOY_SERVER_IP} \"
+    - "ssh root@${STAGING_IP} \"
         docker run --rm
         -v /var/www/static:/static_root
         --env-file secrets.env
         -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
         ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py collectstatic --no-input\""
-    - "ssh root@${DEPLOY_SERVER_IP} \"
+    - "ssh root@${STAGING_IP} \"
         WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
         docker stack deploy
         -c docker-compose.yml
         -c docker-compose.prod.yml
         --with-registry-auth hanusovedni\""
     - echo "Deployment done succesfully"
-    - "curl -X POST \"https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONEID}/purge_cache\" \
-        -H \"Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}\" \
+    - "curl -X POST \"https://api.cloudflare.com/client/v4/zones/${STAGING_CLOUDFLARE_ZONEID}/purge_cache\" \
+        -H \"Authorization: Bearer ${STAGING_CLOUDFLARE_BEARER_TOKEN}\" \
+        -H \"Content-Type: application/json\" \
+        --data '{\"purge_everything\":true}'"
+
+
+deploy_to_production:
+  stage: deploy
+  when: manual
+  before_script:
+    - apk add curl
+    - mkdir -p ~/.ssh
+    - echo "${PROD_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H ${PROD_IP} >> ~/.ssh/known_hosts
+  script:
+    - scp -r docker-compose.yml docker-compose.prod.yml root@${PROD_IP}:~/
+    - scp ${PROD_SECRETS} root@${PROD_IP}:~/secrets.env
+    - ssh root@${PROD_IP} "docker system prune --all --force"
+    - ssh root@${PROD_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
+    - ssh root@${PROD_IP} "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
+    - "ssh root@${PROD_IP} \"
+        docker run --rm
+        --network hanus-net
+        --env-file secrets.env
+        -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
+        ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py migrate --no-input\""
+    - "ssh root@${PROD_IP} \"
+        docker run --rm
+        -v /var/www/static:/static_root
+        --env-file secrets.env
+        -e DJANGO_SETTINGS_MODULE=\"hanusovedni.settings.production\"
+        ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} python manage.py collectstatic --no-input\""
+    - "ssh root@${PROD_IP} \"
+        WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
+        docker stack deploy
+        -c docker-compose.yml
+        -c docker-compose.prod.yml
+        --with-registry-auth hanusovedni\""
+    - echo "Deployment done succesfully"
+    - "curl -X POST \"https://api.cloudflare.com/client/v4/zones/${PROD_CLOUDFLARE_ZONEID}/purge_cache\" \
+        -H \"Authorization: Bearer ${PROD_CLOUDFLARE_BEARER_TOKEN}\" \
         -H \"Content-Type: application/json\" \
         --data '{\"purge_everything\":true}'"
