@@ -42,7 +42,8 @@ def replace_tags_with_space(value):
 
 
 def last_festival():
-    return FestivalPage.objects.live().order_by("end_date").last()
+    # TODO move this to settings
+    return FestivalPage.objects.get(slug="bhd-online")
 
 
 class HomePage(Page):
