@@ -35,6 +35,9 @@ build:
 
 deploy_to_staging:
   stage: deploy
+  environment:
+    name: staging
+    url: https://hanusovedni.online
   before_script:
     - apk add curl
     - mkdir -p ~/.ssh
@@ -77,6 +80,9 @@ deploy_to_staging:
 deploy_to_production:
   stage: deploy
   when: manual
+  environment:
+    name: production
+    url: https://hanusovedni.sk
   before_script:
     - apk add curl
     - mkdir -p ~/.ssh
