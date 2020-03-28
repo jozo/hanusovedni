@@ -4,7 +4,11 @@
 
 {% block og_image %}
   {% image speaker.photo original format-jpeg as og_photo %}
-  <meta property="og:image" content="{{ og_photo.url }}"/>
+  {{ self.get_url_parts.1 }}{{ og_photo.url }}
+{% endblock %}
+{% block og_url %}{{ self.get_permanent_url }}{% endblock %}
+{% block extra_meta %}
+  <meta property="og:description" content="{{ self.description|striptags|truncatewords:15 }}"/>
 {% endblock %}
 
 {% block body_class %}template-speaker{% endblock %}

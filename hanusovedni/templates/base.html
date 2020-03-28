@@ -1,5 +1,4 @@
-{% load static %}
-{% load wagtailuserbar %}
+{% load static i18n i18n_extra %}
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -17,9 +16,13 @@
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  {% block og_image %}
-    <meta property="og:image" content="{% static 'img/default_og_image.png' %}" />
-  {% endblock %}
+  <meta property="og:title" content="{% block og_title %}{{ self.title }}{% endblock %}"/>
+  <meta property="og:image"
+        content="{% block og_image %}{{ self.get_url_parts.1 }}{% static 'img/default_og_image.png' %}{% endblock %}"/>
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}"/>
+  <meta property="og:url" content="{% block og_url %}{{ self.get_full_url }}{% endblock %}"/>
+  <meta property="og:locale" content="{% current_locale %}"/>
+  {% block extra_meta %}{% endblock %}
 
   {% include "favicon.html" %}
 

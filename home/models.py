@@ -324,6 +324,12 @@ class Speaker(Page):
         page_path.insert(-2, str(self.speaker_id))
         return site_id, root_url, "/".join(page_path)
 
+    def get_permanent_url(self, request=None):
+        site_id, root_url, page_path = super().get_url_parts(request)
+        page_path = page_path.split("/")
+        page_path[-2] = str(self.speaker_id)
+        return root_url + "/".join(page_path)
+
     def save(self, *args, **kwargs):
         if self.speaker_id is None:
             last_speaker_id = (
@@ -513,6 +519,12 @@ class Event(Page):
         page_path = page_path.split("/")
         page_path.insert(-2, str(self.event_id))
         return site_id, root_url, "/".join(page_path)
+
+    def get_permanent_url(self, request=None):
+        site_id, root_url, page_path = super().get_url_parts(request)
+        page_path = page_path.split("/")
+        page_path[-2] = str(self.event_id)
+        return root_url + "/".join(page_path)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)

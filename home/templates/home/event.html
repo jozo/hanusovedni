@@ -11,6 +11,11 @@
   <script src="https://kit.fontawesome.com/8a0d4a7b33.js" crossorigin="anonymous"></script>
 {% endblock %}
 
+{% block og_url %}{{ self.get_permanent_url }}{% endblock %}
+{% block extra_meta %}
+  <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
+{% endblock %}
+
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
