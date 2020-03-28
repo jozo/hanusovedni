@@ -4,6 +4,10 @@
 {% load wagtailimages_tags %}
 {% load wagtailembeds_tags %}
 
+{% block title_suffix %}
+  {# We don't want to add suffix to festival page because it would be duplicated #}
+{% endblock %}
+
 {% block body_class %}template-festival{% endblock %}
 
 {% block content %}
