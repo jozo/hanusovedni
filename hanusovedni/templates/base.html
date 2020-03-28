@@ -17,7 +17,9 @@
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <meta property="og:image" content="{% static 'img/default_og_image.png' %}" />
+  {% block og_image %}
+    <meta property="og:image" content="{% static 'img/default_og_image.png' %}" />
+  {% endblock %}
 
   {% include "favicon.html" %}
 

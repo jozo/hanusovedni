@@ -2,6 +2,11 @@
 
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 
+{% block og_image %}
+  {% image speaker.photo original format-jpeg as og_photo %}
+  <meta property="og:image" content="{{ og_photo.url }}"/>
+{% endblock %}
+
 {% block body_class %}template-speaker{% endblock %}
 
 {% block content %}
