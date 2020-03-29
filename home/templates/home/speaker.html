@@ -2,10 +2,7 @@
 
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 
-{% block og_image %}
-  {% image speaker.photo original format-jpeg as og_photo %}
-  {{ self.get_url_parts.1 }}{{ og_photo.url }}
-{% endblock %}
+{% block og_image %}{% image speaker.photo original format-jpeg as og_photo %}{{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
 {% block extra_meta %}
   <meta property="og:description" content="{{ self.description|striptags|truncatewords:15 }}"/>
 {% endblock %}
