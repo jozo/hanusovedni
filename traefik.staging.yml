@@ -1,0 +1,14 @@
+entryPoints:
+  web-entry:
+    address: :80
+  web-entry-secure:
+    address: :443
+
+
+api:
+  dashboard: true
+
+
+providers:
+  docker:
+    exposedByDefault: false

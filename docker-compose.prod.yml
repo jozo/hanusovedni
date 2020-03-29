@@ -5,16 +5,13 @@ version: "3"
 services:
   web:
     image: ${WEB_IMAGE}
-    ports:
-      - "80:8000"
     env_file:
       - secrets.env
     environment:
       DJANGO_SETTINGS_MODULE: "hanusovedni.settings.production"
     volumes:
-      - /var/www/static:/static_root
-      - /var/www/media:/media_root
-      - /etc/mime.types:/etc/mime.types
+      - /var/www/static:/usr/share/nginx/static:ro
+      - /var/www/media:/usr/share/nginx/media:ro
     healthcheck:
       test: python -c "import requests; requests.get('http://localhost:8000', timeout=5).raise_for_status()"
       interval: 1m
@@ -27,9 +24,34 @@ services:
           memory: 400M
       restart_policy:
         condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"
+        - "traefik.http.routers.web-https-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"
+        - "traefik.http.routers.web-https-router.tls"
+
+  nginx:
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.nginx-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`) && PathPrefix(`/static/`, `/media/`)"
+        - "traefik.http.routers.nginx-https-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`) && PathPrefix(`/static/`, `/media/`)"
+        - "traefik.http.routers.nginx-https-router.tls"
 
   db:
     env_file:
       - secrets.env
     volumes:
       - /var/www/pgdata:/var/lib/postgresql/data/pgdata
+
+  reverse-proxy:
+    volumes:
+      - ./traefik.${ENVIRONMENT}.yml:/etc/traefik/traefik.yml:delegated
+    deploy:
+      labels:
+        - "traefik.http.routers.api.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"
+        - "traefik.http.routers.api.service=api@internal"
+        - "traefik.http.routers.api.middlewares=auth"
+        - "traefik.http.middlewares.auth.basicauth.users=admin:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+        # Dummy service for Swarm port detection. The port can be any valid integer value.
+        - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"

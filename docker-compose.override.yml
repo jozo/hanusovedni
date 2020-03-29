@@ -8,16 +8,22 @@ services:
       - ./pgdata:/var/lib/postgresql/data/pgdata:delegated
       - .:/code:delegated
     ports:
-    - "5432:5432"
+      - "5432:5432"
 
   web:
+    ports:
+      - "8000:8000"
     volumes:
       - .:/code:delegated
       - /Users/jozo/d/bhd/assets:/bhd_images:delegated
       - /Users/jozo/d/bhd/wp-content/themes/bhd/assets/img/illustrations:/bhd_illustrations:delegated
-    ports:
-      - 9191:9191
-    environment:
-      - DJANGO_ENV=dev
     command: ./manage.py runserver 0:8000
-#    command: uwsgi --http 0.0.0.0:8000 --chdir /code/ --wsgi-file hanusovedni/wsgi.py --master --processes 2 --threads 2 --stats 0.0.0.0:9191 --static-map /static=/code/static --static-map /media=/code/media
+
+  nginx:
+    volumes:
+      - ./static:/usr/share/nginx/static:delegated
+      - ./media:/usr/share/nginx/media:delegated
+
+  reverse-proxy:
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml:delegated
