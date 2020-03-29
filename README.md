@@ -11,6 +11,10 @@ s.save()
 from django.core.cache import cache
 cache.clear()
 
+Monitoring
+----------
+https://uptimerobot.com/
+
 DB backup
 ---------
 ```shell script
