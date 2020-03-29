@@ -46,7 +46,7 @@ services:
 
   reverse-proxy:
     volumes:
-      - ./traefik.${ENVIRONMENT}.yml:/etc/traefik/traefik.yml:delegated
+      - ./traefik.yml:/etc/traefik/traefik.yml:delegated
     deploy:
       labels:
         - "traefik.http.routers.api.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"

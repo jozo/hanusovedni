@@ -47,7 +47,8 @@ deploy_to_staging:
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H ${STAGING_IP} >> ~/.ssh/known_hosts
   script:
-    - scp -r docker-compose.yml docker-compose.prod.yml root@${STAGING_IP}:~/
+    - scp -r docker-compose.yml docker-compose.prod.yml nginx.conf root@${STAGING_IP}:~/
+    - scp -r traefik.staging.yml root@${STAGING_IP}:~/traefik.yml
     - scp ${STAGING_SECRETS} root@${STAGING_IP}:~/secrets.env
     - ssh root@${STAGING_IP} "docker system prune --all --force"
     - ssh root@${STAGING_IP} "echo \"WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}\" >> secrets.env"
