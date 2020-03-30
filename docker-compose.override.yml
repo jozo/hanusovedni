@@ -5,8 +5,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=hanusovedni
     volumes:
-      - ./pgdata:/var/lib/postgresql/data/pgdata:delegated
-      - .:/code:delegated
+      - ./docker/pgdata:/var/lib/postgresql/data/pgdata:delegated
     ports:
       - "5432:5432"
 
@@ -14,16 +13,17 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/code:delegated
-      - /Users/jozo/d/bhd/assets:/bhd_images:delegated
-      - /Users/jozo/d/bhd/wp-content/themes/bhd/assets/img/illustrations:/bhd_illustrations:delegated
+      - ./src:/code:delegated
+      - ./docker/static:/static_root:delegated
+      - ./docker/media:/media_root:delegated
     command: ./manage.py runserver 0:8000
 
   nginx:
     volumes:
-      - ./static:/usr/share/nginx/static:delegated
-      - ./media:/usr/share/nginx/media:delegated
+      - ./docker/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/static:/usr/share/nginx/static:delegated
+      - ./docker/media:/usr/share/nginx/media:delegated
 
   reverse-proxy:
     volumes:
-      - ./traefik.yml:/etc/traefik/traefik.yml:delegated
+      - ./docker/config/traefik.yml:/etc/traefik/traefik.yml:delegated

@@ -11,13 +11,11 @@ entryPoints:
 
 
 api:
-  insecure: true
   dashboard: true
-  debug: true
+  insecure: true
 
 
 providers:
   docker:
     exposedByDefault: false
-#    endpoint: "tcp://127.0.0.1:2375"
     swarmMode: true

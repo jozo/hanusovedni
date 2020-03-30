@@ -1,7 +1,3 @@
-debug: True
-log:
-  level: DEBUG
-
 entryPoints:
   web-entry:
     address: :80
@@ -9,12 +5,7 @@ entryPoints:
     address: :443
 
 
-api:
-  insecure: true
-  dashboard: true
-  debug: true
-
-
 providers:
   docker:
     exposedByDefault: false
+    swarmMode: true

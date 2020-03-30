@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 COPY ["pyproject.toml", "poetry.lock", "/root/"]
 RUN cd "/root/" && . "/opt/venv/bin/activate" && poetry install
 
-# TODO install dev packages only during development, not in production
-
 
 FROM python:3.8-slim AS runtime-image
 COPY --from=compile-image /opt/venv /opt/venv
@@ -25,5 +23,5 @@ EXPOSE 8000
 RUN useradd -m wagtail
 USER wagtail
 
-COPY --chown=wagtail:wagtail . /code/
+COPY --chown=wagtail:wagtail ./src /code
 WORKDIR /code/

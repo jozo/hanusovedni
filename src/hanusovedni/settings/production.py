@@ -17,10 +17,6 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DATABASES["default"]["PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
 
-STATIC_ROOT = "/static_root"
-
-MEDIA_ROOT = "/media_root"
-
 WAGTAILFRONTENDCACHE = {
     "cloudflare": {
         "BACKEND": "wagtail.contrib.frontend_cache.backends.CloudflareBackend",

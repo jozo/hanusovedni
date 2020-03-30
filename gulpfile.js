@@ -3,16 +3,16 @@ const sass = require('gulp-sass')
 const browserSync = require('browser-sync').create()
 
 function css() {
-  return src('./hanusovedni/static/sass/style.scss')
+  return src('./src/hanusovedni/static/sass/style.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-    .pipe(dest('./hanusovedni/static/css/'))
+    .pipe(dest('./src/hanusovedni/static/css/'))
     .pipe(browserSync.stream())
 }
 
 function watchFiles() {
-  watch('./hanusovedni/static/sass/**/*.scss', {ignoreInitial: false}, css)
-  watch('./hanusovedni/static/js/**/*.js').on('change', browserSync.reload)
-  watch(['./hanusovedni/templates/**/*.html', './home/templates/**/*.html']).on('change', browserSync.reload)
+  watch('./src/hanusovedni/static/sass/**/*.scss', {ignoreInitial: false}, css)
+  watch('./src/hanusovedni/static/js/**/*.js').on('change', browserSync.reload)
+  watch(['./src/hanusovedni/templates/**/*.html', './src/home/templates/**/*.html']).on('change', browserSync.reload)
 }
 
 function serve() {
