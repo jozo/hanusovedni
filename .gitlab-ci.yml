@@ -1,18 +1,36 @@
-image: tmaier/docker-compose:latest
-services:
-  - docker:dind
-
-before_script:
-  - docker version
-  - docker-compose --version
-  - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
-
 stages:
+  - test
   - build
   - deploy
 
+.test-script: &test-script
+    stage: test
+    script:
+      - echo "Ahoj"
+      - echo ${BLA}
+      - printenv
+
+
+test-test:staging:
+  <<: *test-script
+  environment:
+    name: staging
+
+
+test-test:production:
+  <<: *test-script
+  environment:
+    name: production
+
+
 build:
   stage: build
+  image: docker:19.03.8
+  services:
+    - docker:dind
+  before_script:
+    - docker version
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
   script:
     - set -euo pipefail
     # Pull the latest version of the image, in order to populate the build cache:
@@ -35,11 +53,12 @@ build:
 
 deploy_to_staging:
   stage: deploy
+  image: kroniak/ssh-client:3.9
   environment:
     name: staging
     url: https://hanusovedni.online
   before_script:
-    - apk add curl
+#    - apk add curl
     - mkdir -p ~/.ssh
     - echo "${STAGING_PRIVATE_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
