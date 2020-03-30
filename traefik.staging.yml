@@ -1,3 +1,8 @@
+debug: True
+log:
+  level: DEBUG
+
+
 entryPoints:
   web-entry:
     address: :80
@@ -6,9 +11,13 @@ entryPoints:
 
 
 api:
+  insecure: true
   dashboard: true
+  debug: true
 
 
 providers:
   docker:
     exposedByDefault: false
+#    endpoint: "tcp://127.0.0.1:2375"
+    swarmMode: true

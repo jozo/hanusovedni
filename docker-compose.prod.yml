@@ -26,9 +26,11 @@ services:
         condition: on-failure
       labels:
         - "traefik.enable=true"
+        - "traefik.docker.network=hanus-net"
         - "traefik.http.routers.web-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"
         - "traefik.http.routers.web-https-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`)"
         - "traefik.http.routers.web-https-router.tls"
+        - "traefik.http.services.web.loadbalancer.server.port=8000"
 
   nginx:
     volumes:
@@ -37,9 +39,11 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
+        - "traefik.docker.network=hanus-net"
         - "traefik.http.routers.nginx-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`) && PathPrefix(`/static/`, `/media/`)"
         - "traefik.http.routers.nginx-https-router.rule=Host(`hanusovedni.online`, `hanusovedni.sk`) && PathPrefix(`/static/`, `/media/`)"
         - "traefik.http.routers.nginx-https-router.tls"
+        - "traefik.http.services.nginx.loadbalancer.server.port=80"
 
   db:
     env_file:
