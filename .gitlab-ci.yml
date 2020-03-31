@@ -127,3 +127,33 @@ build-image:on-schedule:
     # Build compile stage without any cache so new images from docker hub will be used
     - docker build --target compile-image --tag ${CI_REGISTRY_IMAGE}:compile-stage .
     - docker push ${CI_REGISTRY_IMAGE}:compile-stage
+
+.backup-db:
+  image: kroniak/ssh-client:3.9
+  stage: build
+  only:
+    - schedules
+  script:
+    - mkdir -p ~/.ssh
+    - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - scp $RCLONE_CONF $SERVER:~/rclone.conf
+    - DB_CONTAINER=$(ssh $SERVER "echo \$(docker ps | grep hanusovedni_db | cut -d' ' -f1)")
+    - BACKUP_FILE=$(date +%F).sql.gz
+    - echo $DB_CONTAINER && echo $BACKUP_FILE
+    - ssh $SERVER "docker exec $DB_CONTAINER pg_dump -U hanusovedni -d hanusovedni | gzip > /tmp/$BACKUP_FILE"
+    - 'ssh $SERVER "docker run --rm
+          -v \$PWD/rclone.conf:/config/rclone/rclone.conf
+          -v /tmp:/backup
+          rclone/rclone copy
+          /backup/$BACKUP_FILE dropbox:backup/hanusovedni/${CI_ENVIRONMENT_NAME}"'
+
+backup-db:staging:
+  extends:
+    - .backup-db
+    - .staging
+
+backup-db:production:
+  extends:
+    - .backup-db
+    - .production
