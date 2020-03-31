@@ -10,6 +10,8 @@ build-image:
   image: docker:19.03.8
   services:
     - docker:dind
+  except:
+    - schedules
   before_script:
     - docker version
     - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
@@ -35,6 +37,8 @@ build-image:
 
 .deploy:
   image: kroniak/ssh-client:3.9
+  except:
+    - schedules
   variables:
     DOCKER_RUN: 'docker run --rm
                   --network hanus-net
@@ -86,6 +90,8 @@ deploy:production:
 
 .purge-cache:
   image: curlimages/curl:7.69.1
+  except:
+    - schedules
   script:
     - "curl -X POST 'https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONEID}/purge_cache'
         -H 'Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}'
@@ -106,8 +112,9 @@ purge-cache:production:
     - .production
 
 
-refresh-build-cache:on-schedule:
+build-image:on-schedule:
   image: docker:19.03.8
+  stage: build
   services:
     - docker:dind
   only:
