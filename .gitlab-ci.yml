@@ -104,3 +104,19 @@ purge-cache:production:
   extends:
     - .purge-cache
     - .production
+
+
+refresh-build-cache:on-schedule:
+  image: docker:19.03.8
+  services:
+    - docker:dind
+  only:
+    - schedules
+  before_script:
+    - docker version
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}
+  script:
+    - set -euo pipefail
+    # Build compile stage without any cache so new images from docker hub will be used
+    - docker build --target compile-image --tag ${CI_REGISTRY_IMAGE}:compile-stage .
+    - docker push ${CI_REGISTRY_IMAGE}:compile-stage
