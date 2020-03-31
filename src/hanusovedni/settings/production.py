@@ -30,9 +30,6 @@ sentry_sdk.init(
     integrations=[DjangoIntegration()],
     # If you wish to associate users to errors (assuming you are using
     # django.contrib.auth) you may enable sending PII data.
-    # send_default_pii=True
+    send_default_pii=True,
+    environment=os.environ["ENVIRONMENT"],
 )
-
-SILKY_AUTHENTICATION = True  # User must login
-SILKY_AUTHORISATION = True  # User must have permissions
-SILKY_PERMISSIONS = lambda user: user.is_superuser
