@@ -52,7 +52,6 @@ build-image:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - scp -r docker-compose.yml docker-compose.prod.yml ./docker/config/* $SERVER:~/
     - scp $SECRETS $SERVER:~/secrets.env
-    - ssh $SERVER "echo "WEB_IMAGE=${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}" >> secrets.env"
     - ssh $SERVER "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
     - ssh $SERVER "docker system prune --all --force"
     - ssh $SERVER "$DOCKER_RUN python manage.py migrate --no-input"
