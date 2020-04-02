@@ -81,10 +81,12 @@
             <div class="description">
               {{ page.description|richtext }}
             </div>
-            <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
-               role="button" target="_blank">
-              Kúpiť lístok
-            </a>
+            {% if page.date_and_time.date >= today %}
+              <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
+                 role="button" target="_blank">
+                Kúpiť lístok
+              </a>
+            {% endif %}
           </article>
         </div>
       </div>
