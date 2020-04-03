@@ -1,3 +1,7 @@
+log:
+  level: WARN
+
+
 entryPoints:
   web-entry:
     address: :80

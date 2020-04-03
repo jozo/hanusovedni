@@ -57,10 +57,10 @@ services:
   reverse-proxy:
     volumes:
       - ./traefik.${ENVIRONMENT}.yml:/etc/traefik/traefik.yml:ro
-    deploy:
-      labels:
-        - "traefik.enable=true"
-        - "traefik.http.routers.api.rule=Host(`traefik.hanusovedni.online`, `traefik.hanusovedni.sk`)"
-        - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
-        - "traefik.http.routers.api.entryPoints=traefik"
-        - "traefik.http.routers.api.service=api@internal"
+#    deploy:
+#      labels:
+#        - "traefik.enable=true"
+#        - "traefik.http.routers.api.rule=Host(`traefik.hanusovedni.online`, `traefik.hanusovedni.sk`)"
+#        - "traefik.http.services.dummy-svc.loadbalancer.server.port=9999"
+#        - "traefik.http.routers.api.entryPoints=traefik"
+#        - "traefik.http.routers.api.service=api@internal"
