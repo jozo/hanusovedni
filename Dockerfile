@@ -21,7 +21,7 @@ ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 EXPOSE 8000
 
-RUN useradd -m wagtail
+RUN useradd -m wagtail && chown -R wagtail:wagtail $VIRTUAL_ENV
 USER wagtail
 
 COPY --chown=wagtail:wagtail ./src /code
