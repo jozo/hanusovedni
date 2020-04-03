@@ -20,6 +20,7 @@ urlpatterns = [
     url(r"^admin/", include(wagtailadmin_urls)),
     url(r"^recnici/(.*)/$", views.redirect_speakers),
     url(r"^archiv/(.*)/$", views.redirect_events),
+    url(r"^program/(.*)/$", views.redirect_events),
     url(r"^documents/", include(wagtaildocs_urls)),
 ]
 
