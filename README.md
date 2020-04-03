@@ -15,6 +15,26 @@ Monitoring
 ----------
 https://uptimerobot.com/
 
+### Logz.io
+```shell script
+docker run --name docker-collector-metrics \
+-d --restart=always \
+--env LOGZIO_TOKEN="{{METRICS TOKEN}}" \
+--env LOGZIO_MODULES="docker" \
+--env LOGZIO_REGION="eu" \
+-v /var/run/docker.sock:/var/run/docker.sock:ro \
+logzio/docker-collector-metrics
+
+
+docker run --name docker-collector-logs \
+-d --restart=always \
+--env LOGZIO_TOKEN="{{ACCOUNT TOKEN}}" \
+--env LOGZIO_URL="listener-eu.logz.io:5015" \
+-v /var/run/docker.sock:/var/run/docker.sock:ro \
+-v /var/lib/docker/containers:/var/lib/docker/containers \
+logzio/docker-collector-logs
+```
+
 DB backup
 ---------
 ```shell script
