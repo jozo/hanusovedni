@@ -20,12 +20,11 @@ from wagtail.admin.edit_handlers import (
     FieldRowPanel,
     InlinePanel,
     MultiFieldPanel,
-    StreamFieldPanel,
     PageChooserPanel,
+    StreamFieldPanel,
 )
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.contrib.settings.models import BaseSetting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
@@ -689,15 +688,17 @@ class CrowdfundingPage(Page):
 
 
 def purge_cache_for_indexes(blog_page):
+    pages = set()
     batch = PurgeBatch()
     for event_index in EventIndexPage.objects.live():
-        batch.add_page(event_index)
+        pages.add(event_index)
     for program_index in ProgramIndexPage.objects.live():
-        batch.add_page(program_index)
+        pages.add(program_index)
     for festival_page in FestivalPage.objects.live():
-        batch.add_page(festival_page)
-    batch.add_page(HomePage.objects.get())
-    batch.add_page(blog_page)
+        pages.add(festival_page)
+    pages.add(HomePage.objects.get())
+    pages.add(blog_page)
+    batch.add_pages(pages)
     batch.purge()
 
 
