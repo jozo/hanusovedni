@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
@@ -22,6 +23,10 @@ urlpatterns = [
     url(r"^archiv/(.*)/$", views.redirect_events),
     url(r"^program/(.*)/$", views.redirect_events),
     url(r"^documents/", include(wagtaildocs_urls)),
+    url(
+        r"^robots\.txt/$",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
+    ),
 ]
 
 urlpatterns += i18n_patterns(
@@ -45,4 +50,4 @@ if settings.DEBUG:
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += [url(r'^__debug__/', include(debug_toolbar.urls))]
+    urlpatterns += [url(r"^__debug__/", include(debug_toolbar.urls))]
