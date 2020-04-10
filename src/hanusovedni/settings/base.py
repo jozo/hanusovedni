@@ -143,10 +143,10 @@ USE_TZ = False
 
 LANGUAGES = [
     ("sk", _("Slovak")),
-    # ('en', _('English')),
+    ('en', _('English')),
 ]
 
-# Disabled because of bug in Wagtail
+# Disabled because of a bug in Wagtail
 # WAGTAILFRONTENDCACHE_LANGUAGES = [lang[0] for lang in LANGUAGES]
 
 # Static files (CSS, JavaScript, Images)

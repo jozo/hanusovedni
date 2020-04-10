@@ -1,7 +1,8 @@
 {% load static i18n i18n_extra %}
 
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<html class="no-js" lang="{{ LANGUAGE_CODE }}">
 <head>
   <meta charset="utf-8"/>
   <title>
