@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags i18n %}
 
 {% block title_suffix %}
   {# We don't want to add suffix to festival page because it would be duplicated #}
+{% endblock %}
+{% block title %}
+  {% get_current_language as LANGUAGE_CODE %}
+  {% if LANGUAGE_CODE == "en" %}
+    {{ page.formatted_title_en|striptags }}
+  {% else %}
+    {{ page.formatted_title_sk|striptags }}
+  {% endif %}
 {% endblock %}
 
 {% block body_class %}template-festival{% endblock %}

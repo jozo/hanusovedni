@@ -209,7 +209,7 @@ class FestivalPage(Page):
 
     def save(self, *args, **kwargs):
         self.draft_title = " ".join(
-            replace_tags_with_space(self.formatted_title).split()
+            replace_tags_with_space(self.formatted_title_sk).split()
         )
         self.title = self.draft_title
         if "updated_fields" in kwargs:
@@ -692,8 +692,8 @@ class ContactPage(Page):
         on_delete=models.SET_NULL,
         related_name="l_img+",
     )
-    left_text_sk = RichTextField()
-    left_text_en = RichTextField()
+    left_text_sk = RichTextField(blank=True, null=True)
+    left_text_en = RichTextField(blank=True, null=True)
     left_text = TranslatedField("left_text_sk", "left_text_en")
     right_image = models.ForeignKey(
         "wagtailimages.Image",
@@ -702,8 +702,8 @@ class ContactPage(Page):
         on_delete=models.SET_NULL,
         related_name="r_img+",
     )
-    right_text_sk = RichTextField()
-    right_text_en = RichTextField()
+    right_text_sk = RichTextField(blank=True, null=True)
+    right_text_en = RichTextField(blank=True, null=True)
     right_text = TranslatedField("right_text_sk", "right_text_en")
 
     class Meta:
