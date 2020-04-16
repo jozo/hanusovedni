@@ -651,8 +651,8 @@ class Event(Page):
 
 @register_snippet
 class Location(models.Model):
-    title_sk = models.CharField(default="", max_length=255, verbose_name=_("názov"))
-    title_en = models.CharField(default="", max_length=255, verbose_name=_("názov"))
+    title_sk = models.CharField(default="", max_length=255)
+    title_en = models.CharField(default="", max_length=255)
     url_to_map = models.URLField(
         verbose_name=_("URL k mape"),
         help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
