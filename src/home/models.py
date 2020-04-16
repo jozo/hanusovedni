@@ -663,6 +663,7 @@ class Location(models.Model):
         help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
     )
 
+    title = TranslatedField("title_sk", "title_en")
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("url_to_map")]
     autocomplete_search_field = "title_sk"
 
@@ -690,6 +691,7 @@ class Category(models.Model):
     title_en = models.CharField(max_length=30)
     color = models.CharField(max_length=20, verbose_name=_("farba"))
 
+    title = TranslatedField("title_sk", "title_en")
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("color")]
     autocomplete_search_field = "title_sk"
 
