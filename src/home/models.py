@@ -659,6 +659,7 @@ class Location(models.Model):
     )
 
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("url_to_map")]
+    autocomplete_search_field = "title_sk"
 
     class Meta:
         verbose_name = _("poloha")
@@ -666,6 +667,9 @@ class Location(models.Model):
 
     def __str__(self):
         return " ".join(replace_tags_with_space(self.title_sk).split())
+
+    def autocomplete_label(self):
+        return self.title_sk
 
 
 @register_snippet
@@ -675,12 +679,16 @@ class Category(models.Model):
     color = models.CharField(max_length=20, verbose_name=_("farba"))
 
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("color")]
+    autocomplete_search_field = "title_sk"
 
     class Meta:
         verbose_name = _("kategória")
         verbose_name_plural = _("kategórie")
 
     def __str__(self):
+        return self.title_sk
+
+    def autocomplete_label(self):
         return self.title_sk
 
 
