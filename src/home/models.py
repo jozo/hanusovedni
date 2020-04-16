@@ -649,6 +649,11 @@ class Event(Page):
         }
 
 
+class LocationManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().order_by("title_sk")
+
+
 @register_snippet
 class Location(models.Model):
     title_sk = models.CharField(default="", max_length=255)
@@ -661,6 +666,8 @@ class Location(models.Model):
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("url_to_map")]
     autocomplete_search_field = "title_sk"
 
+    objects = LocationManager()
+
     class Meta:
         verbose_name = _("poloha")
         verbose_name_plural = _("polohy")
@@ -672,6 +679,11 @@ class Location(models.Model):
         return self.title_sk
 
 
+class CategoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().order_by("title_sk")
+
+
 @register_snippet
 class Category(models.Model):
     title_sk = models.CharField(max_length=30)
@@ -680,6 +692,8 @@ class Category(models.Model):
 
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("color")]
     autocomplete_search_field = "title_sk"
+
+    objects = CategoryManager()
 
     class Meta:
         verbose_name = _("kategória")
