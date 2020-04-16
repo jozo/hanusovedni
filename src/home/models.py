@@ -665,7 +665,7 @@ class Location(models.Model):
         verbose_name_plural = _("polohy")
 
     def __str__(self):
-        return " ".join(replace_tags_with_space(self.title).split())
+        return " ".join(replace_tags_with_space(self.title_sk).split())
 
 
 @register_snippet
@@ -681,7 +681,7 @@ class Category(models.Model):
         verbose_name_plural = _("kategórie")
 
     def __str__(self):
-        return self.title
+        return self.title_sk
 
 
 class ContactPage(Page):
