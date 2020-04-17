@@ -42,7 +42,7 @@
 <body class="d-flex flex-column {% block body_class %}{% endblock %}">
 {#{% wagtailuserbar %}#}
 
-{% if request.site.hostname == "hanusovedni.online" %}
+{% if request.site.hostname == "hanusovedni.online" or request.site.hostname == "localhost" %}
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-sm-6">

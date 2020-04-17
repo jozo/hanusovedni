@@ -1,8 +1,11 @@
 import itertools
+import logging
+import os
 import re
 from collections import defaultdict
 from functools import cached_property
 
+import requests
 from django.db import models
 from django.db.models import Max
 from django.db.models.signals import pre_delete
@@ -12,19 +15,10 @@ from django.utils import timezone, translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
-
 # TODO - gettext vs ugettext_lazy
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtail.admin.edit_handlers import (
-    FieldPanel,
-    FieldRowPanel,
-    InlinePanel,
-    MultiFieldPanel,
-    PageChooserPanel,
-    StreamFieldPanel,
-    TabbedInterface,
-    ObjectList,
-)
+from wagtail.admin.edit_handlers import (FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
+                                         PageChooserPanel, StreamFieldPanel, TabbedInterface)
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
 from wagtail.contrib.settings.models import BaseSetting
@@ -37,6 +31,8 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
+
+logger = logging.getLogger(__name__)
 
 
 def replace_tags_with_space(value):
@@ -1046,6 +1042,20 @@ class TranslationSettings(BaseSetting):
             ObjectList(content_panels_en, heading="Content EN"),
         ]
     )
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+        purge_cache_everything()
+
+
+def purge_cache_everything():
+    if os.environ["ENVIRONMENT"] in ["staging", "production"]:
+        url = f"https://api.cloudflare.com/client/v4/zones/{os.environ['CLOUDFLARE_ZONEID']}/purge_cache"
+        headers = {'Authorization': f"Bearer {os.environ['CLOUDFLARE_BEARER_TOKEN']}"}
+        logger.info(f"Purge everything in cache. {headers} {url}")
+
+        response = requests.post(url, json={"purge_everything": True}, headers=headers)
+        response.raise_for_status()
 
 
 def purge_cache_for_indexes(blog_page):
