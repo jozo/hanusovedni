@@ -171,8 +171,8 @@ class FestivalPage(Page):
         return (
             Event.objects.live()
             .filter(
-                date_and_time__gte=self.start_date,
-                date_and_time__lt=self.end_date,
+                date_and_time__date__gte=self.start_date,
+                date_and_time__date__lte=self.end_date,
                 show_on_festivalpage=True,
             )
             .order_by("date_and_time")
