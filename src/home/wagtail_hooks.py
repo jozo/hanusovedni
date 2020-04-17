@@ -1,9 +1,15 @@
 from django.contrib import admin
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from wagtail.admin.edit_handlers import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
+from wagtail.contrib.settings.models import BaseSetting
+from wagtail.contrib.settings.registry import register_setting
 
+from .fields import TranslatedField
 from .models import Event, Speaker
+from .signals.cache import CloudFlare
 
 
 class YearFilter(admin.SimpleListFilter):
@@ -51,3 +57,36 @@ class SpeakerAdmin(ModelAdmin):
 
 modeladmin_register(EventAdmin)
 modeladmin_register(SpeakerAdmin)
+
+
+@register_setting
+class TranslationSettings(BaseSetting):
+    watch_video_button_sk = models.TextField(blank=True)
+    watch_video_button_en = models.TextField(blank=True)
+    watch_video_button = TranslatedField(
+        "watch_video_button_sk", "watch_video_button_en"
+    )
+
+    buy_ticket_button_sk = models.TextField(blank=True)
+    buy_ticket_button_en = models.TextField(blank=True)
+    buy_ticket_button = TranslatedField("buy_ticket_button_sk", "buy_ticket_button_en")
+
+    content_panels_sk = [
+        FieldPanel("watch_video_button_sk"),
+        FieldPanel("buy_ticket_button_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("watch_video_button_en"),
+        FieldPanel("buy_ticket_button_en"),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+        ]
+    )
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+        CloudFlare().purge_everything()

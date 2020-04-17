@@ -1,61 +1,34 @@
 import itertools
 import logging
-import os
 import re
 from collections import defaultdict
-from functools import cached_property
 
-import requests
 from django.db import models
-from django.db.models import Max
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
 from django.shortcuts import redirect
-from django.utils import timezone, translation
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
+from django.utils import timezone
 from django.utils.translation import gettext as _
-# TODO - gettext vs ugettext_lazy
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from wagtail.admin.edit_handlers import (FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel, ObjectList,
-                                         PageChooserPanel, StreamFieldPanel, TabbedInterface)
-from wagtail.contrib.frontend_cache.utils import PurgeBatch
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    FieldRowPanel,
+    InlinePanel,
+    ObjectList,
+    StreamFieldPanel,
+    TabbedInterface,
+)
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.contrib.settings.models import BaseSetting
-from wagtail.contrib.settings.registry import register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Orderable, Page
-from wagtail.core.signals import page_published
+from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.snippets.models import register_snippet
-from wagtailautocomplete.edit_handlers import AutocompletePanel
+
+from home.fields import TranslatedField
+from home.models.data_models import Event, Speaker
+
+# TODO - gettext vs ugettext_lazy
+
 
 logger = logging.getLogger(__name__)
-
-
-def replace_tags_with_space(value):
-    """Return the given HTML with spaces instead of tags."""
-    return re.sub(r"</?\w+>", " ", str(value))
-
-
-def last_festival():
-    # TODO move this to settings
-    return FestivalPage.objects.get(slug="bhd-online")
-
-
-class TranslatedField:
-    def __init__(self, sk_field, en_field):
-        self.sk_field = sk_field
-        self.en_field = en_field
-
-    def __get__(self, instance, owner):
-        if translation.get_language() == "en":
-            field = getattr(instance, self.en_field)
-            if field:
-                return field
-        return getattr(instance, self.sk_field)
 
 
 class HomePage(Page):
@@ -225,82 +198,6 @@ class FestivalPage(Page):
         return super().get_template(request, *args, **kwargs)
 
 
-class HeroImage(Orderable):
-    page = ParentalKey(
-        FestivalPage, on_delete=models.CASCADE, related_name="hero_images"
-    )
-    image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    url = models.URLField()
-
-    panels = [
-        ImageChooserPanel("image"),
-        FieldPanel("url"),
-    ]
-
-
-class VideoInvite(Orderable):
-    page = ParentalKey(
-        FestivalPage, on_delete=models.CASCADE, related_name="video_invites"
-    )
-    url = models.URLField()
-
-    panels = [
-        FieldPanel("url"),
-    ]
-
-
-class Partner(Orderable):
-    page = ParentalKey(FestivalPage, on_delete=models.CASCADE, related_name="partners")
-    url = models.URLField()
-    logo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-
-    panels = [
-        ImageChooserPanel("logo"),
-        FieldPanel("url"),
-    ]
-
-
-class MediaPartner(Orderable):
-    page = ParentalKey(
-        FestivalPage, on_delete=models.CASCADE, related_name="media_partners"
-    )
-    url = models.URLField()
-    logo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-
-    panels = [
-        ImageChooserPanel("logo"),
-        FieldPanel("url"),
-    ]
-
-
-class MenuItem(Orderable):
-    page = ParentalKey(
-        FestivalPage, on_delete=models.CASCADE, related_name="menu_items"
-    )
-    title_sk = models.CharField(max_length=32)
-    title_en = models.CharField(max_length=32)
-    title = TranslatedField("title_sk", "title_en")
-    link = models.CharField(max_length=255)
-
-
 class SpeakerIndexPage(RoutablePageMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
@@ -378,72 +275,6 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
                     speakers_by_year[year][festival] = speakers.all()
 
         return speakers_by_year
-
-
-class Speaker(Page):
-    speaker_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
-    first_name = models.CharField(max_length=64, verbose_name=_("meno"), blank=True)
-    last_name = models.CharField(max_length=64, verbose_name=_("priezvisko"))
-    description_sk = RichTextField(blank=True, verbose_name=_("popis"))
-    description_en = RichTextField(blank=True)
-    description = TranslatedField("description_sk", "description_en")
-    wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    photo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name=_("fotka"),
-    )
-
-    class Meta:
-        verbose_name = _("rečník")
-        verbose_name_plural = _("rečníci")
-
-    parent_page_types = ["home.SpeakerIndexPage"]
-    content_panels_sk = Page.content_panels + [
-        FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name")]),
-        ImageChooserPanel("photo"),
-        FieldPanel("description_sk"),
-    ]
-    content_panels_en = Page.content_panels + [
-        FieldPanel("description_en"),
-    ]
-
-    edit_handler = TabbedInterface(
-        [
-            ObjectList(content_panels_sk, heading="Content SK"),
-            ObjectList(content_panels_en, heading="Content EN"),
-            ObjectList(Page.promote_panels, heading="Promote"),
-            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
-        ]
-    )
-
-    def get_url_parts(self, request=None):
-        """Insert PK of object to url"""
-        site_id, root_url, page_path = super().get_url_parts(request)
-        page_path = page_path.split("/")
-        page_path.insert(-2, str(self.speaker_id))
-        return site_id, root_url, "/".join(page_path)
-
-    def save(self, *args, **kwargs):
-        if self.speaker_id is None:
-            last_speaker_id = (
-                Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
-            )
-            self.speaker_id = last_speaker_id + 1
-        self.draft_title = f"{self.first_name} {self.last_name}".strip()
-        self.title = self.draft_title
-        if "updated_fields" in kwargs:
-            kwargs["updated_fields"].append("title")
-        return super().save(*args, **kwargs)
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
-        context["speaker"] = self
-        return context
 
 
 class EventIndexPage(RoutablePageMixin, Page):
@@ -550,222 +381,6 @@ class ProgramIndexPage(Page):
         if self.get_parent().slug == "bhd-online":
             context["message_empty"] = "Program prvého BHD ONLINE už čoskoro…"
         return context
-
-
-class Event(Page):
-    event_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
-    title_en = models.CharField(
-        verbose_name=_("title"),
-        max_length=255,
-        blank=True,
-        help_text=_("The page title as you'd like it to be seen by the public"),
-    )
-    title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name=_("krátky popis"),
-        help_text=_("Zobrazuje sa na stránke s programom"),
-    )
-    short_overview_en = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name=_("krátky popis"),
-        help_text=_("Zobrazuje sa na stránke s programom"),
-    )
-    short_overview = TranslatedField("short_overview_sk", "short_overview_en")
-    description_sk = RichTextField(blank=True, verbose_name=_("popis"))
-    description_en = RichTextField(blank=True, verbose_name=_("popis"))
-    description = TranslatedField("description_sk", "description_en")
-    date_and_time = models.DateTimeField(
-        default=timezone.now, verbose_name=_("dátum a čas")
-    )
-    location = models.ForeignKey(
-        "home.Location",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        verbose_name=_("poloha"),
-    )
-    video_url = models.URLField(
-        null=True,
-        blank=True,
-        help_text=format_html(
-            _("Podporuje Youtube, Vimeo a {}{}{}"),
-            mark_safe(
-                "<a href='https://github.com/wagtail/wagtail/blob/master/"
-                "wagtail/embeds/oembed_providers.py' target='_blank'>"
-            ),
-            _("dalšie stránky"),
-            mark_safe("</a>"),
-        ),
-    )
-    ticket_url = models.URLField(null=True, blank=True, verbose_name=_("Lístok URL"))
-    category = models.ForeignKey(
-        "home.Category",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        verbose_name=_("kategória"),
-    )
-    icon = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name=_("ikona"),
-    )
-    speakers = ParentalManyToManyField(
-        "home.Speaker", blank=True, related_name="events", verbose_name=_("rečník")
-    )
-    show_on_festivalpage = models.BooleanField(default=False)
-    wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    related_festival = models.ForeignKey(
-        "wagtailcore.Page",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-        verbose_name=_("festival"),
-    )
-
-    content_panels_sk = Page.content_panels + [
-        MultiFieldPanel(
-            [
-                FieldPanel("date_and_time"),
-                AutocompletePanel("location"),
-                FieldPanel("category"),
-                PageChooserPanel("related_festival", "home.FestivalPage"),
-                ImageChooserPanel("icon"),
-            ]
-        ),
-        MultiFieldPanel(
-            [
-                FieldPanel("short_overview_sk"),
-                FieldPanel("description_sk"),
-                FieldPanel("video_url"),
-                FieldPanel("ticket_url"),
-            ],
-            heading=_("Popis"),
-        ),
-        AutocompletePanel("speakers"),
-    ]
-    content_panels_en = [
-        FieldPanel("title_en", classname="full title"),
-        MultiFieldPanel(
-            [FieldPanel("short_overview_en"), FieldPanel("description_en"),],
-            heading=_("Popis"),
-        ),
-        AutocompletePanel("speakers"),
-    ]
-    promote_panels = Page.promote_panels + [
-        FieldPanel("show_on_festivalpage"),
-    ]
-    edit_handler = TabbedInterface(
-        [
-            ObjectList(content_panels_sk, heading="Content SK"),
-            ObjectList(content_panels_en, heading="Content EN"),
-            ObjectList(promote_panels, heading="Promote"),
-            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
-        ]
-    )
-
-    parent_page_types = ["home.EventIndexPage"]
-    subpage_types = []
-
-    class Meta:
-        verbose_name = _("podujatie")
-        verbose_name_plural = _("podujatia")
-
-    def get_url_parts(self, request=None):
-        """Insert PK of object to url"""
-        site_id, root_url, page_path = super().get_url_parts(request)
-        page_path = page_path.split("/")
-        page_path.insert(-2, str(self.event_id))
-        return site_id, root_url, "/".join(page_path)
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
-        context["today"] = timezone.now().date()
-        return context
-
-    def save(self, *args, **kwargs):
-        if self.event_id is None:
-            last_event_id = (
-                Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
-            )
-            self.event_id = last_event_id + 1
-        return super().save(*args, **kwargs)
-
-    @cached_property
-    def speakers_limited(self):
-        speakers = list(self.speakers.all().only("title"))
-        return {
-            "under_limit": speakers[:3],
-            "over_limit_count": len(speakers[3:]),
-            "over_limit_names": ", ".join(s.title for s in speakers[3:]),
-        }
-
-
-class LocationManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().order_by("title_sk")
-
-
-@register_snippet
-class Location(models.Model):
-    title_sk = models.CharField(default="", max_length=255)
-    title_en = models.CharField(default="", max_length=255)
-    url_to_map = models.URLField(
-        verbose_name=_("URL k mape"),
-        help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
-    )
-
-    title = TranslatedField("title_sk", "title_en")
-    panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("url_to_map")]
-    autocomplete_search_field = "title_sk"
-
-    objects = LocationManager()
-
-    class Meta:
-        verbose_name = _("poloha")
-        verbose_name_plural = _("polohy")
-
-    def __str__(self):
-        return " ".join(replace_tags_with_space(self.title_sk).split())
-
-    def autocomplete_label(self):
-        return self.title_sk
-
-
-class CategoryManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().order_by("title_sk")
-
-
-@register_snippet
-class Category(models.Model):
-    title_sk = models.CharField(max_length=30)
-    title_en = models.CharField(max_length=30)
-    color = models.CharField(max_length=20, verbose_name=_("farba"))
-
-    title = TranslatedField("title_sk", "title_en")
-    panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("color")]
-    autocomplete_search_field = "title_sk"
-
-    objects = CategoryManager()
-
-    class Meta:
-        verbose_name = _("kategória")
-        verbose_name_plural = _("kategórie")
-
-    def __str__(self):
-        return self.title_sk
-
-    def autocomplete_label(self):
-        return self.title_sk
 
 
 class ContactPage(Page):
@@ -1015,89 +630,11 @@ class CrowdfundingPage(Page):
         return context
 
 
-@register_setting
-class TranslationSettings(BaseSetting):
-    watch_video_button_sk = models.TextField(blank=True)
-    watch_video_button_en = models.TextField(blank=True)
-    watch_video_button = TranslatedField(
-        "watch_video_button_sk", "watch_video_button_en"
-    )
-
-    buy_ticket_button_sk = models.TextField(blank=True)
-    buy_ticket_button_en = models.TextField(blank=True)
-    buy_ticket_button = TranslatedField("buy_ticket_button_sk", "buy_ticket_button_en")
-
-    content_panels_sk = [
-        FieldPanel("watch_video_button_sk"),
-        FieldPanel("buy_ticket_button_sk"),
-    ]
-    content_panels_en = [
-        FieldPanel("watch_video_button_en"),
-        FieldPanel("buy_ticket_button_en"),
-    ]
-
-    edit_handler = TabbedInterface(
-        [
-            ObjectList(content_panels_sk, heading="Content SK"),
-            ObjectList(content_panels_en, heading="Content EN"),
-        ]
-    )
-
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        super().save(force_insert, force_update, using, update_fields)
-        purge_cache_everything()
+def replace_tags_with_space(value):
+    """Return the given HTML with spaces instead of tags."""
+    return re.sub(r"</?\w+>", " ", str(value))
 
 
-def purge_cache_everything():
-    if os.environ["ENVIRONMENT"] in ["staging", "production"]:
-        url = f"https://api.cloudflare.com/client/v4/zones/{os.environ['CLOUDFLARE_ZONEID']}/purge_cache"
-        headers = {'Authorization': f"Bearer {os.environ['CLOUDFLARE_BEARER_TOKEN']}"}
-        logger.info(f"Purge everything in cache. {headers} {url}")
-
-        response = requests.post(url, json={"purge_everything": True}, headers=headers)
-        response.raise_for_status()
-
-
-def purge_cache_for_indexes(blog_page):
-    pages = set()
-    batch = PurgeBatch()
-    for event_index in EventIndexPage.objects.live():
-        pages.add(event_index)
-    for program_index in ProgramIndexPage.objects.live():
-        pages.add(program_index)
-    for festival_page in FestivalPage.objects.live():
-        pages.add(festival_page)
-    pages.add(HomePage.objects.get())
-    pages.add(blog_page)
-    batch.add_pages(pages)
-    batch.purge()
-
-
-@receiver(page_published, sender=Event)
-def event_published_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
-
-
-@receiver(pre_delete, sender=Event)
-def event_deleted_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
-
-
-@receiver(page_published, sender=Speaker)
-def speaker_published_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
-
-
-@receiver(pre_delete, sender=Speaker)
-def speaker_deleted_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
-
-
-@receiver(page_published, sender=FestivalPage)
-def festival_published_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
-
-
-@receiver(pre_delete, sender=FestivalPage)
-def festival_deleted_handler(**kwargs):
-    purge_cache_for_indexes(kwargs["instance"])
+def last_festival():
+    # TODO move this to settings
+    return FestivalPage.objects.get(slug="bhd-online")
