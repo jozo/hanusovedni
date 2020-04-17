@@ -92,8 +92,8 @@ deploy:production:
   except:
     - schedules
   script:
-    - "http_code=$(curl -X POST 'https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONEID}/purge_cache'
-        -H 'Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}'
+    - "http_code=$(curl -X POST \"https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONEID}/purge_cache\"
+        -H \"Authorization: Bearer ${CLOUDFLARE_BEARER_TOKEN}\"
         -H 'Content-Type: application/json'
         --data '{\"purge_everything\":true}'
         -o /tmp/out.txt
