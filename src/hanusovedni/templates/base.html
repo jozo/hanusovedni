@@ -42,6 +42,18 @@
 <body class="d-flex flex-column {% block body_class %}{% endblock %}">
 {#{% wagtailuserbar %}#}
 
+{% if request.site.hostname == "hanusovedni.online" %}
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-sm-6">
+        <div class="alert alert-danger text-center m-2" role="alert">
+          <strong>Testovacia verzia stránky!</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 {% block header_content %}
   {% include 'header.html' %}
 {% endblock %}
@@ -68,10 +80,12 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30977387-1"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-30977387-1');
+  window.dataLayer = window.dataLayer || []
+
+  function gtag () {dataLayer.push(arguments)}
+
+  gtag('js', new Date())
+  gtag('config', 'UA-30977387-1')
 </script>
 
 
