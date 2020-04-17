@@ -6,7 +6,7 @@ $(document).ready(function () {
         let full_amount = 5000
         let percentage = (amount + amount_bank) / full_amount
         $('#mercury').height(percentage * 500)
-        $('#mercury').prop('title', amount + '€')
+        $('#mercury').prop('title', (amount + amount_bank) + '€')
       })
       .fail(function () {
         console.log('Error - can\'t get current amount of €')
