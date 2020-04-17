@@ -536,8 +536,8 @@ class ProgramIndexPage(Page):
         events = (
             Event.objects.live()
             .filter(
-                date_and_time__gte=parent_festival.start_date,
-                date_and_time__lte=parent_festival.end_date,
+                date_and_time__date__gte=parent_festival.start_date,
+                date_and_time__date__lte=parent_festival.end_date,
             )
             .select_related("category", "location", "icon")
             .order_by("date_and_time")
