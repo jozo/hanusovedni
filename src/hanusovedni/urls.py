@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.urls import path
 from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -18,6 +19,8 @@ handler404 = views.handler404
 urlpatterns = [
     url(r"^admin/django/", admin.site.urls),
     url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
+    url(r"^admin/i18n/", include("django.conf.urls.i18n")),
+    path("admin/choose-lang/<str:lang_code>/", views.choose_language, name="choose-lang"),
     url(r"^admin/", include(wagtailadmin_urls)),
     url(r"^recnici/(.*)/$", views.redirect_speakers),
     url(r"^archiv/(.*)/$", views.redirect_events),

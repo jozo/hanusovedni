@@ -29,7 +29,7 @@
               {% get_available_languages as languages %}
               {% for lang_code, lang_name in languages %}
                 {% language lang_code %}
-                  <a href="{% pageurl page %}">{{ lang_code|language_name }}</a>
+                  <a href="{% url 'choose-lang' lang_code %}">{{ lang_code|language_name }}</a>
                   {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
                 {% endlanguage %}
               {% endfor %}

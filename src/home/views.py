@@ -1,6 +1,9 @@
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import translate_url
+from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
-from sentry_sdk import capture_message
 
 from home.models import Speaker, Event
 
@@ -18,3 +21,25 @@ def redirect_events(request, slug):
 def handler404(request, exception):
     # capture_message(f"Error 404 {request.path}")
     return page_not_found(request, exception)
+
+
+def choose_language(request, lang_code):
+    next = request.META["HTTP_REFERER"] or '/'
+
+    response = HttpResponseRedirect(next) if next else HttpResponse(status=204)
+    if lang_code and check_for_language(lang_code):
+        if next:
+            next_trans = translate_url(next, lang_code)
+            if next_trans != next:
+                response = HttpResponseRedirect(next_trans)
+        response.set_cookie(
+            settings.LANGUAGE_COOKIE_NAME, lang_code,
+            max_age=settings.LANGUAGE_COOKIE_AGE,
+            path=settings.LANGUAGE_COOKIE_PATH,
+            domain=settings.LANGUAGE_COOKIE_DOMAIN,
+            secure=settings.LANGUAGE_COOKIE_SECURE,
+            httponly=settings.LANGUAGE_COOKIE_HTTPONLY,
+            samesite=settings.LANGUAGE_COOKIE_SAMESITE,
+        )
+    return response
+
