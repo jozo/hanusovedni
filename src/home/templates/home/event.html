@@ -71,7 +71,7 @@
           </article>
         </div>
         <div class="col-md-6 col-12 d-flex px-02 mb-1">
-          <article class="event-detail d-flex flex-column p-4 w-100"
+          <article class="event-detail d-flex flex-column justify-content-between p-4 w-100"
                    style="background-color: {{ page.category.color }}">
             {% if page.video_url %}
               <div class="video mb-3 d-flex justify-content-center">
@@ -81,12 +81,21 @@
             <div class="description">
               {{ page.description|richtext }}
             </div>
-            {% if page.date_and_time.date >= today %}
-              <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg mt-auto ml-auto"
-                 role="button" target="_blank">
-                Kúpiť lístok
-              </a>
-            {% endif %}
+
+            <div class="d-flex flex-sm-row flex-column justify-content-end">
+              {% if page.video_url %}
+                <a href="{{ page.video_url }}" class="btn btn-warning btn-lg m-2"
+                   role="button" target="_blank">
+                  {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
+                </a>
+              {% endif %}
+              {% if page.date_and_time.date >= today and page.ticket_url %}
+                <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg m-2"
+                   role="button" target="_blank">
+                  {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
+                </a>
+              {% endif %}
+            </div>
           </article>
         </div>
       </div>

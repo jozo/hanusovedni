@@ -27,6 +27,8 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
+from wagtail.contrib.settings.models import BaseSetting
+from wagtail.contrib.settings.registry import register_setting
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
@@ -591,10 +593,7 @@ class Event(Page):
     ]
     content_panels_en = Page.content_panels + [
         MultiFieldPanel(
-            [
-                FieldPanel("short_overview_en"),
-                FieldPanel("description_en"),
-            ],
+            [FieldPanel("short_overview_en"), FieldPanel("description_en"),],
             heading=_("Popis"),
         ),
         AutocompletePanel("speakers"),
@@ -913,6 +912,35 @@ class CrowdfundingPage(Page):
         context = super().get_context(request, *args, **kwargs)
         context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
         return context
+
+
+@register_setting
+class TranslationSettings(BaseSetting):
+    watch_video_button_sk = models.TextField(blank=True)
+    watch_video_button_en = models.TextField(blank=True)
+    watch_video_button = TranslatedField(
+        "watch_video_button_sk", "watch_video_button_en"
+    )
+
+    buy_ticket_button_sk = models.TextField(blank=True)
+    buy_ticket_button_en = models.TextField(blank=True)
+    buy_ticket_button = TranslatedField("buy_ticket_button_sk", "buy_ticket_button_en")
+
+    content_panels_sk = [
+        FieldPanel("watch_video_button_sk"),
+        FieldPanel("buy_ticket_button_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("watch_video_button_en"),
+        FieldPanel("buy_ticket_button_en"),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+        ]
+    )
 
 
 def purge_cache_for_indexes(blog_page):

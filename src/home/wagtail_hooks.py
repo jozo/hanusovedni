@@ -29,7 +29,7 @@ class EventAdmin(ModelAdmin):
         False  # or True to exclude pages of this type from Wagtail's explorer view
     )
     list_display = ["title", "latest_revision_created_at", "live"]
-    ordering = ["latest_revision_created_at"]
+    ordering = ["-latest_revision_created_at"]
     list_filter = [YearFilter, "live"]
     search_fields = ["title"]
     list_per_page = 15
@@ -43,7 +43,7 @@ class SpeakerAdmin(ModelAdmin):
         False  # or True to exclude pages of this type from Wagtail's explorer view
     )
     list_display = ["first_name", "last_name", "latest_revision_created_at", "live"]
-    ordering = ["latest_revision_created_at"]
+    ordering = ["-latest_revision_created_at"]
     list_filter = [YearFilter, "live"]
     search_fields = ["title"]
     list_per_page = 15
