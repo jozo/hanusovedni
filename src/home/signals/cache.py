@@ -52,4 +52,6 @@ class IndexPages:
 @receiver([page_published, page_unpublished], sender=Speaker)
 @receiver([page_published, page_unpublished], sender=FestivalPage)
 def purge_cache_for_index_pages(**kwargs):
-    PurgeBatch(IndexPages().set()).purge()
+    batch = PurgeBatch()
+    batch.add_pages(IndexPages().set())
+    batch.purge()
