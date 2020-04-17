@@ -15,6 +15,8 @@
   <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
 {% endblock %}
 
+{% block title %}{{ page.title_translated }}{% endblock %}
+
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
@@ -33,7 +35,7 @@
             </div>
 
             <div class="content">
-              <h3>{{ page.title }}</h3>
+              <h3>{{ page.title_translated }}</h3>
 
               <div class="short-overview mb-3">
                 {{ page.short_overview }}

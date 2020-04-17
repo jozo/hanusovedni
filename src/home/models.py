@@ -306,8 +306,29 @@ class MenuItem(Orderable):
 
 
 class SpeakerIndexPage(RoutablePageMixin, Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+
     class Meta:
         verbose_name = _("rečníci")
+
+    content_panels_sk = Page.content_panels
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
 
     subpage_types = [
         "home.Speaker",
@@ -432,13 +453,32 @@ class Speaker(Page):
 class EventIndexPage(RoutablePageMixin, Page):
     """Archive of all events"""
 
-    intro = RichTextField(blank=True)
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
 
     content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
     subpage_types = ["home.Event"]
 
     class Meta:
         verbose_name = _("archív")
+
+    content_panels_sk = Page.content_panels
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
 
     @route(r"^(\d+)/(.+)/")
     def event_with_id_in_url(self, request, event_id, slug):
@@ -468,9 +508,26 @@ class EventIndexPage(RoutablePageMixin, Page):
 
 
 class ProgramIndexPage(Page):
-    intro = RichTextField(blank=True)
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
 
-    content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
+    content_panels_sk = Page.content_panels
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
     subpage_types = []
 
     class Meta:
@@ -501,6 +558,13 @@ class ProgramIndexPage(Page):
 
 class Event(Page):
     event_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     short_overview_sk = models.CharField(
         max_length=255,
         blank=True,
@@ -591,7 +655,8 @@ class Event(Page):
         ),
         AutocompletePanel("speakers"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
         MultiFieldPanel(
             [FieldPanel("short_overview_en"), FieldPanel("description_en"),],
             heading=_("Popis"),
@@ -708,6 +773,13 @@ class Category(models.Model):
 
 
 class ContactPage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     left_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -738,7 +810,8 @@ class ContactPage(Page):
         ImageChooserPanel("right_image"),
         FieldPanel("right_text_sk", classname="full"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
         FieldPanel("left_text_en", classname="full"),
         FieldPanel("right_text_en", classname="full"),
     ]
@@ -758,6 +831,13 @@ class ContactPage(Page):
 
 
 class AboutFestivalPage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     body_sk = StreamField(
         [
             ("heading", blocks.CharBlock(classname="title")),
@@ -778,7 +858,8 @@ class AboutFestivalPage(Page):
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
         StreamFieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
@@ -797,6 +878,13 @@ class AboutFestivalPage(Page):
 
 
 class DonatePage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     body_sk = StreamField(
         [
             ("heading", blocks.CharBlock(classname="title")),
@@ -817,7 +905,8 @@ class DonatePage(Page):
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
         StreamFieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
@@ -836,6 +925,13 @@ class DonatePage(Page):
 
 
 class PartnersPage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     body_sk = StreamField(
         [
             (
@@ -870,7 +966,8 @@ class PartnersPage(Page):
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
         StreamFieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
@@ -889,6 +986,13 @@ class PartnersPage(Page):
 
 
 class CrowdfundingPage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
     body_sk = StreamField([("text", blocks.TextBlock())])
     body_en = StreamField([("text", blocks.TextBlock())])
     body = TranslatedField("body_sk", "body_en")
@@ -896,7 +1000,8 @@ class CrowdfundingPage(Page):
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
     ]
-    content_panels_en = Page.content_panels + [
+    content_panels_en = [
+        ObjectList(content_panels_sk, heading="Content SK"),
         StreamFieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
