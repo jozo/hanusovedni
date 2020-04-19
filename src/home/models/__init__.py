@@ -3,11 +3,10 @@ from .data_models import (
     Event,
     HeroImage,
     Location,
-    MediaPartner,
     MenuItem,
-    Partner,
     Speaker,
     VideoInvite,
+    PartnerSectionBlock,
 )
 from .pages import (
     AboutFestivalPage,

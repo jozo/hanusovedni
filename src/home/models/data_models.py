@@ -283,44 +283,6 @@ class VideoInvite(Orderable):
     ]
 
 
-class Partner(Orderable):
-    page = ParentalKey(
-        "home.FestivalPage", on_delete=models.CASCADE, related_name="partners"
-    )
-    url = models.URLField()
-    logo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-
-    panels = [
-        ImageChooserPanel("logo"),
-        FieldPanel("url"),
-    ]
-
-
-class MediaPartner(Orderable):
-    page = ParentalKey(
-        "home.FestivalPage", on_delete=models.CASCADE, related_name="media_partners"
-    )
-    url = models.URLField()
-    logo = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-
-    panels = [
-        ImageChooserPanel("logo"),
-        FieldPanel("url"),
-    ]
-
-
 class MenuItem(Orderable):
     page = ParentalKey(
         "home.FestivalPage", on_delete=models.CASCADE, related_name="menu_items"

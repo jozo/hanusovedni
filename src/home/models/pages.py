@@ -23,7 +23,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 
 from home.fields import TranslatedField
-from home.models.data_models import Event, PartnerSectionBlock, Speaker
+from home.models import Event, PartnerSectionBlock, Speaker
 
 # TODO - gettext vs ugettext_lazy
 
@@ -144,8 +144,6 @@ class FestivalPage(Page):
         FieldPanel("video_text_sk", classname="full"),
         InlinePanel("video_invites"),
         StreamFieldPanel("headline_sk"),
-        InlinePanel("partners", label=_("partneri")),
-        InlinePanel("media_partners", label=_("mediálni partneri")),
     ]
     content_panels_en = [
         FieldPanel("formatted_title_en"),
