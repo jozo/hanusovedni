@@ -245,6 +245,16 @@
         opacity: 0.85
       }
     }
+
+    h2 {
+      margin-bottom: 2rem;
+      margin-top: 3rem;
+      font-size: 1.2rem;
+      font-family: $font-special;
+      text-transform: uppercase;
+      text-align: center;
+      color: $c-light-grey;
+    }
   }
 
   section.social-media {

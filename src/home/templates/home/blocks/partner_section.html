@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+
+<h2 class="w-100 text-center">{{ translated_title }}</h2>
+
+{% for partner in value.partners %}
+  {% include_block partner %}
+{% endfor %}
+

@@ -2,11 +2,12 @@ from functools import cached_property
 
 from django.db import models
 from django.db.models import Max
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtail.admin import blocks
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     FieldRowPanel,
@@ -17,6 +18,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
+from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
@@ -282,7 +284,9 @@ class VideoInvite(Orderable):
 
 
 class Partner(Orderable):
-    page = ParentalKey("home.FestivalPage", on_delete=models.CASCADE, related_name="partners")
+    page = ParentalKey(
+        "home.FestivalPage", on_delete=models.CASCADE, related_name="partners"
+    )
     url = models.URLField()
     logo = models.ForeignKey(
         "wagtailimages.Image",
@@ -384,3 +388,29 @@ class Category(models.Model):
 
     def autocomplete_label(self):
         return self.title_sk
+
+
+class PartnerBlock(blocks.StructBlock):
+    logo = ImageChooserBlock()
+    url = blocks.URLBlock()
+
+    class Meta:
+        template = "home/blocks/partner.html"
+
+
+class PartnerSectionBlock(blocks.StructBlock):
+    title_sk = blocks.CharBlock()
+    title_en = blocks.CharBlock()
+    title = TranslatedField("title_sk", "title_en")
+    partners = blocks.ListBlock(PartnerBlock)
+
+    class Meta:
+        template = "home/blocks/partner_section.html"
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
+        if translation.get_language() == "en":
+            context["translated_title"] = value["title_en"]
+        else:
+            context["translated_title"] = value["title_sk"]
+        return context
