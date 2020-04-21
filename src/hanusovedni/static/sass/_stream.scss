@@ -1,0 +1,18 @@
+.template-stream {
+  #body-wrapper {
+    min-height: 550px;
+  }
+  #form-wrapper, #embed-wrapper {
+    top: 0;
+    left: 0;
+  }
+
+  #form-wrapper {
+    display: none;
+    background-color: $c-bg;
+
+    button {
+      font-family: $font-special;
+    }
+  }
+}

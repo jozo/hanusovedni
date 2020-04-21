@@ -40,6 +40,7 @@ class HomePage(Page):
         "home.AboutFestivalPage",
         "home.DonatePage",
         "home.PartnersPage",
+        "home.StreamPage",
     ]
 
     @property
@@ -616,7 +617,7 @@ class CrowdfundingPage(Page):
         StreamFieldPanel("body_sk"),
     ]
     content_panels_en = [
-        ObjectList(content_panels_sk, heading="Content SK"),
+        FieldPanel("title_en", classname="full title"),
         StreamFieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
@@ -631,6 +632,51 @@ class CrowdfundingPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
+        return context
+
+
+class StreamPage(Page):
+    stream_url = models.URLField()
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+    body_sk = RichTextField(blank=True)
+    body_en = RichTextField(blank=True)
+    body = TranslatedField("body_sk", "body_en")
+    button_text_sk = models.CharField(max_length=100)
+    button_text_en = models.CharField(max_length=100)
+    button_text = TranslatedField("button_text_sk", "button_text_en")
+    google_form_url = models.URLField(blank=True)
+
+    content_panels_sk = Page.content_panels + [
+        FieldPanel("stream_url"),
+        FieldPanel("body_sk"),
+        FieldPanel("button_text_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        FieldPanel("body_en"),
+        FieldPanel("button_text_en"),
+    ]
+    settings_panels = Page.settings_panels + [
+        FieldPanel("google_form_url"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival()
         return context
 
 

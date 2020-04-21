@@ -19,4 +19,5 @@ from .pages import (
     PartnersPage,
     ProgramIndexPage,
     SpeakerIndexPage,
+    StreamPage,
 )
