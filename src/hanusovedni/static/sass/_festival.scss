@@ -197,6 +197,7 @@
           transform: translateY(-277px);
           opacity: 0.9;
         }
+
       }
 
       .name, .description {
@@ -224,6 +225,9 @@
 
       a {
         color: white;
+        &:hover, &:active {
+          text-decoration: none;
+        }
       }
 
       img {
