@@ -154,6 +154,16 @@
     p {
       margin-bottom: 0.5rem;
     }
+
+    a {
+      color: white;
+      font-weight: bold;
+
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
   }
 
   // Disable hover effect on event page
@@ -161,7 +171,18 @@
     &:hover {
       box-shadow: none;
     }
+
+    a {
+      color: white;
+      font-weight: bold;
+
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
   }
+
 }
 
 .template-speakers {
