@@ -269,8 +269,8 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
                 speakers = (
                     Speaker.objects.live()
                     .filter(
-                        events__related_festival=festival,
-                        events__date_and_time__year=year,
+                        speaker_connections__event__related_festival=festival,
+                        speaker_connections__event__date_and_time__year=year,
                     )
                     .select_related("photo")
                     .order_by("last_name")

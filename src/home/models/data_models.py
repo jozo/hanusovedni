@@ -6,11 +6,12 @@ from django.utils import timezone, translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from modelcluster.fields import ParentalKey
 from wagtail.admin import blocks
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     FieldRowPanel,
+    InlinePanel,
     MultiFieldPanel,
     ObjectList,
     PageChooserPanel,
@@ -90,9 +91,6 @@ class Event(Page):
         related_name="+",
         verbose_name=_("ikona"),
     )
-    speakers = ParentalManyToManyField(
-        "home.Speaker", blank=True, related_name="events", verbose_name=_("rečník")
-    )
     show_on_festivalpage = models.BooleanField(default=False)
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     related_festival = models.ForeignKey(
@@ -123,7 +121,8 @@ class Event(Page):
             ],
             heading=_("Popis"),
         ),
-        AutocompletePanel("speakers"),
+        InlinePanel("speaker_connections", heading="Speakers"),
+        InlinePanel("moderator_connections", heading="Moderators"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
@@ -131,7 +130,6 @@ class Event(Page):
             [FieldPanel("short_overview_en"), FieldPanel("description_en"),],
             heading=_("Popis"),
         ),
-        AutocompletePanel("speakers"),
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel("show_on_festivalpage"),
@@ -177,12 +175,40 @@ class Event(Page):
 
     @cached_property
     def speakers_limited(self):
-        speakers = list(self.speakers.all().only("title"))
+        connections = list(self.speaker_connections.select_related("speaker").all().only("speaker__title"))
         return {
-            "under_limit": speakers[:3],
-            "over_limit_count": len(speakers[3:]),
-            "over_limit_names": ", ".join(s.title for s in speakers[3:]),
+            "under_limit": [c.speaker for c in connections[:3]],
+            "over_limit_count": len(connections[3:]),
+            "over_limit_names": ", ".join(c.speaker.title for c in connections[3:]),
         }
+
+
+class SpeakerConnection(Orderable):
+    event = ParentalKey(
+        "home.Event", on_delete=models.CASCADE, related_name="speaker_connections"
+    )
+    speaker = models.ForeignKey(
+        "home.Speaker",
+        on_delete=models.CASCADE,
+        blank=True,
+        related_name="speaker_connections",
+    )
+
+    panels = [AutocompletePanel("speaker")]
+
+
+class ModeratorConnection(Orderable):
+    event = ParentalKey(
+        "home.Event", on_delete=models.CASCADE, related_name="moderator_connections"
+    )
+    speaker = models.ForeignKey(
+        "home.Speaker",
+        on_delete=models.CASCADE,
+        blank=True,
+        related_name="moderator_connections",
+    )
+
+    panels = [AutocompletePanel("speaker")]
 
 
 class Speaker(Page):

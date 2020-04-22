@@ -42,10 +42,21 @@
               </div>
 
               <ul class="speakers">
-                {% for speaker in page.speakers.all %}
+                {% for speaker_connection in page.speaker_connections.all %}
                   <li>
-                    <a href="{% pageurl speaker %}">
-                      {{ speaker.title }}
+                    <a href="{% pageurl speaker_connection.speaker %}">
+                      {{ speaker_connection.speaker.title }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+
+            <strong class="text-uppercase">Moderátori:</strong>
+              <ul class="speakers">
+                {% for moderator_connection in page.moderator_connections.all %}
+                  <li>
+                    <a href="{% pageurl moderator_connection.speaker %}">
+                      {{ moderator_connection.speaker.title }}
                     </a>
                   </li>
                 {% endfor %}
@@ -55,7 +66,7 @@
             <footer>
               <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
                 <i class="far fa-calendar-alt"></i>
-                {{ page.date_and_time|date:'j.n.' }}
+                {{ page.date_and_time|date:'j.n.Y' }}
                 &nbsp;&mdash;&nbsp;
                 {{ page.date_and_time|date:'l'|upper }}
                 &nbsp;&mdash;&nbsp;
@@ -104,18 +115,35 @@
     </div>
 
     <div class="container">
-      {% for speaker in page.speakers.all %}
+      {% for speaker_connection in page.speaker_connections.all %}
         <div class="row mx-n02">
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
               <div class="photo align-self-center mt-3 mt-md-0">
-                {% image speaker.photo min-350x350 format-jpeg %}
+                {% image speaker_connection.speaker.photo min-350x350 format-jpeg %}
               </div>
               <div class="m-5">
-                <a href="{% pageurl speaker %}" class="speaker-heading">
-                  <h4 class="mb-4">{{ speaker.title }}</h4>
+                <a href="{% pageurl speaker_connection.speaker %}" class="speaker-heading">
+                  <h4 class="mb-4">{{ speaker_connection.speaker.title }}</h4>
                 </a>
-                {{ speaker.description|richtext }}
+                {{ speaker_connection.speaker.description|richtext }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {% for moderator_connection in page.moderator_connections.all %}
+        <div class="row mx-n02">
+          <div class="col-12 px-02 mb-1">
+            <div class="speaker d-flex flex-md-row flex-column">
+              <div class="photo align-self-center mt-3 mt-md-0">
+                {% image moderator_connection.speaker.photo min-350x350 format-jpeg %}
+              </div>
+              <div class="m-5">
+                <a href="{% pageurl moderator_connection.speaker %}" class="speaker-heading">
+                  <h4 class="mb-4">{{ moderator_connection.speaker.title }}</h4>
+                </a>
+                {{ moderator_connection.speaker.description|richtext }}
               </div>
             </div>
           </div>
