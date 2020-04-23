@@ -159,7 +159,7 @@
                 <div class="headliner overflow-hidden">
                   {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo %}
                   <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
-                  <a href="{{ headliner.value.link }}" class="stretched-link d-block">
+                  <a href="{% pageurl headliner.value.link %}" class="stretched-link d-block">
                     <div class="name p-4">
                       <i class="icon-arrow3 float-left mr-2"></i>
                       <h4>
