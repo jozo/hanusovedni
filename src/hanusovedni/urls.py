@@ -25,6 +25,7 @@ urlpatterns = [
     url(r"^recnici/(.*)/$", views.redirect_speakers),
     url(r"^archiv/(.*)/$", views.redirect_events),
     url(r"^program/(.*)/$", views.redirect_events),
+    path("api/stream/", views.stream_api, name="api-stream"),
     url(r"^documents/", include(wagtaildocs_urls)),
     url(
         r"^robots\.txt/$",

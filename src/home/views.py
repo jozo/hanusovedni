@@ -1,11 +1,11 @@
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import translate_url
 from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
 
-from home.models import Speaker, Event
+from home.models import Speaker, Event, StreamPage
 
 
 def redirect_speakers(request, slug):
@@ -43,3 +43,7 @@ def choose_language(request, lang_code):
         )
     return response
 
+
+def stream_api(request):
+    page = StreamPage.objects.only("live_revision_id").last()
+    return JsonResponse({"live_revision": page.live_revision_id})

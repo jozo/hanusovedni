@@ -1,12 +1,15 @@
 {% extends "base.html" %}
+{% load static wagtailcore_tags wagtailembeds_tags %}
 
-{% load wagtailcore_tags wagtailembeds_tags %}
+{% block extra_js %}
+  <script type="text/javascript" src="{% static 'js/home/stream.js' %}"></script>
+{% endblock %}
 
 {% block body_class %}template-stream{% endblock %}
 {% block title %}{{ page.title }}{% endblock %}
 
 {% block content %}
-  <main class="flex-grow-1">
+  <main class="flex-grow-1" id="main-div" data-revision="{{ page.live_revision_id }}">
     <div class="container">
       <div class="row d-flex flex-row justify-content-center">
         <div class="col-lg-10">
@@ -40,6 +43,13 @@
           </div>
         </div>
       </div>
+{#      <div class="row">#}
+{#        <div class="col d-flex flex-row justify-content-center mt-3">#}
+{#          <a class="btn btn-lg btn-primary" href="program/">#}
+{#            Podporiť BHD#}
+{#          </a>#}
+{#        </div>#}
+{#      </div>#}
     </div>
 
     <iframe src="#" id="no-target" name="no-target" style="visibility:hidden"></iframe>
