@@ -1,7 +1,7 @@
 from functools import cached_property
 
 from django.db import models
-from django.db.models import Max
+from django.db.models import Max, Q
 from django.utils import timezone, translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -175,7 +175,11 @@ class Event(Page):
 
     @cached_property
     def speakers_limited(self):
-        connections = list(self.speaker_connections.select_related("speaker").all().only("speaker__title"))
+        connections = list(
+            self.speaker_connections.select_related("speaker")
+            .all()
+            .only("speaker__title")
+        )
         return {
             "under_limit": [c.speaker for c in connections[:3]],
             "over_limit_count": len(connections[3:]),
@@ -275,7 +279,10 @@ class Speaker(Page):
 
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["speaker"] = self
+        context["events"] = Event.objects.filter(
+            Q(speaker_connections__speaker=self)
+            | Q(moderator_connections__speaker=self)
+        ).live()
         return context
 
 

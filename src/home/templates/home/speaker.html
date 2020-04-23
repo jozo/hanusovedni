@@ -16,13 +16,11 @@
         <div class="col-12 mb-1">
           <div class="speaker d-flex flex-md-row flex-column">
             <div class="photo align-self-center mt-3 mt-md-0">
-              {% image speaker.photo min-350x350 format-jpeg %}
+              {% image page.photo min-350x350 format-jpeg %}
             </div>
             <div class="m-5">
-              <a href="{% pageurl speaker %}" class="speaker-heading">
-                <h4 class="mb-4">{{ speaker.title }}</h4>
-              </a>
-              {{ speaker.description|richtext }}
+              <h4 class="mb-4 speaker-heading">{{ page.title }}</h4>
+              {{ page.description|richtext }}
             </div>
           </div>
         </div>
@@ -31,7 +29,7 @@
 
     <div class="container">
       <div class="row mx-n02">
-        {% for event in speaker.events.live %}
+        {% for event in events %}
           {% include "home/event_block.html" %}
         {% endfor %}
       </div>

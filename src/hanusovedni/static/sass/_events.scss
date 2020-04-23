@@ -116,35 +116,7 @@
   }
 }
 
-.speaker {
-  background-color: $c-bg;
-  font-size: 0.9rem;
 
-  .photo {
-    img {
-      object-fit: cover;
-      width: 350px;
-      height: 350px;
-    }
-  }
-
-  .photo-small {
-    img {
-      object-fit: cover;
-      width: 150px;
-      height: 150px;
-    }
-  }
-
-  a.speaker-heading {
-    font-family: $font-special;
-    color: white;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-}
 
 .template-event {
   .event-detail {
@@ -183,33 +155,4 @@
     }
   }
 
-}
-
-.template-speakers {
-  .speaker {
-    h3 {
-      font-family: $font-special;
-      color: white;
-      font-size: 1.4rem;
-    }
-
-    &:hover {
-      background-color: lighten($c-bg, 5);
-      transition: all 0.5s;
-
-      a {
-        text-decoration: none;
-      }
-
-      .photo-small {
-        filter: none;
-      }
-    }
-
-    .photo-small {
-      filter: grayscale(90%);
-      width: 150px;
-      height: 150px;
-    }
-  }
 }
