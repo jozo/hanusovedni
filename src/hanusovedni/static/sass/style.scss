@@ -261,3 +261,31 @@ body > footer {
     }
   }
 }
+
+.language-switcher-head {
+  font-size: 0.8rem;
+  font-family: $font-special;
+  right: 20%;
+
+  a {
+    background-color: $c-light-grey;
+    color: black;
+    font-weight: bold;
+    display: block;
+    padding: 3px 8px 0px 8px;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: white;
+      text-decoration: none;
+    }
+
+    &:first-child {
+      border-right: 2px solid black;
+      border-bottom-left-radius: 4px;
+    }
+    &:last-child {
+      border-bottom-right-radius: 4px;
+    }
+  }
+}
