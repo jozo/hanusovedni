@@ -1,18 +1,32 @@
 .template-stream {
-  #body-wrapper {
-    min-height: 550px;
-  }
-  #form-wrapper, #embed-wrapper {
-    top: 0;
-    left: 0;
-  }
-
   #form-wrapper {
     display: none;
     background-color: $c-bg;
 
     button {
       font-family: $font-special;
+    }
+  }
+
+  .alternative {
+    font-size: 0.95rem;
+  }
+
+  .btn-support {
+    display: block;
+    background: $c-red-light;
+    color: white;
+    font-family: $font-special;
+    font-size: 1.8rem;
+    line-height: 1;
+
+    &:hover, :focus {
+      background: darken($c-red-light, 5);
+      text-decoration: none;
+    }
+
+    i {
+      color: $c-special;
     }
   }
 }

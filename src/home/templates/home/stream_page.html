@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags wagtailembeds_tags %}
+{% load static wagtailcore_tags wagtailembeds_tags wagtailimages_tags i18n %}
 
 {% block extra_js %}
   <script type="text/javascript" src="{% static 'js/home/stream.js' %}"></script>
@@ -13,14 +13,14 @@
     <div class="container">
       <div class="row d-flex flex-row justify-content-center">
         <div class="col-lg-10">
-          <div id="body-wrapper" class="mt-4 position-relative">
-            <div class="embed-wrapper position-absolute w-100 h-100">
+          <div id="body-wrapper" class="mt-4">
+            <div id="embed-wrapper" class="w-100">
               <div class="embed-container">
                 {% embed page.stream_url %}
               </div>
             </div>
 
-            <div id="form-wrapper" class="position-absolute w-100 h-100 p-4">
+            <div id="form-wrapper" class="w-100 p-4 py-5">
               <div class="row h-100 d-flex justify-content-center">
                 <div class="col-lg-8 d-flex flex-column justify-content-center">
                   <div class="mb-3 text-center">
@@ -37,19 +37,28 @@
                       <strong>{{ page.button_text }}</strong>
                     </button>
                   </form>
+                  <div class="mt-4 text-center alternative">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'en' %}
+                      (or <a href="" id="continue-without-email">continue without email</a>)
+                    {% else %}
+                      (alebo <a href="" id="continue-without-email">pokračovať bez zadania emailu</a>)
+                    {% endif %}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-{#      <div class="row">#}
-{#        <div class="col d-flex flex-row justify-content-center mt-3">#}
-{#          <a class="btn btn-lg btn-primary" href="program/">#}
-{#            Podporiť BHD#}
-{#          </a>#}
-{#        </div>#}
-{#      </div>#}
+      <div class="row">
+        <div class="col d-flex flex-row justify-content-center mt-4">
+          <a class="btn-support p-4 text-center" href="{% pageurl page.donate_button_action %}" target="_blank">
+            <i class="icon-arrow1 mt-2 mr-2"></i>
+            {{ page.donate_button_text }}
+          </a>
+        </div>
+      </div>
     </div>
 
     <iframe src="#" id="no-target" name="no-target" style="visibility:hidden"></iframe>

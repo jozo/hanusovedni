@@ -12,6 +12,7 @@ from wagtail.admin.edit_handlers import (
     FieldRowPanel,
     InlinePanel,
     ObjectList,
+    PageChooserPanel,
     StreamFieldPanel,
     TabbedInterface,
 )
@@ -76,7 +77,7 @@ class FestivalPage(Page):
         ],
         null=True,
         blank=True,
-        help_text=_("Len prvé 2 tlacidla budú použité"),
+        help_text=_("Len prvé 3 tlacidla budú použité"),
     )
     hero_buttons_en = StreamField(
         [
@@ -89,7 +90,7 @@ class FestivalPage(Page):
         ],
         null=True,
         blank=True,
-        help_text=_("Len prvé 2 tlacidla budú použité"),
+        help_text=_("Len prvé 3 tlacidla budú použité"),
     )
     hero_buttons = TranslatedField("hero_buttons_sk", "hero_buttons_en")
     video_text_sk = RichTextField(blank=True)
@@ -650,17 +651,35 @@ class StreamPage(Page):
     button_text_sk = models.CharField(max_length=100)
     button_text_en = models.CharField(max_length=100)
     button_text = TranslatedField("button_text_sk", "button_text_en")
+    background = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
     google_form_url = models.URLField(blank=True)
+    donate_button_text_sk = models.CharField(max_length=100, null=True)
+    donate_button_text_en = models.CharField(max_length=100, null=True)
+    donate_button_text = TranslatedField(
+        "donate_button_text_sk", "donate_button_text_en"
+    )
+    donate_button_action = models.ForeignKey(
+        Page, on_delete=models.SET_NULL, null=True, related_name="stream_page_donate"
+    )
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("stream_url"),
         FieldPanel("body_sk"),
         FieldPanel("button_text_sk"),
+        ImageChooserPanel("background"),
+        FieldPanel("donate_button_text_sk"),
+        PageChooserPanel("donate_button_action"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
         FieldPanel("body_en"),
         FieldPanel("button_text_en"),
+        FieldPanel("donate_button_text_en"),
     ]
     settings_panels = Page.settings_panels + [
         FieldPanel("google_form_url"),
