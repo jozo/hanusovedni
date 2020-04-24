@@ -66,6 +66,7 @@ def purge_cache_for_index_pages(**kwargs):
 @receiver([page_published, page_unpublished], sender=StreamPage)
 def purge_cache_for_api(**kwargs):
     batch = PurgeBatch()
-    batch.add_page(kwargs["instance"])
     batch.add_url(settings.BASE_URL + reverse("api-stream"))
+    batch.add_url(settings.BASE_URL + "/en/stream/")
+    batch.add_url(settings.BASE_URL + "/sk/stream/")
     batch.purge()
