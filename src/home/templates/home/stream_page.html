@@ -13,14 +13,14 @@
     <div class="container">
       <div class="row d-flex flex-row justify-content-center">
         <div class="col-lg-10">
-          {% image page.background format-jpeg as tmp_photo %}
-          <div id="body-wrapper" class="mt-4"
-               style="background-image: url('{{ tmp_photo.url }}')">
+          <div id="body-wrapper" class="mt-4">
             <div id="embed-wrapper" class="w-100">
               <div class="embed-container">
                 {% embed page.stream_url %}
               </div>
             </div>
+
+            {% image page.background format-jpeg %}
 
             <div id="form-wrapper" class="w-100 p-4 py-5">
               <div class="row h-100 d-flex justify-content-center">
