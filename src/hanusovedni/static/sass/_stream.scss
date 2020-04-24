@@ -38,6 +38,7 @@
 
   .alternative {
     font-size: 0.95rem;
+
     a {
       color: gray;
     }
@@ -50,6 +51,14 @@
     font-family: $font-special;
     font-size: 1.8rem;
     line-height: 1;
+
+    &.btn-blue {
+      background: $c-blue-light;
+      &:hover, :focus {
+        background: darken($c-blue-light, 5);
+        text-decoration: none;
+      }
+    }
 
     &:hover, :focus {
       background: darken($c-red-light, 5);
