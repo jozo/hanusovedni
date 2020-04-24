@@ -1,11 +1,12 @@
+from urllib.parse import urlsplit, urlunsplit
+
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import translate_url
 from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
 
-from home.models import Speaker, Event, StreamPage
+from home.models import Event, Speaker, StreamPage
 
 
 def redirect_speakers(request, slug):
@@ -24,14 +25,14 @@ def handler404(request, exception):
 
 
 def choose_language(request, lang_code):
-    next = request.META["HTTP_REFERER"] or '/'
+    next_url = request.META["HTTP_REFERER"]
 
-    response = HttpResponseRedirect(next) if next else HttpResponse(status=204)
+    response = HttpResponseRedirect(next_url) if next_url else HttpResponse(status=204)
     if lang_code and check_for_language(lang_code):
-        if next:
-            next_trans = translate_url(next, lang_code)
-            if next_trans != next:
-                response = HttpResponseRedirect(next_trans)
+        parsed = urlsplit(next_url)
+        new_path = f"/{lang_code}/" + parsed.path[4:]
+        next_url = urlunsplit((parsed.scheme, parsed.netloc, new_path, parsed.query, parsed.fragment))
+        response = HttpResponseRedirect(next_url)
         response.set_cookie(
             settings.LANGUAGE_COOKIE_NAME, lang_code,
             max_age=settings.LANGUAGE_COOKIE_AGE,

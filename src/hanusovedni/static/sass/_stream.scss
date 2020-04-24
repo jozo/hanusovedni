@@ -13,10 +13,12 @@
       top: 0;
       left: 0;
       object-fit: cover;
-      filter: blur(3px);
-      -webkit-filter: blur(3px);
-    }
 
+      &.blur {
+        filter: blur(3px);
+        -webkit-filter: blur(3px);
+      }
+    }
   }
 
   #form-wrapper {
@@ -28,15 +30,14 @@
     button {
       font-family: $font-special;
     }
+  }
 
-    .box-bg {
-      background-color: $c-bg;
-    }
+  .box-bg {
+    background-color: $c-bg;
   }
 
   .alternative {
     font-size: 0.95rem;
-
     a {
       color: gray;
     }
