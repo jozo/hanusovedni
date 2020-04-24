@@ -40,7 +40,7 @@ $(document).ready(function () {
   function refreshIfNewVersion (data) {
     let revision = parseInt($('#main-div').attr('data-revision'))
     if (data.live_revision !== revision) {
-      history.go(0)
+      location.reload()
     }
   }
 
