@@ -1,7 +1,10 @@
+import logging
 import os
 
 import requests
+from django.conf import settings
 from django.dispatch import receiver
+from django.urls import reverse
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
 from wagtail.core.signals import page_published, page_unpublished
 
@@ -11,8 +14,11 @@ from home.models.pages import (
     FestivalPage,
     HomePage,
     ProgramIndexPage,
-    logger,
+    StreamPage,
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class CloudFlare:
@@ -54,4 +60,11 @@ class IndexPages:
 def purge_cache_for_index_pages(**kwargs):
     batch = PurgeBatch()
     batch.add_pages(IndexPages().set())
+    batch.purge()
+
+
+@receiver([page_published, page_unpublished], sender=StreamPage)
+def purge_cache_for_api(**kwargs):
+    batch = PurgeBatch()
+    batch.add_url(settings.BASE_URL + reverse("api-stream"))
     batch.purge()
