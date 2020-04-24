@@ -637,7 +637,7 @@ class CrowdfundingPage(Page):
 
 
 class StreamPage(Page):
-    stream_url = models.URLField()
+    stream_url = models.URLField(blank=True)
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,

@@ -13,7 +13,9 @@
     <div class="container">
       <div class="row d-flex flex-row justify-content-center">
         <div class="col-lg-10">
-          <div id="body-wrapper" class="mt-4">
+          {% image page.background format-jpeg as tmp_photo %}
+          <div id="body-wrapper" class="mt-4"
+               style="background-image: url('{{ tmp_photo.url }}')">
             <div id="embed-wrapper" class="w-100">
               <div class="embed-container">
                 {% embed page.stream_url %}
@@ -22,7 +24,7 @@
 
             <div id="form-wrapper" class="w-100 p-4 py-5">
               <div class="row h-100 d-flex justify-content-center">
-                <div class="col-lg-8 d-flex flex-column justify-content-center">
+                <div class="col-lg-5 d-flex flex-column justify-content-center p-3 box-bg">
                   <div class="mb-3 text-center">
                     {{ page.body|richtext }}
                   </div>
@@ -33,7 +35,7 @@
                       <label for="input-email" class="sr-only">Email address</label>
                       <input type="email" placeholder="Email address" class="form-control" id="input-email">
                     </div>
-                    <button type="submit" class="btn btn-lg btn-block btn-outline-warning">
+                    <button type="submit" class="btn btn-lg btn-block btn-warning">
                       <strong>{{ page.button_text }}</strong>
                     </button>
                   </form>

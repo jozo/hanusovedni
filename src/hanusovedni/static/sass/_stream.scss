@@ -1,10 +1,19 @@
 .template-stream {
+  #body-wrapper {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
   #form-wrapper {
     display: none;
-    background-color: $c-bg;
 
     button {
       font-family: $font-special;
+    }
+
+    .box-bg {
+      background-color: $c-bg;
     }
   }
 
