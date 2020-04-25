@@ -76,6 +76,7 @@
   }
   .n-5 {
     bottom: 250px;
+    left: -30px;
   }
 
   .n-6 {
@@ -95,8 +96,8 @@
   }
 
   .n-5000 {
-    bottom: 505px;
-    left: -4px;
+    bottom: 515px;
+    left: -7px;
     font-size: 34px;
   }
 
@@ -120,9 +121,7 @@
     .rocket-wrapper {
       position: absolute;
       top: 101px;
-    }
-    .n-5000 {
-      left: 0px;
+      left: 40px;
     }
   }
   @media (min-width: 1280px) {
@@ -130,7 +129,7 @@
       left: 100px;
     }
     .n-5000 {
-      left: -4px;
+      left: -7px;
     }
   }
 }
