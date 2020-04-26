@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-contact{% endblock %}
 
@@ -35,6 +32,5 @@
         </div>
       </div>
     </div>
-{# TODO add rest of the elements from the design #}
   </main>
 {% endblock %}

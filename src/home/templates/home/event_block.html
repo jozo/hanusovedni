@@ -23,7 +23,7 @@
               {{ speaker.title }}
               {% if forloop.last and event.speakers_limited.over_limit_count %}
                 <span title="{{ event.speakers_limited.over_limit_names }}">
-                  + {{ event.speakers_limited.over_limit_count }} {% trans "ďalší" %}
+                  + {{ event.speakers_limited.over_limit_count }} {% trans "next" %}
                 </span>
               {% endif %}
             </li>

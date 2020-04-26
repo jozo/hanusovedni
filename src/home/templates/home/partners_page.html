@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-partners{% endblock %}
 
@@ -15,10 +13,10 @@
             <section class="container partner mb-1">
               <div class="row">
                 <div class="col-md-4 p-4 d-flex justify-content-center align-items-center">
-                    {% image partner.value.logo width-200 class='logo'%}
+                  {% image partner.value.logo width-200 class='logo' %}
                 </div>
                 <div class="col-md-8 px-4 pb-4 pt-0 pt-md-4 d-flex align-items-center">
-                    {{ partner.value.description|richtext }}
+                  {{ partner.value.description|richtext }}
                 </div>
               </div>
             </section>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags i18n%}
+{% load wagtailcore_tags i18n %}
 
 {% block body_class %}template-program{% endblock %}
 
@@ -27,11 +27,11 @@
         <div class="row">
           <div class="col-8 mx-auto text-center">
             <div class="alert alert-warning mt-3" role="alert">
-                {% if message_empty %}
-                  {{ message_empty }}
-                {% else %}
-                  {% trans "Nenašli sa žiadne podujatia" %} 😥
-                {% endif %}
+              {% if message_empty %}
+                {{ message_empty }}
+              {% else %}
+                {% trans "No events found" %} 😥
+              {% endif %}
             </div>
           </div>
         </div>

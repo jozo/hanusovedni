@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 
-{# TODO pozriet ci potebujem toto vsetko importovat #}
-{% load i18n %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load i18n wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-speakers{% endblock %}
 
@@ -32,16 +28,14 @@
                 </div>
               </div>
             {% endfor %}
-
           </div>
         {% endfor %}
-
 
       {% empty %}
         <div class="row mx-n02">
           <div class="col-8 mx-auto text-center">
             <div class="alert alert-warning mt-3" role="alert">
-              {% trans "Nenašli sa žiadni rečníci" %} 😥
+              {% trans "No speakers found" %} 😥
             </div>
           </div>
         </div>

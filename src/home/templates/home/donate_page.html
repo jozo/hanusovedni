@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-{% load static %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load i18n static wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}template-donate{% endblock %}
 
@@ -18,7 +14,9 @@
               <div class="row py-5">
                 <div class="col-lg-3 offset-lg-1">
                   <div class="d-flex justify-content-center mb-4 mb-lg-0">
-                    <img src="{% static 'img/beer-philosoph.svg' %}" alt="Pivný filozof" class="img-responsive">
+                    <img src="{% static "img/beer-philosoph.svg" %}"
+                         alt="{% trans "Beer philosopher" %}"
+                         class="img-responsive">
                   </div>
                 </div>
                 <div class="col-lg-7">
@@ -38,11 +36,13 @@
             <h2>{% include_block page.body.1 %}</h2>
           </div>
           <div class="col-sm-5 offset-sm-1">
-            <img src="{% static 'img/icon-people.svg' %}" alt="Ikona ľudia" class="mx-auto mb-4 mt-5">
+            <img src="{% static "img/icon-people.svg" %}" alt="{% trans "Icon people" %}"
+                 class="mx-auto mb-4 mt-5">
             {% include_block page.body.2 %}
           </div>
           <div class="col-sm-5">
-            <img src="{% static 'img/icon-coffee.svg' %}" alt="Ikona káva" class="mx-auto mb-4 mt-5">
+            <img src="{% static "img/icon-coffee.svg" %}" alt="{% trans "Icon coffee" %}"
+                 class="mx-auto mb-4 mt-5">
             {% include_block page.body.3 %}
           </div>
           <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
@@ -124,7 +124,8 @@
       <section id="thank-you" class="my-1 py-5 text-center">
         <div class="row">
           <div class="col-12">
-            <img src="{% static 'img/icon-heart.svg' %}" alt="Ikona srdce" class="mx-auto mb-4">
+            <img src="{% static "img/icon-heart.svg" %}" alt="{% trans "Icon heart" %}"
+                 class="mx-auto mb-4">
             {% include_block page.body.10 %}
           </div>
         </div>

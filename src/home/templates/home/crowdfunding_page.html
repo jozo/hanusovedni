@@ -52,7 +52,7 @@
           <div class="number n-8">8</div>
           <div class="number n-9">9</div>
           <div class="number n-5000">10 000 €</div>
-          <img src="{% static 'img/rocket.gif' %}" class="rocket">
+          <img src="{% static "img/rocket.gif" %}" class="rocket">
         </div>
       </div>
     </div>
@@ -65,7 +65,9 @@
             {% include_block page.body.5 %}
           </p>
           <p>
-            <a href="{% include_block page.body.7 %}" class="btn btn-lg btn-outline-warning">{% include_block page.body.6 %}</a>
+            <a href="{% include_block page.body.7 %}" class="btn btn-lg btn-outline-warning">
+              {% include_block page.body.6 %}
+            </a>
           </p>
         </div>
       </div>

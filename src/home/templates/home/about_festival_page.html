@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-{% load static %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load i18n static wagtailcore_tags %}
 
 {% block body_class %}template-about-festival{% endblock %}
 
@@ -28,14 +24,16 @@
                   {% include_block page.body.3 %}
                 </div>
 
-                <img src="{% static 'img/ladislav-hanus.jpg' %}" alt="Fotka Ladislava Hanusa"
+                <img src="{% static "img/ladislav-hanus.jpg" %}"
+                     alt="{% trans "Photo of Ladislav Hanus" %}"
                      class="mt-5 mb-n4 hanus">
                 <h2>{% include_block page.body.4 %}</h2>
                 {% include_block page.body.5 %}
               </div>
             </section>
 
-            <img src="{% static 'img/slh-spolocenstvo.jpg' %}" alt="Fotka spoločenstva SLH"
+            <img src="{% static "img/slh-spolocenstvo.jpg" %}"
+                 alt="{% trans "Photo of SLH fellowship" %}"
                  class="mt-5 img-fluid">
 
             <section class="third d-flex flex-column align-items-center">
@@ -44,17 +42,18 @@
                 {% include_block page.body.7 %}
               </div>
 
-              <img src="{% static 'img/logo-slh.svg' %}" alt="Logo SLH"
+              <img src="{% static "img/logo-slh.svg" %}" alt="{% trans "Logo SLH" %}"
                    class="mt-5 logo">
               <div class="logo-about d-flex align-items-center mb-5">
                 <i class="icon-arrow1 mr-2"></i>
-                <a href="https://slh.sk/" target="_blank">VIAC O SLH</a>
+                <a href="https://slh.sk/" target="_blank" class="text-uppercase">
+                  {% trans "more about SLH" %}
+                </a>
               </div>
             </section>
           </div>
         </div>
       </div>
     </div>
-    {# TODO add rest of the elements from the design #}
   </main>
 {% endblock %}

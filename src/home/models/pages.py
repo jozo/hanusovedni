@@ -50,18 +50,18 @@ class HomePage(Page):
 
 
 class FestivalPage(Page):
-    formatted_title_sk = RichTextField(default="", verbose_name=_("titulok"))
-    formatted_title_en = RichTextField(default="", verbose_name=_("titulok"))
+    formatted_title_sk = RichTextField(default="", verbose_name=_("title"))
+    formatted_title_en = RichTextField(default="", verbose_name=_("title"))
     formatted_title = TranslatedField("formatted_title_sk", "formatted_title_en")
     logo = models.FileField(null=True, blank=True)
     start_date = models.DateField(
-        default=timezone.now, verbose_name=_("začiatok festivalu")
+        default=timezone.now, verbose_name=_("festival beginning")
     )
     end_date = models.DateField(
-        default=timezone.now, verbose_name=_("koniec festivalu")
+        default=timezone.now, verbose_name=_("festival end")
     )
     place = models.CharField(
-        max_length=50, null=True, blank=True, verbose_name=_("miesto")
+        max_length=50, null=True, blank=True, verbose_name=_("place")
     )
     hero_text_sk = RichTextField(blank=True)
     hero_text_en = RichTextField(blank=True)
@@ -77,7 +77,6 @@ class FestivalPage(Page):
         ],
         null=True,
         blank=True,
-        help_text=_("Len prvé 3 tlacidla budú použité"),
     )
     hero_buttons_en = StreamField(
         [
@@ -90,7 +89,6 @@ class FestivalPage(Page):
         ],
         null=True,
         blank=True,
-        help_text=_("Len prvé 3 tlacidla budú použité"),
     )
     hero_buttons = TranslatedField("hero_buttons_sk", "hero_buttons_en")
     video_text_sk = RichTextField(blank=True)
@@ -155,7 +153,7 @@ class FestivalPage(Page):
         StreamFieldPanel("headline_en"),
     ]
     promote_panels = Page.promote_panels + [
-        InlinePanel("menu_items", label=_("Menu")),
+        InlinePanel("menu_items", label=_("menu")),
         StreamFieldPanel("partner_sections"),
     ]
     subpage_types = [
@@ -198,11 +196,6 @@ class FestivalPage(Page):
         context["header_festival"] = self
         return context
 
-    def get_template(self, request, *args, **kwargs):
-        if self.slug == "bhd-online":
-            return "home/festival_page_online.html"
-        return super().get_template(request, *args, **kwargs)
-
 
 class SpeakerIndexPage(RoutablePageMixin, Page):
     title_en = models.CharField(
@@ -212,9 +205,6 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-
-    class Meta:
-        verbose_name = _("rečníci")
 
     content_panels_sk = Page.content_panels
     content_panels_en = [
@@ -297,9 +287,6 @@ class EventIndexPage(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [FieldPanel("intro", classname="full")]
     subpage_types = ["home.Event"]
 
-    class Meta:
-        verbose_name = _("archív")
-
     content_panels_sk = Page.content_panels
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
@@ -363,9 +350,6 @@ class ProgramIndexPage(Page):
     )
     subpage_types = []
 
-    class Meta:
-        verbose_name = _("program")
-
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         parent_festival = FestivalPage.objects.get(pk=self.get_parent().pk)
@@ -418,9 +402,6 @@ class ContactPage(Page):
     right_text_en = RichTextField(blank=True, null=True)
     right_text = TranslatedField("right_text_sk", "right_text_en")
 
-    class Meta:
-        verbose_name = _("kontakt")
-
     content_panels_sk = Page.content_panels + [
         ImageChooserPanel("left_image"),
         FieldPanel("left_text_sk", classname="full"),
@@ -469,9 +450,6 @@ class AboutFestivalPage(Page):
     )
     body = TranslatedField("body_sk", "body_en")
 
-    class Meta:
-        verbose_name = _("o festivale")
-
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
     ]
@@ -515,9 +493,6 @@ class DonatePage(Page):
         ]
     )
     body = TranslatedField("body_sk", "body_en")
-
-    class Meta:
-        verbose_name = _("podpora")
 
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),
@@ -576,9 +551,6 @@ class PartnersPage(Page):
         ]
     )
     body = TranslatedField("body_sk", "body_en")
-
-    class Meta:
-        verbose_name = _("partneri")
 
     content_panels_sk = Page.content_panels + [
         StreamFieldPanel("body_sk"),

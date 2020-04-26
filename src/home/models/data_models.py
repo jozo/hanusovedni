@@ -36,52 +36,40 @@ class Event(Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name=_("krátky popis"),
-        help_text=_("Zobrazuje sa na stránke s programom"),
-    )
-    short_overview_en = models.CharField(
-        max_length=255,
-        blank=True,
-        verbose_name=_("krátky popis"),
-        help_text=_("Zobrazuje sa na stránke s programom"),
-    )
+    short_overview_sk = models.CharField(max_length=255, blank=True,)
+    short_overview_en = models.CharField(max_length=255, blank=True,)
     short_overview = TranslatedField("short_overview_sk", "short_overview_en")
-    description_sk = RichTextField(blank=True, verbose_name=_("popis"))
-    description_en = RichTextField(blank=True, verbose_name=_("popis"))
+    description_sk = RichTextField(blank=True)
+    description_en = RichTextField(blank=True)
     description = TranslatedField("description_sk", "description_en")
     date_and_time = models.DateTimeField(
-        default=timezone.now, verbose_name=_("dátum a čas")
+        default=timezone.now, verbose_name=_("date and time")
     )
     location = models.ForeignKey(
         "home.Location",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=_("poloha"),
     )
     video_url = models.URLField(
         null=True,
         blank=True,
         help_text=format_html(
-            _("Podporuje Youtube, Vimeo a {}{}{}"),
+            _("Supports Youtube, Vimeo and {}{}{}"),
             mark_safe(
                 "<a href='https://github.com/wagtail/wagtail/blob/master/"
                 "wagtail/embeds/oembed_providers.py' target='_blank'>"
             ),
-            _("dalšie stránky"),
+            _("other websites"),
             mark_safe("</a>"),
         ),
     )
-    ticket_url = models.URLField(null=True, blank=True, verbose_name=_("Lístok URL"))
+    ticket_url = models.URLField(null=True, blank=True)
     category = models.ForeignKey(
         "home.Category",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=_("kategória"),
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
@@ -89,7 +77,6 @@ class Event(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("ikona"),
     )
     show_on_festivalpage = models.BooleanField(default=False)
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
@@ -99,7 +86,6 @@ class Event(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("festival"),
     )
 
     content_panels_sk = Page.content_panels + [
@@ -119,16 +105,16 @@ class Event(Page):
                 FieldPanel("video_url"),
                 FieldPanel("ticket_url"),
             ],
-            heading=_("Popis"),
+            heading=_("description"),
         ),
-        InlinePanel("speaker_connections", heading="Speakers"),
-        InlinePanel("moderator_connections", heading="Moderators"),
+        InlinePanel("speaker_connections", heading="speakers"),
+        InlinePanel("moderator_connections", heading="hosts"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
         MultiFieldPanel(
-            [FieldPanel("short_overview_en"), FieldPanel("description_en"),],
-            heading=_("Popis"),
+            [FieldPanel("short_overview_en"), FieldPanel("description_en")],
+            heading=_("description"),
         ),
     ]
     promote_panels = Page.promote_panels + [
@@ -147,8 +133,8 @@ class Event(Page):
     subpage_types = []
 
     class Meta:
-        verbose_name = _("podujatie")
-        verbose_name_plural = _("podujatia")
+        verbose_name = _("event")
+        verbose_name_plural = _("events")
 
     def get_url_parts(self, request=None):
         """Insert PK of object to url"""
@@ -217,9 +203,9 @@ class ModeratorConnection(Orderable):
 
 class Speaker(Page):
     speaker_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
-    first_name = models.CharField(max_length=64, verbose_name=_("meno"), blank=True)
-    last_name = models.CharField(max_length=64, verbose_name=_("priezvisko"))
-    description_sk = RichTextField(blank=True, verbose_name=_("popis"))
+    first_name = models.CharField(max_length=64, blank=True)
+    last_name = models.CharField(max_length=64)
+    description_sk = RichTextField(blank=True)
     description_en = RichTextField(blank=True)
     description = TranslatedField("description_sk", "description_en")
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
@@ -229,12 +215,11 @@ class Speaker(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name="+",
-        verbose_name=_("fotka"),
     )
 
     class Meta:
-        verbose_name = _("rečník")
-        verbose_name_plural = _("rečníci")
+        verbose_name = _("speaker")
+        verbose_name_plural = _("speakers")
 
     parent_page_types = ["home.SpeakerIndexPage"]
     content_panels_sk = Page.content_panels + [
@@ -336,8 +321,8 @@ class Location(models.Model):
     title_sk = models.CharField(default="", max_length=255)
     title_en = models.CharField(default="", max_length=255)
     url_to_map = models.URLField(
-        verbose_name=_("URL k mape"),
-        help_text=_("URL adresa na Google Mapy alebo obdobnú službu"),
+        verbose_name=_("URL to map"),
+        help_text=_("URL to Google Maps or similar service"),
     )
 
     title = TranslatedField("title_sk", "title_en")
@@ -345,10 +330,6 @@ class Location(models.Model):
     autocomplete_search_field = "title_sk"
 
     objects = LocationManager()
-
-    class Meta:
-        verbose_name = _("poloha")
-        verbose_name_plural = _("polohy")
 
     def __str__(self):
         return self.title_sk
@@ -366,17 +347,13 @@ class CategoryManager(models.Manager):
 class Category(models.Model):
     title_sk = models.CharField(max_length=30)
     title_en = models.CharField(max_length=30)
-    color = models.CharField(max_length=20, verbose_name=_("farba"))
+    color = models.CharField(max_length=20)
 
     title = TranslatedField("title_sk", "title_en")
     panels = [FieldPanel("title_sk"), FieldPanel("title_en"), FieldPanel("color")]
     autocomplete_search_field = "title_sk"
 
     objects = CategoryManager()
-
-    class Meta:
-        verbose_name = _("kategória")
-        verbose_name_plural = _("kategórie")
 
     def __str__(self):
         return self.title_sk

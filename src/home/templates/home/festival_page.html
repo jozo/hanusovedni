@@ -5,14 +5,7 @@
 {% block title_suffix %}
   {# We don't want to add suffix to festival page because it would be duplicated #}
 {% endblock %}
-{% block title %}
-  {% get_current_language as LANGUAGE_CODE %}
-  {% if LANGUAGE_CODE == "en" %}
-    {{ page.formatted_title_en|striptags }}
-  {% else %}
-    {{ page.formatted_title_sk|striptags }}
-  {% endif %}
-{% endblock %}
+{% block title %}{{ page.formatted_title|striptags }}{% endblock %}
 
 {% block body_class %}template-festival{% endblock %}
 
@@ -46,11 +39,11 @@
               </div>
               <a class="carousel-control-prev" href="#carouselHeroImages" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
+                <span class="sr-only">{% trans "previous" %}</span>
               </a>
               <a class="carousel-control-next" href="#carouselHeroImages" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                <span class="sr-only">{% trans "next" %}</span>
               </a>
             </div>
           </div>
@@ -84,18 +77,11 @@
         </div>
         <div class="col-lg-4 col-md-12 small-gutter">
           <div class="btn-full">
-            <a class="d-flex orange about-slh" href="https://www.slh.sk" target="_blank">
-              <div class="row w-100">
-                <div class="col-7 mb-n4 text d-flex flex-column justify-content-center">
-                  <div>Hanusove dni organizuje Spoločenstvo Ladislava Hanusa</div>
-                  <div class="more d-flex align-items-center">
-                    <i class="icon-arrow3 mt-2 mr-2"></i>
-                    <span>Viac o SLH</span>
-                  </div>
-                </div>
-                <div class="col-5 d-flex align-items-center justify-content-center">
-                  <img src="/static/img/logo-slh.svg" alt="SLH logo" class="logo">
-                </div>
+            <a class="d-flex fle-row align-items-center justify-content-center orange big text-center"
+               href="{{ page.hero_buttons.2.value.link }}">
+              <div>
+                <i class="icon-arrow3 mt-2 mr-2" style="color: white"></i>
+                <span>{{ page.hero_buttons.2.value.title }}</span>
               </div>
             </a>
           </div>
@@ -106,7 +92,7 @@
     {% if page.video_invites.all %}
       <div class="container">
         <section class="video-invites">
-          <h2>Videopozvánka</h2>
+          <h2>BHD vs. BHD ONLINE</h2>
           <div class="row no-gutters">
             <div class="col-lg-8">
               <div class="video-invites-carousel">
@@ -151,7 +137,7 @@
     {% if page.headline %}
       <div class="container">
         <section id="headline">
-          <h2>Headlineri</h2>
+          <h2>{% trans "Headline" %}</h2>
 
           <div class="row mx-n02 justify-content-center">
             {% for headliner in page.headline %}
@@ -183,7 +169,7 @@
     {% if page.events %}
       <div class="container">
         <section class="events">
-          <h2>Program</h2>
+          <h2>{% trans "Programme" %}</h2>
 
           <div class="row mx-n02 justify-content-center">
             {% for event in page.events %}
@@ -196,21 +182,21 @@
 
     <div class="container">
       <section class="social-media">
-        <h2>Sledujte nás na Facebooku</h2>
+        <h2>{% trans "Follow us on Facebook" %}</h2>
 
         <div class="row mx-n02">
           <div class="col-md-6 px-02">
             <a href="https://www.facebook.com/BratislavskeHanusoveDni/"
                class="d-flex justify-content-center align-content-center mb-1 text-decoration-none" target="_blank">
               <i class="icon-arrow3 mr-2"></i>
-              BHD facebook
+              BHD Facebook
             </a>
           </div>
           <div class="col-md-6 px-02">
             <a href="https://www.facebook.com/kosickehanusovedni/"
                class="d-flex justify-content-center align-content-center mb-1 text-decoration-none" target="_blank">
               <i class="icon-arrow3 mr-2"></i>
-              KHD facebook
+              KHD Facebook
             </a>
           </div>
         </div>

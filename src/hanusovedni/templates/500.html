@@ -2,21 +2,24 @@
 
 {% load static i18n %}
 
-{% block title %}Page not found{% endblock %}
-{% block body_class %}template-404{% endblock %}
+{% block title %}{% trans "Error 500" %}{% endblock %}
+{% block body_class %}template-error{% endblock %}
 
 {% block content %}
   <main class="d-flex flex-grow-1 flex-column justify-content-center align-items-center">
     <div class="container">
       <div class="row">
         <div class="col-md-5">
-          <img src="{% static 'img/beer-philosoph.svg' %}" alt="Beer philosopher" class="m-5">
+          <img src="{% static "img/beer-philosoph.svg" %}" alt="{% trans "Beer philosopher" %}" class="m-5">
         </div>
         <div class="col-md-7 d-flex flex-column justify-content-center text-center">
           <h1>{% trans "Error 500" %}</h1>
 
           <div class="py-4">
             <mark>{% trans "Sorry, there seems to be an error. Please try again soon." %}</mark>
+          </div>
+          <div>
+            <a href="/">{% trans "< Back to homepage" %}</a>
           </div>
         </div>
       </div>

@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-{% load wagtailembeds_tags %}
+{% load i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
 
 {% block body_class %}template-event{% endblock %}
 
@@ -51,7 +48,7 @@
                 {% endfor %}
               </ul>
 
-            <strong class="text-uppercase">Moderátori:</strong>
+            <strong class="text-uppercase">{% trans "Hosts" %}:</strong>
               <ul class="speakers">
                 {% for moderator_connection in page.moderator_connections.all %}
                   <li>
@@ -76,7 +73,7 @@
                 <i class="far fa-map"></i>
                 <a href="{{ page.location.url_to_map }}"
                    target="_blank"
-                   title="{% trans "Mapa ku miestu konania" %}">
+                   title="{% trans "Map to the place of occurrence" %}">
                   {{ page.location.title }}
                 </a>
               </address>

@@ -20,24 +20,22 @@
         </p>
       </div>
     </div>
-    {% if page %}
-      <div class="row">
-        <div class="col d-flex flex-column my-3">
-          <h3>Choose lanugage</h3>
-          <div class="language-switcher">
-            <div class="col-12">
-              {% get_available_languages as languages %}
-              {% for lang_code, lang_name in languages %}
-                {% language lang_code %}
-                  <a href="{% url 'choose-lang' lang_code %}">{{ lang_code|language_name }}</a>
-                  {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
-                {% endlanguage %}
-              {% endfor %}
-            </div>
+    <div class="row">
+      <div class="col d-flex flex-column my-3">
+        <h3>Choose lanugage</h3>
+        <div class="language-switcher">
+          <div class="col-12">
+            {% get_available_languages as languages %}
+            {% for lang_code, lang_name in languages %}
+              {% language lang_code %}
+                <a href="{% url 'choose-lang' lang_code %}">{{ lang_code|language_name }}</a>
+                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+              {% endlanguage %}
+            {% endfor %}
           </div>
         </div>
       </div>
-    {% endif %}
+    </div>
   </div>
 
   <div class="container-fluid copy">

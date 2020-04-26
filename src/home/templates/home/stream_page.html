@@ -2,7 +2,7 @@
 {% load static wagtailcore_tags wagtailembeds_tags wagtailimages_tags i18n %}
 
 {% block extra_js %}
-  <script type="text/javascript" src="{% static 'js/home/stream.js' %}"></script>
+  <script type="text/javascript" src="{% static "js/home/stream.js" %}"></script>
 {% endblock %}
 
 {% block body_class %}template-stream{% endblock %}
@@ -33,20 +33,16 @@
                   <form id="stream-form" action="" method="POST" target="no-target">
                     <div class="form-group">
                       <input type="hidden" id="google-form-url" value="{{ page.google_form_url }}">
-                      <label for="input-email" class="sr-only">Emailová adresa</label>
-                      <input type="email" placeholder="Emailová adresa" class="form-control" id="input-email2">
+                      <label for="input-email" class="sr-only">{% trans "Email address" %}</label>
+                      <input type="email" placeholder="{% trans "Email address" %}" class="form-control"
+                             id="input-email">
                     </div>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-light">
                       <strong>{{ page.button_text }}</strong>
                     </button>
                   </form>
                   <div class="mt-4 text-center alternative">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% if LANGUAGE_CODE == 'en' %}
-                      (or <a href="" id="continue-without-email">continue without email</a>)
-                    {% else %}
-                      (alebo <a href="" id="continue-without-email">pokračovať bez zadania emailu</a>)
-                    {% endif %}
+                    ({% trans "or" %} <a href="" id="continue-without-email">{% trans "continue without email" %}</a>)
                   </div>
                 </div>
               </div>
@@ -60,7 +56,8 @@
             <i class="icon-arrow1 mt-2 mr-2"></i>
             {{ page.donate_button_text }}
           </a>
-          <a class="btn-support btn-blue p-4 m-01 text-center" href="https://app.sli.do/event/kec0jpnl/" target="_blank">
+          <a class="btn-support btn-blue p-4 m-01 text-center" href="https://app.sli.do/event/kec0jpnl/"
+             target="_blank">
             <i class="icon-arrow1 mt-2 mr-2"></i>
             Sli.do
           </a>
@@ -76,15 +73,11 @@
 
             <form id="stream-form2" action="" method="POST" target="no-target">
               <div class="form-group">
-                <label for="input-email" class="sr-only">Emailová adresa</label>
-                <input type="email" placeholder="Emailová adresa" class="form-control" id="input-email">
+                <label for="input-email" class="sr-only">{% trans "Email address" %}</label>
+                <input type="email" placeholder="{% trans "Email address" %}" class="form-control" id="input-email2">
               </div>
               <button type="submit" class="btn btn-lg btn-block btn-outline-light">
-                {% if LANGUAGE_CODE == 'en' %}
-                  <strong>Submit</strong>
-                {% else %}
-                  <strong>Odoslať</strong>
-                {% endif %}
+                <strong>{% trans "Submit" %}</strong>
               </button>
             </form>
           </div>

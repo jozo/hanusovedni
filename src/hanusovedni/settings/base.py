@@ -29,7 +29,6 @@ ADMINS = [("jozo", "hi@jozo.io")]
 
 INSTALLED_APPS = [
     "home",
-    "search",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -142,8 +141,8 @@ USE_L10N = True
 USE_TZ = False
 
 LANGUAGES = [
-    ("sk", _("Slovak")),
     ('en', _('English')),
+    ("sk", _("Slovak")),
 ]
 
 # Disabled because of a bug in Wagtail

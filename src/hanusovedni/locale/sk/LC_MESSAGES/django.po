@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-04-26 17:17+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
+">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
+
+#: hanusovedni/settings/base.py:144
+msgid "English"
+msgstr "Angličtina"
+
+#: hanusovedni/settings/base.py:145
+msgid "Slovak"
+msgstr "Slovenčina"
+
+#: hanusovedni/templates/404.html:5
+msgid "Page not found"
+msgstr "Stránka nenájdená"
+
+#: hanusovedni/templates/404.html:13 hanusovedni/templates/500.html:13
+msgid "Beer philosopher"
+msgstr "Pivný filozof"
+
+#: hanusovedni/templates/404.html:16
+msgid "Error 404"
+msgstr "Chyba 404"
+
+#: hanusovedni/templates/404.html:20
+msgid "We searched everywhere, but we couldn't find that page."
+msgstr "Hľadali sme všade, ale túto stránku sa nám nepodarilo nájsť."
+
+#: hanusovedni/templates/404.html:24 hanusovedni/templates/500.html:22
+msgid "< Back to homepage"
+msgstr "< Späť na domovskú stránku"
+
+#: hanusovedni/templates/500.html:5 hanusovedni/templates/500.html:16
+msgid "Error 500"
+msgstr "Chyba 500"
+
+#: hanusovedni/templates/500.html:19
+msgid "Sorry, there seems to be an error. Please try again soon."
+msgstr "Prepáčte, ale objavila sa nám tu chyba. Vyskúšajte to prosím o chvíľu."
