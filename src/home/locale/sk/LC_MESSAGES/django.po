@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 17:17+0000\n"
+"POT-Creation-Date: 2020-04-26 17:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,35 +90,35 @@ msgstr "miesto"
 msgid "menu"
 msgstr "menu"
 
-#: home/templates/home/about_festival_page.html:28
+#: home/templates/home/about_festival_page.html:30
 msgid "Photo of Ladislav Hanus"
 msgstr "Fotka Ladislava Hanusa"
 
-#: home/templates/home/about_festival_page.html:36
+#: home/templates/home/about_festival_page.html:38
 msgid "Photo of SLH fellowship"
 msgstr "Fotka spoločenstva SLH"
 
-#: home/templates/home/about_festival_page.html:45
+#: home/templates/home/about_festival_page.html:47
 msgid "Logo SLH"
 msgstr "Logo SLH"
 
-#: home/templates/home/about_festival_page.html:50
+#: home/templates/home/about_festival_page.html:52
 msgid "more about SLH"
 msgstr "viac o SLH"
 
-#: home/templates/home/donate_page.html:18
+#: home/templates/home/donate_page.html:20
 msgid "Beer philosopher"
 msgstr "Pivný filozof"
 
-#: home/templates/home/donate_page.html:39
+#: home/templates/home/donate_page.html:41
 msgid "Icon people"
 msgstr "Ikona ľudia"
 
-#: home/templates/home/donate_page.html:44
+#: home/templates/home/donate_page.html:46
 msgid "Icon coffee"
 msgstr "Ikona káva"
 
-#: home/templates/home/donate_page.html:127
+#: home/templates/home/donate_page.html:129
 msgid "Icon heart"
 msgstr "Ikna srdce"
 
@@ -135,8 +135,8 @@ msgstr "Mapa k miestu konania"
 msgid "next"
 msgstr "ďalší"
 
-#: home/templates/home/event_index_page.html:20
-#: home/templates/home/program_index_page.html:33
+#: home/templates/home/event_index_page.html:22
+#: home/templates/home/program_index_page.html:35
 msgid "No events found"
 msgstr "Nenašli sa žiadne podujatia"
 
@@ -156,7 +156,7 @@ msgstr "Program"
 msgid "Follow us on Facebook"
 msgstr "Sledujte nás na Facebooku"
 
-#: home/templates/home/speaker_index_page.html:38
+#: home/templates/home/speaker_index_page.html:40
 msgid "No speakers found"
 msgstr "Nenašli sa žiadni rečníci"
 

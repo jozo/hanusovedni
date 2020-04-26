@@ -4,7 +4,7 @@
   <div class="container-fluid my-3">
     <div class="row">
       <div class="col d-flex flex-column my-3">
-        <h3>Kontakt</h3>
+        <h3>{% trans "Contact" %}</h3>
         <p>
           <a href="mailto:hanusovedni@slh.sk">hanusovedni@slh.sk</a>
         </p>
@@ -12,7 +12,7 @@
     </div>
     <div class="row">
       <div class="col d-flex flex-column my-3">
-        <h3>Sociálne siete</h3>
+        <h3>{% trans "Social networks" %}</h3>
         <p>
           <a href="https://www.facebook.com/BratislavskeHanusoveDni/" target="_blank">Facebook BHD</a>,
           <a href="https://www.facebook.com/kosickehanusovedni/" target="_blank">Facebook KHD</a>,
@@ -41,15 +41,15 @@
   <div class="container-fluid copy">
     <div class="row">
       <div class="col my-3">
-        <p>Spoločenstvo Ladislava Hanusa &copy; {% now "Y" %}</p>
+        <p>{% trans "The Ladislav Hanus Fellowship" %} &copy; {% now "Y" %}</p>
       </div>
     </div>
   </div>
 
   <div class="cookie d-flex justify-content-center">
     <div id="cookiesAlert" class="alert alert-secondary alert-dismissible fade show py-1" role="alert">
-      <span>Používame 🍪 cookies :)</span>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span>{% trans "We use 🍪 cookies" %} :)</span>
+      <button type="button" class="close" data-dismiss="alert" aria-label="{% trans "Close" %}">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

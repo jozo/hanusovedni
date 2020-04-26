@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 17:17+0000\n"
+"POT-Creation-Date: 2020-04-26 17:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,3 +54,23 @@ msgstr "Chyba 500"
 #: hanusovedni/templates/500.html:19
 msgid "Sorry, there seems to be an error. Please try again soon."
 msgstr "Prepáčte, ale objavila sa nám tu chyba. Vyskúšajte to prosím o chvíľu."
+
+#: hanusovedni/templates/footer.html:7
+msgid "Contact"
+msgstr "Kontakt"
+
+#: hanusovedni/templates/footer.html:15
+msgid "Social networks"
+msgstr "Sociálne siete"
+
+#: hanusovedni/templates/footer.html:44
+msgid "The Ladislav Hanus Fellowship"
+msgstr "Spoločenstvo Ladislava Hanusa"
+
+#: hanusovedni/templates/footer.html:51
+msgid "We use 🍪 cookies"
+msgstr "Používame 🍪 cookies"
+
+#: hanusovedni/templates/footer.html:52
+msgid "Close"
+msgstr "Zavrieť"
