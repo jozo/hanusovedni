@@ -25,7 +25,7 @@ def handler404(request, exception):
 
 
 def choose_language(request, lang_code):
-    next_url = request.META["HTTP_REFERER"]
+    next_url = request.META.get("HTTP_REFERER")
 
     response = HttpResponseRedirect(next_url) if next_url else HttpResponse(status=204)
     if lang_code and check_for_language(lang_code):
