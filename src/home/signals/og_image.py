@@ -53,6 +53,7 @@ def create_og_image_for_event(**kwargs):
             wagtail_image = WagtailImage.objects.create(
                 title=og_file_name, file=django_image
             )
+            wagtail_image.tags.add("open-graph")
             OpenGraphImage.objects.create(
                 page=event, image=wagtail_image, lang_code=lang_code
             )
