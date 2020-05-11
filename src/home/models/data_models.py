@@ -19,6 +19,7 @@ from wagtail.admin.edit_handlers import (
 )
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
+from wagtail.images import get_image_model_string
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -46,10 +47,7 @@ class Event(Page):
         default=timezone.now, verbose_name=_("date and time")
     )
     location = models.ForeignKey(
-        "home.Location",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
     )
     video_url = models.URLField(
         null=True,
@@ -66,10 +64,7 @@ class Event(Page):
     )
     ticket_url = models.URLField(null=True, blank=True)
     category = models.ForeignKey(
-        "home.Category",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "home.Category", null=True, blank=True, on_delete=models.SET_NULL,
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
@@ -81,7 +76,7 @@ class Event(Page):
     show_on_festivalpage = models.BooleanField(default=False)
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     related_festival = models.ForeignKey(
-        "wagtailcore.Page",
+        "home.FestivalPage",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -386,3 +381,24 @@ class PartnerSectionBlock(blocks.StructBlock):
         else:
             context["translated_title"] = value["title_sk"]
         return context
+
+
+class OpenGraphImage(models.Model):
+    page = models.ForeignKey(
+        Page,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="open_graph_image",
+    )
+    image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
+    lang_code = models.CharField(max_length=2, default="sk")
+
+    class Meta:
+        unique_together = ["page", "image", "lang_code"]

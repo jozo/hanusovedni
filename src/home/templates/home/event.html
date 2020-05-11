@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags %}
+{% load i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags og_image %}
 
 {% block body_class %}template-event{% endblock %}
 
@@ -11,6 +11,8 @@
 {% block extra_meta %}
   <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
 {% endblock %}
+
+{% block og_image %}{% get_existing_og_image page as og_img_orig %}{% image og_img_orig original as og_photo %}{{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
 
 {% block title %}{{ page.title_translated }}{% endblock %}
 
