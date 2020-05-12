@@ -69,10 +69,14 @@ a {
 header .navbar {
   text-transform: uppercase;
   font-weight: bold;
-  background-color: $c-menu-bg;
 
   li.nav-item {
+    background-color: $c-menu-bg;
     border-right: 2px solid black;
+
+    &:nth-last-child {
+      border-right: none;
+    }
 
     &:hover {
       background-color: red;
@@ -153,8 +157,6 @@ header .navbar {
 
     a.nav-link {
       color: $c-menu-text;
-      padding-left: 2rem;
-      padding-right: 2rem;
       word-break: break-word;
     }
   }
