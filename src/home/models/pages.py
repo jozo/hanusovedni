@@ -4,8 +4,11 @@ import re
 from collections import defaultdict
 
 from django.db import models
+from django.db.models import Prefetch
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.translation import gettext as _
 from wagtail.admin.edit_handlers import (
     FieldPanel,
@@ -22,6 +25,7 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.models import Rendition
 
 from home.fields import TranslatedField
 from home.models import Event, PartnerSectionBlock, Speaker
@@ -57,9 +61,7 @@ class FestivalPage(Page):
     start_date = models.DateField(
         default=timezone.now, verbose_name=_("festival beginning")
     )
-    end_date = models.DateField(
-        default=timezone.now, verbose_name=_("festival end")
-    )
+    end_date = models.DateField(default=timezone.now, verbose_name=_("festival end"))
     place = models.CharField(
         max_length=50, null=True, blank=True, verbose_name=_("place")
     )
@@ -273,6 +275,64 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
         return speakers_by_year
 
 
+class ArchiveQueryset(models.QuerySet):
+    def events(self):
+        return (
+            Event.objects.live()
+            .order_by("-date_and_time")
+            .select_related("icon", "category", "location")
+            .prefetch_related("host_connections__speaker")
+            .prefetch_related(
+                Prefetch(
+                    "speaker_connections__speaker",
+                    queryset=Speaker.objects.live().only("title"),
+                )
+            )
+            .prefetch_related(
+                Prefetch(
+                    "icon__renditions",
+                    queryset=Rendition.objects.filter(filter_spec="fill-65x65"),
+                )
+            )
+            .only(
+                "title",
+                "title_en",
+                "event_id",
+                "url_path",
+                "date_and_time",
+                "location__title_sk",
+                "location__title_en",
+                "category__color",
+                "category__title_sk",
+                "category__title_en",
+                "icon__title",
+            )
+        )
+
+    def json(self):
+        result = {"events": []}
+        for event in self.events()[:10]:
+            d = {
+                "title": event.title,
+                "url": event.url,
+                "date_and_time": date_format(event.date_and_time, "j.n. — l — G:i").upper(),
+                "location": event.location.title,
+                "category": {
+                    "title": event.category.title,
+                    "color": event.category.color,
+                },
+            }
+            if event.icon:
+                d["icon"] = {
+                    "title": event.icon.title,
+                    "url": event.icon.renditions.all()[0].url,
+                }
+            else:
+                d["icon"] = None
+            result["events"].append(d)
+        return result
+
+
 class EventIndexPage(RoutablePageMixin, Page):
     """Archive of all events"""
 
@@ -307,23 +367,15 @@ class EventIndexPage(RoutablePageMixin, Page):
             return event.serve(request)
         return redirect(event.get_url(request))
 
+    @route(r"^json/$")
+    def json_index(self, request):
+        return JsonResponse(ArchiveQueryset().json())
+
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["events"] = (
-            Event.objects.live()
-            .select_related("category", "location", "icon")
-            .order_by("-date_and_time")
-            .only(
-                "category",
-                "location",
-                "icon",
-                "title",
-                "date_and_time",
-                "event_id",
-                "url_path",
-            )
-        )
+        context["events"] = ArchiveQueryset().events()
+        context["events_json"] = ArchiveQueryset().json()
         return context
 
 
@@ -624,10 +676,7 @@ class StreamPage(Page):
     button_text_en = models.CharField(max_length=100)
     button_text = TranslatedField("button_text_sk", "button_text_en")
     background = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL,
     )
     google_form_url = models.URLField(blank=True)
     donate_button_text_sk = models.CharField(max_length=100, null=True)

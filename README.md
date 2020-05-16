@@ -3,6 +3,8 @@ HanusoveDni.sk
 
 # TODO add how to start develop
 
+docker network create hanus-net
+
 s = Site.objects.get()
 s.hostname = "hanusovedni.online"
 s.port = 443

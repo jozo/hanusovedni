@@ -20,4 +20,5 @@ from .pages import (
     ProgramIndexPage,
     SpeakerIndexPage,
     StreamPage,
+    ArchiveQueryset,
 )

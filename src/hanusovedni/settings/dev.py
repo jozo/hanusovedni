@@ -18,7 +18,7 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 
 def show_toolbar(request):
-    return False
+    return True
 
 
 DEBUG_TOOLBAR_CONFIG = {

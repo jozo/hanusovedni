@@ -52,10 +52,10 @@
 
             <strong class="text-uppercase">{% trans "Hosts" %}:</strong>
               <ul class="speakers">
-                {% for moderator_connection in page.moderator_connections.all %}
+                {% for host_connection in page.host_connections.all %}
                   <li>
-                    <a href="{% pageurl moderator_connection.speaker %}">
-                      {{ moderator_connection.speaker.title }}
+                    <a href="{% pageurl host_connection.speaker %}">
+                      {{ host_connection.speaker.title }}
                     </a>
                   </li>
                 {% endfor %}
@@ -131,18 +131,18 @@
           </div>
         </div>
       {% endfor %}
-      {% for moderator_connection in page.moderator_connections.all %}
+      {% for host_connection in page.host_connections.all %}
         <div class="row mx-n02">
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
               <div class="photo align-self-center mt-3 mt-md-0">
-                {% image moderator_connection.speaker.photo min-350x350 format-jpeg %}
+                {% image host_connection.speaker.photo min-350x350 format-jpeg %}
               </div>
               <div class="m-5">
-                <a href="{% pageurl moderator_connection.speaker %}" class="speaker-heading">
-                  <h4 class="mb-4">{{ moderator_connection.speaker.title }}</h4>
+                <a href="{% pageurl host_connection.speaker %}" class="speaker-heading">
+                  <h4 class="mb-4">{{ host_connection.speaker.title }}</h4>
                 </a>
-                {{ moderator_connection.speaker.description|richtext }}
+                {{ host_connection.speaker.description|richtext }}
               </div>
             </div>
           </div>

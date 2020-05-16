@@ -103,7 +103,7 @@ class Event(Page):
             heading=_("description"),
         ),
         InlinePanel("speaker_connections", heading="speakers"),
-        InlinePanel("moderator_connections", heading="hosts"),
+        InlinePanel("host_connections", heading="hosts"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
@@ -156,11 +156,7 @@ class Event(Page):
 
     @cached_property
     def speakers_limited(self):
-        connections = list(
-            self.speaker_connections.select_related("speaker")
-            .all()
-            .only("speaker__title")
-        )
+        connections = list(self.speaker_connections.all())
         return {
             "under_limit": [c.speaker for c in connections[:3]],
             "over_limit_count": len(connections[3:]),
@@ -182,15 +178,15 @@ class SpeakerConnection(Orderable):
     panels = [AutocompletePanel("speaker")]
 
 
-class ModeratorConnection(Orderable):
+class HostConnection(Orderable):
     event = ParentalKey(
-        "home.Event", on_delete=models.CASCADE, related_name="moderator_connections"
+        "home.Event", on_delete=models.CASCADE, related_name="host_connections"
     )
     speaker = models.ForeignKey(
         "home.Speaker",
         on_delete=models.CASCADE,
         blank=True,
-        related_name="moderator_connections",
+        related_name="host_connections",
     )
 
     panels = [AutocompletePanel("speaker")]
@@ -260,8 +256,7 @@ class Speaker(Page):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
         context["events"] = Event.objects.filter(
-            Q(speaker_connections__speaker=self)
-            | Q(moderator_connections__speaker=self)
+            Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
         ).live()
         return context
 
