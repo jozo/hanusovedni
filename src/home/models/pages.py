@@ -375,7 +375,7 @@ class EventIndexPage(RoutablePageMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
         context["events"] = ArchiveQueryset().events()
-        context["events_json"] = ArchiveQueryset().json()
+        # context["events_json"] = ArchiveQueryset().json()
         return context
 
 
