@@ -406,15 +406,11 @@ class ProgramIndexPage(Page):
         context = super().get_context(request, *args, **kwargs)
         parent_festival = FestivalPage.objects.get(pk=self.get_parent().pk)
         context["header_festival"] = parent_festival
-        events = (
-            Event.objects.live()
-            .filter(
-                date_and_time__date__gte=parent_festival.start_date,
-                date_and_time__date__lte=parent_festival.end_date,
-            )
-            .select_related("category", "location", "icon")
-            .order_by("date_and_time")
-        )
+        events = ArchiveQueryset().events().filter(
+            date_and_time__date__gte=parent_festival.start_date,
+            date_and_time__date__lte=parent_festival.end_date,
+        ).order_by("date_and_time")
+
         # TODO use iterator
         context["grouped_events"] = {
             k: list(v)
