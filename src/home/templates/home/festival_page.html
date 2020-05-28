@@ -166,13 +166,13 @@
       </div>
     {% endif %}
 
-    {% if page.events %}
+    {% if events %}
       <div class="container">
         <section class="events">
           <h2>{% trans "Programme" %}</h2>
 
           <div class="row mx-n02 justify-content-center">
-            {% for event in page.events %}
+            {% for event in events %}
               {% include "home/event_block.html" %}
             {% endfor %}
           </div>

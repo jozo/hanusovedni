@@ -172,18 +172,6 @@ class FestivalPage(Page):
         ]
     )
 
-    @property
-    def events(self):
-        return (
-            Event.objects.live()
-            .filter(
-                date_and_time__date__gte=self.start_date,
-                date_and_time__date__lte=self.end_date,
-                show_on_festivalpage=True,
-            )
-            .order_by("date_and_time")
-        )
-
     def save(self, *args, **kwargs):
         self.draft_title = " ".join(
             replace_tags_with_space(self.formatted_title_sk).split()
@@ -196,6 +184,12 @@ class FestivalPage(Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = self
+        context["events"] = ArchiveQueryset().events().filter(
+            date_and_time__date__gte=self.start_date,
+            date_and_time__date__lte=self.end_date,
+            show_on_festivalpage=True,
+        ).order_by("date_and_time")
+
         return context
 
 
