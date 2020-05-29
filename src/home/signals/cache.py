@@ -60,6 +60,8 @@ class IndexPages:
 def purge_cache_for_index_pages(**kwargs):
     batch = PurgeBatch()
     batch.add_pages(IndexPages().set())
+    batch.add_url(settings.BASE_URL + "/en/events/json/")
+    batch.add_url(settings.BASE_URL + "/sk/events/json/")
     batch.purge()
 
 
