@@ -158,7 +158,7 @@ class Event(Page):
     def speakers_limited(self):
         connections = list(self.speaker_connections.all())
         return {
-            "under_limit": [c.speaker for c in connections[:3]],
+            "under_limit": [c.speaker.title for c in connections[:3]],
             "over_limit_count": len(connections[3:]),
             "over_limit_names": ", ".join(c.speaker.title for c in connections[3:]),
         }
@@ -259,6 +259,10 @@ class Speaker(Page):
             Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
         ).live()
         return context
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class HeroImage(Orderable):

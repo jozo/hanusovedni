@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% load i18n %}
 
@@ -6,37 +7,42 @@
 
 {% block body_class %}template-events{% endblock %}
 
+{% block extra_js %}
+  {% get_current_language as LANGUAGE_CODE %}
+  <script type="text/javascript" src="{% static "elm/bundle.js" %}"></script>
+  <script>
+    $(document).ready(function () {
+      var app = Elm.Main.init({
+        node: document.getElementById('myapp'),
+        flags: "{{ LANGUAGE_CODE }}",
+      })
+    })
+  </script>
+{% endblock %}
+
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
-      <div class="row mx-n02 justify-content-center">
-        {% for event in events %}
-          {% include "home/event_block.html" %}
-        {% empty %}
-          <div class="row">
-            <div class="col-8 mx-auto text-center">
-              <div class="alert alert-warning mt-3" role="alert">
-                {% if message_empty %}
-                  {{ message_empty }}
-                {% else %}
-                  {% trans "No events found" %} 😥
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-        {#        <div class="col-6">#}
-        {#          <p>#}
-        {#            {{ events_json }}#}
-        {#          </p>#}
-        {#        </div>#}
-        {#        <div id="myapp"></div>#}
-        {#        <script>#}
-        {#          var app = Elm.Main.init({#}
-        {#            node: document.getElementById('myapp')#}
-        {#          })#}
-        {#        </script>#}
-      </div>
+
+      <div id="myapp"></div>
+
+      {#        {% for event in events %}#}
+      {#          {% include "home/event_block.html" %}#}
+      {#        {% empty %}#}
+      {#          <div class="row">#}
+      {#            <div class="col-8 mx-auto text-center">#}
+      {#              <div class="alert alert-warning mt-3" role="alert">#}
+      {#                {% if message_empty %}#}
+      {#                  {{ message_empty }}#}
+      {#                {% else %}#}
+      {#                  {% trans "No events found" %} 😥#}
+      {#                {% endif %}#}
+      {#              </div>#}
+      {#            </div>#}
+      {#          </div>#}
+      {#        {% endfor %}#}
+
+    </div>
     </div>
   </main>
 {% endblock %}

@@ -24,10 +24,10 @@
         <ul class="speakers">
           {% for speaker in event.speakers_limited.under_limit %}
             <li>
-              {{ speaker.title }}
+              {{ speaker }}
               {% if forloop.last and event.speakers_limited.over_limit_count %}
                 <span title="{{ event.speakers_limited.over_limit_names }}">
-                  + {{ event.speakers_limited.over_limit_count }} {% trans "next" %}
+                  + {{ event.speakers_limited.over_limit_count }} {% trans "more" %}
                 </span>
               {% endif %}
             </li>

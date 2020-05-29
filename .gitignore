@@ -109,3 +109,4 @@ node_modules/
 /docker/static/
 /docker/pgdata/
 /backup/
+elm-stuff/
