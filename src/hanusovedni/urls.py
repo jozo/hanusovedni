@@ -25,6 +25,7 @@ urlpatterns = [
     url(r"^archiv/(.*)/$", views.redirect_events),
     url(r"^program/(.*)/$", views.redirect_events),
     path("api/stream/", views.stream_api, name="api-stream"),
+    path("api/archive/", views.archive_api, name="api-archive"),
     url(r"^documents/", include(wagtaildocs_urls)),
     url(
         r"^robots\.txt/$",

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
 
-from home.models import Event, Speaker, StreamPage
+from home.models import ArchiveQueryset, Event, Speaker, StreamPage
 
 
 def redirect_speakers(request, slug):
@@ -48,3 +48,11 @@ def choose_language(request, lang_code):
 def stream_api(request):
     page = StreamPage.objects.only("live_revision_id").last()
     return JsonResponse({"live_revision": page.live_revision_id})
+
+
+def archive_api(request):
+    """Used only for debugging SQL performance"""
+    qs = ArchiveQueryset()
+    events = str(qs.json())
+    return HttpResponse(f"<html><body>{events}</body></html>")
+

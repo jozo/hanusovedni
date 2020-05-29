@@ -298,6 +298,7 @@ class ArchiveQueryset(models.QuerySet):
                 "title_en",
                 "event_id",
                 "url_path",
+                "video_url",
                 "date_and_time",
                 "location__title_sk",
                 "location__title_en",
@@ -310,7 +311,7 @@ class ArchiveQueryset(models.QuerySet):
 
     def json(self):
         result = {"events": []}
-        for event in self.events()[:10]:
+        for event in self.events():
             d = {
                 "title": event.title,
                 "url": event.url,

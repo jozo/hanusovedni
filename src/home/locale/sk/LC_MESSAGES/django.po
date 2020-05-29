@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 17:45+0000\n"
+"POT-Creation-Date: 2020-05-29 13:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,166 +19,165 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: home/models/data_models.py:33 home/models/pages.py:53
-#: home/models/pages.py:54 home/models/pages.py:202 home/models/pages.py:280
-#: home/models/pages.py:332 home/models/pages.py:378 home/models/pages.py:433
-#: home/models/pages.py:477 home/models/pages.py:521 home/models/pages.py:579
-#: home/models/pages.py:614
+#: models/data_models.py:34 models/pages.py:57 models/pages.py:58
+#: models/pages.py:203 models/pages.py:345 models/pages.py:389
+#: models/pages.py:436 models/pages.py:491 models/pages.py:535
+#: models/pages.py:579 models/pages.py:637 models/pages.py:672
 msgid "title"
 msgstr "titulok"
 
-#: home/models/data_models.py:36 home/models/pages.py:205
-#: home/models/pages.py:283 home/models/pages.py:335 home/models/pages.py:381
-#: home/models/pages.py:436 home/models/pages.py:480 home/models/pages.py:524
-#: home/models/pages.py:582 home/models/pages.py:617
+#: models/data_models.py:37 models/pages.py:206 models/pages.py:348
+#: models/pages.py:392 models/pages.py:439 models/pages.py:494
+#: models/pages.py:538 models/pages.py:582 models/pages.py:640
+#: models/pages.py:675
 msgid "The page title as you'd like it to be seen by the public"
 msgstr "Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti"
 
-#: home/models/data_models.py:46
+#: models/data_models.py:47
 msgid "date and time"
 msgstr "dátum a čas"
 
-#: home/models/data_models.py:58
+#: models/data_models.py:56
 msgid "Supports Youtube, Vimeo and {}{}{}"
 msgstr "Podporuje Youtube, Vimeo a {}{}{}"
 
-#: home/models/data_models.py:63
+#: models/data_models.py:61
 msgid "other websites"
 msgstr "ďalšie stránky"
 
-#: home/models/data_models.py:108 home/models/data_models.py:117
+#: models/data_models.py:103 models/data_models.py:112
 msgid "description"
 msgstr "popis"
 
-#: home/models/data_models.py:136
+#: models/data_models.py:131
 msgid "event"
 msgstr "podujatie"
 
-#: home/models/data_models.py:137
+#: models/data_models.py:132
 msgid "events"
 msgstr "podujatia"
 
-#: home/models/data_models.py:221
+#: models/data_models.py:212
 msgid "speaker"
 msgstr "rečník"
 
-#: home/models/data_models.py:222
+#: models/data_models.py:213
 msgid "speakers"
 msgstr "rečníci"
 
-#: home/models/data_models.py:324
+#: models/data_models.py:318
 msgid "URL to map"
 msgstr "URL k mape"
 
-#: home/models/data_models.py:325
+#: models/data_models.py:319
 msgid "URL to Google Maps or similar service"
 msgstr "URL adresa na Google Mapy alebo obdobnú službu"
 
-#: home/models/pages.py:58
+#: models/pages.py:62
 msgid "festival beginning"
 msgstr "začiatok festivalu"
 
-#: home/models/pages.py:61
+#: models/pages.py:64
 msgid "festival end"
 msgstr "koniec festivalu"
 
-#: home/models/pages.py:64
+#: models/pages.py:66
 msgid "place"
 msgstr "miesto"
 
-#: home/models/pages.py:156
+#: models/pages.py:158
 msgid "menu"
 msgstr "menu"
 
-#: home/templates/home/about_festival_page.html:30
+#: templates/home/about_festival_page.html:30
 msgid "Photo of Ladislav Hanus"
 msgstr "Fotka Ladislava Hanusa"
 
-#: home/templates/home/about_festival_page.html:38
+#: templates/home/about_festival_page.html:38
 msgid "Photo of SLH fellowship"
 msgstr "Fotka spoločenstva SLH"
 
-#: home/templates/home/about_festival_page.html:47
+#: templates/home/about_festival_page.html:47
 msgid "Logo SLH"
 msgstr "Logo SLH"
 
-#: home/templates/home/about_festival_page.html:52
+#: templates/home/about_festival_page.html:52
 msgid "more about SLH"
 msgstr "viac o SLH"
 
-#: home/templates/home/donate_page.html:20
+#: templates/home/donate_page.html:20
 msgid "Beer philosopher"
 msgstr "Pivný filozof"
 
-#: home/templates/home/donate_page.html:41
+#: templates/home/donate_page.html:41
 msgid "Icon people"
 msgstr "Ikona ľudia"
 
-#: home/templates/home/donate_page.html:46
+#: templates/home/donate_page.html:46
 msgid "Icon coffee"
 msgstr "Ikona káva"
 
-#: home/templates/home/donate_page.html:129
+#: templates/home/donate_page.html:129
 msgid "Icon heart"
 msgstr "Ikna srdce"
 
-#: home/templates/home/event.html:51
+#: templates/home/event.html:53
 msgid "Hosts"
 msgstr "Moderátori"
 
-#: home/templates/home/event.html:76
+#: templates/home/event.html:78
 msgid "Map to the place of occurrence"
 msgstr "Mapa k miestu konania"
 
-#: home/templates/home/event_block.html:26
-#: home/templates/home/festival_page.html:46
-msgid "next"
+#: templates/home/event_block.html:30
+msgid "more"
 msgstr "ďalší"
 
-#: home/templates/home/event_index_page.html:22
-#: home/templates/home/program_index_page.html:35
-msgid "No events found"
-msgstr "Nenašli sa žiadne podujatia"
-
-#: home/templates/home/festival_page.html:42
+#: templates/home/festival_page.html:42
 msgid "previous"
 msgstr "predchádzajúci"
 
-#: home/templates/home/festival_page.html:140
+#: templates/home/festival_page.html:46
+msgid "next"
+msgstr "ďalší"
+
+#: templates/home/festival_page.html:140
 msgid "Headline"
 msgstr "Headlineri"
 
-#: home/templates/home/festival_page.html:172
+#: templates/home/festival_page.html:172
 msgid "Programme"
 msgstr "Program"
 
-#: home/templates/home/festival_page.html:185
+#: templates/home/festival_page.html:185
 msgid "Follow us on Facebook"
 msgstr "Sledujte nás na Facebooku"
 
-#: home/templates/home/speaker_index_page.html:40
+#: templates/home/program_index_page.html:35
+msgid "No events found"
+msgstr "Nenašli sa žiadne podujatia"
+
+#: templates/home/speaker_index_page.html:40
 msgid "No speakers found"
 msgstr "Nenašli sa žiadni rečníci"
 
-#: home/templates/home/stream_page.html:36
-#: home/templates/home/stream_page.html:37
-#: home/templates/home/stream_page.html:76
-#: home/templates/home/stream_page.html:77
+#: templates/home/stream_page.html:36 templates/home/stream_page.html:37
+#: templates/home/stream_page.html:76 templates/home/stream_page.html:77
 msgid "Email address"
 msgstr "Emailová adresa"
 
-#: home/templates/home/stream_page.html:45
+#: templates/home/stream_page.html:45
 msgid "or"
 msgstr "alebo"
 
-#: home/templates/home/stream_page.html:45
+#: templates/home/stream_page.html:45
 msgid "continue without email"
 msgstr "pokračovať bez emailu"
 
-#: home/templates/home/stream_page.html:80
+#: templates/home/stream_page.html:80
 msgid "Submit"
 msgstr "Odoslať"
 
-#: home/wagtail_hooks.py:16
+#: wagtail_hooks.py:16
 msgid "year"
 msgstr "rok"
