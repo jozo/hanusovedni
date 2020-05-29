@@ -317,7 +317,7 @@ class ArchiveQueryset(models.QuerySet):
                 "url": event.url,
                 "dateAndTime": {
                     "iso": event.date_and_time.isoformat(),
-                    "repr": date_format(event.date_and_time, "j.n. — l — G:i").upper(),
+                    "repr": date_format(event.date_and_time, "j.n.Y — l — G:i").upper(),
                 },
                 "location": event.location.title,
                 "hasVideo": bool(event.video_url),

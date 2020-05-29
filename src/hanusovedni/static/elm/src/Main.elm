@@ -4,11 +4,12 @@ import Browser
 import Html exposing (Attribute, Html, a, address, article, div, footer, h3, img, input, label, li, option, select, span, text, time, ul)
 import Html.Attributes exposing (alt, class, datetime, for, height, href, id, src, style, title, type_, value, width)
 import Html.Attributes.Extra exposing (role)
-import Html.Events exposing (onCheck)
+import Html.Events exposing (onCheck, onInput)
 import Html.Events.Extra exposing (onChange)
 import Http
 import Json.Decode as D
 import Set
+import String.Normalize exposing (removeDiacritics)
 
 
 
@@ -83,12 +84,13 @@ type alias Model =
     , category : String
     , year : String
     , withVideo : Bool
+    , searchText : String
     }
 
 
 init : String -> ( Model, Cmd Msg )
 init languageCode =
-    ( Model Loading (decodeLanguage languageCode) "---" "---" False, getAllEvents languageCode )
+    ( Model Loading (decodeLanguage languageCode) "---" "---" False "", getAllEvents languageCode )
 
 
 decodeLanguage : String -> Language
@@ -113,6 +115,7 @@ type Msg
     | SetCategoryFilter String
     | SetYearFilter String
     | SetVideoFilter Bool
+    | SetSearchText String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -134,6 +137,9 @@ update msg model =
 
         SetVideoFilter value ->
             ( { model | withVideo = value }, Cmd.none )
+
+        SetSearchText text ->
+            ( { model | searchText = text }, Cmd.none )
 
 
 
@@ -216,13 +222,29 @@ viewFilters lang events =
 
                 EN ->
                     "Only with video"
+
+        searchLabel =
+            case lang of
+                SK ->
+                    "Hľadať"
+
+                EN ->
+                    "Search"
     in
     div [ class "col-12" ]
         [ div
             [ id "filter-panel"
             , class "p-2 mb-1 d-flex justify-content-center align-items-center"
             ]
-            [ label [ for "categorySelect", class "mb-0 mx-2" ] [ text categoryLabel ]
+            [ label [ for "searchInput", class "mb-0 mx-2" ] [ text searchLabel ]
+            , input
+                [ type_ "text"
+                , id "searchInput"
+                , class "mx-2"
+                , onInput SetSearchText
+                ]
+                []
+            , label [ for "categorySelect", class "mb-0 mx-2" ] [ text categoryLabel ]
             , select [ id "categorySelect", onChange SetCategoryFilter ]
                 ([ option [ value "---" ] [ text "---" ] ]
                     ++ List.map (\c -> option [ value c ] [ text c ]) categories
@@ -278,10 +300,26 @@ viewMessageEmpty lang =
 
 filterEvents : Model -> List Event -> List Event
 filterEvents model events =
-    filterByVideo model.withVideo
-        (filterByYear model.year
-            (filterByCategory model.category events)
+    filterByText model.searchText
+        (filterByVideo model.withVideo
+            (filterByYear model.year
+                (filterByCategory model.category events)
+            )
         )
+
+
+filterByText : String -> List Event -> List Event
+filterByText text events =
+    if String.isEmpty text then
+        events
+
+    else
+        List.filter (\e -> containsText text e.title) events
+
+
+containsText : String -> String -> Bool
+containsText left right =
+    String.contains (removeDiacritics (String.toLower left)) (removeDiacritics (String.toLower right))
 
 
 filterByCategory : String -> List Event -> List Event

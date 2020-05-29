@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.Q.B === region.Y.B)
+	if (region.R.B === region.Z.B)
 	{
-		return 'on line ' + region.Q.B;
+		return 'on line ' + region.R.B;
 	}
-	return 'on lines ' + region.Q.B + ' through ' + region.Y.B;
+	return 'on lines ' + region.R.B + ' through ' + region.Z.B;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aQ,
-		impl.a1,
-		impl.a$,
+		impl.aR,
+		impl.a2,
+		impl.a0,
 		function() { return function() {} }
 	);
 });
@@ -2704,8 +2704,8 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
-		R: record.R,
+		p: func(record.p),
+		S: record.S,
 		O: record.O
 	}
 });
@@ -2974,8 +2974,8 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.R;
+		var message = !tag ? value : tag < 3 ? value.a : value.p;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.S;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
 			(tag == 2 ? value.b : tag == 3 && value.O) && event.preventDefault(),
@@ -3928,11 +3928,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aQ,
-		impl.a1,
-		impl.a$,
+		impl.aR,
+		impl.a2,
+		impl.a0,
 		function(sendToApp, initialModel) {
-			var view = impl.a2;
+			var view = impl.a3;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3964,12 +3964,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aQ,
-		impl.a1,
-		impl.a$,
+		impl.aR,
+		impl.a2,
+		impl.a0,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.P && impl.P(sendToApp)
-			var view = impl.a2;
+			var divertHrefToApp = impl.Q && impl.Q(sendToApp)
+			var view = impl.a3;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aI);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aJ);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.q) && (_VirtualDom_doc.title = title = doc.q);
+				(title !== doc.l) && (_VirtualDom_doc.title = title = doc.l);
 			});
 		}
 	);
@@ -4038,12 +4038,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aT;
-	var onUrlRequest = impl.aU;
+	var onUrlChange = impl.aU;
+	var onUrlRequest = impl.aV;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		P: function(sendToApp)
+		Q: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.ap === next.ap
-							&& curr.ad === next.ad
-							&& curr.am.a === next.am.a
+							&& curr.aq === next.aq
+							&& curr.ae === next.ae
+							&& curr.an.a === next.an.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aQ: function(flags)
+		aR: function(flags)
 		{
-			return A3(impl.aQ, flags, _Browser_getUrl(), key);
+			return A3(impl.aR, flags, _Browser_getUrl(), key);
 		},
+		a3: impl.a3,
 		a2: impl.a2,
-		a1: impl.a1,
-		a$: impl.a$
+		a0: impl.a0
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aO: 'hidden', aJ: 'visibilitychange' }
+		? { aP: 'hidden', aK: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aO: 'mozHidden', aJ: 'mozvisibilitychange' }
+		? { aP: 'mozHidden', aK: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aO: 'msHidden', aJ: 'msvisibilitychange' }
+		? { aP: 'msHidden', aK: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aO: 'webkitHidden', aJ: 'webkitvisibilitychange' }
-		: { aO: 'hidden', aJ: 'visibilitychange' };
+		? { aP: 'webkitHidden', aK: 'webkitvisibilitychange' }
+		: { aP: 'hidden', aK: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aw: _Browser_getScene(),
-		aC: {
-			aE: _Browser_window.pageXOffset,
-			aF: _Browser_window.pageYOffset,
-			aD: _Browser_doc.documentElement.clientWidth,
-			ac: _Browser_doc.documentElement.clientHeight
+		ax: _Browser_getScene(),
+		aD: {
+			aF: _Browser_window.pageXOffset,
+			aG: _Browser_window.pageYOffset,
+			aE: _Browser_doc.documentElement.clientWidth,
+			ad: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		aD: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		ac: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aE: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ad: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aw: {
-				aD: node.scrollWidth,
-				ac: node.scrollHeight
+			ax: {
+				aE: node.scrollWidth,
+				ad: node.scrollHeight
 			},
-			aC: {
-				aE: node.scrollLeft,
-				aF: node.scrollTop,
-				aD: node.clientWidth,
-				ac: node.clientHeight
+			aD: {
+				aF: node.scrollLeft,
+				aG: node.scrollTop,
+				aE: node.clientWidth,
+				ad: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aw: _Browser_getScene(),
-			aC: {
-				aE: x,
-				aF: y,
-				aD: _Browser_doc.documentElement.clientWidth,
-				ac: _Browser_doc.documentElement.clientHeight
+			ax: _Browser_getScene(),
+			aD: {
+				aF: x,
+				aG: y,
+				aE: _Browser_doc.documentElement.clientWidth,
+				ad: _Browser_doc.documentElement.clientHeight
 			},
-			aL: {
-				aE: x + rect.left,
-				aF: y + rect.top,
-				aD: rect.width,
-				ac: rect.height
+			aM: {
+				aF: x + rect.left,
+				aG: y + rect.top,
+				aE: rect.width,
+				ad: rect.height
 			}
 		};
 	});
@@ -4365,25 +4365,25 @@ var _Http_toTask = F3(function(router, toTask, request)
 	return _Scheduler_binding(function(callback)
 	{
 		function done(response) {
-			callback(toTask(request.aM.a(response)));
+			callback(toTask(request.aN.a(response)));
 		}
 
 		var xhr = new XMLHttpRequest();
 		xhr.addEventListener('error', function() { done($elm$http$Http$NetworkError_); });
 		xhr.addEventListener('timeout', function() { done($elm$http$Http$Timeout_); });
-		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aM.b, xhr)); });
-		$elm$core$Maybe$isJust(request.aB) && _Http_track(router, xhr, request.aB.a);
+		xhr.addEventListener('load', function() { done(_Http_toResponse(request.aN.b, xhr)); });
+		$elm$core$Maybe$isJust(request.aC) && _Http_track(router, xhr, request.aC.a);
 
 		try {
-			xhr.open(request.aR, request.H, true);
+			xhr.open(request.aS, request.H, true);
 		} catch (e) {
 			return done($elm$http$Http$BadUrl_(request.H));
 		}
 
 		_Http_configureRequest(xhr, request);
 
-		request.aI.a && xhr.setRequestHeader('Content-Type', request.aI.a);
-		xhr.send(request.aI.b);
+		request.aJ.a && xhr.setRequestHeader('Content-Type', request.aJ.a);
+		xhr.send(request.aJ.b);
 
 		return function() { xhr.c = true; xhr.abort(); };
 	});
@@ -4394,13 +4394,13 @@ var _Http_toTask = F3(function(router, toTask, request)
 
 function _Http_configureRequest(xhr, request)
 {
-	for (var headers = request.ab; headers.b; headers = headers.b) // WHILE_CONS
+	for (var headers = request.ac; headers.b; headers = headers.b) // WHILE_CONS
 	{
 		xhr.setRequestHeader(headers.a.a, headers.a.b);
 	}
-	xhr.timeout = request.a0.a || 0;
-	xhr.responseType = request.aM.d;
-	xhr.withCredentials = request.aG;
+	xhr.timeout = request.a1.a || 0;
+	xhr.responseType = request.aN.d;
+	xhr.withCredentials = request.aH;
 }
 
 
@@ -4422,9 +4422,9 @@ function _Http_toMetadata(xhr)
 {
 	return {
 		H: xhr.responseURL,
-		aZ: xhr.status,
-		a_: xhr.statusText,
-		ab: _Http_parseHeaders(xhr.getAllResponseHeaders())
+		a_: xhr.status,
+		a$: xhr.statusText,
+		ac: _Http_parseHeaders(xhr.getAllResponseHeaders())
 	};
 }
 
@@ -4519,15 +4519,15 @@ function _Http_track(router, xhr, tracker)
 	xhr.upload.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Sending({
-			aY: event.loaded,
-			ax: event.total
+			aZ: event.loaded,
+			ay: event.total
 		}))));
 	});
 	xhr.addEventListener('progress', function(event) {
 		if (xhr.c) { return; }
 		_Scheduler_rawSpawn(A2($elm$core$Platform$sendToSelf, router, _Utils_Tuple2(tracker, $elm$http$Http$Receiving({
-			aW: event.loaded,
-			ax: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
+			aX: event.loaded,
+			ay: event.lengthComputable ? $elm$core$Maybe$Just(event.total) : $elm$core$Maybe$Nothing
 		}))));
 	});
 }var $elm$core$Basics$EQ = 1;
@@ -5034,7 +5034,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {_: fragment, ad: host, ak: path, am: port_, ap: protocol, aq: query};
+		return {aa: fragment, ae: host, al: path, an: port_, aq: protocol, ar: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5314,9 +5314,9 @@ var $elm$core$Task$perform = F2(
 	});
 var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Main$Loading = {$: 1};
-var $author$project$Main$Model = F5(
-	function (state, language, category, year, withVideo) {
-		return {n: category, J: language, K: state, S: withVideo, T: year};
+var $author$project$Main$Model = F6(
+	function (state, language, category, year, withVideo, searchText) {
+		return {o: category, J: language, P: searchText, K: state, T: withVideo, U: year};
 	});
 var $author$project$Main$EN = 1;
 var $author$project$Main$SK = 0;
@@ -5337,12 +5337,12 @@ var $author$project$Main$GotEvents = function (a) {
 };
 var $author$project$Main$Event = F8(
 	function (title, url, dateAndTime, hasVideo, location, category, icon, speakers) {
-		return {n: category, A: dateAndTime, aa: hasVideo, ae: icon, ag: location, ay: speakers, q: title, H: url};
+		return {o: category, A: dateAndTime, ab: hasVideo, af: icon, ah: location, az: speakers, l: title, H: url};
 	});
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
 var $author$project$Main$EventCategory = F2(
 	function (title, color) {
-		return {W: color, q: title};
+		return {X: color, l: title};
 	});
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$string = _Json_decodeString;
@@ -5353,7 +5353,7 @@ var $author$project$Main$eventCategoryDecoder = A3(
 	A2($elm$json$Json$Decode$field, 'color', $elm$json$Json$Decode$string));
 var $author$project$Main$EventDateAndTime = F2(
 	function (iso, repr) {
-		return {I: iso, as: repr};
+		return {I: iso, at: repr};
 	});
 var $author$project$Main$eventDateAndTimeDecoder = A3(
 	$elm$json$Json$Decode$map2,
@@ -5362,7 +5362,7 @@ var $author$project$Main$eventDateAndTimeDecoder = A3(
 	A2($elm$json$Json$Decode$field, 'repr', $elm$json$Json$Decode$string));
 var $author$project$Main$EventIcon = F2(
 	function (title, url) {
-		return {q: title, H: url};
+		return {l: title, H: url};
 	});
 var $author$project$Main$eventIconDecoder = A3(
 	$elm$json$Json$Decode$map2,
@@ -5382,7 +5382,7 @@ var $elm$json$Json$Decode$nullable = function (decoder) {
 };
 var $author$project$Main$Speakers = F3(
 	function (underLimit, overLimitNames, overLimitCount) {
-		return {N: overLimitCount, aj: overLimitNames, F: underLimit};
+		return {N: overLimitCount, ak: overLimitNames, F: underLimit};
 	});
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $elm$json$Json$Decode$list = _Json_decodeList;
@@ -6006,7 +6006,7 @@ var $elm$http$Http$resolve = F2(
 			case 3:
 				var metadata = response.a;
 				return $elm$core$Result$Err(
-					$elm$http$Http$BadStatus(metadata.aZ));
+					$elm$http$Http$BadStatus(metadata.a_));
 			default:
 				var body = response.b;
 				return A2(
@@ -6034,7 +6034,7 @@ var $elm$http$Http$Request = function (a) {
 };
 var $elm$http$Http$State = F2(
 	function (reqs, subs) {
-		return {at: reqs, az: subs};
+		return {au: reqs, aA: subs};
 	});
 var $elm$http$Http$init = $elm$core$Task$succeed(
 	A2($elm$http$Http$State, $elm$core$Dict$empty, _List_Nil));
@@ -6078,7 +6078,7 @@ var $elm$http$Http$updateReqs = F3(
 					return A2(
 						$elm$core$Task$andThen,
 						function (pid) {
-							var _v4 = req.aB;
+							var _v4 = req.aC;
 							if (_v4.$ === 1) {
 								return A3($elm$http$Http$updateReqs, router, otherCmds, reqs);
 							} else {
@@ -6108,7 +6108,7 @@ var $elm$http$Http$onEffects = F4(
 				return $elm$core$Task$succeed(
 					A2($elm$http$Http$State, reqs, subs));
 			},
-			A3($elm$http$Http$updateReqs, router, cmds, state.at));
+			A3($elm$http$Http$updateReqs, router, cmds, state.au));
 	});
 var $elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
@@ -6151,7 +6151,7 @@ var $elm$http$Http$onSelfMsg = F3(
 				A2(
 					$elm$core$List$filterMap,
 					A3($elm$http$Http$maybeSend, router, tracker, progress),
-					state.az)));
+					state.aA)));
 	});
 var $elm$http$Http$Cancel = function (a) {
 	return {$: 0, a: a};
@@ -6165,13 +6165,13 @@ var $elm$http$Http$cmdMap = F2(
 			var r = cmd.a;
 			return $elm$http$Http$Request(
 				{
-					aG: r.aG,
-					aI: r.aI,
-					aM: A2(_Http_mapExpect, func, r.aM),
-					ab: r.ab,
-					aR: r.aR,
-					a0: r.a0,
-					aB: r.aB,
+					aH: r.aH,
+					aJ: r.aJ,
+					aN: A2(_Http_mapExpect, func, r.aN),
+					ac: r.ac,
+					aS: r.aS,
+					a1: r.a1,
+					aC: r.aC,
 					H: r.H
 				});
 		}
@@ -6195,28 +6195,29 @@ var $elm$http$Http$subscription = _Platform_leaf('Http');
 var $elm$http$Http$request = function (r) {
 	return $elm$http$Http$command(
 		$elm$http$Http$Request(
-			{aG: false, aI: r.aI, aM: r.aM, ab: r.ab, aR: r.aR, a0: r.a0, aB: r.aB, H: r.H}));
+			{aH: false, aJ: r.aJ, aN: r.aN, ac: r.ac, aS: r.aS, a1: r.a1, aC: r.aC, H: r.H}));
 };
 var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
-		{aI: $elm$http$Http$emptyBody, aM: r.aM, ab: _List_Nil, aR: 'GET', a0: $elm$core$Maybe$Nothing, aB: $elm$core$Maybe$Nothing, H: r.H});
+		{aJ: $elm$http$Http$emptyBody, aN: r.aN, ac: _List_Nil, aS: 'GET', a1: $elm$core$Maybe$Nothing, aC: $elm$core$Maybe$Nothing, H: r.H});
 };
 var $author$project$Main$getAllEvents = function (languageCode) {
 	return $elm$http$Http$get(
 		{
-			aM: A2($elm$http$Http$expectJson, $author$project$Main$GotEvents, $author$project$Main$eventsDecoder),
+			aN: A2($elm$http$Http$expectJson, $author$project$Main$GotEvents, $author$project$Main$eventsDecoder),
 			H: '/' + (languageCode + '/events/json/')
 		});
 };
 var $author$project$Main$init = function (languageCode) {
 	return _Utils_Tuple2(
-		A5(
+		A6(
 			$author$project$Main$Model,
 			$author$project$Main$Loading,
 			$author$project$Main$decodeLanguage(languageCode),
 			'---',
 			'---',
-			false),
+			false,
+			''),
 		$author$project$Main$getAllEvents(languageCode));
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -6261,21 +6262,28 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{n: category}),
+						{o: category}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
 				var year = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{T: year}),
+						{U: year}),
 					$elm$core$Platform$Cmd$none);
-			default:
+			case 3:
 				var value = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{S: value}),
+						{T: value}),
+					$elm$core$Platform$Cmd$none);
+			default:
+				var text = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{P: text}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
@@ -6307,7 +6315,1276 @@ var $author$project$Main$filterByCategory = F2(
 		return (category === '---') ? events : A2(
 			$elm$core$List$filter,
 			function (e) {
-				return _Utils_eq(e.n.q, category);
+				return _Utils_eq(e.o.l, category);
+			},
+			events);
+	});
+var $elm$core$String$foldl = _String_foldl;
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $kuon$elm_string_normalize$String$Normalize$Diacritics$lookupList = _Utils_ap(
+	_List_fromArray(
+		[
+			_Utils_Tuple2('A', 'A'),
+			_Utils_Tuple2('Ⓐ', 'A'),
+			_Utils_Tuple2('Ａ', 'A'),
+			_Utils_Tuple2('À', 'A'),
+			_Utils_Tuple2('Á', 'A'),
+			_Utils_Tuple2('Â', 'A'),
+			_Utils_Tuple2('Ầ', 'A'),
+			_Utils_Tuple2('Ấ', 'A'),
+			_Utils_Tuple2('Ẫ', 'A'),
+			_Utils_Tuple2('Ẩ', 'A')
+		]),
+	_Utils_ap(
+		_List_fromArray(
+			[
+				_Utils_Tuple2('Ã', 'A'),
+				_Utils_Tuple2('Ā', 'A'),
+				_Utils_Tuple2('Ă', 'A'),
+				_Utils_Tuple2('Ằ', 'A'),
+				_Utils_Tuple2('Ắ', 'A'),
+				_Utils_Tuple2('Ẵ', 'A'),
+				_Utils_Tuple2('Ẳ', 'A'),
+				_Utils_Tuple2('Ȧ', 'A'),
+				_Utils_Tuple2('Ǡ', 'A'),
+				_Utils_Tuple2('Ä', 'A')
+			]),
+		_Utils_ap(
+			_List_fromArray(
+				[
+					_Utils_Tuple2('Ǟ', 'A'),
+					_Utils_Tuple2('Ả', 'A'),
+					_Utils_Tuple2('Å', 'A'),
+					_Utils_Tuple2('Ǻ', 'A'),
+					_Utils_Tuple2('Ǎ', 'A'),
+					_Utils_Tuple2('Ȁ', 'A'),
+					_Utils_Tuple2('Ȃ', 'A'),
+					_Utils_Tuple2('Ạ', 'A'),
+					_Utils_Tuple2('Ậ', 'A'),
+					_Utils_Tuple2('Ặ', 'A')
+				]),
+			_Utils_ap(
+				_List_fromArray(
+					[
+						_Utils_Tuple2('Ḁ', 'A'),
+						_Utils_Tuple2('Ą', 'A'),
+						_Utils_Tuple2('Ⱥ', 'A'),
+						_Utils_Tuple2('Ɐ', 'A'),
+						_Utils_Tuple2('Ꜳ', 'AA'),
+						_Utils_Tuple2('Æ', 'AE'),
+						_Utils_Tuple2('Ǽ', 'AE'),
+						_Utils_Tuple2('Ǣ', 'AE'),
+						_Utils_Tuple2('Ꜵ', 'AO'),
+						_Utils_Tuple2('Ꜷ', 'AU')
+					]),
+				_Utils_ap(
+					_List_fromArray(
+						[
+							_Utils_Tuple2('Ꜹ', 'AV'),
+							_Utils_Tuple2('Ꜻ', 'AV'),
+							_Utils_Tuple2('Ꜽ', 'AY'),
+							_Utils_Tuple2('B', 'B'),
+							_Utils_Tuple2('Ⓑ', 'B'),
+							_Utils_Tuple2('Ｂ', 'B'),
+							_Utils_Tuple2('Ḃ', 'B'),
+							_Utils_Tuple2('Ḅ', 'B'),
+							_Utils_Tuple2('Ḇ', 'B'),
+							_Utils_Tuple2('Ƀ', 'B')
+						]),
+					_Utils_ap(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('Ƃ', 'B'),
+								_Utils_Tuple2('Ɓ', 'B'),
+								_Utils_Tuple2('C', 'C'),
+								_Utils_Tuple2('Ⓒ', 'C'),
+								_Utils_Tuple2('Ｃ', 'C'),
+								_Utils_Tuple2('Ć', 'C'),
+								_Utils_Tuple2('Ĉ', 'C'),
+								_Utils_Tuple2('Ċ', 'C'),
+								_Utils_Tuple2('Č', 'C'),
+								_Utils_Tuple2('Ç', 'C')
+							]),
+						_Utils_ap(
+							_List_fromArray(
+								[
+									_Utils_Tuple2('Ḉ', 'C'),
+									_Utils_Tuple2('Ƈ', 'C'),
+									_Utils_Tuple2('Ȼ', 'C'),
+									_Utils_Tuple2('Ꜿ', 'C'),
+									_Utils_Tuple2('D', 'D'),
+									_Utils_Tuple2('Ⓓ', 'D'),
+									_Utils_Tuple2('Ｄ', 'D'),
+									_Utils_Tuple2('Ḋ', 'D'),
+									_Utils_Tuple2('Ď', 'D'),
+									_Utils_Tuple2('Ḍ', 'D')
+								]),
+							_Utils_ap(
+								_List_fromArray(
+									[
+										_Utils_Tuple2('Ḑ', 'D'),
+										_Utils_Tuple2('Ḓ', 'D'),
+										_Utils_Tuple2('Ḏ', 'D'),
+										_Utils_Tuple2('Đ', 'D'),
+										_Utils_Tuple2('Ƌ', 'D'),
+										_Utils_Tuple2('Ɗ', 'D'),
+										_Utils_Tuple2('Ɖ', 'D'),
+										_Utils_Tuple2('Ꝺ', 'D'),
+										_Utils_Tuple2('Ǳ', 'DZ'),
+										_Utils_Tuple2('Ǆ', 'DZ')
+									]),
+								_Utils_ap(
+									_List_fromArray(
+										[
+											_Utils_Tuple2('ǲ', 'Dz'),
+											_Utils_Tuple2('ǅ', 'Dz'),
+											_Utils_Tuple2('E', 'E'),
+											_Utils_Tuple2('Ⓔ', 'E'),
+											_Utils_Tuple2('Ｅ', 'E'),
+											_Utils_Tuple2('È', 'E'),
+											_Utils_Tuple2('É', 'E'),
+											_Utils_Tuple2('Ê', 'E'),
+											_Utils_Tuple2('Ề', 'E'),
+											_Utils_Tuple2('Ế', 'E')
+										]),
+									_Utils_ap(
+										_List_fromArray(
+											[
+												_Utils_Tuple2('Ễ', 'E'),
+												_Utils_Tuple2('Ể', 'E'),
+												_Utils_Tuple2('Ẽ', 'E'),
+												_Utils_Tuple2('Ē', 'E'),
+												_Utils_Tuple2('Ḕ', 'E'),
+												_Utils_Tuple2('Ḗ', 'E'),
+												_Utils_Tuple2('Ĕ', 'E'),
+												_Utils_Tuple2('Ė', 'E'),
+												_Utils_Tuple2('Ë', 'E'),
+												_Utils_Tuple2('Ẻ', 'E')
+											]),
+										_Utils_ap(
+											_List_fromArray(
+												[
+													_Utils_Tuple2('Ě', 'E'),
+													_Utils_Tuple2('Ȅ', 'E'),
+													_Utils_Tuple2('Ȇ', 'E'),
+													_Utils_Tuple2('Ẹ', 'E'),
+													_Utils_Tuple2('Ệ', 'E'),
+													_Utils_Tuple2('Ȩ', 'E'),
+													_Utils_Tuple2('Ḝ', 'E'),
+													_Utils_Tuple2('Ę', 'E'),
+													_Utils_Tuple2('Ḙ', 'E'),
+													_Utils_Tuple2('Ḛ', 'E')
+												]),
+											_Utils_ap(
+												_List_fromArray(
+													[
+														_Utils_Tuple2('Ɛ', 'E'),
+														_Utils_Tuple2('Ǝ', 'E'),
+														_Utils_Tuple2('F', 'F'),
+														_Utils_Tuple2('Ⓕ', 'F'),
+														_Utils_Tuple2('Ｆ', 'F'),
+														_Utils_Tuple2('Ḟ', 'F'),
+														_Utils_Tuple2('Ƒ', 'F'),
+														_Utils_Tuple2('Ꝼ', 'F'),
+														_Utils_Tuple2('G', 'G'),
+														_Utils_Tuple2('Ⓖ', 'G')
+													]),
+												_Utils_ap(
+													_List_fromArray(
+														[
+															_Utils_Tuple2('Ｇ', 'G'),
+															_Utils_Tuple2('Ǵ', 'G'),
+															_Utils_Tuple2('Ĝ', 'G'),
+															_Utils_Tuple2('Ḡ', 'G'),
+															_Utils_Tuple2('Ğ', 'G'),
+															_Utils_Tuple2('Ġ', 'G'),
+															_Utils_Tuple2('Ǧ', 'G'),
+															_Utils_Tuple2('Ģ', 'G'),
+															_Utils_Tuple2('Ǥ', 'G'),
+															_Utils_Tuple2('Ɠ', 'G')
+														]),
+													_Utils_ap(
+														_List_fromArray(
+															[
+																_Utils_Tuple2('Ꞡ', 'G'),
+																_Utils_Tuple2('Ᵹ', 'G'),
+																_Utils_Tuple2('Ꝿ', 'G'),
+																_Utils_Tuple2('H', 'H'),
+																_Utils_Tuple2('Ⓗ', 'H'),
+																_Utils_Tuple2('Ｈ', 'H'),
+																_Utils_Tuple2('Ĥ', 'H'),
+																_Utils_Tuple2('Ḣ', 'H'),
+																_Utils_Tuple2('Ḧ', 'H'),
+																_Utils_Tuple2('Ȟ', 'H')
+															]),
+														_Utils_ap(
+															_List_fromArray(
+																[
+																	_Utils_Tuple2('Ḥ', 'H'),
+																	_Utils_Tuple2('Ḩ', 'H'),
+																	_Utils_Tuple2('Ḫ', 'H'),
+																	_Utils_Tuple2('Ħ', 'H'),
+																	_Utils_Tuple2('Ⱨ', 'H'),
+																	_Utils_Tuple2('Ⱶ', 'H'),
+																	_Utils_Tuple2('Ɥ', 'H'),
+																	_Utils_Tuple2('I', 'I'),
+																	_Utils_Tuple2('Ⓘ', 'I'),
+																	_Utils_Tuple2('Ｉ', 'I')
+																]),
+															_Utils_ap(
+																_List_fromArray(
+																	[
+																		_Utils_Tuple2('Ì', 'I'),
+																		_Utils_Tuple2('Í', 'I'),
+																		_Utils_Tuple2('Î', 'I'),
+																		_Utils_Tuple2('Ĩ', 'I'),
+																		_Utils_Tuple2('Ī', 'I'),
+																		_Utils_Tuple2('Ĭ', 'I'),
+																		_Utils_Tuple2('İ', 'I'),
+																		_Utils_Tuple2('Ï', 'I'),
+																		_Utils_Tuple2('Ḯ', 'I'),
+																		_Utils_Tuple2('Ỉ', 'I')
+																	]),
+																_Utils_ap(
+																	_List_fromArray(
+																		[
+																			_Utils_Tuple2('Ǐ', 'I'),
+																			_Utils_Tuple2('Ȉ', 'I'),
+																			_Utils_Tuple2('Ȋ', 'I'),
+																			_Utils_Tuple2('Ị', 'I'),
+																			_Utils_Tuple2('Į', 'I'),
+																			_Utils_Tuple2('Ḭ', 'I'),
+																			_Utils_Tuple2('Ɨ', 'I'),
+																			_Utils_Tuple2('J', 'J'),
+																			_Utils_Tuple2('Ⓙ', 'J'),
+																			_Utils_Tuple2('Ｊ', 'J')
+																		]),
+																	_Utils_ap(
+																		_List_fromArray(
+																			[
+																				_Utils_Tuple2('Ĵ', 'J'),
+																				_Utils_Tuple2('Ɉ', 'J'),
+																				_Utils_Tuple2('K', 'K'),
+																				_Utils_Tuple2('Ⓚ', 'K'),
+																				_Utils_Tuple2('Ｋ', 'K'),
+																				_Utils_Tuple2('Ḱ', 'K'),
+																				_Utils_Tuple2('Ǩ', 'K'),
+																				_Utils_Tuple2('Ḳ', 'K'),
+																				_Utils_Tuple2('Ķ', 'K'),
+																				_Utils_Tuple2('Ḵ', 'K')
+																			]),
+																		_Utils_ap(
+																			_List_fromArray(
+																				[
+																					_Utils_Tuple2('Ƙ', 'K'),
+																					_Utils_Tuple2('Ⱪ', 'K'),
+																					_Utils_Tuple2('Ꝁ', 'K'),
+																					_Utils_Tuple2('Ꝃ', 'K'),
+																					_Utils_Tuple2('Ꝅ', 'K'),
+																					_Utils_Tuple2('Ꞣ', 'K'),
+																					_Utils_Tuple2('L', 'L'),
+																					_Utils_Tuple2('Ⓛ', 'L'),
+																					_Utils_Tuple2('Ｌ', 'L'),
+																					_Utils_Tuple2('Ŀ', 'L')
+																				]),
+																			_Utils_ap(
+																				_List_fromArray(
+																					[
+																						_Utils_Tuple2('Ĺ', 'L'),
+																						_Utils_Tuple2('Ľ', 'L'),
+																						_Utils_Tuple2('Ḷ', 'L'),
+																						_Utils_Tuple2('Ḹ', 'L'),
+																						_Utils_Tuple2('Ļ', 'L'),
+																						_Utils_Tuple2('Ḽ', 'L'),
+																						_Utils_Tuple2('Ḻ', 'L'),
+																						_Utils_Tuple2('Ł', 'L'),
+																						_Utils_Tuple2('Ƚ', 'L'),
+																						_Utils_Tuple2('Ɫ', 'L')
+																					]),
+																				_Utils_ap(
+																					_List_fromArray(
+																						[
+																							_Utils_Tuple2('Ⱡ', 'L'),
+																							_Utils_Tuple2('Ꝉ', 'L'),
+																							_Utils_Tuple2('Ꝇ', 'L'),
+																							_Utils_Tuple2('Ꞁ', 'L'),
+																							_Utils_Tuple2('Ǉ', 'LJ'),
+																							_Utils_Tuple2('ǈ', 'Lj'),
+																							_Utils_Tuple2('M', 'M'),
+																							_Utils_Tuple2('Ⓜ', 'M'),
+																							_Utils_Tuple2('Ｍ', 'M'),
+																							_Utils_Tuple2('Ḿ', 'M')
+																						]),
+																					_Utils_ap(
+																						_List_fromArray(
+																							[
+																								_Utils_Tuple2('Ṁ', 'M'),
+																								_Utils_Tuple2('Ṃ', 'M'),
+																								_Utils_Tuple2('Ɱ', 'M'),
+																								_Utils_Tuple2('Ɯ', 'M'),
+																								_Utils_Tuple2('N', 'N'),
+																								_Utils_Tuple2('Ⓝ', 'N'),
+																								_Utils_Tuple2('Ｎ', 'N'),
+																								_Utils_Tuple2('Ǹ', 'N'),
+																								_Utils_Tuple2('Ń', 'N'),
+																								_Utils_Tuple2('Ñ', 'N')
+																							]),
+																						_Utils_ap(
+																							_List_fromArray(
+																								[
+																									_Utils_Tuple2('Ṅ', 'N'),
+																									_Utils_Tuple2('Ň', 'N'),
+																									_Utils_Tuple2('Ṇ', 'N'),
+																									_Utils_Tuple2('Ņ', 'N'),
+																									_Utils_Tuple2('Ṋ', 'N'),
+																									_Utils_Tuple2('Ṉ', 'N'),
+																									_Utils_Tuple2('Ƞ', 'N'),
+																									_Utils_Tuple2('Ɲ', 'N'),
+																									_Utils_Tuple2('Ꞑ', 'N'),
+																									_Utils_Tuple2('Ꞥ', 'N')
+																								]),
+																							_Utils_ap(
+																								_List_fromArray(
+																									[
+																										_Utils_Tuple2('Ǌ', 'NJ'),
+																										_Utils_Tuple2('ǋ', 'Nj'),
+																										_Utils_Tuple2('O', 'O'),
+																										_Utils_Tuple2('Ⓞ', 'O'),
+																										_Utils_Tuple2('Ｏ', 'O'),
+																										_Utils_Tuple2('Ò', 'O'),
+																										_Utils_Tuple2('Ó', 'O'),
+																										_Utils_Tuple2('Ô', 'O'),
+																										_Utils_Tuple2('Ồ', 'O'),
+																										_Utils_Tuple2('Ố', 'O')
+																									]),
+																								_Utils_ap(
+																									_List_fromArray(
+																										[
+																											_Utils_Tuple2('Ỗ', 'O'),
+																											_Utils_Tuple2('Ổ', 'O'),
+																											_Utils_Tuple2('Õ', 'O'),
+																											_Utils_Tuple2('Ṍ', 'O'),
+																											_Utils_Tuple2('Ȭ', 'O'),
+																											_Utils_Tuple2('Ṏ', 'O'),
+																											_Utils_Tuple2('Ō', 'O'),
+																											_Utils_Tuple2('Ṑ', 'O'),
+																											_Utils_Tuple2('Ṓ', 'O'),
+																											_Utils_Tuple2('Ŏ', 'O')
+																										]),
+																									_Utils_ap(
+																										_List_fromArray(
+																											[
+																												_Utils_Tuple2('Ȯ', 'O'),
+																												_Utils_Tuple2('Ȱ', 'O'),
+																												_Utils_Tuple2('Ö', 'O'),
+																												_Utils_Tuple2('Ȫ', 'O'),
+																												_Utils_Tuple2('Ỏ', 'O'),
+																												_Utils_Tuple2('Ő', 'O'),
+																												_Utils_Tuple2('Ǒ', 'O'),
+																												_Utils_Tuple2('Ȍ', 'O'),
+																												_Utils_Tuple2('Ȏ', 'O'),
+																												_Utils_Tuple2('Ơ', 'O')
+																											]),
+																										_Utils_ap(
+																											_List_fromArray(
+																												[
+																													_Utils_Tuple2('Ờ', 'O'),
+																													_Utils_Tuple2('Ớ', 'O'),
+																													_Utils_Tuple2('Ỡ', 'O'),
+																													_Utils_Tuple2('Ở', 'O'),
+																													_Utils_Tuple2('Ợ', 'O'),
+																													_Utils_Tuple2('Ọ', 'O'),
+																													_Utils_Tuple2('Ộ', 'O'),
+																													_Utils_Tuple2('Ǫ', 'O'),
+																													_Utils_Tuple2('Ǭ', 'O'),
+																													_Utils_Tuple2('Ø', 'O')
+																												]),
+																											_Utils_ap(
+																												_List_fromArray(
+																													[
+																														_Utils_Tuple2('Ǿ', 'O'),
+																														_Utils_Tuple2('Ɔ', 'O'),
+																														_Utils_Tuple2('Ɵ', 'O'),
+																														_Utils_Tuple2('Ꝋ', 'O'),
+																														_Utils_Tuple2('Ꝍ', 'O'),
+																														_Utils_Tuple2('Ƣ', 'OI'),
+																														_Utils_Tuple2('Ꝏ', 'OO'),
+																														_Utils_Tuple2('Ȣ', 'OU'),
+																														_Utils_Tuple2('\u008C', 'OE'),
+																														_Utils_Tuple2('Œ', 'OE')
+																													]),
+																												_Utils_ap(
+																													_List_fromArray(
+																														[
+																															_Utils_Tuple2('\u009C', 'oe'),
+																															_Utils_Tuple2('œ', 'oe'),
+																															_Utils_Tuple2('P', 'P'),
+																															_Utils_Tuple2('Ⓟ', 'P'),
+																															_Utils_Tuple2('Ｐ', 'P'),
+																															_Utils_Tuple2('Ṕ', 'P'),
+																															_Utils_Tuple2('Ṗ', 'P'),
+																															_Utils_Tuple2('Ƥ', 'P'),
+																															_Utils_Tuple2('Ᵽ', 'P'),
+																															_Utils_Tuple2('Ꝑ', 'P')
+																														]),
+																													_Utils_ap(
+																														_List_fromArray(
+																															[
+																																_Utils_Tuple2('Ꝓ', 'P'),
+																																_Utils_Tuple2('Ꝕ', 'P'),
+																																_Utils_Tuple2('Q', 'Q'),
+																																_Utils_Tuple2('Ⓠ', 'Q'),
+																																_Utils_Tuple2('Ｑ', 'Q'),
+																																_Utils_Tuple2('Ꝗ', 'Q'),
+																																_Utils_Tuple2('Ꝙ', 'Q'),
+																																_Utils_Tuple2('Ɋ', 'Q'),
+																																_Utils_Tuple2('R', 'R'),
+																																_Utils_Tuple2('Ⓡ', 'R')
+																															]),
+																														_Utils_ap(
+																															_List_fromArray(
+																																[
+																																	_Utils_Tuple2('Ｒ', 'R'),
+																																	_Utils_Tuple2('Ŕ', 'R'),
+																																	_Utils_Tuple2('Ṙ', 'R'),
+																																	_Utils_Tuple2('Ř', 'R'),
+																																	_Utils_Tuple2('Ȑ', 'R'),
+																																	_Utils_Tuple2('Ȓ', 'R'),
+																																	_Utils_Tuple2('Ṛ', 'R'),
+																																	_Utils_Tuple2('Ṝ', 'R'),
+																																	_Utils_Tuple2('Ŗ', 'R'),
+																																	_Utils_Tuple2('Ṟ', 'R')
+																																]),
+																															_Utils_ap(
+																																_List_fromArray(
+																																	[
+																																		_Utils_Tuple2('Ɍ', 'R'),
+																																		_Utils_Tuple2('Ɽ', 'R'),
+																																		_Utils_Tuple2('Ꝛ', 'R'),
+																																		_Utils_Tuple2('Ꞧ', 'R'),
+																																		_Utils_Tuple2('Ꞃ', 'R'),
+																																		_Utils_Tuple2('S', 'S'),
+																																		_Utils_Tuple2('Ⓢ', 'S'),
+																																		_Utils_Tuple2('Ｓ', 'S'),
+																																		_Utils_Tuple2('ẞ', 'S'),
+																																		_Utils_Tuple2('Ś', 'S')
+																																	]),
+																																_Utils_ap(
+																																	_List_fromArray(
+																																		[
+																																			_Utils_Tuple2('Ṥ', 'S'),
+																																			_Utils_Tuple2('Ŝ', 'S'),
+																																			_Utils_Tuple2('Ṡ', 'S'),
+																																			_Utils_Tuple2('Š', 'S'),
+																																			_Utils_Tuple2('Ṧ', 'S'),
+																																			_Utils_Tuple2('Ṣ', 'S'),
+																																			_Utils_Tuple2('Ṩ', 'S'),
+																																			_Utils_Tuple2('Ș', 'S'),
+																																			_Utils_Tuple2('Ş', 'S'),
+																																			_Utils_Tuple2('Ȿ', 'S')
+																																		]),
+																																	_Utils_ap(
+																																		_List_fromArray(
+																																			[
+																																				_Utils_Tuple2('Ꞩ', 'S'),
+																																				_Utils_Tuple2('Ꞅ', 'S'),
+																																				_Utils_Tuple2('T', 'T'),
+																																				_Utils_Tuple2('Ⓣ', 'T'),
+																																				_Utils_Tuple2('Ｔ', 'T'),
+																																				_Utils_Tuple2('Ṫ', 'T'),
+																																				_Utils_Tuple2('Ť', 'T'),
+																																				_Utils_Tuple2('Ṭ', 'T'),
+																																				_Utils_Tuple2('Ț', 'T'),
+																																				_Utils_Tuple2('Ţ', 'T')
+																																			]),
+																																		_Utils_ap(
+																																			_List_fromArray(
+																																				[
+																																					_Utils_Tuple2('Ṱ', 'T'),
+																																					_Utils_Tuple2('Ṯ', 'T'),
+																																					_Utils_Tuple2('Ŧ', 'T'),
+																																					_Utils_Tuple2('Ƭ', 'T'),
+																																					_Utils_Tuple2('Ʈ', 'T'),
+																																					_Utils_Tuple2('Ⱦ', 'T'),
+																																					_Utils_Tuple2('Ꞇ', 'T'),
+																																					_Utils_Tuple2('Ꜩ', 'TZ'),
+																																					_Utils_Tuple2('U', 'U'),
+																																					_Utils_Tuple2('Ⓤ', 'U')
+																																				]),
+																																			_Utils_ap(
+																																				_List_fromArray(
+																																					[
+																																						_Utils_Tuple2('Ｕ', 'U'),
+																																						_Utils_Tuple2('Ù', 'U'),
+																																						_Utils_Tuple2('Ú', 'U'),
+																																						_Utils_Tuple2('Û', 'U'),
+																																						_Utils_Tuple2('Ũ', 'U'),
+																																						_Utils_Tuple2('Ṹ', 'U'),
+																																						_Utils_Tuple2('Ū', 'U'),
+																																						_Utils_Tuple2('Ṻ', 'U'),
+																																						_Utils_Tuple2('Ŭ', 'U'),
+																																						_Utils_Tuple2('Ü', 'U')
+																																					]),
+																																				_Utils_ap(
+																																					_List_fromArray(
+																																						[
+																																							_Utils_Tuple2('Ǜ', 'U'),
+																																							_Utils_Tuple2('Ǘ', 'U'),
+																																							_Utils_Tuple2('Ǖ', 'U'),
+																																							_Utils_Tuple2('Ǚ', 'U'),
+																																							_Utils_Tuple2('Ủ', 'U'),
+																																							_Utils_Tuple2('Ů', 'U'),
+																																							_Utils_Tuple2('Ű', 'U'),
+																																							_Utils_Tuple2('Ǔ', 'U'),
+																																							_Utils_Tuple2('Ȕ', 'U'),
+																																							_Utils_Tuple2('Ȗ', 'U')
+																																						]),
+																																					_Utils_ap(
+																																						_List_fromArray(
+																																							[
+																																								_Utils_Tuple2('Ư', 'U'),
+																																								_Utils_Tuple2('Ừ', 'U'),
+																																								_Utils_Tuple2('Ứ', 'U'),
+																																								_Utils_Tuple2('Ữ', 'U'),
+																																								_Utils_Tuple2('Ử', 'U'),
+																																								_Utils_Tuple2('Ự', 'U'),
+																																								_Utils_Tuple2('Ụ', 'U'),
+																																								_Utils_Tuple2('Ṳ', 'U'),
+																																								_Utils_Tuple2('Ų', 'U'),
+																																								_Utils_Tuple2('Ṷ', 'U')
+																																							]),
+																																						_Utils_ap(
+																																							_List_fromArray(
+																																								[
+																																									_Utils_Tuple2('Ṵ', 'U'),
+																																									_Utils_Tuple2('Ʉ', 'U'),
+																																									_Utils_Tuple2('V', 'V'),
+																																									_Utils_Tuple2('Ⓥ', 'V'),
+																																									_Utils_Tuple2('Ｖ', 'V'),
+																																									_Utils_Tuple2('Ṽ', 'V'),
+																																									_Utils_Tuple2('Ṿ', 'V'),
+																																									_Utils_Tuple2('Ʋ', 'V'),
+																																									_Utils_Tuple2('Ꝟ', 'V'),
+																																									_Utils_Tuple2('Ʌ', 'V')
+																																								]),
+																																							_Utils_ap(
+																																								_List_fromArray(
+																																									[
+																																										_Utils_Tuple2('Ꝡ', 'VY'),
+																																										_Utils_Tuple2('W', 'W'),
+																																										_Utils_Tuple2('Ⓦ', 'W'),
+																																										_Utils_Tuple2('Ｗ', 'W'),
+																																										_Utils_Tuple2('Ẁ', 'W'),
+																																										_Utils_Tuple2('Ẃ', 'W'),
+																																										_Utils_Tuple2('Ŵ', 'W'),
+																																										_Utils_Tuple2('Ẇ', 'W'),
+																																										_Utils_Tuple2('Ẅ', 'W'),
+																																										_Utils_Tuple2('Ẉ', 'W')
+																																									]),
+																																								_Utils_ap(
+																																									_List_fromArray(
+																																										[
+																																											_Utils_Tuple2('Ⱳ', 'W'),
+																																											_Utils_Tuple2('X', 'X'),
+																																											_Utils_Tuple2('Ⓧ', 'X'),
+																																											_Utils_Tuple2('Ｘ', 'X'),
+																																											_Utils_Tuple2('Ẋ', 'X'),
+																																											_Utils_Tuple2('Ẍ', 'X'),
+																																											_Utils_Tuple2('Y', 'Y'),
+																																											_Utils_Tuple2('Ⓨ', 'Y'),
+																																											_Utils_Tuple2('Ｙ', 'Y'),
+																																											_Utils_Tuple2('Ỳ', 'Y')
+																																										]),
+																																									_Utils_ap(
+																																										_List_fromArray(
+																																											[
+																																												_Utils_Tuple2('Ý', 'Y'),
+																																												_Utils_Tuple2('Ŷ', 'Y'),
+																																												_Utils_Tuple2('Ỹ', 'Y'),
+																																												_Utils_Tuple2('Ȳ', 'Y'),
+																																												_Utils_Tuple2('Ẏ', 'Y'),
+																																												_Utils_Tuple2('Ÿ', 'Y'),
+																																												_Utils_Tuple2('Ỷ', 'Y'),
+																																												_Utils_Tuple2('Ỵ', 'Y'),
+																																												_Utils_Tuple2('Ƴ', 'Y'),
+																																												_Utils_Tuple2('Ɏ', 'Y')
+																																											]),
+																																										_Utils_ap(
+																																											_List_fromArray(
+																																												[
+																																													_Utils_Tuple2('Ỿ', 'Y'),
+																																													_Utils_Tuple2('Z', 'Z'),
+																																													_Utils_Tuple2('Ⓩ', 'Z'),
+																																													_Utils_Tuple2('Ｚ', 'Z'),
+																																													_Utils_Tuple2('Ź', 'Z'),
+																																													_Utils_Tuple2('Ẑ', 'Z'),
+																																													_Utils_Tuple2('Ż', 'Z'),
+																																													_Utils_Tuple2('Ž', 'Z'),
+																																													_Utils_Tuple2('Ẓ', 'Z'),
+																																													_Utils_Tuple2('Ẕ', 'Z')
+																																												]),
+																																											_Utils_ap(
+																																												_List_fromArray(
+																																													[
+																																														_Utils_Tuple2('Ƶ', 'Z'),
+																																														_Utils_Tuple2('Ȥ', 'Z'),
+																																														_Utils_Tuple2('Ɀ', 'Z'),
+																																														_Utils_Tuple2('Ⱬ', 'Z'),
+																																														_Utils_Tuple2('Ꝣ', 'Z'),
+																																														_Utils_Tuple2('a', 'a'),
+																																														_Utils_Tuple2('ⓐ', 'a'),
+																																														_Utils_Tuple2('ａ', 'a'),
+																																														_Utils_Tuple2('ẚ', 'a'),
+																																														_Utils_Tuple2('à', 'a')
+																																													]),
+																																												_Utils_ap(
+																																													_List_fromArray(
+																																														[
+																																															_Utils_Tuple2('á', 'a'),
+																																															_Utils_Tuple2('â', 'a'),
+																																															_Utils_Tuple2('ầ', 'a'),
+																																															_Utils_Tuple2('ấ', 'a'),
+																																															_Utils_Tuple2('ẫ', 'a'),
+																																															_Utils_Tuple2('ẩ', 'a'),
+																																															_Utils_Tuple2('ã', 'a'),
+																																															_Utils_Tuple2('ā', 'a'),
+																																															_Utils_Tuple2('ă', 'a'),
+																																															_Utils_Tuple2('ằ', 'a')
+																																														]),
+																																													_Utils_ap(
+																																														_List_fromArray(
+																																															[
+																																																_Utils_Tuple2('ắ', 'a'),
+																																																_Utils_Tuple2('ẵ', 'a'),
+																																																_Utils_Tuple2('ẳ', 'a'),
+																																																_Utils_Tuple2('ȧ', 'a'),
+																																																_Utils_Tuple2('ǡ', 'a'),
+																																																_Utils_Tuple2('ä', 'a'),
+																																																_Utils_Tuple2('ǟ', 'a'),
+																																																_Utils_Tuple2('ả', 'a'),
+																																																_Utils_Tuple2('å', 'a'),
+																																																_Utils_Tuple2('ǻ', 'a')
+																																															]),
+																																														_Utils_ap(
+																																															_List_fromArray(
+																																																[
+																																																	_Utils_Tuple2('ǎ', 'a'),
+																																																	_Utils_Tuple2('ȁ', 'a'),
+																																																	_Utils_Tuple2('ȃ', 'a'),
+																																																	_Utils_Tuple2('ạ', 'a'),
+																																																	_Utils_Tuple2('ậ', 'a'),
+																																																	_Utils_Tuple2('ặ', 'a'),
+																																																	_Utils_Tuple2('ḁ', 'a'),
+																																																	_Utils_Tuple2('ą', 'a'),
+																																																	_Utils_Tuple2('ⱥ', 'a'),
+																																																	_Utils_Tuple2('ɐ', 'a')
+																																																]),
+																																															_Utils_ap(
+																																																_List_fromArray(
+																																																	[
+																																																		_Utils_Tuple2('ꜳ', 'aa'),
+																																																		_Utils_Tuple2('æ', 'ae'),
+																																																		_Utils_Tuple2('ǽ', 'ae'),
+																																																		_Utils_Tuple2('ǣ', 'ae'),
+																																																		_Utils_Tuple2('ꜵ', 'ao'),
+																																																		_Utils_Tuple2('ꜷ', 'au'),
+																																																		_Utils_Tuple2('ꜹ', 'av'),
+																																																		_Utils_Tuple2('ꜻ', 'av'),
+																																																		_Utils_Tuple2('ꜽ', 'ay'),
+																																																		_Utils_Tuple2('b', 'b')
+																																																	]),
+																																																_Utils_ap(
+																																																	_List_fromArray(
+																																																		[
+																																																			_Utils_Tuple2('ⓑ', 'b'),
+																																																			_Utils_Tuple2('ｂ', 'b'),
+																																																			_Utils_Tuple2('ḃ', 'b'),
+																																																			_Utils_Tuple2('ḅ', 'b'),
+																																																			_Utils_Tuple2('ḇ', 'b'),
+																																																			_Utils_Tuple2('ƀ', 'b'),
+																																																			_Utils_Tuple2('ƃ', 'b'),
+																																																			_Utils_Tuple2('ɓ', 'b'),
+																																																			_Utils_Tuple2('c', 'c'),
+																																																			_Utils_Tuple2('ⓒ', 'c')
+																																																		]),
+																																																	_Utils_ap(
+																																																		_List_fromArray(
+																																																			[
+																																																				_Utils_Tuple2('ｃ', 'c'),
+																																																				_Utils_Tuple2('ć', 'c'),
+																																																				_Utils_Tuple2('ĉ', 'c'),
+																																																				_Utils_Tuple2('ċ', 'c'),
+																																																				_Utils_Tuple2('č', 'c'),
+																																																				_Utils_Tuple2('ç', 'c'),
+																																																				_Utils_Tuple2('ḉ', 'c'),
+																																																				_Utils_Tuple2('ƈ', 'c'),
+																																																				_Utils_Tuple2('ȼ', 'c'),
+																																																				_Utils_Tuple2('ꜿ', 'c')
+																																																			]),
+																																																		_Utils_ap(
+																																																			_List_fromArray(
+																																																				[
+																																																					_Utils_Tuple2('ↄ', 'c'),
+																																																					_Utils_Tuple2('d', 'd'),
+																																																					_Utils_Tuple2('ⓓ', 'd'),
+																																																					_Utils_Tuple2('ｄ', 'd'),
+																																																					_Utils_Tuple2('ḋ', 'd'),
+																																																					_Utils_Tuple2('ď', 'd'),
+																																																					_Utils_Tuple2('ḍ', 'd'),
+																																																					_Utils_Tuple2('ḑ', 'd'),
+																																																					_Utils_Tuple2('ḓ', 'd'),
+																																																					_Utils_Tuple2('ḏ', 'd')
+																																																				]),
+																																																			_Utils_ap(
+																																																				_List_fromArray(
+																																																					[
+																																																						_Utils_Tuple2('đ', 'd'),
+																																																						_Utils_Tuple2('ƌ', 'd'),
+																																																						_Utils_Tuple2('ɖ', 'd'),
+																																																						_Utils_Tuple2('ɗ', 'd'),
+																																																						_Utils_Tuple2('ꝺ', 'd'),
+																																																						_Utils_Tuple2('ǳ', 'dz'),
+																																																						_Utils_Tuple2('ǆ', 'dz'),
+																																																						_Utils_Tuple2('e', 'e'),
+																																																						_Utils_Tuple2('ⓔ', 'e'),
+																																																						_Utils_Tuple2('ｅ', 'e')
+																																																					]),
+																																																				_Utils_ap(
+																																																					_List_fromArray(
+																																																						[
+																																																							_Utils_Tuple2('è', 'e'),
+																																																							_Utils_Tuple2('é', 'e'),
+																																																							_Utils_Tuple2('ê', 'e'),
+																																																							_Utils_Tuple2('ề', 'e'),
+																																																							_Utils_Tuple2('ế', 'e'),
+																																																							_Utils_Tuple2('ễ', 'e'),
+																																																							_Utils_Tuple2('ể', 'e'),
+																																																							_Utils_Tuple2('ẽ', 'e'),
+																																																							_Utils_Tuple2('ē', 'e'),
+																																																							_Utils_Tuple2('ḕ', 'e')
+																																																						]),
+																																																					_Utils_ap(
+																																																						_List_fromArray(
+																																																							[
+																																																								_Utils_Tuple2('ḗ', 'e'),
+																																																								_Utils_Tuple2('ĕ', 'e'),
+																																																								_Utils_Tuple2('ė', 'e'),
+																																																								_Utils_Tuple2('ë', 'e'),
+																																																								_Utils_Tuple2('ẻ', 'e'),
+																																																								_Utils_Tuple2('ě', 'e'),
+																																																								_Utils_Tuple2('ȅ', 'e'),
+																																																								_Utils_Tuple2('ȇ', 'e'),
+																																																								_Utils_Tuple2('ẹ', 'e'),
+																																																								_Utils_Tuple2('ệ', 'e')
+																																																							]),
+																																																						_Utils_ap(
+																																																							_List_fromArray(
+																																																								[
+																																																									_Utils_Tuple2('ȩ', 'e'),
+																																																									_Utils_Tuple2('ḝ', 'e'),
+																																																									_Utils_Tuple2('ę', 'e'),
+																																																									_Utils_Tuple2('ḙ', 'e'),
+																																																									_Utils_Tuple2('ḛ', 'e'),
+																																																									_Utils_Tuple2('ɇ', 'e'),
+																																																									_Utils_Tuple2('ɛ', 'e'),
+																																																									_Utils_Tuple2('ǝ', 'e'),
+																																																									_Utils_Tuple2('f', 'f'),
+																																																									_Utils_Tuple2('ⓕ', 'f')
+																																																								]),
+																																																							_Utils_ap(
+																																																								_List_fromArray(
+																																																									[
+																																																										_Utils_Tuple2('ｆ', 'f'),
+																																																										_Utils_Tuple2('ḟ', 'f'),
+																																																										_Utils_Tuple2('ƒ', 'f'),
+																																																										_Utils_Tuple2('ꝼ', 'f'),
+																																																										_Utils_Tuple2('g', 'g'),
+																																																										_Utils_Tuple2('ⓖ', 'g'),
+																																																										_Utils_Tuple2('ｇ', 'g'),
+																																																										_Utils_Tuple2('ǵ', 'g'),
+																																																										_Utils_Tuple2('ĝ', 'g'),
+																																																										_Utils_Tuple2('ḡ', 'g')
+																																																									]),
+																																																								_Utils_ap(
+																																																									_List_fromArray(
+																																																										[
+																																																											_Utils_Tuple2('ğ', 'g'),
+																																																											_Utils_Tuple2('ġ', 'g'),
+																																																											_Utils_Tuple2('ǧ', 'g'),
+																																																											_Utils_Tuple2('ģ', 'g'),
+																																																											_Utils_Tuple2('ǥ', 'g'),
+																																																											_Utils_Tuple2('ɠ', 'g'),
+																																																											_Utils_Tuple2('ꞡ', 'g'),
+																																																											_Utils_Tuple2('ᵹ', 'g'),
+																																																											_Utils_Tuple2('ꝿ', 'g'),
+																																																											_Utils_Tuple2('h', 'h')
+																																																										]),
+																																																									_Utils_ap(
+																																																										_List_fromArray(
+																																																											[
+																																																												_Utils_Tuple2('ⓗ', 'h'),
+																																																												_Utils_Tuple2('ｈ', 'h'),
+																																																												_Utils_Tuple2('ĥ', 'h'),
+																																																												_Utils_Tuple2('ḣ', 'h'),
+																																																												_Utils_Tuple2('ḧ', 'h'),
+																																																												_Utils_Tuple2('ȟ', 'h'),
+																																																												_Utils_Tuple2('ḥ', 'h'),
+																																																												_Utils_Tuple2('ḩ', 'h'),
+																																																												_Utils_Tuple2('ḫ', 'h'),
+																																																												_Utils_Tuple2('ẖ', 'h')
+																																																											]),
+																																																										_Utils_ap(
+																																																											_List_fromArray(
+																																																												[
+																																																													_Utils_Tuple2('ħ', 'h'),
+																																																													_Utils_Tuple2('ⱨ', 'h'),
+																																																													_Utils_Tuple2('ⱶ', 'h'),
+																																																													_Utils_Tuple2('ɥ', 'h'),
+																																																													_Utils_Tuple2('ƕ', 'hv'),
+																																																													_Utils_Tuple2('i', 'i'),
+																																																													_Utils_Tuple2('ⓘ', 'i'),
+																																																													_Utils_Tuple2('ｉ', 'i'),
+																																																													_Utils_Tuple2('ì', 'i'),
+																																																													_Utils_Tuple2('í', 'i')
+																																																												]),
+																																																											_Utils_ap(
+																																																												_List_fromArray(
+																																																													[
+																																																														_Utils_Tuple2('î', 'i'),
+																																																														_Utils_Tuple2('ĩ', 'i'),
+																																																														_Utils_Tuple2('ī', 'i'),
+																																																														_Utils_Tuple2('ĭ', 'i'),
+																																																														_Utils_Tuple2('ï', 'i'),
+																																																														_Utils_Tuple2('ḯ', 'i'),
+																																																														_Utils_Tuple2('ỉ', 'i'),
+																																																														_Utils_Tuple2('ǐ', 'i'),
+																																																														_Utils_Tuple2('ȉ', 'i'),
+																																																														_Utils_Tuple2('ȋ', 'i')
+																																																													]),
+																																																												_Utils_ap(
+																																																													_List_fromArray(
+																																																														[
+																																																															_Utils_Tuple2('ị', 'i'),
+																																																															_Utils_Tuple2('į', 'i'),
+																																																															_Utils_Tuple2('ḭ', 'i'),
+																																																															_Utils_Tuple2('ɨ', 'i'),
+																																																															_Utils_Tuple2('ı', 'i'),
+																																																															_Utils_Tuple2('j', 'j'),
+																																																															_Utils_Tuple2('ⓙ', 'j'),
+																																																															_Utils_Tuple2('ｊ', 'j'),
+																																																															_Utils_Tuple2('ĵ', 'j'),
+																																																															_Utils_Tuple2('ǰ', 'j')
+																																																														]),
+																																																													_Utils_ap(
+																																																														_List_fromArray(
+																																																															[
+																																																																_Utils_Tuple2('ɉ', 'j'),
+																																																																_Utils_Tuple2('k', 'k'),
+																																																																_Utils_Tuple2('ⓚ', 'k'),
+																																																																_Utils_Tuple2('ｋ', 'k'),
+																																																																_Utils_Tuple2('ḱ', 'k'),
+																																																																_Utils_Tuple2('ǩ', 'k'),
+																																																																_Utils_Tuple2('ḳ', 'k'),
+																																																																_Utils_Tuple2('ķ', 'k'),
+																																																																_Utils_Tuple2('ḵ', 'k'),
+																																																																_Utils_Tuple2('ƙ', 'k')
+																																																															]),
+																																																														_Utils_ap(
+																																																															_List_fromArray(
+																																																																[
+																																																																	_Utils_Tuple2('ⱪ', 'k'),
+																																																																	_Utils_Tuple2('ꝁ', 'k'),
+																																																																	_Utils_Tuple2('ꝃ', 'k'),
+																																																																	_Utils_Tuple2('ꝅ', 'k'),
+																																																																	_Utils_Tuple2('ꞣ', 'k'),
+																																																																	_Utils_Tuple2('l', 'l'),
+																																																																	_Utils_Tuple2('ⓛ', 'l'),
+																																																																	_Utils_Tuple2('ｌ', 'l'),
+																																																																	_Utils_Tuple2('ŀ', 'l'),
+																																																																	_Utils_Tuple2('ĺ', 'l')
+																																																																]),
+																																																															_Utils_ap(
+																																																																_List_fromArray(
+																																																																	[
+																																																																		_Utils_Tuple2('ľ', 'l'),
+																																																																		_Utils_Tuple2('ḷ', 'l'),
+																																																																		_Utils_Tuple2('ḹ', 'l'),
+																																																																		_Utils_Tuple2('ļ', 'l'),
+																																																																		_Utils_Tuple2('ḽ', 'l'),
+																																																																		_Utils_Tuple2('ḻ', 'l'),
+																																																																		_Utils_Tuple2('ſ', 'l'),
+																																																																		_Utils_Tuple2('ł', 'l'),
+																																																																		_Utils_Tuple2('ƚ', 'l'),
+																																																																		_Utils_Tuple2('ɫ', 'l')
+																																																																	]),
+																																																																_Utils_ap(
+																																																																	_List_fromArray(
+																																																																		[
+																																																																			_Utils_Tuple2('ⱡ', 'l'),
+																																																																			_Utils_Tuple2('ꝉ', 'l'),
+																																																																			_Utils_Tuple2('ꞁ', 'l'),
+																																																																			_Utils_Tuple2('ꝇ', 'l'),
+																																																																			_Utils_Tuple2('ǉ', 'lj'),
+																																																																			_Utils_Tuple2('m', 'm'),
+																																																																			_Utils_Tuple2('ⓜ', 'm'),
+																																																																			_Utils_Tuple2('ｍ', 'm'),
+																																																																			_Utils_Tuple2('ḿ', 'm'),
+																																																																			_Utils_Tuple2('ṁ', 'm')
+																																																																		]),
+																																																																	_Utils_ap(
+																																																																		_List_fromArray(
+																																																																			[
+																																																																				_Utils_Tuple2('ṃ', 'm'),
+																																																																				_Utils_Tuple2('ɱ', 'm'),
+																																																																				_Utils_Tuple2('ɯ', 'm'),
+																																																																				_Utils_Tuple2('n', 'n'),
+																																																																				_Utils_Tuple2('ⓝ', 'n'),
+																																																																				_Utils_Tuple2('ｎ', 'n'),
+																																																																				_Utils_Tuple2('ǹ', 'n'),
+																																																																				_Utils_Tuple2('ń', 'n'),
+																																																																				_Utils_Tuple2('ñ', 'n'),
+																																																																				_Utils_Tuple2('ṅ', 'n')
+																																																																			]),
+																																																																		_Utils_ap(
+																																																																			_List_fromArray(
+																																																																				[
+																																																																					_Utils_Tuple2('ň', 'n'),
+																																																																					_Utils_Tuple2('ṇ', 'n'),
+																																																																					_Utils_Tuple2('ņ', 'n'),
+																																																																					_Utils_Tuple2('ṋ', 'n'),
+																																																																					_Utils_Tuple2('ṉ', 'n'),
+																																																																					_Utils_Tuple2('ƞ', 'n'),
+																																																																					_Utils_Tuple2('ɲ', 'n'),
+																																																																					_Utils_Tuple2('ŉ', 'n'),
+																																																																					_Utils_Tuple2('ꞑ', 'n'),
+																																																																					_Utils_Tuple2('ꞥ', 'n')
+																																																																				]),
+																																																																			_Utils_ap(
+																																																																				_List_fromArray(
+																																																																					[
+																																																																						_Utils_Tuple2('ǌ', 'nj'),
+																																																																						_Utils_Tuple2('o', 'o'),
+																																																																						_Utils_Tuple2('ⓞ', 'o'),
+																																																																						_Utils_Tuple2('ｏ', 'o'),
+																																																																						_Utils_Tuple2('ò', 'o'),
+																																																																						_Utils_Tuple2('ó', 'o'),
+																																																																						_Utils_Tuple2('ô', 'o'),
+																																																																						_Utils_Tuple2('ồ', 'o'),
+																																																																						_Utils_Tuple2('ố', 'o'),
+																																																																						_Utils_Tuple2('ỗ', 'o')
+																																																																					]),
+																																																																				_Utils_ap(
+																																																																					_List_fromArray(
+																																																																						[
+																																																																							_Utils_Tuple2('ổ', 'o'),
+																																																																							_Utils_Tuple2('õ', 'o'),
+																																																																							_Utils_Tuple2('ṍ', 'o'),
+																																																																							_Utils_Tuple2('ȭ', 'o'),
+																																																																							_Utils_Tuple2('ṏ', 'o'),
+																																																																							_Utils_Tuple2('ō', 'o'),
+																																																																							_Utils_Tuple2('ṑ', 'o'),
+																																																																							_Utils_Tuple2('ṓ', 'o'),
+																																																																							_Utils_Tuple2('ŏ', 'o'),
+																																																																							_Utils_Tuple2('ȯ', 'o')
+																																																																						]),
+																																																																					_Utils_ap(
+																																																																						_List_fromArray(
+																																																																							[
+																																																																								_Utils_Tuple2('ȱ', 'o'),
+																																																																								_Utils_Tuple2('ö', 'o'),
+																																																																								_Utils_Tuple2('ȫ', 'o'),
+																																																																								_Utils_Tuple2('ỏ', 'o'),
+																																																																								_Utils_Tuple2('ő', 'o'),
+																																																																								_Utils_Tuple2('ǒ', 'o'),
+																																																																								_Utils_Tuple2('ȍ', 'o'),
+																																																																								_Utils_Tuple2('ȏ', 'o'),
+																																																																								_Utils_Tuple2('ơ', 'o'),
+																																																																								_Utils_Tuple2('ờ', 'o')
+																																																																							]),
+																																																																						_Utils_ap(
+																																																																							_List_fromArray(
+																																																																								[
+																																																																									_Utils_Tuple2('ớ', 'o'),
+																																																																									_Utils_Tuple2('ỡ', 'o'),
+																																																																									_Utils_Tuple2('ở', 'o'),
+																																																																									_Utils_Tuple2('ợ', 'o'),
+																																																																									_Utils_Tuple2('ọ', 'o'),
+																																																																									_Utils_Tuple2('ộ', 'o'),
+																																																																									_Utils_Tuple2('ǫ', 'o'),
+																																																																									_Utils_Tuple2('ǭ', 'o'),
+																																																																									_Utils_Tuple2('ø', 'o'),
+																																																																									_Utils_Tuple2('ǿ', 'o')
+																																																																								]),
+																																																																							_Utils_ap(
+																																																																								_List_fromArray(
+																																																																									[
+																																																																										_Utils_Tuple2('ɔ', 'o'),
+																																																																										_Utils_Tuple2('ꝋ', 'o'),
+																																																																										_Utils_Tuple2('ꝍ', 'o'),
+																																																																										_Utils_Tuple2('ɵ', 'o'),
+																																																																										_Utils_Tuple2('ƣ', 'oi'),
+																																																																										_Utils_Tuple2('ȣ', 'ou'),
+																																																																										_Utils_Tuple2('ꝏ', 'oo'),
+																																																																										_Utils_Tuple2('p', 'p'),
+																																																																										_Utils_Tuple2('ⓟ', 'p'),
+																																																																										_Utils_Tuple2('ｐ', 'p')
+																																																																									]),
+																																																																								_Utils_ap(
+																																																																									_List_fromArray(
+																																																																										[
+																																																																											_Utils_Tuple2('ṕ', 'p'),
+																																																																											_Utils_Tuple2('ṗ', 'p'),
+																																																																											_Utils_Tuple2('ƥ', 'p'),
+																																																																											_Utils_Tuple2('ᵽ', 'p'),
+																																																																											_Utils_Tuple2('ꝑ', 'p'),
+																																																																											_Utils_Tuple2('ꝓ', 'p'),
+																																																																											_Utils_Tuple2('ꝕ', 'p'),
+																																																																											_Utils_Tuple2('q', 'q'),
+																																																																											_Utils_Tuple2('ⓠ', 'q'),
+																																																																											_Utils_Tuple2('ｑ', 'q')
+																																																																										]),
+																																																																									_Utils_ap(
+																																																																										_List_fromArray(
+																																																																											[
+																																																																												_Utils_Tuple2('ɋ', 'q'),
+																																																																												_Utils_Tuple2('ꝗ', 'q'),
+																																																																												_Utils_Tuple2('ꝙ', 'q'),
+																																																																												_Utils_Tuple2('r', 'r'),
+																																																																												_Utils_Tuple2('ⓡ', 'r'),
+																																																																												_Utils_Tuple2('ｒ', 'r'),
+																																																																												_Utils_Tuple2('ŕ', 'r'),
+																																																																												_Utils_Tuple2('ṙ', 'r'),
+																																																																												_Utils_Tuple2('ř', 'r'),
+																																																																												_Utils_Tuple2('ȑ', 'r')
+																																																																											]),
+																																																																										_Utils_ap(
+																																																																											_List_fromArray(
+																																																																												[
+																																																																													_Utils_Tuple2('ȓ', 'r'),
+																																																																													_Utils_Tuple2('ṛ', 'r'),
+																																																																													_Utils_Tuple2('ṝ', 'r'),
+																																																																													_Utils_Tuple2('ŗ', 'r'),
+																																																																													_Utils_Tuple2('ṟ', 'r'),
+																																																																													_Utils_Tuple2('ɍ', 'r'),
+																																																																													_Utils_Tuple2('ɽ', 'r'),
+																																																																													_Utils_Tuple2('ꝛ', 'r'),
+																																																																													_Utils_Tuple2('ꞧ', 'r'),
+																																																																													_Utils_Tuple2('ꞃ', 'r')
+																																																																												]),
+																																																																											_Utils_ap(
+																																																																												_List_fromArray(
+																																																																													[
+																																																																														_Utils_Tuple2('s', 's'),
+																																																																														_Utils_Tuple2('ⓢ', 's'),
+																																																																														_Utils_Tuple2('ｓ', 's'),
+																																																																														_Utils_Tuple2('ß', 's'),
+																																																																														_Utils_Tuple2('ś', 's'),
+																																																																														_Utils_Tuple2('ṥ', 's'),
+																																																																														_Utils_Tuple2('ŝ', 's'),
+																																																																														_Utils_Tuple2('ṡ', 's'),
+																																																																														_Utils_Tuple2('š', 's'),
+																																																																														_Utils_Tuple2('ṧ', 's')
+																																																																													]),
+																																																																												_Utils_ap(
+																																																																													_List_fromArray(
+																																																																														[
+																																																																															_Utils_Tuple2('ṣ', 's'),
+																																																																															_Utils_Tuple2('ṩ', 's'),
+																																																																															_Utils_Tuple2('ș', 's'),
+																																																																															_Utils_Tuple2('ş', 's'),
+																																																																															_Utils_Tuple2('ȿ', 's'),
+																																																																															_Utils_Tuple2('ꞩ', 's'),
+																																																																															_Utils_Tuple2('ꞅ', 's'),
+																																																																															_Utils_Tuple2('ẛ', 's'),
+																																																																															_Utils_Tuple2('t', 't'),
+																																																																															_Utils_Tuple2('ⓣ', 't')
+																																																																														]),
+																																																																													_Utils_ap(
+																																																																														_List_fromArray(
+																																																																															[
+																																																																																_Utils_Tuple2('ｔ', 't'),
+																																																																																_Utils_Tuple2('ṫ', 't'),
+																																																																																_Utils_Tuple2('ẗ', 't'),
+																																																																																_Utils_Tuple2('ť', 't'),
+																																																																																_Utils_Tuple2('ṭ', 't'),
+																																																																																_Utils_Tuple2('ț', 't'),
+																																																																																_Utils_Tuple2('ţ', 't'),
+																																																																																_Utils_Tuple2('ṱ', 't'),
+																																																																																_Utils_Tuple2('ṯ', 't'),
+																																																																																_Utils_Tuple2('ŧ', 't')
+																																																																															]),
+																																																																														_Utils_ap(
+																																																																															_List_fromArray(
+																																																																																[
+																																																																																	_Utils_Tuple2('ƭ', 't'),
+																																																																																	_Utils_Tuple2('ʈ', 't'),
+																																																																																	_Utils_Tuple2('ⱦ', 't'),
+																																																																																	_Utils_Tuple2('ꞇ', 't'),
+																																																																																	_Utils_Tuple2('ꜩ', 'tz'),
+																																																																																	_Utils_Tuple2('u', 'u'),
+																																																																																	_Utils_Tuple2('ⓤ', 'u'),
+																																																																																	_Utils_Tuple2('ｕ', 'u'),
+																																																																																	_Utils_Tuple2('ù', 'u'),
+																																																																																	_Utils_Tuple2('ú', 'u')
+																																																																																]),
+																																																																															_Utils_ap(
+																																																																																_List_fromArray(
+																																																																																	[
+																																																																																		_Utils_Tuple2('û', 'u'),
+																																																																																		_Utils_Tuple2('ũ', 'u'),
+																																																																																		_Utils_Tuple2('ṹ', 'u'),
+																																																																																		_Utils_Tuple2('ū', 'u'),
+																																																																																		_Utils_Tuple2('ṻ', 'u'),
+																																																																																		_Utils_Tuple2('ŭ', 'u'),
+																																																																																		_Utils_Tuple2('ü', 'u'),
+																																																																																		_Utils_Tuple2('ǜ', 'u'),
+																																																																																		_Utils_Tuple2('ǘ', 'u'),
+																																																																																		_Utils_Tuple2('ǖ', 'u')
+																																																																																	]),
+																																																																																_Utils_ap(
+																																																																																	_List_fromArray(
+																																																																																		[
+																																																																																			_Utils_Tuple2('ǚ', 'u'),
+																																																																																			_Utils_Tuple2('ủ', 'u'),
+																																																																																			_Utils_Tuple2('ů', 'u'),
+																																																																																			_Utils_Tuple2('ű', 'u'),
+																																																																																			_Utils_Tuple2('ǔ', 'u'),
+																																																																																			_Utils_Tuple2('ȕ', 'u'),
+																																																																																			_Utils_Tuple2('ȗ', 'u'),
+																																																																																			_Utils_Tuple2('ư', 'u'),
+																																																																																			_Utils_Tuple2('ừ', 'u'),
+																																																																																			_Utils_Tuple2('ứ', 'u')
+																																																																																		]),
+																																																																																	_Utils_ap(
+																																																																																		_List_fromArray(
+																																																																																			[
+																																																																																				_Utils_Tuple2('ữ', 'u'),
+																																																																																				_Utils_Tuple2('ử', 'u'),
+																																																																																				_Utils_Tuple2('ự', 'u'),
+																																																																																				_Utils_Tuple2('ụ', 'u'),
+																																																																																				_Utils_Tuple2('ṳ', 'u'),
+																																																																																				_Utils_Tuple2('ų', 'u'),
+																																																																																				_Utils_Tuple2('ṷ', 'u'),
+																																																																																				_Utils_Tuple2('ṵ', 'u'),
+																																																																																				_Utils_Tuple2('ʉ', 'u'),
+																																																																																				_Utils_Tuple2('v', 'v')
+																																																																																			]),
+																																																																																		_Utils_ap(
+																																																																																			_List_fromArray(
+																																																																																				[
+																																																																																					_Utils_Tuple2('ⓥ', 'v'),
+																																																																																					_Utils_Tuple2('ｖ', 'v'),
+																																																																																					_Utils_Tuple2('ṽ', 'v'),
+																																																																																					_Utils_Tuple2('ṿ', 'v'),
+																																																																																					_Utils_Tuple2('ʋ', 'v'),
+																																																																																					_Utils_Tuple2('ꝟ', 'v'),
+																																																																																					_Utils_Tuple2('ʌ', 'v'),
+																																																																																					_Utils_Tuple2('ꝡ', 'vy'),
+																																																																																					_Utils_Tuple2('w', 'w'),
+																																																																																					_Utils_Tuple2('ⓦ', 'w')
+																																																																																				]),
+																																																																																			_Utils_ap(
+																																																																																				_List_fromArray(
+																																																																																					[
+																																																																																						_Utils_Tuple2('ｗ', 'w'),
+																																																																																						_Utils_Tuple2('ẁ', 'w'),
+																																																																																						_Utils_Tuple2('ẃ', 'w'),
+																																																																																						_Utils_Tuple2('ŵ', 'w'),
+																																																																																						_Utils_Tuple2('ẇ', 'w'),
+																																																																																						_Utils_Tuple2('ẅ', 'w'),
+																																																																																						_Utils_Tuple2('ẘ', 'w'),
+																																																																																						_Utils_Tuple2('ẉ', 'w'),
+																																																																																						_Utils_Tuple2('ⱳ', 'w'),
+																																																																																						_Utils_Tuple2('x', 'x')
+																																																																																					]),
+																																																																																				_Utils_ap(
+																																																																																					_List_fromArray(
+																																																																																						[
+																																																																																							_Utils_Tuple2('ⓧ', 'x'),
+																																																																																							_Utils_Tuple2('ｘ', 'x'),
+																																																																																							_Utils_Tuple2('ẋ', 'x'),
+																																																																																							_Utils_Tuple2('ẍ', 'x'),
+																																																																																							_Utils_Tuple2('y', 'y'),
+																																																																																							_Utils_Tuple2('ⓨ', 'y'),
+																																																																																							_Utils_Tuple2('ｙ', 'y'),
+																																																																																							_Utils_Tuple2('ỳ', 'y'),
+																																																																																							_Utils_Tuple2('ý', 'y'),
+																																																																																							_Utils_Tuple2('ŷ', 'y')
+																																																																																						]),
+																																																																																					_Utils_ap(
+																																																																																						_List_fromArray(
+																																																																																							[
+																																																																																								_Utils_Tuple2('ỹ', 'y'),
+																																																																																								_Utils_Tuple2('ȳ', 'y'),
+																																																																																								_Utils_Tuple2('ẏ', 'y'),
+																																																																																								_Utils_Tuple2('ÿ', 'y'),
+																																																																																								_Utils_Tuple2('ỷ', 'y'),
+																																																																																								_Utils_Tuple2('ẙ', 'y'),
+																																																																																								_Utils_Tuple2('ỵ', 'y'),
+																																																																																								_Utils_Tuple2('ƴ', 'y'),
+																																																																																								_Utils_Tuple2('ɏ', 'y'),
+																																																																																								_Utils_Tuple2('ỿ', 'y')
+																																																																																							]),
+																																																																																						_List_fromArray(
+																																																																																							[
+																																																																																								_Utils_Tuple2('z', 'z'),
+																																																																																								_Utils_Tuple2('ⓩ', 'z'),
+																																																																																								_Utils_Tuple2('ｚ', 'z'),
+																																																																																								_Utils_Tuple2('ź', 'z'),
+																																																																																								_Utils_Tuple2('ẑ', 'z'),
+																																																																																								_Utils_Tuple2('ż', 'z'),
+																																																																																								_Utils_Tuple2('ž', 'z'),
+																																																																																								_Utils_Tuple2('ẓ', 'z'),
+																																																																																								_Utils_Tuple2('ẕ', 'z'),
+																																																																																								_Utils_Tuple2('ƶ', 'z')
+																																																																																							])))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+var $kuon$elm_string_normalize$String$Normalize$Diacritics$lookupTable = $elm$core$Dict$fromList($kuon$elm_string_normalize$String$Normalize$Diacritics$lookupList);
+var $kuon$elm_string_normalize$String$Normalize$removeDiacritics = function (str) {
+	var replace = F2(
+		function (c, result) {
+			var _v0 = A2($elm$core$Dict$get, c, $kuon$elm_string_normalize$String$Normalize$Diacritics$lookupTable);
+			if (!_v0.$) {
+				var candidate = _v0.a;
+				return _Utils_ap(result, candidate);
+			} else {
+				return _Utils_ap(
+					result,
+					$elm$core$String$fromChar(c));
+			}
+		});
+	return A3($elm$core$String$foldl, replace, '', str);
+};
+var $elm$core$String$toLower = _String_toLower;
+var $author$project$Main$containsText = F2(
+	function (left, right) {
+		return A2(
+			$elm$core$String$contains,
+			$kuon$elm_string_normalize$String$Normalize$removeDiacritics(
+				$elm$core$String$toLower(left)),
+			$kuon$elm_string_normalize$String$Normalize$removeDiacritics(
+				$elm$core$String$toLower(right)));
+	});
+var $author$project$Main$filterByText = F2(
+	function (text, events) {
+		return $elm$core$String$isEmpty(text) ? events : A2(
+			$elm$core$List$filter,
+			function (e) {
+				return A2($author$project$Main$containsText, text, e.l);
 			},
 			events);
 	});
@@ -6317,7 +7594,7 @@ var $author$project$Main$filterByVideo = F2(
 		return (!withVideo) ? events : A2(
 			$elm$core$List$filter,
 			function ($) {
-				return $.aa;
+				return $.ab;
 			},
 			events);
 	});
@@ -6335,12 +7612,15 @@ var $author$project$Main$filterByYear = F2(
 var $author$project$Main$filterEvents = F2(
 	function (model, events) {
 		return A2(
-			$author$project$Main$filterByVideo,
-			model.S,
+			$author$project$Main$filterByText,
+			model.P,
 			A2(
-				$author$project$Main$filterByYear,
+				$author$project$Main$filterByVideo,
 				model.T,
-				A2($author$project$Main$filterByCategory, model.n, events)));
+				A2(
+					$author$project$Main$filterByYear,
+					model.U,
+					A2($author$project$Main$filterByCategory, model.o, events))));
 	});
 var $elm$core$List$isEmpty = function (xs) {
 	if (!xs.b) {
@@ -6393,7 +7673,7 @@ var $author$project$Main$viewEventIcon = function (maybeIcon) {
 			$elm$html$Html$img,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$alt(icon.q),
+					$elm$html$Html$Attributes$alt(icon.l),
 					$elm$html$Html$Attributes$src(icon.H),
 					$elm$html$Html$Attributes$width(65),
 					$elm$html$Html$Attributes$height(65)
@@ -6602,7 +7882,7 @@ var $author$project$Main$viewSpeakers = F2(
 				$elm$core$List$head(
 					$elm$core$List$reverse(speakers.F)),
 				speakers.N,
-				speakers.aj);
+				speakers.ak);
 			return A2(
 				$elm$html$Html$ul,
 				_List_fromArray(
@@ -6639,7 +7919,7 @@ var $author$project$Main$viewEvent = F2(
 							_List_fromArray(
 								[
 									$elm$html$Html$Attributes$class('event d-flex flex-column'),
-									A2($elm$html$Html$Attributes$style, 'background-color', event.n.W)
+									A2($elm$html$Html$Attributes$style, 'background-color', event.o.X)
 								]),
 							_List_fromArray(
 								[
@@ -6651,7 +7931,7 @@ var $author$project$Main$viewEvent = F2(
 										]),
 									_List_fromArray(
 										[
-											$author$project$Main$viewEventIcon(event.ae)
+											$author$project$Main$viewEventIcon(event.af)
 										])),
 									A2(
 									$elm$html$Html$div,
@@ -6669,7 +7949,7 @@ var $author$project$Main$viewEvent = F2(
 												]),
 											_List_fromArray(
 												[
-													$elm$html$Html$text(event.n.q)
+													$elm$html$Html$text(event.o.l)
 												]))
 										])),
 									A2(
@@ -6685,9 +7965,9 @@ var $author$project$Main$viewEvent = F2(
 											_List_Nil,
 											_List_fromArray(
 												[
-													$elm$html$Html$text(event.q)
+													$elm$html$Html$text(event.l)
 												])),
-											A2($author$project$Main$viewSpeakers, lang, event.ay)
+											A2($author$project$Main$viewSpeakers, lang, event.az)
 										])),
 									A2(
 									$elm$html$Html$footer,
@@ -6703,7 +7983,7 @@ var $author$project$Main$viewEvent = F2(
 												]),
 											_List_fromArray(
 												[
-													$elm$html$Html$text(event.A.as)
+													$elm$html$Html$text(event.A.at)
 												])),
 											A2(
 											$elm$html$Html$address,
@@ -6713,7 +7993,7 @@ var $author$project$Main$viewEvent = F2(
 												]),
 											_List_fromArray(
 												[
-													$elm$html$Html$text(event.ag)
+													$elm$html$Html$text(event.ah)
 												]))
 										]))
 								]))
@@ -6788,6 +8068,9 @@ var $author$project$Main$viewEvents = F2(
 var $author$project$Main$SetCategoryFilter = function (a) {
 	return {$: 1, a: a};
 };
+var $author$project$Main$SetSearchText = function (a) {
+	return {$: 4, a: a};
+};
 var $author$project$Main$SetVideoFilter = function (a) {
 	return {$: 3, a: a};
 };
@@ -6845,6 +8128,28 @@ var $elm$html$Html$Events$onCheck = function (tagger) {
 		'change',
 		A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetChecked));
 };
+var $elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
+var $elm$html$Html$Events$onInput = function (tagger) {
+	return A2(
+		$elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysStop,
+			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
+};
 var $elm$html$Html$option = _VirtualDom_node('option');
 var $elm$html$Html$select = _VirtualDom_node('select');
 var $elm$core$List$sortBy = _List_sortBy;
@@ -6879,6 +8184,13 @@ var $author$project$Main$viewFilters = F2(
 				return 'Only with video';
 			}
 		}();
+		var searchLabel = function () {
+			if (!lang) {
+				return 'Hľadať';
+			} else {
+				return 'Search';
+			}
+		}();
 		var categoryLabel = function () {
 			if (!lang) {
 				return 'Kategória:';
@@ -6891,7 +8203,7 @@ var $author$project$Main$viewFilters = F2(
 				A2(
 					$elm$core$List$map,
 					function (e) {
-						return e.n.q;
+						return e.o.l;
 					},
 					events)));
 		return A2(
@@ -6911,6 +8223,27 @@ var $author$project$Main$viewFilters = F2(
 						]),
 					_List_fromArray(
 						[
+							A2(
+							$elm$html$Html$label,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$for('searchInput'),
+									$elm$html$Html$Attributes$class('mb-0 mx-2')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(searchLabel)
+								])),
+							A2(
+							$elm$html$Html$input,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$type_('text'),
+									$elm$html$Html$Attributes$id('searchInput'),
+									$elm$html$Html$Attributes$class('mx-2'),
+									$elm$html$Html$Events$onInput($author$project$Main$SetSearchText)
+								]),
+							_List_Nil),
 							A2(
 							$elm$html$Html$label,
 							_List_fromArray(
@@ -7071,5 +8404,5 @@ var $author$project$Main$view = function (model) {
 	}
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{aQ: $author$project$Main$init, a$: $author$project$Main$subscriptions, a1: $author$project$Main$update, a2: $author$project$Main$view});
+	{aR: $author$project$Main$init, a0: $author$project$Main$subscriptions, a2: $author$project$Main$update, a3: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$string)(0)}});}(this));
