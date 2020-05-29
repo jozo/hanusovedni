@@ -12,7 +12,7 @@
   <script type="text/javascript" src="{% static "elm/bundle.js" %}"></script>
   <script>
     $(document).ready(function () {
-      var app = Elm.Main.init({
+      const app = Elm.Main.init({
         node: document.getElementById('myapp'),
         flags: "{{ LANGUAGE_CODE }}",
       })
@@ -23,25 +23,7 @@
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
-
       <div id="myapp"></div>
-
-      {#        {% for event in events %}#}
-      {#          {% include "home/event_block.html" %}#}
-      {#        {% empty %}#}
-      {#          <div class="row">#}
-      {#            <div class="col-8 mx-auto text-center">#}
-      {#              <div class="alert alert-warning mt-3" role="alert">#}
-      {#                {% if message_empty %}#}
-      {#                  {{ message_empty }}#}
-      {#                {% else %}#}
-      {#                  {% trans "No events found" %} 😥#}
-      {#                {% endif %}#}
-      {#              </div>#}
-      {#            </div>#}
-      {#          </div>#}
-      {#        {% endfor %}#}
-
     </div>
     </div>
   </main>

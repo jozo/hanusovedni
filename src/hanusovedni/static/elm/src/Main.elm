@@ -3,11 +3,15 @@ module Main exposing (..)
 import Browser
 import Html exposing (Attribute, Html, a, address, article, div, footer, h3, img, input, label, li, option, select, span, text, time, ul)
 import Html.Attributes exposing (alt, class, datetime, for, height, href, id, src, style, title, type_, value, width)
+import Html.Attributes.Extra exposing (role)
 import Html.Events exposing (onCheck)
 import Html.Events.Extra exposing (onChange)
 import Http
 import Json.Decode as D
 import Set
+
+
+-- In memory of Rakyi who introduced me to Elm
 
 
 -- MAIN
@@ -211,8 +215,23 @@ viewEvents model events =
         div [class "col-12"]
         [ div
             [ class "row mx-n02 justify-content-center w-100" ]
-            (List.map (viewEvent model.language) filteredEvents)
+            ( if List.isEmpty filteredEvents then
+                [viewMessageEmpty model.language]
+              else
+                (List.map (viewEvent model.language) filteredEvents)
+            )
         ]
+
+
+viewMessageEmpty : Language -> Html Msg
+viewMessageEmpty lang =
+    div [class "col-8 mx-auto text-center"]
+    [ div [class "alert alert-warning mt-3", role "alert"]
+        [ case lang of
+            SK -> text "Nenašli sa podujatia pre zadané kritériá 😥"
+            EN -> text "No events found for specified criteria 😥"
+        ]
+    ]
 
 
 filterEvents : Model -> List Event -> List Event

@@ -5316,7 +5316,7 @@ var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Main$Loading = {$: 1};
 var $author$project$Main$Model = F5(
 	function (state, language, category, year, withVideo) {
-		return {n: category, K: language, J: state, S: withVideo, T: year};
+		return {n: category, J: language, K: state, S: withVideo, T: year};
 	});
 var $author$project$Main$EN = 1;
 var $author$project$Main$SK = 0;
@@ -6243,7 +6243,7 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								J: $author$project$Main$Success(events)
+								K: $author$project$Main$Success(events)
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
@@ -6252,7 +6252,7 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								J: $author$project$Main$Failure(error)
+								K: $author$project$Main$Failure(error)
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -6342,6 +6342,13 @@ var $author$project$Main$filterEvents = F2(
 				model.T,
 				A2($author$project$Main$filterByCategory, model.n, events)));
 	});
+var $elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$address = _VirtualDom_node('address');
 var $elm$html$Html$article = _VirtualDom_node('article');
@@ -6713,6 +6720,45 @@ var $author$project$Main$viewEvent = F2(
 						]))
 				]));
 	});
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $elm_community$html_extra$Html$Attributes$Extra$role = function (r) {
+	return A2($elm$html$Html$Attributes$attribute, 'role', r);
+};
+var $author$project$Main$viewMessageEmpty = function (lang) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('col-8 mx-auto text-center')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('alert alert-warning mt-3'),
+						$elm_community$html_extra$Html$Attributes$Extra$role('alert')
+					]),
+				_List_fromArray(
+					[
+						function () {
+						if (!lang) {
+							return $elm$html$Html$text('Nenašli sa podujatia pre zadané kritériá 😥');
+						} else {
+							return $elm$html$Html$text('No events found for specified criteria 😥');
+						}
+					}()
+					]))
+			]));
+};
 var $author$project$Main$viewEvents = F2(
 	function (model, events) {
 		var filteredEvents = A2($author$project$Main$filterEvents, model, events);
@@ -6730,9 +6776,12 @@ var $author$project$Main$viewEvents = F2(
 						[
 							$elm$html$Html$Attributes$class('row mx-n02 justify-content-center w-100')
 						]),
-					A2(
+					$elm$core$List$isEmpty(filteredEvents) ? _List_fromArray(
+						[
+							$author$project$Main$viewMessageEmpty(model.J)
+						]) : A2(
 						$elm$core$List$map,
-						$author$project$Main$viewEvent(model.K),
+						$author$project$Main$viewEvent(model.J),
 						filteredEvents))
 				]));
 	});
@@ -6981,7 +7030,7 @@ var $author$project$Main$viewFilters = F2(
 				]));
 	});
 var $author$project$Main$view = function (model) {
-	var _v0 = model.J;
+	var _v0 = model.K;
 	switch (_v0.$) {
 		case 0:
 			var error = _v0.a;
@@ -7016,7 +7065,7 @@ var $author$project$Main$view = function (model) {
 					]),
 				_List_fromArray(
 					[
-						A2($author$project$Main$viewFilters, model.K, events),
+						A2($author$project$Main$viewFilters, model.J, events),
 						A2($author$project$Main$viewEvents, model, events)
 					]));
 	}
