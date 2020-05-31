@@ -8219,145 +8219,181 @@ var $author$project$Main$viewFilters = F2(
 					_List_fromArray(
 						[
 							$elm$html$Html$Attributes$id('filter-panel'),
-							$elm$html$Html$Attributes$class('p-2 mb-1 d-flex justify-content-center align-items-center')
+							$elm$html$Html$Attributes$class('mb-1 d-flex flex-wrap align-items-center')
 						]),
 					_List_fromArray(
 						[
 							A2(
-							$elm$html$Html$label,
+							$elm$html$Html$div,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$for('searchInput'),
-									$elm$html$Html$Attributes$class('mb-0 mx-2')
+									$elm$html$Html$Attributes$class('m-2')
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text(searchLabel)
+									A2(
+									$elm$html$Html$label,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$for('searchInput'),
+											$elm$html$Html$Attributes$class('mb-0 mx-2')
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text(searchLabel)
+										])),
+									A2(
+									$elm$html$Html$input,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$type_('text'),
+											$elm$html$Html$Attributes$id('searchInput'),
+											$elm$html$Html$Attributes$class('mx-2'),
+											$elm$html$Html$Events$onInput($author$project$Main$SetSearchText)
+										]),
+									_List_Nil)
 								])),
 							A2(
-							$elm$html$Html$input,
+							$elm$html$Html$div,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$type_('text'),
-									$elm$html$Html$Attributes$id('searchInput'),
-									$elm$html$Html$Attributes$class('mx-2'),
-									$elm$html$Html$Events$onInput($author$project$Main$SetSearchText)
-								]),
-							_List_Nil),
-							A2(
-							$elm$html$Html$label,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$for('categorySelect'),
-									$elm$html$Html$Attributes$class('mb-0 mx-2')
+									$elm$html$Html$Attributes$class('m-2')
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text(categoryLabel)
-								])),
-							A2(
-							$elm$html$Html$select,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('categorySelect'),
-									$elm_community$html_extra$Html$Events$Extra$onChange($author$project$Main$SetCategoryFilter)
-								]),
-							_Utils_ap(
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$option,
+									A2(
+									$elm$html$Html$label,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$for('categorySelect'),
+											$elm$html$Html$Attributes$class('mb-0 mx-2')
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text(categoryLabel)
+										])),
+									A2(
+									$elm$html$Html$select,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$id('categorySelect'),
+											$elm_community$html_extra$Html$Events$Extra$onChange($author$project$Main$SetCategoryFilter)
+										]),
+									_Utils_ap(
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$value('---')
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('---')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('---')
+													]))
 											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('---')
-											]))
-									]),
-								A2(
-									$elm$core$List$map,
-									function (c) {
-										return A2(
-											$elm$html$Html$option,
-											_List_fromArray(
-												[
-													$elm$html$Html$Attributes$value(c)
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text(c)
-												]));
-									},
-									categories))),
-							A2(
-							$elm$html$Html$label,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$for('yearSelect'),
-									$elm$html$Html$Attributes$class('mb-0 mx-2')
-								]),
-							_List_fromArray(
-								[
-									$elm$html$Html$text(yearLabel)
+										A2(
+											$elm$core$List$map,
+											function (c) {
+												return A2(
+													$elm$html$Html$option,
+													_List_fromArray(
+														[
+															$elm$html$Html$Attributes$value(c)
+														]),
+													_List_fromArray(
+														[
+															$elm$html$Html$text(c)
+														]));
+											},
+											categories)))
 								])),
 							A2(
-							$elm$html$Html$select,
+							$elm$html$Html$div,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$id('yearSelect'),
-									$elm_community$html_extra$Html$Events$Extra$onChange($author$project$Main$SetYearFilter)
+									$elm$html$Html$Attributes$class('m-2')
 								]),
-							_Utils_ap(
-								_List_fromArray(
-									[
-										A2(
-										$elm$html$Html$option,
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$label,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$for('yearSelect'),
+											$elm$html$Html$Attributes$class('mb-0 mx-2')
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text(yearLabel)
+										])),
+									A2(
+									$elm$html$Html$select,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$id('yearSelect'),
+											$elm_community$html_extra$Html$Events$Extra$onChange($author$project$Main$SetYearFilter)
+										]),
+									_Utils_ap(
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$value('---')
+												A2(
+												$elm$html$Html$option,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$value('---')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('---')
+													]))
 											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text('---')
-											]))
-									]),
-								A2(
-									$elm$core$List$map,
-									function (y) {
-										return A2(
-											$elm$html$Html$option,
-											_List_fromArray(
-												[
-													$elm$html$Html$Attributes$value(y)
-												]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text(y)
-												]));
-									},
-									years))),
+										A2(
+											$elm$core$List$map,
+											function (y) {
+												return A2(
+													$elm$html$Html$option,
+													_List_fromArray(
+														[
+															$elm$html$Html$Attributes$value(y)
+														]),
+													_List_fromArray(
+														[
+															$elm$html$Html$text(y)
+														]));
+											},
+											years)))
+								])),
 							A2(
-							$elm$html$Html$input,
+							$elm$html$Html$div,
 							_List_fromArray(
 								[
-									$elm$html$Html$Attributes$type_('checkbox'),
-									$elm$html$Html$Attributes$id('withVideoInput'),
-									$elm$html$Html$Attributes$class('mx-2'),
-									$elm$html$Html$Events$onCheck($author$project$Main$SetVideoFilter)
-								]),
-							_List_Nil),
-							A2(
-							$elm$html$Html$label,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$for('withVideoInput'),
-									$elm$html$Html$Attributes$class('mb-0')
+									$elm$html$Html$Attributes$class('m-2')
 								]),
 							_List_fromArray(
 								[
-									$elm$html$Html$text(withVideoLabel)
+									A2(
+									$elm$html$Html$input,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$type_('checkbox'),
+											$elm$html$Html$Attributes$id('withVideoInput'),
+											$elm$html$Html$Attributes$class('mx-2'),
+											$elm$html$Html$Events$onCheck($author$project$Main$SetVideoFilter)
+										]),
+									_List_Nil),
+									A2(
+									$elm$html$Html$label,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$for('withVideoInput'),
+											$elm$html$Html$Attributes$class('mb-0')
+										]),
+									_List_fromArray(
+										[
+											$elm$html$Html$text(withVideoLabel)
+										]))
 								]))
 						]))
 				]));

@@ -234,34 +234,42 @@ viewFilters lang events =
     div [ class "col-12" ]
         [ div
             [ id "filter-panel"
-            , class "p-2 mb-1 d-flex justify-content-center align-items-center"
+            , class "mb-1 d-flex flex-wrap align-items-center"
             ]
-            [ label [ for "searchInput", class "mb-0 mx-2" ] [ text searchLabel ]
-            , input
-                [ type_ "text"
-                , id "searchInput"
-                , class "mx-2"
-                , onInput SetSearchText
+            [ div [class "m-2"]
+                [ label [ for "searchInput", class "mb-0 mx-2" ] [ text searchLabel ]
+                , input
+                    [ type_ "text"
+                    , id "searchInput"
+                    , class "mx-2"
+                    , onInput SetSearchText
+                    ]
+                    []
                 ]
-                []
-            , label [ for "categorySelect", class "mb-0 mx-2" ] [ text categoryLabel ]
-            , select [ id "categorySelect", onChange SetCategoryFilter ]
-                ([ option [ value "---" ] [ text "---" ] ]
-                    ++ List.map (\c -> option [ value c ] [ text c ]) categories
-                )
-            , label [ for "yearSelect", class "mb-0 mx-2" ] [ text yearLabel ]
-            , select [ id "yearSelect", onChange SetYearFilter ]
-                ([ option [ value "---" ] [ text "---" ] ]
-                    ++ List.map (\y -> option [ value y ] [ text y ]) years
-                )
-            , input
-                [ type_ "checkbox"
-                , id "withVideoInput"
-                , class "mx-2"
-                , onCheck SetVideoFilter
+            , div [class "m-2"]
+                [ label [ for "categorySelect", class "mb-0 mx-2" ] [ text categoryLabel ]
+                , select [ id "categorySelect", onChange SetCategoryFilter ]
+                    ([ option [ value "---" ] [ text "---" ] ]
+                        ++ List.map (\c -> option [ value c ] [ text c ]) categories
+                    )
                 ]
-                []
-            , label [ for "withVideoInput", class "mb-0" ] [ text withVideoLabel ]
+            , div [class "m-2"]
+                [ label [ for "yearSelect", class "mb-0 mx-2" ] [ text yearLabel ]
+                , select [ id "yearSelect", onChange SetYearFilter ]
+                    ([ option [ value "---" ] [ text "---" ] ]
+                        ++ List.map (\y -> option [ value y ] [ text y ]) years
+                    )
+                ]
+            , div [class "m-2"]
+                [ input
+                    [ type_ "checkbox"
+                    , id "withVideoInput"
+                    , class "mx-2"
+                    , onCheck SetVideoFilter
+                    ]
+                    []
+                , label [ for "withVideoInput", class "mb-0" ] [ text withVideoLabel ]
+                ]
             ]
         ]
 
