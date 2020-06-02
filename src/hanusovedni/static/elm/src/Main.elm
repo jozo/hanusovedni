@@ -34,17 +34,30 @@ type alias Event =
     { title : String
     , url : String
     , dateAndTime : EventDateAndTime
-    , hasVideo : Bool
     , location : String
-    , category : EventCategory
-    , icon : Maybe EventIcon
     , speakers : Speakers
+    , extendedInfo : EventExtendedInfo
     }
 
 
 type alias EventDateAndTime =
     { iso : String
     , repr : String
+    }
+
+
+type alias Speakers =
+    { underLimit : List String
+    , overLimitNames : String
+    , overLimitCount : Int
+    }
+
+
+type alias EventExtendedInfo =
+    { hasVideo : Bool
+    , category : EventCategory
+    , festival : String
+    , icon : Maybe EventIcon
     }
 
 
@@ -57,13 +70,6 @@ type alias EventCategory =
 type alias EventIcon =
     { title : String
     , url : String
-    }
-
-
-type alias Speakers =
-    { underLimit : List String
-    , overLimitNames : String
-    , overLimitCount : Int
     }
 
 
@@ -85,12 +91,13 @@ type alias Model =
     , year : String
     , withVideo : Bool
     , searchText : String
+    , festival : String
     }
 
 
 init : String -> ( Model, Cmd Msg )
 init languageCode =
-    ( Model Loading (decodeLanguage languageCode) "---" "---" False "", getAllEvents languageCode )
+    ( Model Loading (decodeLanguage languageCode) "---" "---" False "" "---", getAllEvents languageCode )
 
 
 decodeLanguage : String -> Language
@@ -116,6 +123,7 @@ type Msg
     | SetYearFilter String
     | SetVideoFilter Bool
     | SetSearchText String
+    | SetFestivalFilter String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -140,6 +148,9 @@ update msg model =
 
         SetSearchText text ->
             ( { model | searchText = text }, Cmd.none )
+
+        SetFestivalFilter text ->
+            ( { model | festival = text }, Cmd.none )
 
 
 
@@ -187,7 +198,7 @@ viewFilters lang events =
     let
         categories =
             events
-                |> List.map (\e -> e.category.title)
+                |> List.map (\e -> e.extendedInfo.category.title)
                 |> Set.fromList
                 |> Set.toList
 
@@ -230,13 +241,28 @@ viewFilters lang events =
 
                 EN ->
                     "Search"
+
+        festivals =
+            events
+                |> List.map (\e -> e.extendedInfo.festival)
+                |> Set.fromList
+                |> Set.toList
+                |> List.sort
+
+        festivalLabel =
+            case lang of
+                SK ->
+                    "Festival"
+
+                EN ->
+                    "Festival"
     in
     div [ class "col-12" ]
         [ div
             [ id "filter-panel"
             , class "mb-1 d-flex flex-wrap align-items-center"
             ]
-            [ div [class "m-2"]
+            [ div [ class "m-2" ]
                 [ label [ for "searchInput", class "mb-0 mx-2" ] [ text searchLabel ]
                 , input
                     [ type_ "text"
@@ -246,21 +272,28 @@ viewFilters lang events =
                     ]
                     []
                 ]
-            , div [class "m-2"]
+            , div [ class "m-2" ]
+                [ label [ for "festivalSelect", class "mb-0 mx-2" ] [ text festivalLabel ]
+                , select [ id "festivalSelect", onChange SetFestivalFilter ]
+                    ([ option [ value "---" ] [ text "---" ] ]
+                        ++ List.map (\f -> option [ value f ] [ text f ]) festivals
+                    )
+                ]
+            , div [ class "m-2" ]
                 [ label [ for "categorySelect", class "mb-0 mx-2" ] [ text categoryLabel ]
                 , select [ id "categorySelect", onChange SetCategoryFilter ]
                     ([ option [ value "---" ] [ text "---" ] ]
                         ++ List.map (\c -> option [ value c ] [ text c ]) categories
                     )
                 ]
-            , div [class "m-2"]
+            , div [ class "m-2" ]
                 [ label [ for "yearSelect", class "mb-0 mx-2" ] [ text yearLabel ]
                 , select [ id "yearSelect", onChange SetYearFilter ]
                     ([ option [ value "---" ] [ text "---" ] ]
                         ++ List.map (\y -> option [ value y ] [ text y ]) years
                     )
                 ]
-            , div [class "m-2"]
+            , div [ class "m-2" ]
                 [ input
                     [ type_ "checkbox"
                     , id "withVideoInput"
@@ -311,9 +344,18 @@ filterEvents model events =
     filterByText model.searchText
         (filterByVideo model.withVideo
             (filterByYear model.year
-                (filterByCategory model.category events)
+                (filterByCategory model.category (filterByFestival model.festival events))
             )
         )
+
+
+filterByFestival : String -> List Event -> List Event
+filterByFestival festival events =
+    if festival == "---" then
+        events
+
+    else
+        List.filter (\e -> e.extendedInfo.festival == festival) events
 
 
 filterByText : String -> List Event -> List Event
@@ -336,7 +378,7 @@ filterByCategory category events =
         events
 
     else
-        List.filter (\e -> e.category.title == category) events
+        List.filter (\e -> e.extendedInfo.category.title == category) events
 
 
 filterByYear : String -> List Event -> List Event
@@ -354,7 +396,7 @@ filterByVideo withVideo events =
         events
 
     else
-        List.filter .hasVideo events
+        List.filter (\e -> e.extendedInfo.hasVideo) events
 
 
 viewEvent : Language -> Event -> Html Msg
@@ -363,13 +405,13 @@ viewEvent lang event =
         [ a [ href event.url, class "d-flex w-100 text-decoration-none" ]
             [ article
                 [ class "event d-flex flex-column"
-                , style "background-color" event.category.color
+                , style "background-color" event.extendedInfo.category.color
                 ]
                 [ div
                     [ class "illustration d-flex justify-content-center align-items-center" ]
-                    [ viewEventIcon event.icon ]
+                    [ viewEventIcon event.extendedInfo.icon ]
                 , div [ class "category" ]
-                    [ div [ class "name" ] [ text event.category.title ] ]
+                    [ div [ class "name" ] [ text event.extendedInfo.category.title ] ]
                 , div [ class "content" ]
                     [ h3 [] [ text event.title ]
                     , viewSpeakers lang event.speakers
@@ -466,15 +508,13 @@ eventsDecoder =
 
 eventDecoder : D.Decoder Event
 eventDecoder =
-    D.map8 Event
+    D.map6 Event
         (D.field "title" D.string)
         (D.field "url" D.string)
         (D.field "dateAndTime" eventDateAndTimeDecoder)
-        (D.field "hasVideo" D.bool)
         (D.field "location" D.string)
-        (D.field "category" eventCategoryDecoder)
-        (D.field "icon" (D.nullable eventIconDecoder))
         (D.field "speakers" speakersDecoder)
+        (D.field "extendedInfo" eventExtendedInfoDecoder)
 
 
 eventDateAndTimeDecoder : D.Decoder EventDateAndTime
@@ -482,6 +522,15 @@ eventDateAndTimeDecoder =
     D.map2 EventDateAndTime
         (D.field "iso" D.string)
         (D.field "repr" D.string)
+
+
+eventExtendedInfoDecoder : D.Decoder EventExtendedInfo
+eventExtendedInfoDecoder =
+    D.map4 EventExtendedInfo
+        (D.field "hasVideo" D.bool)
+        (D.field "category" eventCategoryDecoder)
+        (D.field "festival" D.string)
+        (D.field "icon" (D.nullable eventIconDecoder))
 
 
 eventCategoryDecoder : D.Decoder EventCategory

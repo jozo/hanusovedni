@@ -279,7 +279,7 @@ class ArchiveQueryset(models.QuerySet):
         return (
             Event.objects.live()
             .order_by("-date_and_time")
-            .select_related("icon", "category", "location")
+            .select_related("icon", "category", "location", "related_festival")
             .prefetch_related("host_connections__speaker")
             .prefetch_related(
                 Prefetch(
@@ -306,6 +306,7 @@ class ArchiveQueryset(models.QuerySet):
                 "category__title_sk",
                 "category__title_en",
                 "icon__title",
+                "related_festival__slug",
             )
         )
 
@@ -320,20 +321,23 @@ class ArchiveQueryset(models.QuerySet):
                     "repr": date_format(event.date_and_time, "j.n.Y — l — G:i").upper(),
                 },
                 "location": event.location.title,
-                "hasVideo": bool(event.video_url),
-                "category": {
-                    "title": event.category.title,
-                    "color": event.category.color,
-                },
                 "speakers": event.speakers_limited,
+                "extendedInfo": {
+                    "hasVideo": bool(event.video_url),
+                    "category": {
+                        "title": event.category.title,
+                        "color": event.category.color,
+                    },
+                    "festival": event.related_festival.slug.replace("-", " ").upper(),
+                },
             }
             if event.icon:
-                d["icon"] = {
+                d["extendedInfo"]["icon"] = {
                     "title": event.icon.title,
                     "url": event.icon.renditions.all()[0].url,
                 }
             else:
-                d["icon"] = None
+                d["extendedInfo"]["icon"] = None
             result["events"].append(d)
         return result
 
