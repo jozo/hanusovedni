@@ -120,14 +120,11 @@
   @media (min-width: 992px) {
     .rocket-wrapper {
       position: absolute;
-      top: 101px;
       left: 40px;
+      bottom: 0;
     }
   }
   @media (min-width: 1280px) {
-    .rocket-wrapper {
-      left: 100px;
-    }
     .n-5000 {
       left: -7px;
     }
