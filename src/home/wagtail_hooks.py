@@ -36,7 +36,7 @@ class EventAdmin(ModelAdmin):
     )
     list_display = ["title", "latest_revision_created_at", "live"]
     ordering = ["-latest_revision_created_at"]
-    list_filter = [YearFilter, "live"]
+    list_filter = [YearFilter, "live", "category"]
     search_fields = ["title"]
     list_per_page = 15
 
