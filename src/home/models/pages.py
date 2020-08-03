@@ -737,4 +737,4 @@ def replace_tags_with_space(value):
 
 def last_festival():
     # TODO move this to settings
-    return FestivalPage.objects.get(slug="bhd-online")
+    return FestivalPage.objects.get(slug="bhd")
