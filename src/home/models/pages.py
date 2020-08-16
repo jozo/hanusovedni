@@ -54,8 +54,16 @@ class HomePage(Page):
 
 
 class FestivalPage(Page):
-    formatted_title_sk = RichTextField(default="", verbose_name=_("title"))
-    formatted_title_en = RichTextField(default="", verbose_name=_("title"))
+    formatted_title_sk = RichTextField(
+        default="",
+        verbose_name=_("title"),
+        help_text=_("Visible in header next to the logo"),
+    )
+    formatted_title_en = RichTextField(
+        default="",
+        verbose_name=_("title"),
+        help_text=_("Visible in header next to the logo"),
+    )
     formatted_title = TranslatedField("formatted_title_sk", "formatted_title_en")
     logo = models.FileField(null=True, blank=True)
     start_date = models.DateField(
@@ -136,6 +144,11 @@ class FestivalPage(Page):
     )
 
     content_panels_sk = [
+        FieldPanel(
+            "title",
+            heading=_("Internal title"),
+            help_text=_("Visible only in the admin"),
+        ),
         FieldPanel("formatted_title_sk"),
         FieldPanel("logo"),
         FieldRowPanel([FieldPanel("start_date"), FieldPanel("end_date")]),
@@ -171,15 +184,6 @@ class FestivalPage(Page):
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
     )
-
-    def save(self, *args, **kwargs):
-        self.draft_title = " ".join(
-            replace_tags_with_space(self.formatted_title_sk).split()
-        )
-        self.title = self.draft_title
-        if "updated_fields" in kwargs:
-            kwargs["updated_fields"].append("title")
-        return super().save(*args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
