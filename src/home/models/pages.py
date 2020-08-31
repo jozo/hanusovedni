@@ -174,6 +174,7 @@ class FestivalPage(Page):
     subpage_types = [
         "home.ProgramIndexPage",
         "home.CrowdfundingPage",
+        "home.CrowdfundingStarsPage",
     ]
 
     edit_handler = TabbedInterface(
@@ -641,6 +642,46 @@ class PartnersPage(Page):
 
 
 class CrowdfundingPage(Page):
+    class Meta:
+        verbose_name = "crowdfunding - rocket"
+
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+    body_sk = StreamField([("text", blocks.TextBlock())])
+    body_en = StreamField([("text", blocks.TextBlock())])
+    body = TranslatedField("body_sk", "body_en")
+
+    content_panels_sk = Page.content_panels + [
+        StreamFieldPanel("body_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        StreamFieldPanel("body_en"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
+        return context
+
+
+class CrowdfundingStarsPage(Page):
+    class Meta:
+        verbose_name = "crowdfunding - stars"
+
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,

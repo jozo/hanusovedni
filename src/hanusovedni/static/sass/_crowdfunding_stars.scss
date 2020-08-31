@@ -1,0 +1,177 @@
+.template-crowdfunding-stars {
+  background-image: none;
+  font-family: $font-special;
+
+  .help {
+    text-transform: uppercase;
+    font-size: 43px;
+    font-weight: bold;
+  }
+
+  .colorful {
+    font-size: 1.85rem;
+
+    &.yellow {
+      color: $c-special;
+    }
+
+    &.red {
+      color: $c-red-light;
+    }
+  }
+
+  .thx-footer {
+    border-top: 1px solid #EDA605;
+    background-color: #131313;
+  }
+
+  .thermometer {
+    position: relative;
+    width: 150px;
+    height: 550px;
+  }
+
+  .scale {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    height: 500px;
+    width: 15px;
+    background-color: #25221E;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .mercury {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    width: 15px;
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .number {
+    position: absolute;
+    color: white;
+    left: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: -10px;
+  }
+
+  .n-1 {
+    bottom: 50px;
+  }
+
+  .n-2 {
+    bottom: 100px;
+  }
+
+  .n-3 {
+    bottom: 150px;
+  }
+
+  .n-4 {
+    bottom: 200px;
+  }
+
+  .n-5 {
+    bottom: 250px;
+    left: -30px;
+  }
+
+  .n-6 {
+    bottom: 300px;
+  }
+
+  .n-7 {
+    bottom: 350px;
+  }
+
+  .n-8 {
+    bottom: 400px;
+  }
+
+  .n-9 {
+    bottom: 450px;
+  }
+
+  .n-5000 {
+    bottom: 515px;
+    left: -7px;
+    font-size: 34px;
+  }
+
+  .darujme-iframe {
+    width: 100%;
+  }
+
+  .bg-stars {
+    position: absolute;
+    background: url("../img/bg-stars.svg") no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+    bottom: 0;
+    z-index: -2;
+  }
+
+  .grey-overlay {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 250px;
+    bottom: 250px;
+    z-index: -1;
+  }
+
+  @media (max-width: 576px) {
+    #grey-overlay-1 {
+      display: none;
+    }
+
+    #grey-overlay-2 {
+      display: block;
+    }
+
+    .rocket-wrapper {
+      margin-left: -15px;
+      margin-right: -15px;
+      background: url("../img/bg-stars.svg") no-repeat;
+      background-size: cover;
+    }
+  }
+
+  @media (min-width: 576px) {
+    .darujme-iframe {
+      width: 360px;
+    }
+
+    #grey-overlay-1 {
+      display: block;
+    }
+
+    #grey-overlay-2 {
+      display: none;
+    }
+  }
+  @media (min-width: 768px) {
+    .rocket-wrapper {
+      position: absolute;
+      left: 40px;
+      bottom: 0;
+    }
+  }
+  @media (min-width: 1280px) {
+    .n-5000 {
+      left: -7px;
+    }
+    .rocket-wrapper {
+      left: 150px;
+    }
+  }
+}
