@@ -175,6 +175,7 @@ class FestivalPage(Page):
         "home.ProgramIndexPage",
         "home.CrowdfundingPage",
         "home.CrowdfundingStarsPage",
+        "home.PartnersPage",
     ]
 
     edit_handler = TabbedInterface(
