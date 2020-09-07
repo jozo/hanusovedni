@@ -43,20 +43,6 @@
 {#{% wagtailuserbar %}#}
 
 
-<div class="container-fluid position-absolute" style="top: 0; right: 25%">
-  <div class="language-switcher-head">
-    <div class="d-flex flex-row justify-content-end">
-      {% get_available_languages as languages %}
-      {% for lang_code, lang_name in languages %}
-        {% language lang_code %}
-          <a href="{% url "choose-lang" lang_code %}">{{ lang_code }}</a>
-        {% endlanguage %}
-      {% endfor %}
-    </div>
-  </div>
-</div>
-
-
 {% if request.site.hostname == "hanusovedni.online" %}
   <div class="container">
     <div class="row d-flex justify-content-center">
@@ -77,6 +63,20 @@
 {% endblock %}
 
 {% block content %}{% endblock %}
+
+<div class="container-fluid position-absolute" style="top: 0; right: 25%">
+  <div class="language-switcher-head">
+    <div class="d-flex flex-row justify-content-end">
+      {% get_available_languages as languages %}
+      {% for lang_code, lang_name in languages %}
+        {% language lang_code %}
+          <a href="{% url "choose-lang" lang_code %}">{{ lang_code }}</a>
+        {% endlanguage %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
 
 {% block footer_content %}
   {% include "footer.html" %}

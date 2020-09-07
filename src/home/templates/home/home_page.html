@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% load wagtailcore_tags %}
 
@@ -6,6 +7,25 @@
 
 {% block header_content %}{% endblock %}
 {% block footer_content %}{% endblock %}
+{% block title %}
+  {% get_current_language as LANGUAGE_CODE %}
+  {% if LANGUAGE_CODE == 'sk' %}
+    Festival Hanusove dni
+  {% else %}
+    Festival Hanus days
+  {% endif %}
+{% endblock %}
+{% block title_suffix %}{% endblock %}
+{% block extra_meta %}
+  {% get_current_language as LANGUAGE_CODE %}
+  {% if LANGUAGE_CODE == 'sk' %}
+    <meta name="description"
+          content="Unikátny mestský spoločensko-akademický festival ponúkajúci hodnotový program na priesečníku kresťanstva a dnešnej spoločnosti!"/>
+  {% else %}
+    <meta name="description"
+          content="A unique social city academic festival offering a value programme at a point where Christianity meets today´s society!"/>
+  {% endif %}
+{% endblock %}
 {% block og_title %}{{ self.get_site.site_name }}{% endblock %}
 
 {% block content %}
