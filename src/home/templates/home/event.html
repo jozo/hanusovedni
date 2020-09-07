@@ -4,10 +4,6 @@
 
 {% block body_class %}template-event{% endblock %}
 
-{% block extra_js %}
-  <script src="https://kit.fontawesome.com/8a0d4a7b33.js" crossorigin="anonymous"></script>
-{% endblock %}
-
 {% block extra_meta %}
   <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
 {% endblock %}

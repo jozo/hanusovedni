@@ -179,8 +179,9 @@ body > footer {
     opacity: 0.8;
 
     &:hover, &:focus {
-      color: white;
-      text-decoration: underline;
+      color: $c-special;
+      text-decoration: none;
+      opacity: 1;
     }
   }
 
