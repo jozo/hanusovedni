@@ -676,7 +676,11 @@ class CrowdfundingPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
+        festival = self.get_ancestors().type(FestivalPage).first()
+        if festival:
+            context["festival"] = festival.specific
+        else:
+            context["festival"] = last_festival()
         return context
 
 
@@ -713,7 +717,11 @@ class CrowdfundingStarsPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = FestivalPage.objects.get(pk=self.get_parent().pk)
+        festival = self.get_ancestors().type(FestivalPage).first()
+        if festival:
+            context["festival"] = festival.specific
+        else:
+            context["festival"] = last_festival()
         return context
 
 
