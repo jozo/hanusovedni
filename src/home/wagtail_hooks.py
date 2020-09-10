@@ -24,7 +24,9 @@ class YearFilter(admin.SimpleListFilter):
             if queryset.model == Event:
                 return queryset.filter(date_and_time__year=self.value())
             elif queryset.model == Speaker:
-                return queryset.filter(events__date_and_time__year=self.value()).distinct()
+                return queryset.filter(
+                    events__date_and_time__year=self.value()
+                ).distinct()
 
 
 class EventAdmin(ModelAdmin):
@@ -71,13 +73,25 @@ class TranslationSettings(BaseSetting):
     buy_ticket_button_en = models.TextField(blank=True)
     buy_ticket_button = TranslatedField("buy_ticket_button_sk", "buy_ticket_button_en")
 
+    # Permanentka
+    season_ticket_button_sk = models.TextField(blank=True)
+    season_ticket_button_en = models.TextField(blank=True)
+    season_ticket_button = TranslatedField(
+        "season_ticket_button_sk", "season_ticket_button_en"
+    )
+
+    season_ticket_url = models.URLField(blank=True)
+
     content_panels_sk = [
         FieldPanel("watch_video_button_sk"),
         FieldPanel("buy_ticket_button_sk"),
+        FieldPanel("season_ticket_button_sk"),
+        FieldPanel("season_ticket_url"),
     ]
     content_panels_en = [
         FieldPanel("watch_video_button_en"),
         FieldPanel("buy_ticket_button_en"),
+        FieldPanel("season_ticket_button_en"),
     ]
 
     edit_handler = TabbedInterface(
@@ -87,6 +101,8 @@ class TranslationSettings(BaseSetting):
         ]
     )
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
         super().save(force_insert, force_update, using, update_fields)
         CloudFlare().purge_everything()

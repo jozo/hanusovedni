@@ -24,8 +24,8 @@ logger = logging.getLogger(__name__)
 class CloudFlare:
     def __init__(self, environments=None, zone_id=None, token=None) -> None:
         self.environments = environments or ["staging", "production"]
-        self.zone_id = zone_id or os.environ["CLOUDFLARE_ZONEID"]
-        self.token = token or os.environ["CLOUDFLARE_BEARER_TOKEN"]
+        self.zone_id = zone_id or os.environ.get("CLOUDFLARE_ZONEID")
+        self.token = token or os.environ.get("CLOUDFLARE_BEARER_TOKEN")
 
     def purge_everything(self):
         if os.environ["ENVIRONMENT"] in self.environments:

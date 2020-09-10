@@ -8,7 +8,8 @@
   <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
 {% endblock %}
 
-{% block og_image %}{% get_existing_og_image page as og_img_orig %}{% image og_img_orig original as og_photo %}{{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
+{% block og_image %}{% get_existing_og_image page as og_img_orig %}{% image og_img_orig original as og_photo %}
+  {{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
 
 {% block title %}{{ page.title_translated }}{% endblock %}
 
@@ -46,7 +47,7 @@
                 {% endfor %}
               </ul>
 
-            <strong class="text-uppercase">{% trans "Hosts" %}:</strong>
+              <strong class="text-uppercase">{% trans "Hosts" %}:</strong>
               <ul class="speakers">
                 {% for host_connection in page.host_connections.all %}
                   <li>
@@ -97,12 +98,18 @@
                   {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
                 </a>
               {% endif %}
-{#              {% if page.date_and_time.date >= today and page.ticket_url %}#}
-                <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg m-2"
+              {#              {% if page.date_and_time.date >= today and page.ticket_url %}#}
+              <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg m-2"
+                 role="button" target="_blank">
+                {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
+              </a>
+              {% if settings.home.TranslationSettings.season_ticket_url %}
+                <a href="{{ settings.home.TranslationSettings.season_ticket_url }}" class="btn btn-success btn-lg m-2"
                    role="button" target="_blank">
-                  {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
+                  {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
                 </a>
-{#              {% endif %}#}
+              {% endif %}
+              {#              {% endif %}#}
             </div>
           </article>
         </div>
