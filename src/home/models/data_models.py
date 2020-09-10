@@ -1,7 +1,7 @@
 from functools import cached_property
 
 from django.db import models
-from django.db.models import Max, Q
+from django.db.models import Max, Prefetch, Q
 from django.utils import timezone, translation
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -22,6 +22,7 @@ from wagtail.core.models import Orderable, Page
 from wagtail.images import get_image_model_string
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.models import Rendition
 from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
@@ -255,9 +256,18 @@ class Speaker(Page):
 
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival()
-        context["events"] = Event.objects.filter(
-            Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
-        ).live()
+        context["events"] = (
+            Event.objects.filter(
+                Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
+            )
+            .live()
+            .prefetch_related(
+                Prefetch(
+                    "icon__renditions",
+                    queryset=Rendition.objects.filter(filter_spec="fill-65x65"),
+                )
+            )
+        )
         return context
 
     @property

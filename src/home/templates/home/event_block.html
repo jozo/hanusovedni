@@ -5,7 +5,6 @@
     <article class="event d-flex flex-column"
              style="background-color: {{ event.category.color }}">
       <div class="illustration d-flex justify-content-center align-items-center">
-        {#        {% image event.icon fill-65x65 %}#}
         {% for rendition in event.icon.renditions.all %}
           <img alt="{{ event.icon.title }}" src="{{ rendition.url }}" width="65" height="65">
         {% endfor %}
