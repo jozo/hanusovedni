@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from wagtail.admin.edit_handlers import FieldPanel, ObjectList, TabbedInterface
@@ -25,7 +26,8 @@ class YearFilter(admin.SimpleListFilter):
                 return queryset.filter(date_and_time__year=self.value())
             elif queryset.model == Speaker:
                 return queryset.filter(
-                    events__date_and_time__year=self.value()
+                    Q(speaker_connections__event__date_and_time__year=self.value())
+                    | Q(host_connections__event__date_and_time__year=self.value())
                 ).distinct()
 
 
