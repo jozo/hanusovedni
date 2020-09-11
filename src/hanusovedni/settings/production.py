@@ -30,5 +30,4 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True,
     environment=os.environ["ENVIRONMENT"],
-    traces_sample_rate=1.0,
 )
