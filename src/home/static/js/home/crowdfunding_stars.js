@@ -21,6 +21,6 @@ $(document).ready(function () {
       })
       .fail(function () {
         console.log('Error - can\'t get current amount of €')
-        showPercentage(60)
+        showPercentage(120)
       })
   })
