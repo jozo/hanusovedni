@@ -14,9 +14,9 @@ $(document).ready(function () {
     $('#grey-overlay-2').css('bottom', percentage * 500 + "px")
   }
 
-    $.ajax('https://old.darujme.sk/sk/campaign/feed/2785/key/8277e0e414c8b5089c657c6bedd182e5/')
+    $.ajax('https://api.darujme.sk/v1/feeds/7ac2c2c2-65ef-4d7b-b4a4-e43cc0c9a296/donations/?per_page=1')
       .done(function (data) {
-        let amount = parseFloat(/.*;el.innerHTML="(\d+\.\d+)".*/g.exec(data)[1])
+        let amount = data["response"]["metadata"]["total_amount"]
         showPercentage(amount)
       })
       .fail(function () {
