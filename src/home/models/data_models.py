@@ -172,7 +172,8 @@ class SpeakerConnection(Orderable):
     speaker = models.ForeignKey(
         "home.Speaker",
         on_delete=models.CASCADE,
-        blank=True,
+        null=True,
+        blank=False,
         related_name="speaker_connections",
     )
 
@@ -186,7 +187,8 @@ class HostConnection(Orderable):
     speaker = models.ForeignKey(
         "home.Speaker",
         on_delete=models.CASCADE,
-        blank=True,
+        null=True,
+        blank=False,
         related_name="host_connections",
     )
 
