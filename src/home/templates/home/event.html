@@ -47,16 +47,20 @@
                 {% endfor %}
               </ul>
 
-              <strong class="text-uppercase">{% trans "Hosts" %}:</strong>
-              <ul class="speakers">
-                {% for host_connection in page.host_connections.all %}
-                  <li>
-                    <a href="{% pageurl host_connection.speaker %}">
-                      {{ host_connection.speaker.title }}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
+              {% if page.host_connections.all %}
+                <strong>
+                  {% blocktranslate count counter=page.host_connections.all|length %}Host{% plural %}Hosts{% endblocktranslate %}:
+                  </strong>
+                <ul class="speakers">
+                  {% for host_connection in page.host_connections.all %}
+                    <li>
+                      <a href="{% pageurl host_connection.speaker %}">
+                        {{ host_connection.speaker.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
             </div>
 
             <footer>

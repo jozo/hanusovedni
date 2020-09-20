@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 17:45+0000\n"
+"POT-Creation-Date: 2020-09-20 22:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,14 +63,14 @@ msgstr "Kontakt"
 msgid "Social networks"
 msgstr "Sociálne siete"
 
-#: hanusovedni/templates/footer.html:44
+#: hanusovedni/templates/footer.html:53
 msgid "The Ladislav Hanus Fellowship"
 msgstr "Spoločenstvo Ladislava Hanusa"
 
-#: hanusovedni/templates/footer.html:51
+#: hanusovedni/templates/footer.html:60
 msgid "We use 🍪 cookies"
 msgstr "Používame 🍪 cookies"
 
-#: hanusovedni/templates/footer.html:52
+#: hanusovedni/templates/footer.html:61
 msgid "Close"
 msgstr "Zavrieť"
