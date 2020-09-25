@@ -752,6 +752,7 @@ class StreamPage(Page):
     donate_button_action = models.ForeignKey(
         Page, on_delete=models.SET_NULL, null=True, related_name="stream_page_donate"
     )
+    slido_url = models.URLField(blank=True, verbose_name="Sli.do")
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("stream_url"),
@@ -760,6 +761,7 @@ class StreamPage(Page):
         ImageChooserPanel("background"),
         FieldPanel("donate_button_text_sk"),
         PageChooserPanel("donate_button_action"),
+        FieldPanel("slido_url"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
