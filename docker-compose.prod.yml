@@ -21,7 +21,7 @@ services:
       resources:
         limits:
           cpus: "0.5"
-          memory: 400M
+          memory: 300M
       restart_policy:
         condition: on-failure
       labels:
@@ -39,7 +39,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 500M
+          memory: 100M
 
   nginx:
     volumes:
@@ -47,6 +47,9 @@ services:
       - /var/www/static:/usr/share/nginx/static:ro
       - /var/www/media:/usr/share/nginx/media:ro
     deploy:
+      resources:
+        limits:
+          memory: 100M
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.nginx-router.rule=Host(`hanusovedni.online`, `www.hanusovedni.online`, `hanusovedni.sk`, `www.hanusovedni.sk`) && PathPrefix(`/static/`, `/media/`)"
@@ -59,10 +62,18 @@ services:
       - secrets.env
     volumes:
       - /var/www/pgdata:/var/lib/postgresql/data/pgdata
+    deploy:
+      resources:
+        limits:
+          memory: 100M
 
   reverse-proxy:
     volumes:
       - ./traefik.${ENVIRONMENT}.yml:/etc/traefik/traefik.yml:ro
+    deploy:
+      resources:
+        limits:
+          memory: 100M
 #    deploy:
 #      labels:
 #        - "traefik.enable=true"
