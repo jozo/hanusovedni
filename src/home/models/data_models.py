@@ -262,6 +262,7 @@ class Speaker(Page):
             Event.objects.filter(
                 Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
             )
+            .distinct()
             .live()
             .prefetch_related(
                 Prefetch(
