@@ -1,6 +1,6 @@
 $(document).ready(function () {
   function showPercentage(amount) {
-    let amount_bank = 125
+    let amount_bank = 345
     let full_amount = 5000
     let display_amount = Math.min(amount + amount_bank, full_amount)
     let percentage = display_amount / full_amount
