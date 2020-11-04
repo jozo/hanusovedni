@@ -537,7 +537,11 @@ class AboutFestivalPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        festival = self.get_ancestors().type(FestivalPage).first()
+        if festival:
+            context["header_festival"] = festival.specific
+        else:
+            context["header_festival"] = last_festival()
         return context
 
 
