@@ -164,6 +164,9 @@ class Event(Page):
             "over_limit_names": ", ".join(c.speaker.title for c in connections[3:]),
         }
 
+    def delete(self, *args, **kwargs):
+        self.unpublish(user=kwargs.get("user"))
+
 
 class SpeakerConnection(Orderable):
     event = ParentalKey(
@@ -276,6 +279,9 @@ class Speaker(Page):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def delete(self, *args, **kwargs):
+        self.unpublish(user=kwargs.get("user"))
 
 
 class HeroImage(Orderable):
