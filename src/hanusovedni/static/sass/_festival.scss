@@ -196,7 +196,7 @@
       &:hover, &:active {
         .name, .description {
           transition: all 0.3s;
-          transform: translateY(-277px);
+          transform: translateY(-280px);
           opacity: 0.9;
         }
 
@@ -204,7 +204,7 @@
 
       .name, .description {
         background: $c-bg;
-        transform: translateY(-77px);
+        transform: translateY(-80px);
       }
 
       .description > div {
@@ -212,6 +212,8 @@
       }
 
       .name {
+        height: 80px;
+
         i {
           color: $c-red-light;
           font-size: 1.8rem;
