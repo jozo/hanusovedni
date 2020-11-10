@@ -338,6 +338,10 @@ class Location(models.Model):
 
     objects = LocationManager()
 
+    class Meta:
+        verbose_name = _("location")
+        verbose_name_plural = _("locations")
+
     def __str__(self):
         return self.title_sk
 
@@ -361,6 +365,10 @@ class Category(models.Model):
     autocomplete_search_field = "title_sk"
 
     objects = CategoryManager()
+
+    class Meta:
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
     def __str__(self):
         return self.title_sk
