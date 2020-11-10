@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -7,6 +8,7 @@ from wagtail.admin.edit_handlers import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
+from wagtail.core import hooks
 
 from .fields import TranslatedField
 from .models import Event, Speaker
@@ -108,3 +110,19 @@ class TranslationSettings(BaseSetting):
     ):
         super().save(force_insert, force_update, using, update_fields)
         CloudFlare().purge_everything()
+
+
+@hooks.register("register_permissions")
+def register_permissions():
+    """We register these permissions so we can limit which groups can delete speakers/events"""
+    return Permission.objects.filter(
+        content_type__app_label="home",
+        codename__in=[
+            "add_speaker",
+            "change_speaker",
+            "delete_speaker",
+            "add_event",
+            "change_event",
+            "delete_event",
+        ],
+    )
