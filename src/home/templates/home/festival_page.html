@@ -5,7 +5,6 @@
 {% block title_suffix %}
   {# We don't want to add suffix to festival page because it would be duplicated #}
 {% endblock %}
-{% block title %}{{ page.formatted_title|striptags }}{% endblock %}
 {% block extra_meta %}
     <meta name="description" content="{{ page.hero_text|striptags }}"/>
 {% endblock %}
