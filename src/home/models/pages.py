@@ -261,7 +261,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
             .date_and_time.year
         )
 
-        festivals = FestivalPage.objects.live().all()
+        festivals = FestivalPage.objects.live().order_by("-start_date").all()
 
         for year in range(max_year, min_year - 1, -1):
             for festival in festivals:
