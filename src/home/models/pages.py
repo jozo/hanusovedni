@@ -175,6 +175,7 @@ class FestivalPage(Page):
         "home.ProgramIndexPage",
         "home.CrowdfundingPage",
         "home.CrowdfundingStarsPage",
+        "home.CrowdfundingRocket2Page",
         "home.PartnersPage",
         "home.AboutFestivalPage",
     ]
@@ -733,6 +734,49 @@ class CrowdfundingStarsPage(Page):
         return context
 
 
+class CrowdfundingRocket2Page(Page):
+    class Meta:
+        verbose_name = "crowdfunding - rocket 2"
+
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=True,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    target_amount = models.IntegerField()
+    title_translated = TranslatedField("title", "title_en")
+    body_sk = StreamField([("text", blocks.TextBlock())])
+    body_en = StreamField([("text", blocks.TextBlock())])
+    body = TranslatedField("body_sk", "body_en")
+
+    content_panels_sk = Page.content_panels + [
+        FieldPanel("target_amount"),
+        StreamFieldPanel("body_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        StreamFieldPanel("body_en"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        festival = self.get_ancestors().type(FestivalPage).first()
+        if festival:
+            context["festival"] = festival.specific
+        else:
+            context["festival"] = last_festival()
+        return context
+
+
 class StreamPage(Page):
     stream_url = models.URLField(blank=True)
     title_en = models.CharField(
@@ -749,7 +793,10 @@ class StreamPage(Page):
     button_text_en = models.CharField(max_length=100)
     button_text = TranslatedField("button_text_sk", "button_text_en")
     background = models.ForeignKey(
-        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL,
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     google_form_url = models.URLField(blank=True)
     donate_button_text_sk = models.CharField(max_length=100, null=True)

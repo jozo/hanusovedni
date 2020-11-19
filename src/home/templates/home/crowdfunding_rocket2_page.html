@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load text %}
+
+{% load static wagtailcore_tags %}
+
+{% block extra_js %}
+  <script type="text/javascript" src="{% static 'js/home/crowdfunding_rocket2.js' %}"></script>
+{% endblock %}
+
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block body_class %}template-crowdfunding-rocket2{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <header>
+      {% include "logo_and_description.html" %}
+    </header>
+
+    <div class="container position-relative">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 d-flex flex-column align-items-center">
+          <h2 class="help text-center mt-5 mt-md-0">
+            <span>{% include_block page.body.0 %}</span>
+            <br>
+            <span class="colorful yellow">{% include_block page.body.1 %}</span>
+            <span class="colorful red">{% include_block page.body.2 %}</span>
+          </h2>
+
+          <a href="{% include_block page.body.3 %}" target="_blank"
+             class="donate-button btn btn-lg btn-danger mt-5">
+            {% include_block page.body.4 %}
+          </a>
+          <img src="{% static "img/line-building.png" %}" class="mb-4 mt-n3">
+        </div>
+      </div>
+
+      <div class="rocket-wrapper">
+        <div class="d-flex justify-content-center">
+          <div class="thermometer">
+            <div class="scale"></div>
+            <div class="mercury" id="mercury"></div>
+            <div class="number n-2">20%</div>
+            <div class="number n-4">40%</div>
+            <div class="number n-6">60%</div>
+            <div class="number n-8">80%</div>
+            <div class="number n-top" data-attr-value="{{ page.target_amount }}">{{ page.target_amount|intspace }} €
+            </div>
+            <img src="{% static "img/rocket.gif" %}" class="rocket">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <footer class="container-fluid py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-4 text-center font-weight-bold">
+          <h3 class="font-weight-bold">{% include_block page.body.5 %}</h3>
+          <p>
+            {% include_block page.body.6 %}
+          </p>
+          <p>
+            <a href="{% include_block page.body.8 %}" class="btn btn-lg btn-outline-warning">
+              {% include_block page.body.7 %}
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </main>
+{% endblock %}
