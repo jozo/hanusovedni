@@ -112,7 +112,7 @@ class FestivalPage(Page):
                     [
                         ("name", blocks.CharBlock()),
                         ("photo", ImageChooserBlock()),
-                        ("link", blocks.PageChooserBlock(page_type="home.Speaker")),
+                        ("link", blocks.PageChooserBlock()),
                         ("description", blocks.RichTextBlock()),
                     ]
                 ),
@@ -129,7 +129,7 @@ class FestivalPage(Page):
                     [
                         ("name", blocks.CharBlock()),
                         ("photo", ImageChooserBlock()),
-                        ("link", blocks.PageChooserBlock(page_type="home.Speaker")),
+                        ("link", blocks.PageChooserBlock()),
                         ("description", blocks.RichTextBlock()),
                     ]
                 ),
