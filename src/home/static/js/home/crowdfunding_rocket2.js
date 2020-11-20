@@ -8,7 +8,7 @@ $(document).ready(function () {
     $('#mercury').prop('title', (amount + amount_bank) + '€')
   }
 
-  $.ajax('https://api.darujme.sk/v1/feeds//donations/?per_page=1')
+  $.ajax('https://api.darujme.sk/v1/feeds/c652ee51-bde3-49ff-b274-362a7d50fd99/donations/?per_page=1')
     .done(function (data) {
       let amount = data['response']['metadata']['total_amount']
       showPercentage(amount)
