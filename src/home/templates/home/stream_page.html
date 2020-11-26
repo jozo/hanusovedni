@@ -17,17 +17,30 @@
 
             {% image page.background format-jpeg id="bg-image" %}
 
-            <div id="embed-wrapper" class="w-100">
+            <div id="embed-wrapper" class="w-100" style="display: none">
               <div class="embed-container">
                 {% embed page.stream_url %}
               </div>
             </div>
 
-            <div id="form-wrapper" class="w-100 p-4 py-5">
+            <div id="popup-wrapper" class="w-100 p-4 py-5">
               <div class="row h-100 d-flex justify-content-center">
-                <div class="col-lg-5 d-flex flex-column justify-content-center p-3 box-bg">
-                  <div class="mb-3 text-center">
-                    {{ page.body|richtext }}
+                <div class="col-lg-5 d-flex flex-column justify-content-center p-3 mb-2 box-bg closable">
+                  <button type="button" id="popup-close-donation" class="popup-close" aria-label="Close">&times;</button>
+                  <div class="mb-3 mr-3 text-center">
+                    {{ page.popup_donation_body|richtext }}
+                  </div>
+
+                  <a href="{% pageurl page.donate_button_action %}" target="_blank"
+                     class="btn btn-lg btn-block btn-danger">
+                    <strong>{{ page.popup_donation_button }}</strong>
+                  </a>
+                </div>
+
+                <div class="col-lg-5 offset-lg-1 d-flex flex-column justify-content-center p-3 mb-2 box-bg closable">
+                  <button type="button" id="popup-close-email" class="popup-close" aria-label="Close">&times;</button>
+                  <div class="mb-3 mr-3 text-center">
+                    {{ page.popup_email_body|richtext }}
                   </div>
 
                   <form id="stream-form" action="" method="POST" target="no-target">
@@ -38,12 +51,9 @@
                              id="input-email" required>
                     </div>
                     <button type="submit" class="btn btn-lg btn-block btn-outline-light">
-                      <strong>{{ page.button_text }}</strong>
+                      <strong>{{ page.popup_email_button }}</strong>
                     </button>
                   </form>
-                  <div class="mt-4 text-center alternative">
-                    ({% trans "or" %} <a href="" id="continue-without-email">{% trans "continue without email" %}</a>)
-                  </div>
                 </div>
               </div>
             </div>
@@ -64,17 +74,18 @@
         </div>
       </div>
 
-      <div id="form-wrapper2">
+      <div id="popup-wrapper2">
         <div class="row d-flex justify-content-center">
           <div class="col-lg-4 d-flex flex-column justify-content-center mt-5 p-3 box-bg">
             <div class="mb-3 text-center">
-              {{ page.body|richtext }}
+              {{ page.popup_email_body|richtext }}
             </div>
 
             <form id="stream-form2" action="" method="POST" target="no-target">
               <div class="form-group">
                 <label for="input-email" class="sr-only">{% trans "Email address" %}</label>
-                <input type="email" placeholder="{% trans "Email address" %}" class="form-control" id="input-email2" required>
+                <input type="email" placeholder="{% trans "Email address" %}" class="form-control" id="input-email2"
+                       required>
               </div>
               <button type="submit" class="btn btn-lg btn-block btn-outline-light">
                 <strong>{% trans "Submit" %}</strong>

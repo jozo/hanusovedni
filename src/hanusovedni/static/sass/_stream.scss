@@ -21,14 +21,26 @@
     }
   }
 
-  #form-wrapper {
+  #popup-wrapper {
     display: none;
     position: absolute;
     top: 0;
     left: 0;
 
-    button {
+    button, .btn {
       font-family: $font-special;
+    }
+    .popup-close {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: inherit;
+      border: none;
+      background-color: transparent;
+      font-family: $font-main;
+      font-size: 2.5rem;
+      line-height: 0.5;
     }
   }
 

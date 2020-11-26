@@ -143,7 +143,7 @@ class Event(Page):
         from home.models.pages import last_festival
 
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         context["today"] = timezone.now().date()
         return context
 
@@ -260,7 +260,7 @@ class Speaker(Page):
         from home.models.pages import last_festival
 
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         context["events"] = (
             Event.objects.filter(
                 Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)

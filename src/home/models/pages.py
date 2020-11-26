@@ -241,7 +241,7 @@ class SpeakerIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         context["speakers_by_year"] = self.get_speakers_by_year()
         # disable defaultdict because Django Template can't work with it
         context["speakers_by_year"].default_factory = None
@@ -390,7 +390,7 @@ class EventIndexPage(RoutablePageMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         context["events"] = ArchiveQueryset().events()
         # context["events_json"] = ArchiveQueryset().json()
         return context
@@ -494,7 +494,7 @@ class ContactPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         return context
 
 
@@ -542,7 +542,7 @@ class AboutFestivalPage(Page):
         if festival:
             context["header_festival"] = festival.specific
         else:
-            context["header_festival"] = last_festival()
+            context["header_festival"] = last_festival(self)
         return context
 
 
@@ -586,7 +586,7 @@ class DonatePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         return context
 
 
@@ -648,7 +648,7 @@ class PartnersPage(Page):
         if festival:
             context["header_festival"] = festival.specific
         else:
-            context["header_festival"] = last_festival()
+            context["header_festival"] = last_festival(self)
         return context
 
 
@@ -689,7 +689,7 @@ class CrowdfundingPage(Page):
         if festival:
             context["festival"] = festival.specific
         else:
-            context["festival"] = last_festival()
+            context["festival"] = last_festival(self)
         return context
 
 
@@ -730,7 +730,7 @@ class CrowdfundingStarsPage(Page):
         if festival:
             context["festival"] = festival.specific
         else:
-            context["festival"] = last_festival()
+            context["festival"] = last_festival(self)
         return context
 
 
@@ -773,7 +773,7 @@ class CrowdfundingRocket2Page(Page):
         if festival:
             context["festival"] = festival.specific
         else:
-            context["festival"] = last_festival()
+            context["festival"] = last_festival(self)
         return context
 
 
@@ -786,12 +786,18 @@ class StreamPage(Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    body_sk = RichTextField(blank=True)
-    body_en = RichTextField(blank=True)
-    body = TranslatedField("body_sk", "body_en")
-    button_text_sk = models.CharField(max_length=100)
-    button_text_en = models.CharField(max_length=100)
-    button_text = TranslatedField("button_text_sk", "button_text_en")
+    popup_email_body_sk = RichTextField(blank=True)
+    popup_email_body_en = RichTextField(blank=True)
+    popup_email_body = TranslatedField("popup_email_body_sk", "popup_email_body_en")
+    popup_email_button_sk = models.CharField(max_length=100)
+    popup_email_button_en = models.CharField(max_length=100)
+    popup_email_button = TranslatedField("popup_email_button_sk", "popup_email_button_en")
+    popup_donation_body_sk = RichTextField(blank=True)
+    popup_donation_body_en = RichTextField(blank=True)
+    popup_donation_body = TranslatedField("popup_donation_body_sk", "popup_donation_body_en")
+    popup_donation_button_sk = models.CharField(max_length=100, default="")
+    popup_donation_button_en = models.CharField(max_length=100, default="")
+    popup_donation_button = TranslatedField("popup_donation_button_sk", "popup_donation_button_en")
     background = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -811,8 +817,10 @@ class StreamPage(Page):
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("stream_url"),
-        FieldPanel("body_sk"),
-        FieldPanel("button_text_sk"),
+        FieldPanel("popup_email_body_sk"),
+        FieldPanel("popup_email_button_sk"),
+        FieldPanel("popup_donation_body_sk"),
+        FieldPanel("popup_donation_button_sk"),
         ImageChooserPanel("background"),
         FieldPanel("donate_button_text_sk"),
         PageChooserPanel("donate_button_action"),
@@ -820,8 +828,10 @@ class StreamPage(Page):
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        FieldPanel("body_en"),
-        FieldPanel("button_text_en"),
+        FieldPanel("popup_email_body_en"),
+        FieldPanel("popup_email_button_en"),
+        FieldPanel("popup_donation_body_en"),
+        FieldPanel("popup_donation_button_en"),
         FieldPanel("donate_button_text_en"),
     ]
     settings_panels = Page.settings_panels + [
@@ -838,7 +848,7 @@ class StreamPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival()
+        context["header_festival"] = last_festival(self)
         return context
 
 
@@ -847,6 +857,10 @@ def replace_tags_with_space(value):
     return re.sub(r"</?\w+>", " ", str(value))
 
 
-def last_festival():
-    # TODO move this to settings
-    return FestivalPage.objects.get(slug="khd")
+def last_festival(page: Page):
+    festival = page.get_ancestors().type(FestivalPage).first()
+    if festival:
+        return festival.specific
+    else:
+        # TODO move this to settings
+        return FestivalPage.objects.get(slug="khd")
