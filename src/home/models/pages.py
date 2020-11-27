@@ -798,6 +798,7 @@ class StreamPage(Page):
     popup_donation_button_sk = models.CharField(max_length=100, default="")
     popup_donation_button_en = models.CharField(max_length=100, default="")
     popup_donation_button = TranslatedField("popup_donation_button_sk", "popup_donation_button_en")
+    popup_donation_button_url = models.URLField(blank=True, default="")
     background = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -817,11 +818,12 @@ class StreamPage(Page):
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("stream_url"),
-        FieldPanel("popup_email_body_sk"),
-        FieldPanel("popup_email_button_sk"),
+        ImageChooserPanel("background"),
         FieldPanel("popup_donation_body_sk"),
         FieldPanel("popup_donation_button_sk"),
-        ImageChooserPanel("background"),
+        FieldPanel("popup_donation_button_url"),
+        FieldPanel("popup_email_body_sk"),
+        FieldPanel("popup_email_button_sk"),
         FieldPanel("donate_button_text_sk"),
         PageChooserPanel("donate_button_action"),
         FieldPanel("slido_url"),

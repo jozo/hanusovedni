@@ -31,7 +31,7 @@
                     {{ page.popup_donation_body|richtext }}
                   </div>
 
-                  <a href="{% pageurl page.donate_button_action %}" target="_blank"
+                  <a href="{{ page.popup_donation_button_url }}" target="_blank"
                      class="btn btn-lg btn-block btn-danger">
                     <strong>{{ page.popup_donation_button }}</strong>
                   </a>
