@@ -147,3 +147,4 @@ where events.post_type = 'event'
   and events.post_status = 'publish'
 order by events.ID
 ```
+
