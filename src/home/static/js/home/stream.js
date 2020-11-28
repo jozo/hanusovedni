@@ -17,6 +17,8 @@ $(document).ready(function () {
     $('#popup-close-donation').closest('.closable').removeClass('d-flex').hide()
   }
 
+  showEmbedAfterPopupsClosed();
+
   $('#stream-form').one('submit', function () {
     const inputName = encodeURIComponent($('#input-email').val())
     const baseURL = $('#google-form-url').val()
