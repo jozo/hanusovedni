@@ -294,3 +294,9 @@ body > footer {
     }
   }
 }
+
+
+#page-editing-bar {
+  // by default Wagtail's userbar is not displayed
+  display: none;
+}

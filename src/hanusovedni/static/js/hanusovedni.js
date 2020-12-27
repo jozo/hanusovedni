@@ -6,4 +6,17 @@ $(document).ready(function () {
   if (Cookies.get('cookiesAccepted')) {
     $('#cookiesAlert').hide()
   }
+
+
+  function userIsLoggedIn () {
+    return Cookies.get('user_logged_in') !== undefined
+  }
+
+  function showWagtailUserBar () {
+    if (userIsLoggedIn()) {
+      $("#page-editing-bar").show()
+    }
+  }
+
+  showWagtailUserBar()
 })
