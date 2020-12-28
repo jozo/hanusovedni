@@ -10,7 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+#dist/
 downloads/
 eggs/
 .eggs/
@@ -110,3 +110,5 @@ node_modules/
 /docker/pgdata/
 /backup/
 elm-stuff/
+.yarn/
+.pnp.js

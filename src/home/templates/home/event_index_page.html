@@ -9,11 +9,11 @@
 
 {% block extra_js %}
   {% get_current_language as LANGUAGE_CODE %}
-  <script type="text/javascript" src="{% static "elm/bundle.js" %}"></script>
+  <script type="text/javascript" src="{% static "dist/elm-bundle.js" %}"></script>
   <script>
     $(document).ready(function () {
-      const app = Elm.Main.init({
-        node: document.getElementById('myapp'),
+      Elm.Main.init({
+        node: document.getElementById('event-elm-app'),
         flags: "{{ LANGUAGE_CODE }}",
       })
     })
@@ -23,7 +23,7 @@
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
-      <div id="myapp"></div>
+      <div id="event-elm-app">Loading...</div>
     </div>
   </main>
 {% endblock %}

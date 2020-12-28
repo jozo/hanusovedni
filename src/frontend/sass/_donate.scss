@@ -6,7 +6,7 @@
   }
 
   #banner {
-    background: url("/static/img/bg-dots.png") $c-purple;
+    background: url("../img/bg-dots.png") $c-purple;
 
     h2 {
       font-size: 2rem;
@@ -54,7 +54,7 @@
         height: 12px;
         margin-right: 10px;
         margin-top: 6px;
-        background-image: url("/static/img/icon-arrow-blue.svg");
+        background-image: url("../img/icon-arrow-blue.svg");
         background-size: cover;
         background-position: center;
       }

@@ -11,9 +11,20 @@
   font-style: italic;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Enriqueta:400,700&subset=latin-ext');
+@font-face {
+  font-family: Enriqueta;
+  src: url('../fonts/Enriqueta-Medium.ttf');
+  font-weight: normal;
+}
 
-$font-main: 'Enriqueta', serif;
+@font-face {
+  font-family: Enriqueta;
+  src: url('../fonts/Enriqueta-Bold.ttf');
+  font-weight: bold;
+}
+
+
+$font-main: Enriqueta, serif;
 $font-special: Adelle, $font-main;
 
 $c-bg: #282828;
