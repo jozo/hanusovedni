@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n_extra %}
 {% load static wagtailcore_tags wagtailembeds_tags wagtailimages_tags i18n %}
 
 {% block body_class %}template-podcast{% endblock %}
@@ -50,7 +51,13 @@
 
                   <div class="content">
                     <h3>
-                      #{{ episode.value.number }}<br>{{ episode.value.title_sk }}
+                      #{{ episode.value.number }}<br>
+                      {% current_locale as lang %}
+                      {% if lang == "sk" %}
+                        {{ episode.value.title_sk }}
+                      {% else %}
+                        {{ episode.value.title_en }}
+                      {% endif %}
                     </h3>
                   </div>
 
