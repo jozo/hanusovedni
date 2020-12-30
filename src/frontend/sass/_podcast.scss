@@ -1,0 +1,20 @@
+.template-podcast {
+  .description {
+    background: $c-bg;
+  }
+
+  .event {
+    a {
+      &:hover {
+        color: inherit;
+        opacity: 0.7;
+        text-decoration: none;
+      }
+    }
+
+    footer {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  }
+}

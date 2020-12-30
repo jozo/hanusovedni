@@ -64,15 +64,25 @@
 
 {% block content %}{% endblock %}
 
-<div class="container-fluid position-absolute" style="top: 0; right: 25%">
+<div class="container-fluid position-absolute" style="top: 0; right: 15%">
   <div class="language-switcher-head">
     <div class="d-flex flex-row justify-content-end">
-      {% get_available_languages as languages %}
-      {% for lang_code, lang_name in languages %}
-        {% language lang_code %}
-          <a href="{% url "choose-lang" lang_code %}">{{ lang_code }}</a>
-        {% endlanguage %}
-      {% endfor %}
+      <div class="link-group d-flex">
+        {% get_available_languages as languages %}
+        {% for lang_code, lang_name in languages %}
+          {% language lang_code %}
+            {% if forloop.first %}
+              <a href="{% url "choose-lang" lang_code %}" class="spacer">{{ lang_code }}</a>
+            {% else %}
+              <a href="{% url "choose-lang" lang_code %}">{{ lang_code }}</a>
+            {% endif %}
+          {% endlanguage %}
+        {% endfor %}
+      </div>
+
+      <div class="link-group d-flex ml-2">
+        <a href="/podcast/"><i class="fas fa-microphone-alt"></i> Podcast</a>
+      </div>
     </div>
   </div>
 </div>

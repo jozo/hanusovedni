@@ -26,6 +26,7 @@ from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.models import Rendition
+from wagtail.snippets.blocks import SnippetChooserBlock
 
 from home.fields import TranslatedField
 from home.models import Event, PartnerSectionBlock, Speaker
@@ -46,6 +47,7 @@ class HomePage(Page):
         "home.DonatePage",
         "home.PartnersPage",
         "home.StreamPage",
+        "home.PodcastPage",
     ]
 
     @property
@@ -791,13 +793,19 @@ class StreamPage(Page):
     popup_email_body = TranslatedField("popup_email_body_sk", "popup_email_body_en")
     popup_email_button_sk = models.CharField(max_length=100)
     popup_email_button_en = models.CharField(max_length=100)
-    popup_email_button = TranslatedField("popup_email_button_sk", "popup_email_button_en")
+    popup_email_button = TranslatedField(
+        "popup_email_button_sk", "popup_email_button_en"
+    )
     popup_donation_body_sk = RichTextField(blank=True)
     popup_donation_body_en = RichTextField(blank=True)
-    popup_donation_body = TranslatedField("popup_donation_body_sk", "popup_donation_body_en")
+    popup_donation_body = TranslatedField(
+        "popup_donation_body_sk", "popup_donation_body_en"
+    )
     popup_donation_button_sk = models.CharField(max_length=100, default="")
     popup_donation_button_en = models.CharField(max_length=100, default="")
-    popup_donation_button = TranslatedField("popup_donation_button_sk", "popup_donation_button_en")
+    popup_donation_button = TranslatedField(
+        "popup_donation_button_sk", "popup_donation_button_en"
+    )
     popup_donation_button_url = models.URLField(blank=True, default="")
     background = models.ForeignKey(
         "wagtailimages.Image",
@@ -854,6 +862,61 @@ class StreamPage(Page):
         return context
 
 
+class PodcastPage(Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=False,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+    description_sk = RichTextField(blank=True)
+    description_en = RichTextField(blank=True)
+    description = TranslatedField("description_sk", "description_en")
+    episodes = StreamField(
+        [
+            (
+                "episode",
+                blocks.StructBlock(
+                    [
+                        ("number", blocks.IntegerBlock(min_value=1)),
+                        ("title_sk", blocks.CharBlock()),
+                        ("title_en", blocks.CharBlock()),
+                        ("category", SnippetChooserBlock("home.Category")),
+                        ("url_anchor", blocks.URLBlock()),
+                        ("url_apple", blocks.URLBlock()),
+                        ("url_spotify", blocks.URLBlock()),
+                    ]
+                ),
+            ),
+        ]
+    )
+
+    content_panels = [
+        FieldPanel("title", classname="full title", heading="Title SK"),
+        FieldPanel("title_en", classname="full title",  heading="Title EN"),
+        FieldPanel("description_sk", classname="full"),
+        FieldPanel("description_en", classname="full"),
+    ]
+    episodes_panel = [
+        StreamFieldPanel("episodes"),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels, heading=_("Content")),
+            ObjectList(episodes_panel, heading=_("Episodes")),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival(self)
+        return context
+
+
 def replace_tags_with_space(value):
     """Return the given HTML with spaces instead of tags."""
     return re.sub(r"</?\w+>", " ", str(value))
@@ -865,4 +928,4 @@ def last_festival(page: Page):
         return festival.specific
     else:
         # TODO move this to settings
-        return FestivalPage.objects.get(slug="khd")
+        return FestivalPage.objects.get(slug="bhd-online")
