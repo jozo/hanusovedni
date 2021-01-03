@@ -2,7 +2,7 @@ const path = require('path')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin')
 
 const config = {
   entry: {
@@ -50,10 +50,17 @@ const config = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: "./elm/elm-bundle.js", to: "elm-bundle.js" },
+        { from: './elm/elm-bundle.js', to: 'elm-bundle.js' },
       ],
     }),
-  ]
+  ],
+  devServer: {
+    proxy: {
+      '/': 'http://localhost:8000',
+    },
+    watchContentBase: true,
+    writeToDisk: true
+  }
 }
 
 module.exports = (env, argv) => {
