@@ -1,4 +1,4 @@
-FROM python:3.8-slim AS compile-image
+FROM python:3.9-slim AS compile-image
 LABEL maintainer="hi@jozo.io"
 
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential libpq-dev \
@@ -11,7 +11,7 @@ COPY ["src/pyproject.toml", "src/poetry.lock", "/root/"]
 RUN cd "/root/" && . "/opt/venv/bin/activate" && poetry install
 
 
-FROM python:3.8-slim AS runtime-image
+FROM python:3.9-slim AS runtime-image
 COPY --from=compile-image  /opt/venv /opt/venv
 
 RUN apt-get update && apt-get install -y --no-install-recommends libcairo2 libpq5 && apt-get clean
