@@ -13,7 +13,7 @@ services:
       - /var/www/static:/static_root
       - /var/www/media:/media_root
     healthcheck:
-      test: python -c "import requests; requests.get('http://localhost:8000/en/bhd/', timeout=5).raise_for_status()"
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5).read()"
       interval: 1m
       timeout: 5s
     deploy:
