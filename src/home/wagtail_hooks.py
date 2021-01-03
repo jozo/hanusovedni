@@ -2,8 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from django.db import models
 from django.db.models import Q
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from wagtail.admin import messages
 from wagtail.admin.edit_handlers import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.settings.models import BaseSetting
@@ -126,3 +128,25 @@ def register_permissions():
             "delete_event",
         ],
     )
+
+
+@hooks.register("before_delete_page")
+def disable_delete(request, page):
+    """Disable deleting of speakers/events
+
+    We don't want it because it breaks urls and connections between speakers and events.
+    We disable it only during POST request (so in the final stage of deleting). This means
+    delete confirmation page is displayed. From there user can alternatively unpublish the page.
+    """
+    if (
+        request.user.username != "admin"
+        and page.specific_class in [Speaker, Event]
+        and request.method == "POST"
+    ):
+        messages.warning(
+            request,
+            _("Page '{0}' can not be deleted. You can only unpublish it.").format(
+                page.get_admin_display_title()
+            ),
+        )
+        return redirect("wagtailadmin_pages:delete", page.pk)
