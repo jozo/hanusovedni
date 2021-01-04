@@ -87,8 +87,10 @@
           <article class="event-detail d-flex flex-column justify-content-between p-4 w-100"
                    style="background-color: {{ page.category.color }}">
             {% if page.video_url %}
-              <div class="video mb-3 d-flex justify-content-center">
-                {% embed page.video_url %}
+              <div class="video mb-3">
+                <div class="embed-container">
+                  {% embed page.video_url %}
+                </div>
               </div>
             {% endif %}
             <div class="description">

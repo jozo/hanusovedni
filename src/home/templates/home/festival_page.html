@@ -33,7 +33,7 @@
                 {% for hero_image in page.hero_images.all %}
                   <div class="carousel-item h-100 {% if forloop.first %}active{% endif %}">
                     <a href="{{ hero_image.url }}" target="_blank">
-                      {% image hero_image.image original format-jpeg loading="lazy" as tmp_photo %}
+                      {% image hero_image.image original format-jpeg as tmp_photo %}
                       <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
                     </a>
                   </div>
@@ -145,7 +145,7 @@
             {% for headliner in page.headline %}
               <div class="col-md-6 col-lg-4 d-flex flex-column px-02 mb-1">
                 <div class="headliner overflow-hidden">
-                  {% image headliner.value.photo fill-360x360 format-jpeg loading="lazy" as tmp_photo %}
+                  {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo %}
                   <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
                   <a href="{% pageurl headliner.value.link %}" class="stretched-link d-block">
                     <div class="name px-4 d-flex flex-column justify-content-center">

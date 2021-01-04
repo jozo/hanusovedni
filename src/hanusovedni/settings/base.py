@@ -194,6 +194,7 @@ WAGTAIL_SITE_NAME = "hanusovedni"
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = "http://example.com"
 
+WAGTAILEMBEDS_RESPONSIVE_HTML = True
 
 LOGGING = {
     "version": 1,
