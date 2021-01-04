@@ -16,7 +16,7 @@
         <div class="col-12 mb-1">
           <div class="speaker d-flex flex-md-row flex-column">
             <div class="photo align-self-center mt-3 mt-md-0">
-              {% image page.photo min-350x350 format-jpeg %}
+              {% image page.photo min-350x350 format-jpeg loading="lazy" %}
             </div>
             <div class="m-5">
               <h4 class="mb-4 speaker-heading">{{ page.title }}</h4>

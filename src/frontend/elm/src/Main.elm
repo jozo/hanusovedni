@@ -2,7 +2,7 @@ module Main exposing (..)
 
 import Browser
 import Html exposing (Attribute, Html, a, address, article, div, footer, h3, img, input, label, li, option, select, span, text, time, ul)
-import Html.Attributes exposing (alt, class, datetime, for, height, href, id, src, style, title, type_, value, width)
+import Html.Attributes exposing (alt, attribute, class, datetime, for, height, href, id, src, style, title, type_, value, width)
 import Html.Attributes.Extra exposing (role)
 import Html.Events exposing (onCheck, onInput)
 import Html.Events.Extra exposing (onChange)
@@ -436,7 +436,7 @@ viewEventIcon maybeIcon =
             text ""
 
         Just icon ->
-            img [ alt icon.title, src icon.url, width 65, height 65 ] []
+            img [ alt icon.title, src icon.url, width 65, height 65, attribute "loading" "lazy" ] []
 
 
 viewSpeakers : Language -> Speakers -> Html Msg

@@ -6,7 +6,7 @@
              style="background-color: {{ event.category.color }}">
       <div class="illustration d-flex justify-content-center align-items-center">
         {% for rendition in event.icon.renditions.all %}
-          <img alt="{{ event.icon.title }}" src="{{ rendition.url }}" width="65" height="65">
+          <img alt="{{ event.icon.title }}" src="{{ rendition.url }}" width="65" height="65" loading="lazy">
         {% endfor %}
 
       </div>

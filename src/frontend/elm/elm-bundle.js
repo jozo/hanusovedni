@@ -7675,6 +7675,14 @@ var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$html$Html$time = _VirtualDom_node('time');
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm$html$Html$Attributes$height = function (n) {
 	return A2(
 		_VirtualDom_attribute,
@@ -7706,7 +7714,8 @@ var $author$project$Main$viewEventIcon = function (maybeIcon) {
 					$elm$html$Html$Attributes$alt(icon.m),
 					$elm$html$Html$Attributes$src(icon.J),
 					$elm$html$Html$Attributes$width(65),
-					$elm$html$Html$Attributes$height(65)
+					$elm$html$Html$Attributes$height(65),
+					A2($elm$html$Html$Attributes$attribute, 'loading', 'lazy')
 				]),
 			_List_Nil);
 	}
@@ -8030,14 +8039,6 @@ var $author$project$Main$viewEvent = F2(
 						]))
 				]));
 	});
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
 var $elm_community$html_extra$Html$Attributes$Extra$role = function (r) {
 	return A2($elm$html$Html$Attributes$attribute, 'role', r);
 };

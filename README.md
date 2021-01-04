@@ -16,6 +16,10 @@ cache.clear()
 ## Stream - google form URL
 https://stefano.brilli.me/google-forms-html-exporter/
 
+## Bundle Elm
+```shell
+elm make src/Main.elm --optimize --output=elm-bundle.js
+```
 
 Monitoring
 ----------

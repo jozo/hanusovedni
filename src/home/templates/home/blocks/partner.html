@@ -1,5 +1,5 @@
 {% load wagtailimages_tags %}
 
 <a href="{{ value.url }}" target="_blank" class="mx-4 my-3">
-  {% image value.logo height-50 %}
+  {% image value.logo height-50 loading="lazy" %}
 </a>

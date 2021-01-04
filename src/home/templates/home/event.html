@@ -21,7 +21,7 @@
           <article class="event d-flex flex-column w-100"
                    style="background-color: {{ page.category.color }}">
             <div class="illustration d-flex justify-content-center align-items-center">
-              {% image page.icon fill-65x65 %}
+              {% image page.icon fill-65x65 loading="lazy" %}
             </div>
 
             <div class="category">
@@ -126,7 +126,7 @@
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
               <div class="photo align-self-center mt-3 mt-md-0">
-                {% image speaker_connection.speaker.photo min-350x350 format-jpeg %}
+                {% image speaker_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
                 <a href="{% pageurl speaker_connection.speaker %}" class="speaker-heading">
@@ -143,7 +143,7 @@
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
               <div class="photo align-self-center mt-3 mt-md-0">
-                {% image host_connection.speaker.photo min-350x350 format-jpeg %}
+                {% image host_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
                 <a href="{% pageurl host_connection.speaker %}" class="speaker-heading">
