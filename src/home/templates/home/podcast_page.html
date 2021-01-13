@@ -8,7 +8,7 @@
 {% block content %}
   <main class="flex-grow-1" id="main-div">
     <div class="container mb-1">
-      <div class="row d-flex flex-row">
+      <div class="row d-flex flex-row mb-1">
         <div class="col-lg-8">
           <div class="description p-4">
             <h2>{{ page.title_translated }}</h2>
@@ -30,6 +30,12 @@
               <img src="{% static "img/badge-apple-podcasts-en.svg" %}" alt="Badge">
             </a>
           </div>
+        </div>
+      </div>
+
+      <div class="row mb-1">
+        <div class="col-12">
+          <div id="podcast-img"></div>
         </div>
       </div>
     </div>

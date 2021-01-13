@@ -3,6 +3,11 @@
     background: $c-bg;
   }
 
+  #podcast-img {
+    min-height: 240px;
+    background-image: url("../img/bg-podcast.jpg");
+  }
+
   .event {
     a {
       &:hover {
