@@ -30,14 +30,14 @@ from wagtail.snippets.blocks import SnippetChooserBlock
 
 from home.fields import TranslatedField
 from home.models import Event, PartnerSectionBlock, Speaker
+from home.models.mixins import FixUrlMixin
 
 # TODO - gettext vs ugettext_lazy
-
 
 logger = logging.getLogger(__name__)
 
 
-class HomePage(Page):
+class HomePage(FixUrlMixin, Page):
     subpage_types = [
         "home.EventIndexPage",
         "home.SpeakerIndexPage",
@@ -55,7 +55,7 @@ class HomePage(Page):
         return FestivalPage.objects.live()
 
 
-class FestivalPage(Page):
+class FestivalPage(FixUrlMixin, Page):
     formatted_title_sk = RichTextField(
         default="",
         verbose_name=_("title"),
@@ -208,7 +208,7 @@ class FestivalPage(Page):
         return context
 
 
-class SpeakerIndexPage(RoutablePageMixin, Page):
+class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -352,7 +352,7 @@ class ArchiveQueryset(models.QuerySet):
         return result
 
 
-class EventIndexPage(RoutablePageMixin, Page):
+class EventIndexPage(RoutablePageMixin, FixUrlMixin, Page):
     """Archive of all events"""
 
     title_en = models.CharField(
@@ -398,7 +398,7 @@ class EventIndexPage(RoutablePageMixin, Page):
         return context
 
 
-class ProgramIndexPage(Page):
+class ProgramIndexPage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -445,7 +445,7 @@ class ProgramIndexPage(Page):
         return context
 
 
-class ContactPage(Page):
+class ContactPage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -500,7 +500,7 @@ class ContactPage(Page):
         return context
 
 
-class AboutFestivalPage(Page):
+class AboutFestivalPage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -548,7 +548,7 @@ class AboutFestivalPage(Page):
         return context
 
 
-class DonatePage(Page):
+class DonatePage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -592,7 +592,7 @@ class DonatePage(Page):
         return context
 
 
-class PartnersPage(Page):
+class PartnersPage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,
@@ -654,7 +654,7 @@ class PartnersPage(Page):
         return context
 
 
-class CrowdfundingPage(Page):
+class CrowdfundingPage(FixUrlMixin, Page):
     class Meta:
         verbose_name = "crowdfunding - rocket"
 
@@ -695,7 +695,7 @@ class CrowdfundingPage(Page):
         return context
 
 
-class CrowdfundingStarsPage(Page):
+class CrowdfundingStarsPage(FixUrlMixin, Page):
     class Meta:
         verbose_name = "crowdfunding - stars"
 
@@ -736,7 +736,7 @@ class CrowdfundingStarsPage(Page):
         return context
 
 
-class CrowdfundingRocket2Page(Page):
+class CrowdfundingRocket2Page(FixUrlMixin, Page):
     class Meta:
         verbose_name = "crowdfunding - rocket 2"
 
@@ -779,7 +779,7 @@ class CrowdfundingRocket2Page(Page):
         return context
 
 
-class StreamPage(Page):
+class StreamPage(FixUrlMixin, Page):
     stream_url = models.URLField(blank=True)
     title_en = models.CharField(
         verbose_name=_("title"),
@@ -862,7 +862,7 @@ class StreamPage(Page):
         return context
 
 
-class PodcastPage(Page):
+class PodcastPage(FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),
         max_length=255,

@@ -27,9 +27,10 @@ from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
 
 from home.fields import TranslatedField
+from home.models.mixins import FixUrlMixin
 
 
-class Event(Page):
+class Event(FixUrlMixin, Page):
     event_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
     title_en = models.CharField(
         verbose_name=_("title"),
@@ -198,7 +199,7 @@ class HostConnection(Orderable):
     panels = [AutocompletePanel("speaker")]
 
 
-class Speaker(Page):
+class Speaker(FixUrlMixin, Page):
     speaker_id = models.IntegerField(unique=True, null=True, blank=True, default=None)
     first_name = models.CharField(max_length=64, blank=True)
     last_name = models.CharField(max_length=64)
