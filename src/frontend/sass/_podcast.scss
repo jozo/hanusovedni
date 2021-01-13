@@ -3,9 +3,16 @@
     background: $c-bg;
   }
 
+  .podcast-links {
+    background: $c-bg;
+  }
+
   #podcast-img {
     min-height: 240px;
     background-image: url("../img/bg-podcast.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 
   .event {

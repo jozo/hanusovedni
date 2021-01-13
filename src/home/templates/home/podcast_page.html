@@ -8,15 +8,15 @@
 {% block content %}
   <main class="flex-grow-1" id="main-div">
     <div class="container mb-1">
-      <div class="row d-flex flex-row mb-1">
-        <div class="col-lg-8">
-          <div class="description p-4">
+      <div class="row d-flex flex-row mb-1 mx-n02">
+        <div class="col-lg-8 col-md-7 px-02 d-flex">
+          <div class="description p-4 flex-fill">
             <h2>{{ page.title_translated }}</h2>
             {{ page.description|richtext }}
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="m-3 d-flex flex-column align-items-center justify-content-around">
+        <div class="col-lg-4 col-md-5 px-02 d-flex">
+          <div class="p-3 d-flex flex-column flex-fill align-items-center justify-content-around podcast-links">
             <a href="https://anchor.fm/slhpodcast/" target="_blank"
                class="m-2" title="{% translate "Listen on" %} Anchor.fm">
               <img src="{% static "img/badge-anchor-fm.svg" %}" alt="Badge">
