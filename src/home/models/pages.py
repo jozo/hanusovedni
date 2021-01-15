@@ -928,4 +928,4 @@ def last_festival(page: Page):
         return festival.specific
     else:
         # TODO move this to settings
-        return FestivalPage.objects.get(slug="bhd-online")
+        return FestivalPage.objects.get(slug="bhd")
