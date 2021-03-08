@@ -142,7 +142,7 @@ class EventOGImage:
     def default_font(self, size):
         return ImageFont.truetype(
             os.path.join(
-                settings.BASE_DIR, "hanusovedni/static/fonts/AdelleBasic_Bold.otf"
+                settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"
             ),
             size,
         )
