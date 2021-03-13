@@ -83,7 +83,7 @@ build-image:
 .staging:
   environment:
     name: staging
-    url: https://hanusovedni.online
+    url: https://test.hanusovedni.sk
 
 .production:
   environment:

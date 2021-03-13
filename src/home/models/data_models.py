@@ -7,7 +7,6 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 from modelcluster.fields import ParentalKey
-from wagtail.admin import blocks
 from wagtail.admin.edit_handlers import (
     FieldPanel,
     FieldRowPanel,
@@ -17,6 +16,7 @@ from wagtail.admin.edit_handlers import (
     PageChooserPanel,
     TabbedInterface,
 )
+from wagtail.core import blocks
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
 from wagtail.images import get_image_model_string
@@ -39,8 +39,14 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(max_length=255, blank=True,)
-    short_overview_en = models.CharField(max_length=255, blank=True,)
+    short_overview_sk = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    short_overview_en = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     short_overview = TranslatedField("short_overview_sk", "short_overview_en")
     description_sk = RichTextField(blank=True)
     description_en = RichTextField(blank=True)
@@ -49,7 +55,10 @@ class Event(FixUrlMixin, Page):
         default=timezone.now, verbose_name=_("date and time")
     )
     location = models.ForeignKey(
-        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
+        "home.Location",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     video_url = models.URLField(
         null=True,
@@ -66,7 +75,10 @@ class Event(FixUrlMixin, Page):
     )
     ticket_url = models.URLField(null=True, blank=True)
     category = models.ForeignKey(
-        "home.Category", null=True, blank=True, on_delete=models.SET_NULL,
+        "home.Category",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
