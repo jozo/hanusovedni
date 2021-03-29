@@ -447,7 +447,7 @@ viewSpeakers lang speakers =
     else
         let
             normalSpeakers =
-                List.take (List.length speakers.underLimit) speakers.underLimit
+                List.take ((List.length speakers.underLimit) - 1) speakers.underLimit
 
             lastSpeaker =
                 viewLastSpeaker

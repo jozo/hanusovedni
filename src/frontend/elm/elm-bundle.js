@@ -7913,7 +7913,7 @@ var $author$project$Main$viewSpeakers = F2(
 		} else {
 			var normalSpeakers = A2(
 				$elm$core$List$take,
-				$elm$core$List$length(speakers.H),
+				$elm$core$List$length(speakers.H) - 1,
 				speakers.H);
 			var lastSpeaker = A4(
 				$author$project$Main$viewLastSpeaker,

@@ -287,14 +287,14 @@ class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
 class ArchiveQueryset(models.QuerySet):
     def events(self):
         return (
-            Event.objects.live()
+            Event.objects.live().distinct()
             .order_by("-date_and_time")
             .select_related("icon", "category", "location", "related_festival")
             .prefetch_related("host_connections__speaker")
             .prefetch_related(
                 Prefetch(
                     "speaker_connections__speaker",
-                    queryset=Speaker.objects.live().only("title"),
+                    queryset=Speaker.objects.live().distinct().only("title"),
                 )
             )
             .prefetch_related(
