@@ -330,7 +330,7 @@ class ArchiveQueryset(models.QuerySet):
                     "iso": event.date_and_time.isoformat(),
                     "repr": date_format(event.date_and_time, "j.n.Y — l — G:i").upper(),
                 },
-                "location": event.location.title,
+                "location": event.location.title if event.location else "",
                 "speakers": event.speakers_limited,
                 "extendedInfo": {
                     "hasVideo": bool(event.video_url),
