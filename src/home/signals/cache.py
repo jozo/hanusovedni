@@ -15,6 +15,7 @@ from home.models.pages import (
     HomePage,
     ProgramIndexPage,
     StreamPage,
+    SpeakerIndexPage,
 )
 
 
@@ -51,6 +52,8 @@ class IndexPages:
             pages.add(program_index)
         for festival_page in FestivalPage.objects.live():
             pages.add(festival_page)
+        for speaker_index in SpeakerIndexPage.objects.live():
+            pages.add(speaker_index)
         return pages
 
 
