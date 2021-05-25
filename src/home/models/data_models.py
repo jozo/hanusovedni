@@ -91,9 +91,7 @@ class Event(FixUrlMixin, Page):
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     related_festival = models.ForeignKey(
         "home.FestivalPage",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         related_name="+",
     )
 
