@@ -768,6 +768,26 @@ class CrowdfundingCandlePage(CrowdfundingRocket2Page):
     class Meta:
         verbose_name = "crowdfunding - candle"
 
+    feed_url = models.URLField(blank=True, help_text="URL from darujme.sk with donation amount")
+
+    content_panels_sk = Page.content_panels + [
+        FieldPanel("target_amount"),
+        FieldPanel("feed_url"),
+        StreamFieldPanel("body_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        StreamFieldPanel("body_en"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
 
 class StreamPage(FixUrlMixin, Page):
     stream_url = models.URLField(blank=True)

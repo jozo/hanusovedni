@@ -13,13 +13,15 @@ $(document).ready(function () {
 
         // light on candles
         let num_of_candles = Math.min(10, Math.floor(percentage * 10))
+        num_of_candles = Math.max(1, num_of_candles)
         const candle_flames = $('.flame')
         for (let i = 0; i < num_of_candles; i++) {
             $(candle_flames[i]).delay(i * animation_time).animate({width: "30px", opacity: "show"})
         }
     }
 
-    $.ajax('https://api.darujme.sk/v1/feeds/c652ee51-bde3-49ff-b274-362a7d50fd99/donations/?per_page=1')
+    const feedUrl = $("#feed-url").text()
+    $.ajax(feedUrl)
         .done(function (data) {
             let amount = data['response']['metadata']['total_amount']
             showAsPercentage(amount)
