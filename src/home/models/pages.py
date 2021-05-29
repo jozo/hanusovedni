@@ -178,6 +178,7 @@ class FestivalPage(FixUrlMixin, Page):
         "home.CrowdfundingPage",
         "home.CrowdfundingStarsPage",
         "home.CrowdfundingRocket2Page",
+        "home.CrowdfundingCandlePage",
         "home.PartnersPage",
         "home.AboutFestivalPage",
     ]
@@ -646,11 +647,7 @@ class PartnersPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        festival = self.get_ancestors().type(FestivalPage).first()
-        if festival:
-            context["header_festival"] = festival.specific
-        else:
-            context["header_festival"] = last_festival(self)
+        context["festival"] = last_festival(self)
         return context
 
 
@@ -687,11 +684,7 @@ class CrowdfundingPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        festival = self.get_ancestors().type(FestivalPage).first()
-        if festival:
-            context["festival"] = festival.specific
-        else:
-            context["festival"] = last_festival(self)
+        context["festival"] = last_festival(self)
         return context
 
 
@@ -728,11 +721,7 @@ class CrowdfundingStarsPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        festival = self.get_ancestors().type(FestivalPage).first()
-        if festival:
-            context["festival"] = festival.specific
-        else:
-            context["festival"] = last_festival(self)
+        context["festival"] = last_festival(self)
         return context
 
 
@@ -771,12 +760,13 @@ class CrowdfundingRocket2Page(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        festival = self.get_ancestors().type(FestivalPage).first()
-        if festival:
-            context["festival"] = festival.specific
-        else:
-            context["festival"] = last_festival(self)
+        context["festival"] = last_festival(self)
         return context
+
+
+class CrowdfundingCandlePage(CrowdfundingRocket2Page):
+    class Meta:
+        verbose_name = "crowdfunding - candle"
 
 
 class StreamPage(FixUrlMixin, Page):

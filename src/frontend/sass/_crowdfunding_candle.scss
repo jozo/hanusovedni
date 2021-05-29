@@ -1,0 +1,124 @@
+.template-crowdfunding-candle {
+  font-family: $font-special;
+
+  .help {
+    text-transform: uppercase;
+    font-size: 43px;
+    font-weight: bold;
+  }
+
+  .colorful {
+    font-size: 1.85rem;
+    &.yellow {
+      color: $c-special;
+    }
+    &.red {
+      color: $c-red-light;
+    }
+  }
+
+  footer {
+    border-top: 1px solid #EDA605;
+  }
+
+  .thermometer {
+    width: 100%;
+    height: 10px;
+    position: relative;
+  }
+
+  .scale {
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    background-color: white;
+    border-radius: 4px;
+  }
+
+  .mercury {
+    position: absolute;
+    height: 10px;
+    width: 0;
+    border-radius: 4px;
+    background-color: #EDA605;
+  }
+
+  .numbers {
+    position: relative;
+    height: 30px;
+    font-size: 1.4rem;
+    @media (max-width: map-get($grid-breakpoints, "sm")) {
+      font-size: 0.8rem;
+    }
+
+    &>div {
+      position: absolute;
+    }
+    .n-2 {
+      left: 25%;
+      margin-left: -20px;
+    }
+    .n-3 {
+      left: 50%;
+      margin-left: -20px;
+    }
+    .n-4 {
+      left: 75%;
+      margin-left: -20px;
+    }
+    #target-amount {
+      right: 0;
+    }
+  }
+
+  .donate-button {
+    z-index: 10;
+  }
+
+  .candles {
+    position: relative;
+    height: 89px;
+
+    .candle-wrapper {
+      position: absolute;
+      margin-left: -6px;
+
+      @for $i from 0 through 8 {
+        &.c-#{$i} {
+          left: $i / 8 * 100%;
+          .flame {
+            display: none;
+          }
+        }
+      }
+
+      &.c-9 {
+        right: 6px;
+        .flame {
+          display: none;
+        }
+      }
+      &.c-0 {
+        margin-left: 0;
+        .flame {
+          display: block;
+        }
+      }
+    }
+
+    .candle {
+      position: relative;
+      .flame {
+        position: absolute;
+        left: -9px;
+        width: 0;
+      }
+      .body {
+        position: absolute;
+        top: 34px;
+        height: 55px;
+      }
+    }
+  }
+
+}
