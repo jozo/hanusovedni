@@ -110,5 +110,12 @@ node_modules/
 /docker/pgdata/
 /backup/
 elm-stuff/
-.yarn/
-.pnp.js
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
