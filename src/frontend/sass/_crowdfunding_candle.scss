@@ -85,7 +85,7 @@
 
       @for $i from 0 through 8 {
         &.c-#{$i} {
-          left: $i / 8 * 100%;
+          left: $i / 9 * 100%;
           .flame {
             display: none;
           }
@@ -98,6 +98,7 @@
           display: none;
         }
       }
+
       &.c-0 {
         margin-left: 0;
         .flame {
