@@ -1,6 +1,6 @@
 $(document).ready(function () {
     function showAsPercentage(amount) {
-        const amount_bank = 0
+        const amount_bank = 120
         const full_amount = $('#target-amount').data("attr-value")
         let display_amount = Math.min(amount + amount_bank, full_amount)
         let percentage = display_amount / full_amount
