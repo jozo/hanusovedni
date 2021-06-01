@@ -5,6 +5,8 @@ $(document).ready(function () {
         let display_amount = Math.min(amount + amount_bank, full_amount)
         let percentage = display_amount / full_amount
         const animation_time = 400
+        const scale = $('#scale')
+        scale.prop('title', (amount + amount_bank) + '€')
         const mercury = $('#mercury')
         mercury.prop('title', (amount + amount_bank) + '€')
         mercury.animate({
