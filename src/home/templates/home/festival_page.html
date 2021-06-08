@@ -207,14 +207,14 @@
       </section>
     </div>
 
-{#    <div class="container">#}
-{#      <section class="partners">#}
-{#        <div class="d-flex flex-row flex-wrap justify-content-center">#}
-{#          {% for partner_section in page.partner_sections %}#}
-{#            {% include_block partner_section %}#}
-{#          {% endfor %}#}
-{#        </div>#}
-{#      </section>#}
-{#    </div>#}
+    <div class="container">
+      <section class="partners">
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          {% for partner_section in page.partner_sections %}
+            {% include_block partner_section %}
+          {% endfor %}
+        </div>
+      </section>
+    </div>
   </main>
 {% endblock %}
