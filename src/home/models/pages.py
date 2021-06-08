@@ -647,7 +647,7 @@ class PartnersPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = last_festival(self)
+        context["header_festival"] = last_festival(self)
         return context
 
 
