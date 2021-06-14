@@ -168,7 +168,7 @@ class Event(FixUrlMixin, Page):
 
     @cached_property
     def speakers_limited(self):
-        connections = list(self.speaker_connections.all())
+        connections = list(filter(lambda c: c.speaker is not None, self.speaker_connections.all()))
         return {
             "under_limit": [c.speaker.title for c in connections[:3]],
             "over_limit_count": len(connections[3:]),
