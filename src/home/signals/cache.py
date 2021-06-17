@@ -29,7 +29,7 @@ class CloudFlare:
         self.token = token or os.environ.get("CLOUDFLARE_BEARER_TOKEN")
 
     def purge_everything(self):
-        if os.environ["ENVIRONMENT"] in self.environments:
+        if os.environ.get("ENVIRONMENT") in self.environments:
             url = (
                 f"https://api.cloudflare.com/client/v4/zones/{self.zone_id}/purge_cache"
             )

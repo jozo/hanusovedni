@@ -74,6 +74,7 @@ class Event(FixUrlMixin, Page):
         ),
     )
     ticket_url = models.URLField(null=True, blank=True)
+    ticket2_url = models.URLField(null=True, blank=True)
     category = models.ForeignKey(
         "home.Category",
         null=True,
@@ -111,6 +112,7 @@ class Event(FixUrlMixin, Page):
                 FieldPanel("description_sk"),
                 FieldPanel("video_url"),
                 FieldPanel("ticket_url"),
+                FieldPanel("ticket2_url"),
             ],
             heading=_("description"),
         ),

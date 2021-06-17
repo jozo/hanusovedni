@@ -109,6 +109,12 @@
                  role="button" target="_blank">
                 {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
               </a>
+              {% if page.ticket2_url %}
+                <a href="{{ page.ticket2_url }}" class="btn btn-primary btn-lg m-2"
+                   role="button" target="_blank">
+                  {{ settings.home.TranslationSettings.buy_ticket2_button|linebreaks }}
+                </a>
+              {% endif %}
               {% if settings.home.TranslationSettings.season_ticket_url %}
                 <a href="{{ settings.home.TranslationSettings.season_ticket_url }}" class="btn btn-success btn-lg m-2"
                    role="button" target="_blank">
