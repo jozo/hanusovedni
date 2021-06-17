@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailembeds_tags wagtailimages_tags i18n %}
+
+{% block body_class %}template-stream-moje-kino{% endblock %}
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1" id="main-div" data-revision="{{ page.live_revision_id }}">
+    <div class="container">
+      <div class="row d-flex flex-row justify-content-center">
+        <div class="col-lg-12">
+          <div id="body-wrapper" class="mt-4">
+
+            <iframe src="http://mojekino.sk/klient-3480/kino-508"
+                    style="min-height:50vh;border:none"
+                    width="100%">
+            </iframe>
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col d-flex flex-row justify-content-center mt-3 pt-5">
+          <a class="btn-support p-4 m-01 text-center" href="{% pageurl page.donate_button_action %}" target="_blank">
+            <i class="icon-arrow1 mt-2 mr-2"></i>
+            {{ page.donate_button_text }}
+          </a>
+          <a class="btn-support btn-blue p-4 m-01 text-center" href="{{ page.slido_url }}"
+             target="_blank">
+            <i class="icon-arrow1 mt-2 mr-2"></i>
+            Sli.do
+          </a>
+        </div>
+      </div>
+
+      <div id="email-dialog-bottom">
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-4 d-flex flex-column justify-content-center mt-5 p-3 box-bg">
+            <div class="mb-3 text-center">
+              {{ page.popup_email_body|richtext }}
+            </div>
+
+            <form id="stream-form2" action="" method="POST" target="no-target">
+              <div class="form-group">
+                <label for="input-email" class="sr-only">{% trans "Email address" %}</label>
+                <input type="email" placeholder="{% trans "Email address" %}"
+                       class="form-control" id="input-email"
+                       required>
+              </div>
+              <button type="submit" class="btn btn-lg btn-block btn-outline-light">
+                <strong>{% trans "Submit" %}</strong>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <iframe src="#" id="no-target" name="no-target" style="visibility:hidden"></iframe>
+  </main>
+{% endblock %}

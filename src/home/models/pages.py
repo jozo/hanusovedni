@@ -47,6 +47,7 @@ class HomePage(FixUrlMixin, Page):
         "home.DonatePage",
         "home.PartnersPage",
         "home.StreamPage",
+        "home.StreamPageMojeKino",
         "home.PodcastPage",
     ]
 
@@ -870,6 +871,10 @@ class StreamPage(FixUrlMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival(self)
         return context
+
+
+class StreamPageMojeKino(StreamPage):
+    pass
 
 
 class PodcastPage(FixUrlMixin, Page):

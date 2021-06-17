@@ -8,6 +8,12 @@ $(document).ready(function () {
   }
 })
 
+$(document).ready(function () {
+  if ($('body.template-stream-moje-kino').length === 1) {
+    setSubmitUrlOnForms()
+  }
+})
+
 function showPopups () {
   $('#embed-wrapper').addClass('blur')    // blur embedded video
   showOrHideEmailPopup()
