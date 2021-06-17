@@ -99,25 +99,26 @@
 
             <div class="d-flex flex-sm-row flex-column justify-content-end">
               {% if page.video_url %}
-                <a href="{{ page.video_url }}" class="btn btn-warning btn-lg m-2"
-                   role="button" target="_blank">
+                <a href="{{ page.video_url }}" role="button" target="_blank"
+                   class="btn btn-warning btn-lg m-2 d-flex align-items-center">
                   {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
                 </a>
               {% endif %}
               {#              {% if page.date_and_time.date >= today and page.ticket_url %}#}
-              <a href="{{ page.ticket_url }}" class="btn btn-primary btn-lg m-2"
-                 role="button" target="_blank">
+              <a href="{{ page.ticket_url }}" role="button" target="_blank"
+                 class="btn btn-primary btn-lg m-2 d-flex align-items-center">
                 {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
               </a>
               {% if page.ticket2_url %}
-                <a href="{{ page.ticket2_url }}" class="btn btn-primary btn-lg m-2"
-                   role="button" target="_blank">
+                <a href="{{ page.ticket2_url }}" role="button" target="_blank"
+                   class="btn btn-primary btn-lg m-2 d-flex align-items-center">
                   {{ settings.home.TranslationSettings.buy_ticket2_button|linebreaks }}
                 </a>
               {% endif %}
               {% if settings.home.TranslationSettings.season_ticket_url %}
-                <a href="{{ settings.home.TranslationSettings.season_ticket_url }}" class="btn btn-success btn-lg m-2"
-                   role="button" target="_blank">
+                <a href="{{ settings.home.TranslationSettings.season_ticket_url }}"
+                   role="button" target="_blank"
+                   class="btn btn-success btn-lg m-2 d-flex align-items-center">
                   {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
                 </a>
               {% endif %}
