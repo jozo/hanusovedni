@@ -14,7 +14,7 @@ $(document).ready(function () {
         }, percentage * animation_time * 10)
 
         // light on candles
-        let num_of_candles = Math.min(10, Math.floor(percentage * 10))
+        let num_of_candles = Math.min(10, Math.floor(percentage * 10)) + 1
         num_of_candles = Math.max(1, num_of_candles)
         const candle_flames = $('.flame')
         for (let i = 0; i < num_of_candles; i++) {
