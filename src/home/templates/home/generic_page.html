@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block body_class %}template-generic{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row mx-n02">
+        <div class="col-12 px-02 mb-1">
+          <article class="p-4">
+            {{ page.body | richtext }}
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

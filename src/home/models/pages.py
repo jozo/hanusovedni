@@ -49,6 +49,7 @@ class HomePage(FixUrlMixin, Page):
         "home.StreamPage",
         "home.StreamPageMojeKino",
         "home.PodcastPage",
+        "home.GenericPage",
     ]
 
     @property
@@ -182,6 +183,7 @@ class FestivalPage(FixUrlMixin, Page):
         "home.CrowdfundingCandlePage",
         "home.PartnersPage",
         "home.AboutFestivalPage",
+        "home.GenericPage",
     ]
 
     edit_handler = TabbedInterface(
@@ -921,6 +923,40 @@ class PodcastPage(FixUrlMixin, Page):
         [
             ObjectList(content_panels, heading=_("Content")),
             ObjectList(episodes_panel, heading=_("Episodes")),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival(self)
+        return context
+
+
+class GenericPage(FixUrlMixin, Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+    body_sk = RichTextField()
+    body_en = RichTextField()
+    body = TranslatedField("body_sk", "body_en")
+
+    content_panels_sk = [
+        FieldPanel("title", classname="full title"),
+        FieldPanel("body_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        FieldPanel("body_en"),
+    ]
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading="Content SK"),
+            ObjectList(content_panels_en, heading="Content EN"),
             ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]

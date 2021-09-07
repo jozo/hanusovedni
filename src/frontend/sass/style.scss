@@ -307,3 +307,14 @@ body > footer {
   // by default Wagtail's userbar is not displayed
   display: none;
 }
+
+.template-generic {
+  article {
+    background-color: $c-bg;
+    font-size: 1.1rem;
+
+    p {
+      margin-bottom: 1rem;
+    }
+  }
+}
