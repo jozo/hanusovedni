@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-10 20:39+0000\n"
+"POT-Creation-Date: 2021-09-08 09:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,104 +19,114 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: home/models/data_models.py:35 home/models/pages.py:59
-#: home/models/pages.py:64 home/models/pages.py:210 home/models/pages.py:356
-#: home/models/pages.py:400 home/models/pages.py:447 home/models/pages.py:502
-#: home/models/pages.py:550 home/models/pages.py:594 home/models/pages.py:659
-#: home/models/pages.py:700 home/models/pages.py:739
+#: home/models/data_models.py:36 home/models/pages.py:63
+#: home/models/pages.py:68 home/models/pages.py:217 home/models/pages.py:363
+#: home/models/pages.py:407 home/models/pages.py:454 home/models/pages.py:509
+#: home/models/pages.py:557 home/models/pages.py:601 home/models/pages.py:662
+#: home/models/pages.py:699 home/models/pages.py:736 home/models/pages.py:798
+#: home/models/pages.py:884 home/models/pages.py:939
 msgid "title"
 msgstr "titulok"
 
-#: home/models/data_models.py:38 home/models/pages.py:213
-#: home/models/pages.py:359 home/models/pages.py:403 home/models/pages.py:450
-#: home/models/pages.py:505 home/models/pages.py:553 home/models/pages.py:597
-#: home/models/pages.py:662 home/models/pages.py:703 home/models/pages.py:742
+#: home/models/data_models.py:39 home/models/pages.py:220
+#: home/models/pages.py:366 home/models/pages.py:410 home/models/pages.py:457
+#: home/models/pages.py:512 home/models/pages.py:560 home/models/pages.py:604
+#: home/models/pages.py:665 home/models/pages.py:702 home/models/pages.py:739
+#: home/models/pages.py:801 home/models/pages.py:887 home/models/pages.py:941
 msgid "The page title as you'd like it to be seen by the public"
 msgstr "Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti"
 
-#: home/models/data_models.py:48
+#: home/models/data_models.py:55
 msgid "date and time"
 msgstr "dátum a čas"
 
-#: home/models/data_models.py:57
+#: home/models/data_models.py:67
 msgid "Supports Youtube, Vimeo and {}{}{}"
 msgstr "Podporuje Youtube, Vimeo a {}{}{}"
 
-#: home/models/data_models.py:62
+#: home/models/data_models.py:72
 msgid "other websites"
 msgstr "ďalšie stránky"
 
-#: home/models/data_models.py:104 home/models/data_models.py:113
+#: home/models/data_models.py:117 home/models/data_models.py:126
 msgid "description"
 msgstr "popis"
 
-#: home/models/data_models.py:132
+#: home/models/data_models.py:145
 msgid "event"
 msgstr "podujatie"
 
-#: home/models/data_models.py:133
+#: home/models/data_models.py:146
 msgid "events"
 msgstr "podujatia"
 
-#: home/models/data_models.py:215
+#: home/models/data_models.py:231
 msgid "speaker"
 msgstr "rečník"
 
-#: home/models/data_models.py:216
+#: home/models/data_models.py:232
 msgid "speakers"
 msgstr "rečníci"
 
-#: home/models/data_models.py:331
+#: home/models/data_models.py:350
 msgid "URL to map"
 msgstr "URL k mape"
 
-#: home/models/data_models.py:332
+#: home/models/data_models.py:351
 msgid "URL to Google Maps or similar service"
 msgstr "URL adresa na Google Mapy alebo obdobnú službu"
 
-#: home/models/data_models.py:342
+#: home/models/data_models.py:361
 msgid "location"
 msgstr "poloha"
 
-#: home/models/data_models.py:343
+#: home/models/data_models.py:362
 msgid "locations"
 msgstr "polohy"
 
-#: home/models/data_models.py:370
+#: home/models/data_models.py:389
 msgid "category"
 msgstr "kategória"
 
-#: home/models/data_models.py:371
+#: home/models/data_models.py:390
 msgid "categories"
 msgstr "kategórie"
 
-#: home/models/pages.py:60 home/models/pages.py:65
+#: home/models/pages.py:64 home/models/pages.py:69
 msgid "Visible in header next to the logo"
 msgstr "Viditeľné v hlavičke vedľa loga"
 
-#: home/models/pages.py:70
+#: home/models/pages.py:74
 msgid "festival beginning"
 msgstr "začiatok festivalu"
 
-#: home/models/pages.py:72
+#: home/models/pages.py:76
 msgid "festival end"
 msgstr "koniec festivalu"
 
-#: home/models/pages.py:74
+#: home/models/pages.py:78
 msgid "place"
 msgstr "miesto"
 
-#: home/models/pages.py:149
+#: home/models/pages.py:153
 msgid "Internal title"
 msgstr "Interný názov"
 
-#: home/models/pages.py:150
+#: home/models/pages.py:154
 msgid "Visible only in the admin"
 msgstr "Viditeľné iba v adminovi"
 
-#: home/models/pages.py:171
+#: home/models/pages.py:175
 msgid "menu"
 msgstr "menu"
+
+#: home/models/pages.py:924
+msgid "Content"
+msgstr "Obsah"
+
+#: home/models/pages.py:925
+msgid "Episodes"
+msgstr "Epizódy"
 
 #: home/templates/home/about_festival_page.html:30
 msgid "Photo of Ladislav Hanus"
@@ -184,33 +194,42 @@ msgstr "Program"
 msgid "Follow us on Facebook"
 msgstr "Sledujte nás na Facebooku"
 
+#: home/templates/home/podcast_page.html:21
+#: home/templates/home/podcast_page.html:25
+#: home/templates/home/podcast_page.html:29
+#: home/templates/home/podcast_page.html:72
+#: home/templates/home/podcast_page.html:76
+#: home/templates/home/podcast_page.html:80
+msgid "Listen on"
+msgstr "Počúvaj na"
+
 #: home/templates/home/program_index_page.html:35
-msgid "No events found"
-msgstr "Nenašli sa žiadne podujatia"
+msgid "We are working on this..."
+msgstr "Na programe sa pracuje..."
 
 #: home/templates/home/speaker_index_page.html:40
 msgid "No speakers found"
 msgstr "Nenašli sa žiadni rečníci"
 
-#: home/templates/home/stream_page.html:36
-#: home/templates/home/stream_page.html:37
-#: home/templates/home/stream_page.html:76
-#: home/templates/home/stream_page.html:77
+#: home/templates/home/stream_page.html:45
+#: home/templates/home/stream_page.html:46
+#: home/templates/home/stream_page.html:82
+#: home/templates/home/stream_page.html:83
+#: home/templates/home/stream_page_moje_kino.html:45
+#: home/templates/home/stream_page_moje_kino.html:46
 msgid "Email address"
 msgstr "Emailová adresa"
 
-#: home/templates/home/stream_page.html:45
-msgid "or"
-msgstr "alebo"
-
-#: home/templates/home/stream_page.html:45
-msgid "continue without email"
-msgstr "pokračovať bez emailu"
-
-#: home/templates/home/stream_page.html:80
+#: home/templates/home/stream_page.html:87
+#: home/templates/home/stream_page_moje_kino.html:51
 msgid "Submit"
 msgstr "Odoslať"
 
-#: home/wagtail_hooks.py:19
+#: home/wagtail_hooks.py:21
 msgid "year"
 msgstr "rok"
+
+#: home/wagtail_hooks.py:154
+#, python-brace-format
+msgid "Page '{0}' can not be deleted. You can only unpublish it."
+msgstr "Stránka '{0}' nemôže byť vymazaná. Môžete ju iba odpublikovať."
