@@ -11,8 +11,6 @@ ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
 
 BASE_URL = os.environ["DJANGO_BASE_URL"]
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 DATABASES["default"]["PASSWORD"] = os.environ["POSTGRES_PASSWORD"]
 
 WAGTAILFRONTENDCACHE = {
@@ -31,3 +29,10 @@ sentry_sdk.init(
     send_default_pii=True,
     environment=os.environ["ENVIRONMENT"],
 )
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
