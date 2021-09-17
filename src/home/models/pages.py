@@ -163,6 +163,7 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("video_text_sk", classname="full"),
         InlinePanel("video_invites"),
         StreamFieldPanel("headline_sk"),
+        StreamFieldPanel("partner_sections"),
     ]
     content_panels_en = [
         FieldPanel("formatted_title_en"),
@@ -171,11 +172,12 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("video_text_en", classname="full"),
         StreamFieldPanel("headline_en"),
     ]
-    promote_panels = Page.promote_panels + [
+    menu_panels = [
         InlinePanel("menu_items", label=_("menu")),
-        StreamFieldPanel("partner_sections"),
     ]
     subpage_types = [
+        "home.EventIndexPage",
+        "home.SpeakerIndexPage",
         "home.ProgramIndexPage",
         "home.CrowdfundingPage",
         "home.CrowdfundingStarsPage",
@@ -184,13 +186,15 @@ class FestivalPage(FixUrlMixin, Page):
         "home.PartnersPage",
         "home.AboutFestivalPage",
         "home.GenericPage",
+        "home.ContactPage",
     ]
 
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels_sk, heading="Content SK"),
             ObjectList(content_panels_en, heading="Content EN"),
-            ObjectList(promote_panels, heading="Promote"),
+            ObjectList(menu_panels, heading="Menu"),
+            ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
     )
@@ -234,10 +238,6 @@ class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
         ]
     )
 
-    subpage_types = [
-        "home.Speaker",
-    ]
-
     @route(r"^(\d+)/(.+)/")
     def speaker_with_id_in_url(self, request, speaker_id, slug):
         speaker = Speaker.objects.get(speaker_id=speaker_id)
@@ -255,6 +255,8 @@ class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
 
     def get_speakers_by_year(self):
         speakers_by_year = defaultdict(dict)
+        if not Event.objects.live():
+            return speakers_by_year
         min_year = (
             Event.objects.live()
             .only("date_and_time")
@@ -398,7 +400,6 @@ class EventIndexPage(RoutablePageMixin, FixUrlMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival(self)
         context["events"] = ArchiveQueryset().events()
-        # context["events_json"] = ArchiveQueryset().json()
         return context
 
 

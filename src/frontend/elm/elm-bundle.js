@@ -6211,13 +6211,11 @@ var $elm$http$Http$get = function (r) {
 	return $elm$http$Http$request(
 		{aL: $elm$http$Http$emptyBody, aP: r.aP, ae: _List_Nil, aU: 'GET', a3: $elm$core$Maybe$Nothing, aE: $elm$core$Maybe$Nothing, J: r.J});
 };
-var $author$project$Main$getAllEvents = function (languageCode) {
-	return $elm$http$Http$get(
-		{
-			aP: A2($elm$http$Http$expectJson, $author$project$Main$GotEvents, $author$project$Main$eventsDecoder),
-			J: '/' + (languageCode + '/events/json/')
-		});
-};
+var $author$project$Main$getAllEvents = $elm$http$Http$get(
+	{
+		aP: A2($elm$http$Http$expectJson, $author$project$Main$GotEvents, $author$project$Main$eventsDecoder),
+		J: 'json/'
+	});
 var $author$project$Main$init = function (languageCode) {
 	return _Utils_Tuple2(
 		A7(
@@ -6229,7 +6227,7 @@ var $author$project$Main$init = function (languageCode) {
 			false,
 			'',
 			'---'),
-		$author$project$Main$getAllEvents(languageCode));
+		$author$project$Main$getAllEvents);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
