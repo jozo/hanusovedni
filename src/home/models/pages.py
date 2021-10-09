@@ -187,6 +187,7 @@ class FestivalPage(FixUrlMixin, Page):
         "home.AboutFestivalPage",
         "home.GenericPage",
         "home.ContactPage",
+        "home.MirrorPage",
     ]
 
     edit_handler = TabbedInterface(
@@ -331,7 +332,7 @@ class ArchiveQueryset(models.QuerySet):
         for event in self.events():
             d = {
                 "title": event.title,
-                "url": event.url,
+                "url": f"{event.event_id}/{event.slug}",
                 "dateAndTime": {
                     "iso": event.date_and_time.isoformat(),
                     "repr": date_format(event.date_and_time, "j.n.Y — l — G:i").upper(),
@@ -399,7 +400,7 @@ class EventIndexPage(RoutablePageMixin, FixUrlMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival(self)
-        context["events"] = ArchiveQueryset().events()
+        # context["events"] = ArchiveQueryset().events()
         return context
 
 
@@ -967,6 +968,53 @@ class GenericPage(FixUrlMixin, Page):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = last_festival(self)
         return context
+
+
+class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=False,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+
+    mirrored_page = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    content_panels = Page.content_panels + [
+        FieldPanel("title_en", classname="full title", heading="Title EN"),
+        PageChooserPanel('mirrored_page',),
+    ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["header_festival"] = last_festival(self)
+        return context
+
+    def serve(self, request, *args, **kwargs):
+        if args[1]:
+            # for subpage
+            return self.mirrored_page.specific.serve(request, *args, **kwargs)
+        # ignore "view" in args
+        return self.mirrored_page.specific.serve(request, **kwargs)
+
+    @route(r"^(\d+)/(.+)/")
+    def subpage_with_id_in_url(self, request, object_id, slug):
+        if isinstance(self.mirrored_page.specific, SpeakerIndexPage):
+            speaker = Speaker.objects.get(speaker_id=object_id)
+            if slug == speaker.slug:
+                return speaker.serve(request)
+            return redirect(speaker.get_url(request))
+        elif isinstance(self.mirrored_page.specific, EventIndexPage):
+            event = Event.objects.get(event_id=object_id)
+            if slug == event.slug:
+                return event.serve(request)
+            return redirect(event.get_url(request))
 
 
 def replace_tags_with_space(value):

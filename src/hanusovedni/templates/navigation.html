@@ -12,9 +12,9 @@
 
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 text-center">
-            {% for menu_item in header_festival.menu_items.all %}
+            {% for page in header_festival.get_children.live.in_menu %}
               <li class="nav-item col p-0 d-flex justify-content-center align-items-center">
-                <a class="nav-link w-100" href="{{ menu_item.link|localize_url }}">{{ menu_item.title }}</a>
+                <a class="nav-link w-100" href="{{ page.url }}">{{ page.title }}</a>
               </li>
             {% endfor %}
           </ul>

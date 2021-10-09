@@ -97,7 +97,7 @@ type alias Model =
 
 init : String -> ( Model, Cmd Msg )
 init languageCode =
-    ( Model Loading (decodeLanguage languageCode) "---" "---" False "" "---", getAllEvents )
+    ( Model Loading (decodeLanguage languageCode) "---" "---" False "" "---", getAllEvents languageCode )
 
 
 decodeLanguage : String -> Language
@@ -493,10 +493,10 @@ viewLastSpeaker lang maybeSpeaker overLimit overLimitNames =
 -- HTTP
 
 
-getAllEvents : Cmd Msg
-getAllEvents =
+getAllEvents : String -> Cmd Msg
+getAllEvents languageCode =
     Http.get
-        { url = "json/"
+        { url = "/" ++ languageCode ++ "/events/json/"
         , expect = Http.expectJson GotEvents eventsDecoder
         }
 

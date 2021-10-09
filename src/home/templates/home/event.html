@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n_extra %}
 
 {% load i18n wagtailcore_tags wagtailimages_tags wagtailembeds_tags og_image %}
 
@@ -138,7 +139,7 @@
                 {% image speaker_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
-                <a href="{% pageurl speaker_connection.speaker %}" class="speaker-heading">
+                <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}" class="speaker-heading">
                   <h4 class="mb-4">{{ speaker_connection.speaker.title }}</h4>
                 </a>
                 {{ speaker_connection.speaker.description|richtext }}
@@ -155,7 +156,7 @@
                 {% image host_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
-                <a href="{% pageurl host_connection.speaker %}" class="speaker-heading">
+                <a href="{{ host_connection.speaker.url|prefix_festival:request }}" class="speaker-heading">
                   <h4 class="mb-4">{{ host_connection.speaker.title }}</h4>
                 </a>
                 {{ host_connection.speaker.description|richtext }}

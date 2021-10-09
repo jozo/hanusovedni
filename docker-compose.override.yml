@@ -6,6 +6,7 @@ services:
       - POSTGRES_PASSWORD=hanusovedni
     volumes:
       - ./docker/pgdata:/var/lib/postgresql/data/pgdata:delegated
+      - ./:/code:delegated
     ports:
       - "5432:5432"
 

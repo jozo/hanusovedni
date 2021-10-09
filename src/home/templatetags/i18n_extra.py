@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django import template
 from django.utils.translation import get_language, to_locale
 
@@ -10,11 +12,5 @@ def current_locale():
 
 
 @register.filter
-def localize_url(value):
-    if value and not value.startswith("http"):
-        locale = to_locale(get_language())
-        if value.startswith("/"):
-            return f"/{locale}{value}"
-        else:
-            return f"/{locale}/{value}"
-    return value
+def prefix_festival(value, request):
+    return "/".join(chain(request.path.split("/")[:3], value.split("/")[2:]))
