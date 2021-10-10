@@ -7,13 +7,18 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0009_auto_20200208_1523'),
+        ("home", "0009_auto_20200208_1523"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='speakers',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, related_name='events', to='home.Speaker', verbose_name='rečník'),
+            model_name="event",
+            name="speakers",
+            field=modelcluster.fields.ParentalManyToManyField(
+                blank=True,
+                related_name="events",
+                to="home.Speaker",
+                verbose_name="rečník",
+            ),
         ),
     ]

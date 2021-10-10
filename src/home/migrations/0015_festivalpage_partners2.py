@@ -9,13 +9,20 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0014_remove_videoinvite_name'),
+        ("home", "0014_remove_videoinvite_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='festivalpage',
-            name='partners2',
-            field=wagtail.core.fields.StreamField([('heading', wagtail.core.blocks.CharBlock(classname='full title')), ('url', wagtail.core.blocks.URLBlock()), ('logo', wagtail.images.blocks.ImageChooserBlock())], blank=True),
+            model_name="festivalpage",
+            name="partners2",
+            field=wagtail.core.fields.StreamField(
+                [
+                    ("heading", wagtail.core.blocks.CharBlock(classname="full title")),
+                    ("url", wagtail.core.blocks.URLBlock()),
+                    ("logo", wagtail.images.blocks.ImageChooserBlock()),
+                ],
+                blank=True,
+            ),
         ),
     ]

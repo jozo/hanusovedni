@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0065_auto_20200421_0940'),
+        ("home", "0065_auto_20200421_0940"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='streampage',
-            name='button_text_en',
+            model_name="streampage",
+            name="button_text_en",
             field=models.CharField(blank=True, max_length=100),
         ),
         migrations.AddField(
-            model_name='streampage',
-            name='button_text_sk',
+            model_name="streampage",
+            name="button_text_sk",
             field=models.CharField(blank=True, max_length=100),
         ),
     ]

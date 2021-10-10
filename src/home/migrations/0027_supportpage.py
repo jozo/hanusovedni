@@ -9,20 +9,39 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0045_assign_unlock_grouppagepermission'),
-        ('home', '0026_auto_20200306_1559'),
+        ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
+        ("home", "0026_auto_20200306_1559"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SupportPage',
+            name="SupportPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('body', wagtail.core.fields.StreamField([('heading', wagtail.core.blocks.CharBlock(classname='title')), ('paragraph', wagtail.core.blocks.RichTextBlock())])),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                (
+                    "body",
+                    wagtail.core.fields.StreamField(
+                        [
+                            (
+                                "heading",
+                                wagtail.core.blocks.CharBlock(classname="title"),
+                            ),
+                            ("paragraph", wagtail.core.blocks.RichTextBlock()),
+                        ]
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'podpora',
-            },
-            bases=('wagtailcore.page',),
+            options={"verbose_name": "podpora",},
+            bases=("wagtailcore.page",),
         ),
     ]

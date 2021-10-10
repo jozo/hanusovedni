@@ -7,6 +7,7 @@ def logged_in_middleware(get_response):
     """Set cookie after user logs in. This is used later in JS to show
     Wagtail's userbar only to authenticated users.
     """
+
     def middleware(request):
         response = get_response(request)
 

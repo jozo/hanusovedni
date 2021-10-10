@@ -7,21 +7,45 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0001_squashed_0021'),
-        ('wagtailcore', '0045_assign_unlock_grouppagepermission'),
-        ('home', '0082_auto_20200426_1918'),
+        ("wagtailimages", "0001_squashed_0021"),
+        ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
+        ("home", "0082_auto_20200426_1918"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='OpenGraphImage',
+            name="OpenGraphImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='wagtailimages.Image')),
-                ('page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='wagtailcore.Page')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                    ),
+                ),
+                (
+                    "page",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="wagtailcore.Page",
+                    ),
+                ),
             ],
-            options={
-                'unique_together': {('page', 'image')},
-            },
+            options={"unique_together": {("page", "image")},},
         ),
     ]

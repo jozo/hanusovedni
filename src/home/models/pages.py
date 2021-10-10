@@ -172,29 +172,11 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("video_text_en", classname="full"),
         StreamFieldPanel("headline_en"),
     ]
-    menu_panels = [
-        InlinePanel("menu_items", label=_("menu")),
-    ]
-    subpage_types = [
-        "home.EventIndexPage",
-        "home.SpeakerIndexPage",
-        "home.ProgramIndexPage",
-        "home.CrowdfundingPage",
-        "home.CrowdfundingStarsPage",
-        "home.CrowdfundingRocket2Page",
-        "home.CrowdfundingCandlePage",
-        "home.PartnersPage",
-        "home.AboutFestivalPage",
-        "home.GenericPage",
-        "home.ContactPage",
-        "home.MirrorPage",
-    ]
 
     edit_handler = TabbedInterface(
         [
             ObjectList(content_panels_sk, heading="Content SK"),
             ObjectList(content_panels_en, heading="Content EN"),
-            ObjectList(menu_panels, heading="Menu"),
             ObjectList(Page.promote_panels, heading="Promote"),
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
@@ -248,7 +230,6 @@ class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
         context["speakers_by_year"] = self.get_speakers_by_year()
         # disable defaultdict because Django Template can't work with it
         context["speakers_by_year"].default_factory = None
@@ -294,7 +275,8 @@ class SpeakerIndexPage(RoutablePageMixin, FixUrlMixin, Page):
 class ArchiveQueryset(models.QuerySet):
     def events(self):
         return (
-            Event.objects.live().distinct()
+            Event.objects.live()
+            .distinct()
             .order_by("-date_and_time")
             .select_related("icon", "category", "location", "related_festival")
             .prefetch_related("host_connections__speaker")
@@ -399,7 +381,6 @@ class EventIndexPage(RoutablePageMixin, FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
         # context["events"] = ArchiveQueryset().events()
         return context
 
@@ -502,7 +483,6 @@ class ContactPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
         return context
 
 
@@ -544,15 +524,6 @@ class AboutFestivalPage(FixUrlMixin, Page):
         ]
     )
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        festival = self.get_ancestors().type(FestivalPage).first()
-        if festival:
-            context["header_festival"] = festival.specific
-        else:
-            context["header_festival"] = last_festival(self)
-        return context
-
 
 class DonatePage(FixUrlMixin, Page):
     title_en = models.CharField(
@@ -591,11 +562,6 @@ class DonatePage(FixUrlMixin, Page):
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
     )
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
 
 
 class PartnersPage(FixUrlMixin, Page):
@@ -650,11 +616,6 @@ class PartnersPage(FixUrlMixin, Page):
         ]
     )
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
-
 
 class CrowdfundingPage(FixUrlMixin, Page):
     class Meta:
@@ -689,7 +650,7 @@ class CrowdfundingPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = last_festival(self)
+        context["festival"] = ancestor_festival(self)
         return context
 
 
@@ -726,7 +687,7 @@ class CrowdfundingStarsPage(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = last_festival(self)
+        context["festival"] = ancestor_festival(self)
         return context
 
 
@@ -765,7 +726,7 @@ class CrowdfundingRocket2Page(FixUrlMixin, Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["festival"] = last_festival(self)
+        context["festival"] = ancestor_festival(self)
         return context
 
 
@@ -773,7 +734,9 @@ class CrowdfundingCandlePage(CrowdfundingRocket2Page):
     class Meta:
         verbose_name = "crowdfunding - candle"
 
-    feed_url = models.URLField(blank=True, help_text="URL from darujme.sk with donation amount")
+    feed_url = models.URLField(
+        blank=True, help_text="URL from darujme.sk with donation amount"
+    )
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("target_amount"),
@@ -823,10 +786,7 @@ class StreamPage(FixUrlMixin, Page):
     )
     popup_donation_button_url = models.URLField(blank=True, default="")
     background = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL,
     )
     google_form_url = models.URLField(blank=True)
     donate_button_text_sk = models.CharField(max_length=100, null=True)
@@ -871,11 +831,6 @@ class StreamPage(FixUrlMixin, Page):
         ]
     )
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
-
 
 class StreamPageMojeKino(StreamPage):
     pass
@@ -913,7 +868,7 @@ class PodcastPage(FixUrlMixin, Page):
 
     content_panels = [
         FieldPanel("title", classname="full title", heading="Title SK"),
-        FieldPanel("title_en", classname="full title",  heading="Title EN"),
+        FieldPanel("title_en", classname="full title", heading="Title EN"),
         FieldPanel("description_sk", classname="full"),
         FieldPanel("description_en", classname="full"),
     ]
@@ -929,11 +884,6 @@ class PodcastPage(FixUrlMixin, Page):
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
     )
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
 
 
 class GenericPage(FixUrlMixin, Page):
@@ -964,11 +914,6 @@ class GenericPage(FixUrlMixin, Page):
         ]
     )
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
-
 
 class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
     title_en = models.CharField(
@@ -980,21 +925,16 @@ class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
     title_translated = TranslatedField("title", "title_en")
 
     mirrored_page = models.ForeignKey(
-        'wagtailcore.Page',
+        "wagtailcore.Page",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
+        related_name="+",
     )
     content_panels = Page.content_panels + [
         FieldPanel("title_en", classname="full title", heading="Title EN"),
-        PageChooserPanel('mirrored_page',),
+        PageChooserPanel("mirrored_page",),
     ]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
-        return context
 
     def serve(self, request, *args, **kwargs):
         if args[1]:
@@ -1022,10 +962,7 @@ def replace_tags_with_space(value):
     return re.sub(r"</?\w+>", " ", str(value))
 
 
-def last_festival(page: Page):
+def ancestor_festival(page: Page):
     festival = page.get_ancestors().type(FestivalPage).first()
     if festival:
         return festival.specific
-    else:
-        # TODO move this to settings
-        return FestivalPage.objects.get(slug="bhd")

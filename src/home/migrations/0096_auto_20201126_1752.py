@@ -6,28 +6,24 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0095_auto_20201120_0926'),
+        ("home", "0095_auto_20201120_0926"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='streampage',
-            old_name='body_en',
-            new_name='popup_email_body_en',
+            model_name="streampage", old_name="body_en", new_name="popup_email_body_en",
         ),
         migrations.RenameField(
-            model_name='streampage',
-            old_name='body_sk',
-            new_name='popup_email_body_sk',
+            model_name="streampage", old_name="body_sk", new_name="popup_email_body_sk",
         ),
         migrations.RenameField(
-            model_name='streampage',
-            old_name='button_text_en',
-            new_name='popup_email_button_en',
+            model_name="streampage",
+            old_name="button_text_en",
+            new_name="popup_email_button_en",
         ),
         migrations.RenameField(
-            model_name='streampage',
-            old_name='button_text_sk',
-            new_name='popup_email_button_sk',
+            model_name="streampage",
+            old_name="button_text_sk",
+            new_name="popup_email_button_sk",
         ),
     ]

@@ -7,18 +7,26 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0102_auto_20210525_1452'),
+        ("home", "0102_auto_20210525_1452"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CrowdfundingCandlePage',
+            name="CrowdfundingCandlePage",
             fields=[
-                ('crowdfundingrocket2page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='home.crowdfundingrocket2page')),
+                (
+                    "crowdfundingrocket2page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="home.crowdfundingrocket2page",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'crowdfunding - candle',
-            },
-            bases=('home.crowdfundingrocket2page',),
+            options={"verbose_name": "crowdfunding - candle",},
+            bases=("home.crowdfundingrocket2page",),
         ),
     ]

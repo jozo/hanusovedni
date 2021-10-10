@@ -8,23 +8,36 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0090_auto_20200910_0350'),
+        ("home", "0090_auto_20200910_0350"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='festivalpage',
-            name='formatted_title_en',
-            field=wagtail.core.fields.RichTextField(default='', help_text='Viditeľné v hlavičke vedľa loga', verbose_name='titulok'),
+            model_name="festivalpage",
+            name="formatted_title_en",
+            field=wagtail.core.fields.RichTextField(
+                default="",
+                help_text="Viditeľné v hlavičke vedľa loga",
+                verbose_name="titulok",
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='formatted_title_sk',
-            field=wagtail.core.fields.RichTextField(default='', help_text='Viditeľné v hlavičke vedľa loga', verbose_name='titulok'),
+            model_name="festivalpage",
+            name="formatted_title_sk",
+            field=wagtail.core.fields.RichTextField(
+                default="",
+                help_text="Viditeľné v hlavičke vedľa loga",
+                verbose_name="titulok",
+            ),
         ),
         migrations.AlterField(
-            model_name='hostconnection',
-            name='speaker',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='host_connections', to='home.speaker'),
+            model_name="hostconnection",
+            name="speaker",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="host_connections",
+                to="home.speaker",
+            ),
         ),
     ]

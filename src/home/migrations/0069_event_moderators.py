@@ -7,13 +7,15 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0068_streampage_google_form_url'),
+        ("home", "0068_streampage_google_form_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='moderators',
-            field=modelcluster.fields.ParentalManyToManyField(blank=True, related_name='events_as_moderator', to='home.Speaker'),
+            model_name="event",
+            name="moderators",
+            field=modelcluster.fields.ParentalManyToManyField(
+                blank=True, related_name="events_as_moderator", to="home.Speaker"
+            ),
         ),
     ]

@@ -1,8 +1,8 @@
 {% load wagtailcore_tags %}
 
-{% if header_festival is not None %}
+{% if not disable_header %}
   <header>
-    {% include "logo_and_description.html" with festival=header_festival %}
+    {% include "logo_and_description.html" %}
     {% include "navigation.html" %}
   </header>
 {% endif %}

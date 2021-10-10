@@ -7,19 +7,31 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0001_squashed_0021'),
-        ('home', '0024_contactpage'),
+        ("wagtailimages", "0001_squashed_0021"),
+        ("home", "0024_contactpage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contactpage',
-            name='left_image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='l_img+', to='wagtailimages.Image'),
+            model_name="contactpage",
+            name="left_image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="l_img+",
+                to="wagtailimages.Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='contactpage',
-            name='right_image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='r_img+', to='wagtailimages.Image'),
+            model_name="contactpage",
+            name="right_image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="r_img+",
+                to="wagtailimages.Image",
+            ),
         ),
     ]

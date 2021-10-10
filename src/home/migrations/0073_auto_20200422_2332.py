@@ -8,26 +8,47 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0072_auto_20200422_2325'),
+        ("home", "0072_auto_20200422_2325"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='moderatorconnection',
-            old_name='page',
-            new_name='event',
+            model_name="moderatorconnection", old_name="page", new_name="event",
         ),
         migrations.CreateModel(
-            name='SpeakerConnection',
+            name="SpeakerConnection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('event', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='speaker_connections', to='home.Event')),
-                ('speaker', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='speaker_connections', to='home.Speaker')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                (
+                    "event",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="speaker_connections",
+                        to="home.Event",
+                    ),
+                ),
+                (
+                    "speaker",
+                    models.ForeignKey(
+                        blank=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="speaker_connections",
+                        to="home.Speaker",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
     ]

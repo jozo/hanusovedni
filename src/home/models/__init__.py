@@ -3,7 +3,6 @@ from .data_models import (
     Event,
     HeroImage,
     Location,
-    MenuItem,
     Speaker,
     VideoInvite,
     PartnerSectionBlock,

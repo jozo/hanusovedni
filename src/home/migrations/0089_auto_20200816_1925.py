@@ -7,25 +7,23 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailforms', '0004_add_verbose_name_plural'),
-        ('wagtailcore', '0052_pagelogentry'),
-        ('contenttypes', '0002_remove_content_type_name'),
+        ("wagtailforms", "0004_add_verbose_name_plural"),
+        ("wagtailcore", "0052_pagelogentry"),
+        ("contenttypes", "0002_remove_content_type_name"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('wagtailredirects', '0006_redirect_increase_max_length'),
-        ('home', '0088_auto_20200816_1919'),
+        ("wagtailredirects", "0006_redirect_increase_max_length"),
+        ("home", "0088_auto_20200816_1919"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Crowdfunding2Page',
-            new_name='CrowdfundingStarsPage',
+            old_name="Crowdfunding2Page", new_name="CrowdfundingStarsPage",
         ),
         migrations.AlterModelOptions(
-            name='crowdfundingpage',
-            options={'verbose_name': 'crowdfunding - rocket'},
+            name="crowdfundingpage", options={"verbose_name": "crowdfunding - rocket"},
         ),
         migrations.AlterModelOptions(
-            name='crowdfundingstarspage',
-            options={'verbose_name': 'crowdfunding - stars'},
+            name="crowdfundingstarspage",
+            options={"verbose_name": "crowdfunding - stars"},
         ),
     ]

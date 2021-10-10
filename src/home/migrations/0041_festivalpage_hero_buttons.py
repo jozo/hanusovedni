@@ -8,13 +8,28 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0040_crowdfundingpage'),
+        ("home", "0040_crowdfundingpage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='festivalpage',
-            name='hero_buttons',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.URLBlock())]))], blank=True, help_text='Len prvé 2 tlacidla budú použité', null=True),
+            model_name="festivalpage",
+            name="hero_buttons",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.URLBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                help_text="Len prvé 2 tlacidla budú použité",
+                null=True,
+            ),
         ),
     ]

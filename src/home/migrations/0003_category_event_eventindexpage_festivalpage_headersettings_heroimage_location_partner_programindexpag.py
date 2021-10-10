@@ -11,169 +11,391 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0001_squashed_0021'),
-        ('wagtailcore', '0041_group_collection_permissions_verbose_name_plural'),
-        ('home', '0002_create_homepage'),
+        ("wagtailimages", "0001_squashed_0021"),
+        ("wagtailcore", "0041_group_collection_permissions_verbose_name_plural"),
+        ("home", "0002_create_homepage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=30)),
-                ('color', models.CharField(max_length=20, verbose_name='farba')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=30)),
+                ("color", models.CharField(max_length=20, verbose_name="farba")),
             ],
-            options={
-                'verbose_name': 'kategória',
-                'verbose_name_plural': 'kategórie',
-            },
+            options={"verbose_name": "kategória", "verbose_name_plural": "kategórie",},
         ),
         migrations.CreateModel(
-            name='EventIndexPage',
+            name="EventIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('intro', wagtail.core.fields.RichTextField(blank=True)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("intro", wagtail.core.fields.RichTextField(blank=True)),
             ],
-            options={
-                'verbose_name': 'archív',
-            },
-            bases=(wagtail.contrib.routable_page.models.RoutablePageMixin, 'wagtailcore.page'),
+            options={"verbose_name": "archív",},
+            bases=(
+                wagtail.contrib.routable_page.models.RoutablePageMixin,
+                "wagtailcore.page",
+            ),
         ),
         migrations.CreateModel(
-            name='FestivalPage',
+            name="FestivalPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('hero_text', wagtail.core.fields.RichTextField(blank=True)),
-                ('video_text', wagtail.core.fields.RichTextField(blank=True)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("hero_text", wagtail.core.fields.RichTextField(blank=True)),
+                ("video_text", wagtail.core.fields.RichTextField(blank=True)),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('wagtailcore.page',),
+            options={"abstract": False,},
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='Location',
+            name="Location",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', wagtail.core.fields.RichTextField(blank=True, verbose_name='názov')),
-                ('url_to_map', models.URLField(help_text='URL adresa na Google Mapy alebo obdobnú službu', verbose_name='URL k mape')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    wagtail.core.fields.RichTextField(blank=True, verbose_name="názov"),
+                ),
+                (
+                    "url_to_map",
+                    models.URLField(
+                        help_text="URL adresa na Google Mapy alebo obdobnú službu",
+                        verbose_name="URL k mape",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'poloha',
-                'verbose_name_plural': 'polohy',
-            },
+            options={"verbose_name": "poloha", "verbose_name_plural": "polohy",},
         ),
         migrations.CreateModel(
-            name='ProgramIndexPage',
+            name="ProgramIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('intro', wagtail.core.fields.RichTextField(blank=True)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("intro", wagtail.core.fields.RichTextField(blank=True)),
             ],
-            options={
-                'verbose_name': 'program',
-            },
-            bases=('wagtailcore.page',),
+            options={"verbose_name": "program",},
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='SpeakerIndexPage',
+            name="SpeakerIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'rečníci',
-            },
-            bases=(wagtail.contrib.routable_page.models.RoutablePageMixin, 'wagtailcore.page'),
+            options={"verbose_name": "rečníci",},
+            bases=(
+                wagtail.contrib.routable_page.models.RoutablePageMixin,
+                "wagtailcore.page",
+            ),
         ),
         migrations.CreateModel(
-            name='VideoInvite',
+            name="VideoInvite",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('name', models.CharField(max_length=255)),
-                ('url', models.URLField()),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='video_invites', to='home.FestivalPage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("url", models.URLField()),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="video_invites",
+                        to="home.FestivalPage",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
         migrations.CreateModel(
-            name='Speaker',
+            name="Speaker",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('first_name', models.CharField(max_length=30, verbose_name='meno')),
-                ('last_name', models.CharField(max_length=30, verbose_name='priezvisko')),
-                ('description', wagtail.core.fields.RichTextField(blank=True, verbose_name='popis')),
-                ('photo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='fotka')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=30, verbose_name="meno")),
+                (
+                    "last_name",
+                    models.CharField(max_length=30, verbose_name="priezvisko"),
+                ),
+                (
+                    "description",
+                    wagtail.core.fields.RichTextField(blank=True, verbose_name="popis"),
+                ),
+                (
+                    "photo",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                        verbose_name="fotka",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('wagtailcore.page',),
+            options={"abstract": False,},
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='Partner',
+            name="Partner",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('url', models.URLField()),
-                ('logo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='partners', to='home.FestivalPage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                ("url", models.URLField()),
+                (
+                    "logo",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                    ),
+                ),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="partners",
+                        to="home.FestivalPage",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
         migrations.CreateModel(
-            name='HeroImage',
+            name="HeroImage",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('name', models.CharField(max_length=255)),
-                ('url', models.URLField()),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='hero_images', to='home.FestivalPage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("url", models.URLField()),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="hero_images",
+                        to="home.FestivalPage",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
         migrations.CreateModel(
-            name='HeaderSettings',
+            name="HeaderSettings",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('logo', models.FileField(null=True, upload_to='')),
-                ('title', wagtail.core.fields.RichTextField(default='Bratislavské Hanusove dni')),
-                ('start_date', models.DateField(default=django.utils.timezone.now)),
-                ('end_date', models.DateField(default=django.utils.timezone.now)),
-                ('place', models.CharField(default='Malá scéna STU', max_length=50)),
-                ('site', models.OneToOneField(editable=False, on_delete=django.db.models.deletion.CASCADE, to='wagtailcore.Site')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("logo", models.FileField(null=True, upload_to="")),
+                (
+                    "title",
+                    wagtail.core.fields.RichTextField(
+                        default="Bratislavské Hanusove dni"
+                    ),
+                ),
+                ("start_date", models.DateField(default=django.utils.timezone.now)),
+                ("end_date", models.DateField(default=django.utils.timezone.now)),
+                ("place", models.CharField(default="Malá scéna STU", max_length=50)),
+                (
+                    "site",
+                    models.OneToOneField(
+                        editable=False,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="wagtailcore.Site",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='Event',
+            name="Event",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('short_overview', models.CharField(blank=True, help_text='Zobrazuje sa na stránke s programom', max_length=255, verbose_name='krátky popis')),
-                ('description', wagtail.core.fields.RichTextField(blank=True, verbose_name='popis')),
-                ('date_and_time', models.DateTimeField(default=django.utils.timezone.now, verbose_name='dátum a čas')),
-                ('video_url', models.URLField(blank=True, help_text="Podporuje Youtube, Vimeo a <a href='https://github.com/wagtail/wagtail/blob/master/wagtail/embeds/oembed_providers.py' target='_blank'>dalšie stránky</a>", null=True)),
-                ('ticket_url', models.URLField(blank=True, null=True, verbose_name='Lístok URL')),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='home.Category', verbose_name='kategória')),
-                ('icon', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image', verbose_name='ikona')),
-                ('location', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='home.Location', verbose_name='poloha')),
-                ('speakers', modelcluster.fields.ParentalManyToManyField(blank=True, related_name='speakers', to='home.Speaker', verbose_name='rečník')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                (
+                    "short_overview",
+                    models.CharField(
+                        blank=True,
+                        help_text="Zobrazuje sa na stránke s programom",
+                        max_length=255,
+                        verbose_name="krátky popis",
+                    ),
+                ),
+                (
+                    "description",
+                    wagtail.core.fields.RichTextField(blank=True, verbose_name="popis"),
+                ),
+                (
+                    "date_and_time",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="dátum a čas"
+                    ),
+                ),
+                (
+                    "video_url",
+                    models.URLField(
+                        blank=True,
+                        help_text="Podporuje Youtube, Vimeo a <a href='https://github.com/wagtail/wagtail/blob/master/wagtail/embeds/oembed_providers.py' target='_blank'>dalšie stránky</a>",
+                        null=True,
+                    ),
+                ),
+                (
+                    "ticket_url",
+                    models.URLField(blank=True, null=True, verbose_name="Lístok URL"),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="home.Category",
+                        verbose_name="kategória",
+                    ),
+                ),
+                (
+                    "icon",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                        verbose_name="ikona",
+                    ),
+                ),
+                (
+                    "location",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="home.Location",
+                        verbose_name="poloha",
+                    ),
+                ),
+                (
+                    "speakers",
+                    modelcluster.fields.ParentalManyToManyField(
+                        blank=True,
+                        related_name="speakers",
+                        to="home.Speaker",
+                        verbose_name="rečník",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'podujatie',
-                'verbose_name_plural': 'podujatia',
-            },
-            bases=('wagtailcore.page',),
+            options={"verbose_name": "podujatie", "verbose_name_plural": "podujatia",},
+            bases=("wagtailcore.page",),
         ),
     ]

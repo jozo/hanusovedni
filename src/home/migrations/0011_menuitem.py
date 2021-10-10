@@ -8,22 +8,37 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0010_auto_20200208_1724'),
+        ("home", "0010_auto_20200208_1724"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MenuItem',
+            name="MenuItem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('title', models.CharField(max_length=32, verbose_name='titulok')),
-                ('link', models.CharField(max_length=255)),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='menu_items', to='home.FestivalPage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                ("title", models.CharField(max_length=32, verbose_name="titulok")),
+                ("link", models.CharField(max_length=255)),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="menu_items",
+                        to="home.FestivalPage",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
     ]

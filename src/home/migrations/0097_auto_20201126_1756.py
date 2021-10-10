@@ -7,28 +7,28 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0096_auto_20201126_1752'),
+        ("home", "0096_auto_20201126_1752"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='streampage',
-            name='popup_donation_body_en',
+            model_name="streampage",
+            name="popup_donation_body_en",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AddField(
-            model_name='streampage',
-            name='popup_donation_body_sk',
+            model_name="streampage",
+            name="popup_donation_body_sk",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AddField(
-            model_name='streampage',
-            name='popup_donation_button_en',
-            field=models.CharField(default='', max_length=100),
+            model_name="streampage",
+            name="popup_donation_button_en",
+            field=models.CharField(default="", max_length=100),
         ),
         migrations.AddField(
-            model_name='streampage',
-            name='popup_donation_button_sk',
-            field=models.CharField(default='', max_length=100),
+            model_name="streampage",
+            name="popup_donation_button_sk",
+            field=models.CharField(default="", max_length=100),
         ),
     ]

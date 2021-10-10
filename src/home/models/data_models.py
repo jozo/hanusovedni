@@ -39,14 +39,8 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(
-        max_length=255,
-        blank=True,
-    )
-    short_overview_en = models.CharField(
-        max_length=255,
-        blank=True,
-    )
+    short_overview_sk = models.CharField(max_length=255, blank=True,)
+    short_overview_en = models.CharField(max_length=255, blank=True,)
     short_overview = TranslatedField("short_overview_sk", "short_overview_en")
     description_sk = RichTextField(blank=True)
     description_en = RichTextField(blank=True)
@@ -55,10 +49,7 @@ class Event(FixUrlMixin, Page):
         default=timezone.now, verbose_name=_("date and time")
     )
     location = models.ForeignKey(
-        "home.Location",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
     )
     video_url = models.URLField(
         null=True,
@@ -76,10 +67,7 @@ class Event(FixUrlMixin, Page):
     ticket_url = models.URLField(null=True, blank=True)
     ticket2_url = models.URLField(null=True, blank=True)
     category = models.ForeignKey(
-        "home.Category",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        "home.Category", null=True, blank=True, on_delete=models.SET_NULL,
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
@@ -91,9 +79,7 @@ class Event(FixUrlMixin, Page):
     show_on_festivalpage = models.BooleanField(default=False)
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     related_festival = models.ForeignKey(
-        "home.FestivalPage",
-        on_delete=models.PROTECT,
-        related_name="+",
+        "home.FestivalPage", on_delete=models.PROTECT, related_name="+",
     )
 
     content_panels_sk = Page.content_panels + [
@@ -153,10 +139,7 @@ class Event(FixUrlMixin, Page):
         return site_id, root_url, "/".join(page_path)
 
     def get_context(self, request, *args, **kwargs):
-        from home.models.pages import last_festival
-
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
         context["today"] = timezone.now().date()
         return context
 
@@ -170,7 +153,9 @@ class Event(FixUrlMixin, Page):
 
     @cached_property
     def speakers_limited(self):
-        connections = list(filter(lambda c: c.speaker is not None, self.speaker_connections.all()))
+        connections = list(
+            filter(lambda c: c.speaker is not None, self.speaker_connections.all())
+        )
         return {
             "under_limit": [c.speaker.title for c in connections[:3]],
             "over_limit_count": len(connections[3:]),
@@ -270,10 +255,9 @@ class Speaker(FixUrlMixin, Page):
         return super().save(*args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
-        from home.models.pages import last_festival
+        from home.models.pages import ancestor_festival
 
         context = super().get_context(request, *args, **kwargs)
-        context["header_festival"] = last_festival(self)
         context["events"] = (
             Event.objects.filter(
                 Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
@@ -325,16 +309,6 @@ class VideoInvite(Orderable):
     panels = [
         FieldPanel("url"),
     ]
-
-
-class MenuItem(Orderable):
-    page = ParentalKey(
-        "home.FestivalPage", on_delete=models.CASCADE, related_name="menu_items"
-    )
-    title_sk = models.CharField(max_length=32)
-    title_en = models.CharField(max_length=32)
-    title = TranslatedField("title_sk", "title_en")
-    link = models.CharField(max_length=255)
 
 
 class LocationManager(models.Manager):

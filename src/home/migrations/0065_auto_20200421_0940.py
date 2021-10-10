@@ -7,18 +7,18 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0064_streampage'),
+        ("home", "0064_streampage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='streampage',
-            name='body_en',
+            model_name="streampage",
+            name="body_en",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='streampage',
-            name='body_sk',
+            model_name="streampage",
+            name="body_sk",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
     ]

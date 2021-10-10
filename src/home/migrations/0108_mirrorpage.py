@@ -9,21 +9,49 @@ import wagtail.contrib.routable_page.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0060_fix_workflow_unique_constraint'),
-        ('home', '0107_genericpage'),
+        ("wagtailcore", "0060_fix_workflow_unique_constraint"),
+        ("home", "0107_genericpage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MirrorPage',
+            name="MirrorPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('title_en', models.CharField(help_text='Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti', max_length=255, verbose_name='titulok')),
-                ('mirrored_page', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                (
+                    "title_en",
+                    models.CharField(
+                        help_text="Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti",
+                        max_length=255,
+                        verbose_name="titulok",
+                    ),
+                ),
+                (
+                    "mirrored_page",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=(wagtail.contrib.routable_page.models.RoutablePageMixin, home.models.mixins.FixUrlMixin, 'wagtailcore.page'),
+            options={"abstract": False,},
+            bases=(
+                wagtail.contrib.routable_page.models.RoutablePageMixin,
+                home.models.mixins.FixUrlMixin,
+                "wagtailcore.page",
+            ),
         ),
     ]

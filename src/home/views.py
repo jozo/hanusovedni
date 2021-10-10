@@ -31,10 +31,13 @@ def choose_language(request, lang_code):
     if lang_code and check_for_language(lang_code):
         parsed = urlsplit(next_url)
         new_path = f"/{lang_code}/" + parsed.path[4:]
-        next_url = urlunsplit((parsed.scheme, parsed.netloc, new_path, parsed.query, parsed.fragment))
+        next_url = urlunsplit(
+            (parsed.scheme, parsed.netloc, new_path, parsed.query, parsed.fragment)
+        )
         response = HttpResponseRedirect(next_url)
         response.set_cookie(
-            settings.LANGUAGE_COOKIE_NAME, lang_code,
+            settings.LANGUAGE_COOKIE_NAME,
+            lang_code,
             max_age=settings.LANGUAGE_COOKIE_AGE,
             path=settings.LANGUAGE_COOKIE_PATH,
             domain=settings.LANGUAGE_COOKIE_DOMAIN,
@@ -55,4 +58,3 @@ def archive_api(request):
     qs = ArchiveQueryset()
     events = str(qs.json())
     return HttpResponse(f"<html><body>{events}</body></html>")
-

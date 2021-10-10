@@ -7,18 +7,26 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0104_crowdfundingcandlepage_feed_url'),
+        ("home", "0104_crowdfundingcandlepage_feed_url"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='StreamPageMojeKino',
+            name="StreamPageMojeKino",
             fields=[
-                ('streampage_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='home.streampage')),
+                (
+                    "streampage_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="home.streampage",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
-            bases=('home.streampage',),
+            options={"abstract": False,},
+            bases=("home.streampage",),
         ),
     ]

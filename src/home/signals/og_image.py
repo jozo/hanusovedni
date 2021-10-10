@@ -141,10 +141,7 @@ class EventOGImage:
 
     def default_font(self, size):
         return ImageFont.truetype(
-            os.path.join(
-                settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"
-            ),
-            size,
+            os.path.join(settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"), size,
         )
 
     def draw_logo(self, image):

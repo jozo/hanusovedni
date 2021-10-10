@@ -9,33 +9,69 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0044_auto_20200407_1830'),
+        ("home", "0044_auto_20200407_1830"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='festivalpage',
-            name='formatted_title_en',
-            field=wagtail.core.fields.RichTextField(default='', verbose_name='titulok'),
+            model_name="festivalpage",
+            name="formatted_title_en",
+            field=wagtail.core.fields.RichTextField(default="", verbose_name="titulok"),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='headline_en',
-            field=wagtail.core.fields.StreamField([('headliner', wagtail.core.blocks.StructBlock([('name', wagtail.core.blocks.CharBlock()), ('photo', wagtail.images.blocks.ImageChooserBlock()), ('link', wagtail.core.blocks.PageChooserBlock(page_type=['home.Speaker'])), ('description', wagtail.core.blocks.RichTextBlock())]))], blank=True, null=True),
+            model_name="festivalpage",
+            name="headline_en",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "headliner",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("name", wagtail.core.blocks.CharBlock()),
+                                ("photo", wagtail.images.blocks.ImageChooserBlock()),
+                                (
+                                    "link",
+                                    wagtail.core.blocks.PageChooserBlock(
+                                        page_type=["home.Speaker"]
+                                    ),
+                                ),
+                                ("description", wagtail.core.blocks.RichTextBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='hero_buttons_en',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.CharBlock())]))], blank=True, help_text='Len prvé 2 tlacidla budú použité', null=True),
+            model_name="festivalpage",
+            name="hero_buttons_en",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                help_text="Len prvé 2 tlacidla budú použité",
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='hero_text_en',
+            model_name="festivalpage",
+            name="hero_text_en",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='video_text_en',
+            model_name="festivalpage",
+            name="video_text_en",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
     ]

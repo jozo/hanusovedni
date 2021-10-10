@@ -9,24 +9,59 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0001_squashed_0021'),
-        ('home', '0076_auto_20200424_0108'),
+        ("wagtailimages", "0001_squashed_0021"),
+        ("home", "0076_auto_20200424_0108"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='streampage',
-            name='background',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='wagtailimages.Image'),
+            model_name="streampage",
+            name="background",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="wagtailimages.Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='hero_buttons_en',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.CharBlock())]))], blank=True, help_text='Len prvé 3 tlacidla budú použité', null=True),
+            model_name="festivalpage",
+            name="hero_buttons_en",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                help_text="Len prvé 3 tlacidla budú použité",
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='hero_buttons_sk',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.CharBlock())]))], blank=True, help_text='Len prvé 3 tlacidla budú použité', null=True),
+            model_name="festivalpage",
+            name="hero_buttons_sk",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                help_text="Len prvé 3 tlacidla budú použité",
+                null=True,
+            ),
         ),
     ]

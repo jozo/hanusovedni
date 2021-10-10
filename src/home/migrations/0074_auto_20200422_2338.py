@@ -4,8 +4,8 @@ from django.db import migrations
 
 
 def forward(apps, schema_editor):
-    Event = apps.get_model('home', 'Event')
-    SpeakerConnection = apps.get_model('home', 'SpeakerConnection')
+    Event = apps.get_model("home", "Event")
+    SpeakerConnection = apps.get_model("home", "SpeakerConnection")
 
     for event in Event.objects.iterator():
         for speaker in event.speakers.all():
@@ -21,9 +21,7 @@ def backward(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0073_auto_20200422_2332'),
+        ("home", "0073_auto_20200422_2332"),
     ]
 
-    operations = [
-        migrations.RunPython(forward, backward)
-    ]
+    operations = [migrations.RunPython(forward, backward)]

@@ -7,28 +7,37 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0003_category_event_eventindexpage_festivalpage_headersettings_heroimage_location_partner_programindexpag'),
+        (
+            "home",
+            "0003_category_event_eventindexpage_festivalpage_headersettings_heroimage_location_partner_programindexpag",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='festivalpage',
-            name='end_date',
-            field=models.DateField(default=django.utils.timezone.now, verbose_name='koniec festivalu'),
+            model_name="festivalpage",
+            name="end_date",
+            field=models.DateField(
+                default=django.utils.timezone.now, verbose_name="koniec festivalu"
+            ),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='logo',
-            field=models.FileField(null=True, upload_to=''),
+            model_name="festivalpage",
+            name="logo",
+            field=models.FileField(null=True, upload_to=""),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='place',
-            field=models.CharField(default='Malá scéna STU', max_length=50, verbose_name='miesto'),
+            model_name="festivalpage",
+            name="place",
+            field=models.CharField(
+                default="Malá scéna STU", max_length=50, verbose_name="miesto"
+            ),
         ),
         migrations.AddField(
-            model_name='festivalpage',
-            name='start_date',
-            field=models.DateField(default=django.utils.timezone.now, verbose_name='začiatok festivalu'),
+            model_name="festivalpage",
+            name="start_date",
+            field=models.DateField(
+                default=django.utils.timezone.now, verbose_name="začiatok festivalu"
+            ),
         ),
     ]

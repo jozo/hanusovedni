@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0013_remove_heroimage_name'),
+        ("home", "0013_remove_heroimage_name"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='videoinvite',
-            name='name',
-        ),
+        migrations.RemoveField(model_name="videoinvite", name="name",),
     ]

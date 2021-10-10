@@ -6,23 +6,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0105_streampagemojekino'),
+        ("home", "0105_streampagemojekino"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='ticket2_url',
+            model_name="event",
+            name="ticket2_url",
             field=models.URLField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='translationsettings',
-            name='buy_ticket2_button_en',
+            model_name="translationsettings",
+            name="buy_ticket2_button_en",
             field=models.TextField(blank=True),
         ),
         migrations.AddField(
-            model_name='translationsettings',
-            name='buy_ticket2_button_sk',
+            model_name="translationsettings",
+            name="buy_ticket2_button_sk",
             field=models.TextField(blank=True),
         ),
     ]

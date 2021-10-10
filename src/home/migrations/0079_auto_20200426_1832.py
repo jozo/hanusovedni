@@ -9,57 +9,73 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0078_auto_20200424_1038'),
+        ("home", "0078_auto_20200424_1038"),
     ]
 
     operations = [
-        migrations.AlterModelOptions(
-            name='aboutfestivalpage',
-            options={},
-        ),
-        migrations.AlterModelOptions(
-            name='contactpage',
-            options={},
-        ),
-        migrations.AlterModelOptions(
-            name='donatepage',
-            options={},
-        ),
-        migrations.AlterModelOptions(
-            name='eventindexpage',
-            options={},
-        ),
-        migrations.AlterModelOptions(
-            name='partnerspage',
-            options={},
-        ),
-        migrations.AlterModelOptions(
-            name='speakerindexpage',
-            options={},
+        migrations.AlterModelOptions(name="aboutfestivalpage", options={},),
+        migrations.AlterModelOptions(name="contactpage", options={},),
+        migrations.AlterModelOptions(name="donatepage", options={},),
+        migrations.AlterModelOptions(name="eventindexpage", options={},),
+        migrations.AlterModelOptions(name="partnerspage", options={},),
+        migrations.AlterModelOptions(name="speakerindexpage", options={},),
+        migrations.AlterField(
+            model_name="festivalpage",
+            name="end_date",
+            field=models.DateField(
+                default=django.utils.timezone.now, verbose_name="festival end"
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='end_date',
-            field=models.DateField(default=django.utils.timezone.now, verbose_name='festival end'),
+            model_name="festivalpage",
+            name="hero_buttons_en",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='hero_buttons_en',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.CharBlock())]))], blank=True, null=True),
+            model_name="festivalpage",
+            name="hero_buttons_sk",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "hero_buttons",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("title", wagtail.core.blocks.CharBlock()),
+                                ("link", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                blank=True,
+                null=True,
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='hero_buttons_sk',
-            field=wagtail.core.fields.StreamField([('hero_buttons', wagtail.core.blocks.StructBlock([('title', wagtail.core.blocks.CharBlock()), ('link', wagtail.core.blocks.CharBlock())]))], blank=True, null=True),
+            model_name="festivalpage",
+            name="place",
+            field=models.CharField(
+                blank=True, max_length=50, null=True, verbose_name="place"
+            ),
         ),
         migrations.AlterField(
-            model_name='festivalpage',
-            name='place',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='place'),
-        ),
-        migrations.AlterField(
-            model_name='festivalpage',
-            name='start_date',
-            field=models.DateField(default=django.utils.timezone.now, verbose_name='festival beginning'),
+            model_name="festivalpage",
+            name="start_date",
+            field=models.DateField(
+                default=django.utils.timezone.now, verbose_name="festival beginning"
+            ),
         ),
     ]

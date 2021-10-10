@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0067_auto_20200421_0948'),
+        ("home", "0067_auto_20200421_0948"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='streampage',
-            name='google_form_url',
+            model_name="streampage",
+            name="google_form_url",
             field=models.URLField(blank=True),
         ),
     ]

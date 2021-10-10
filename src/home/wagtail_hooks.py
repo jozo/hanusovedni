@@ -81,7 +81,9 @@ class TranslationSettings(BaseSetting):
 
     buy_ticket2_button_sk = models.TextField(blank=True)
     buy_ticket2_button_en = models.TextField(blank=True)
-    buy_ticket2_button = TranslatedField("buy_ticket2_button_sk", "buy_ticket2_button_en")
+    buy_ticket2_button = TranslatedField(
+        "buy_ticket2_button_sk", "buy_ticket2_button_en"
+    )
 
     # Permanentka
     season_ticket_button_sk = models.TextField(blank=True)

@@ -6,63 +6,41 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0049_auto_20200409_2130'),
+        ("home", "0049_auto_20200409_2130"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='aboutfestivalpage',
-            old_name='body',
-            new_name='body_sk',
+            model_name="aboutfestivalpage", old_name="body", new_name="body_sk",
         ),
         migrations.RenameField(
-            model_name='category',
-            old_name='title',
-            new_name='title_sk',
+            model_name="category", old_name="title", new_name="title_sk",
         ),
         migrations.RenameField(
-            model_name='contactpage',
-            old_name='left_text',
-            new_name='left_text_sk',
+            model_name="contactpage", old_name="left_text", new_name="left_text_sk",
         ),
         migrations.RenameField(
-            model_name='contactpage',
-            old_name='right_text',
-            new_name='right_text_sk',
+            model_name="contactpage", old_name="right_text", new_name="right_text_sk",
         ),
         migrations.RenameField(
-            model_name='crowdfundingpage',
-            old_name='body',
-            new_name='body_sk',
+            model_name="crowdfundingpage", old_name="body", new_name="body_sk",
         ),
         migrations.RenameField(
-            model_name='donatepage',
-            old_name='body',
-            new_name='body_sk',
+            model_name="donatepage", old_name="body", new_name="body_sk",
         ),
         migrations.RenameField(
-            model_name='event',
-            old_name='description',
-            new_name='description_sk',
+            model_name="event", old_name="description", new_name="description_sk",
         ),
         migrations.RenameField(
-            model_name='event',
-            old_name='short_overview',
-            new_name='short_overview_sk',
+            model_name="event", old_name="short_overview", new_name="short_overview_sk",
         ),
         migrations.RenameField(
-            model_name='location',
-            old_name='title',
-            new_name='title_sk',
+            model_name="location", old_name="title", new_name="title_sk",
         ),
         migrations.RenameField(
-            model_name='partnerspage',
-            old_name='body',
-            new_name='body_sk',
+            model_name="partnerspage", old_name="body", new_name="body_sk",
         ),
         migrations.RenameField(
-            model_name='speaker',
-            old_name='description',
-            new_name='description_sk',
+            model_name="speaker", old_name="description", new_name="description_sk",
         ),
     ]

@@ -6,22 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0062_remove_festivalpage_partners2'),
+        ("home", "0062_remove_festivalpage_partners2"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='partner',
-            name='logo',
-        ),
-        migrations.RemoveField(
-            model_name='partner',
-            name='page',
-        ),
-        migrations.DeleteModel(
-            name='MediaPartner',
-        ),
-        migrations.DeleteModel(
-            name='Partner',
-        ),
+        migrations.RemoveField(model_name="partner", name="logo",),
+        migrations.RemoveField(model_name="partner", name="page",),
+        migrations.DeleteModel(name="MediaPartner",),
+        migrations.DeleteModel(name="Partner",),
     ]

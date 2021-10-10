@@ -8,33 +8,35 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0079_auto_20200426_1832'),
+        ("home", "0079_auto_20200426_1832"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='date_and_time',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='date and time'),
+            model_name="event",
+            name="date_and_time",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="date and time"
+            ),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='description_en',
+            model_name="event",
+            name="description_en",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='description_sk',
+            model_name="event",
+            name="description_sk",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='short_overview_en',
+            model_name="event",
+            name="short_overview_en",
             field=models.CharField(blank=True, max_length=255),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='short_overview_sk',
+            model_name="event",
+            name="short_overview_sk",
             field=models.CharField(blank=True, max_length=255),
         ),
     ]

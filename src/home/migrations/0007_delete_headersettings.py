@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0006_auto_20200208_1045'),
+        ("home", "0006_auto_20200208_1045"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='HeaderSettings',
-        ),
+        migrations.DeleteModel(name="HeaderSettings",),
     ]

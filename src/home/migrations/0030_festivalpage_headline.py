@@ -9,13 +9,28 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0029_auto_20200307_1344'),
+        ("home", "0029_auto_20200307_1344"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='festivalpage',
-            name='headline',
-            field=wagtail.core.fields.StreamField([('headliner', wagtail.core.blocks.StructBlock([('name', wagtail.core.blocks.CharBlock()), ('photo', wagtail.images.blocks.ImageChooserBlock()), ('link', wagtail.core.blocks.PageChooserBlock()), ('description', wagtail.core.blocks.RichTextBlock())]))], null=True),
+            model_name="festivalpage",
+            name="headline",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "headliner",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("name", wagtail.core.blocks.CharBlock()),
+                                ("photo", wagtail.images.blocks.ImageChooserBlock()),
+                                ("link", wagtail.core.blocks.PageChooserBlock()),
+                                ("description", wagtail.core.blocks.RichTextBlock()),
+                            ]
+                        ),
+                    )
+                ],
+                null=True,
+            ),
         ),
     ]

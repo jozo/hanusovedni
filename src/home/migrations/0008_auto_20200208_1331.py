@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0007_delete_headersettings'),
+        ("home", "0007_delete_headersettings"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='location',
-            name='title',
-            field=models.CharField(default='', max_length=255, verbose_name='názov'),
+            model_name="location",
+            name="title",
+            field=models.CharField(default="", max_length=255, verbose_name="názov"),
         ),
     ]

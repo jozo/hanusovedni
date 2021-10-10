@@ -7,13 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0083_opengraphimage'),
+        ("home", "0083_opengraphimage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='related_festival',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='home.FestivalPage'),
+            model_name="event",
+            name="related_festival",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="home.FestivalPage",
+            ),
         ),
     ]

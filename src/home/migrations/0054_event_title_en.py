@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0053_translationsettings'),
+        ("home", "0053_translationsettings"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='title_en',
-            field=models.CharField(blank=True, help_text='Titulok stránky ktorý budú vidieť ostatní návštevníci', max_length=255, verbose_name='titulok'),
+            model_name="event",
+            name="title_en",
+            field=models.CharField(
+                blank=True,
+                help_text="Titulok stránky ktorý budú vidieť ostatní návštevníci",
+                max_length=255,
+                verbose_name="titulok",
+            ),
         ),
     ]

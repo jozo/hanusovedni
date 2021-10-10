@@ -10,20 +10,46 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0045_assign_unlock_grouppagepermission'),
-        ('home', '0027_supportpage'),
+        ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
+        ("home", "0027_supportpage"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PartnersPage',
+            name="PartnersPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('body', wagtail.core.fields.StreamField([('partner', wagtail.core.blocks.StructBlock([('logo', wagtail.images.blocks.ImageChooserBlock()), ('body', wagtail.core.blocks.RichTextBlock())]))])),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                (
+                    "body",
+                    wagtail.core.fields.StreamField(
+                        [
+                            (
+                                "partner",
+                                wagtail.core.blocks.StructBlock(
+                                    [
+                                        (
+                                            "logo",
+                                            wagtail.images.blocks.ImageChooserBlock(),
+                                        ),
+                                        ("body", wagtail.core.blocks.RichTextBlock()),
+                                    ]
+                                ),
+                            )
+                        ]
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'partneri',
-            },
-            bases=('wagtailcore.page',),
+            options={"verbose_name": "partneri",},
+            bases=("wagtailcore.page",),
         ),
     ]

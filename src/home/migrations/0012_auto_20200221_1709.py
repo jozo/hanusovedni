@@ -7,19 +7,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0001_squashed_0021'),
-        ('home', '0011_menuitem'),
+        ("wagtailimages", "0001_squashed_0021"),
+        ("home", "0011_menuitem"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='heroimage',
-            name='image',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image'),
+            model_name="heroimage",
+            name="image",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='heroimage',
-            name='name',
-            field=models.CharField(max_length=128),
+            model_name="heroimage", name="name", field=models.CharField(max_length=128),
         ),
     ]

@@ -7,13 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0101_auto_20210525_1452'),
+        ("home", "0101_auto_20210525_1452"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='hostconnection',
-            name='speaker',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='host_connections', to='home.speaker'),
+            model_name="hostconnection",
+            name="speaker",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="host_connections",
+                to="home.speaker",
+            ),
         ),
     ]

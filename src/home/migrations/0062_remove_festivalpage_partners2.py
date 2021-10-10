@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0061_festivalpage_partner_sections'),
+        ("home", "0061_festivalpage_partner_sections"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='festivalpage',
-            name='partners2',
-        ),
+        migrations.RemoveField(model_name="festivalpage", name="partners2",),
     ]

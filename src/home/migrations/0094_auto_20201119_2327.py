@@ -9,31 +9,57 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0059_apply_collection_ordering'),
-        ('home', '0093_streampage_slido_url'),
+        ("wagtailcore", "0059_apply_collection_ordering"),
+        ("home", "0093_streampage_slido_url"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CrowdfundingRocket2Page',
+            name="CrowdfundingRocket2Page",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('title_en', models.CharField(blank=True, help_text='Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti', max_length=255, verbose_name='titulok')),
-                ('target_amount', models.IntegerField()),
-                ('body_sk', wagtail.core.fields.StreamField([('text', wagtail.core.blocks.TextBlock())])),
-                ('body_en', wagtail.core.fields.StreamField([('text', wagtail.core.blocks.TextBlock())])),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                (
+                    "title_en",
+                    models.CharField(
+                        blank=True,
+                        help_text="Názov stránky, ako by ste chceli, aby sa zobrazoval verejnosti",
+                        max_length=255,
+                        verbose_name="titulok",
+                    ),
+                ),
+                ("target_amount", models.IntegerField()),
+                (
+                    "body_sk",
+                    wagtail.core.fields.StreamField(
+                        [("text", wagtail.core.blocks.TextBlock())]
+                    ),
+                ),
+                (
+                    "body_en",
+                    wagtail.core.fields.StreamField(
+                        [("text", wagtail.core.blocks.TextBlock())]
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'crowdfunding - rocket 2',
-            },
-            bases=('wagtailcore.page',),
+            options={"verbose_name": "crowdfunding - rocket 2",},
+            bases=("wagtailcore.page",),
         ),
         migrations.AlterModelOptions(
-            name='category',
-            options={'verbose_name': 'kategória', 'verbose_name_plural': 'kategórie'},
+            name="category",
+            options={"verbose_name": "kategória", "verbose_name_plural": "kategórie"},
         ),
         migrations.AlterModelOptions(
-            name='location',
-            options={'verbose_name': 'poloha', 'verbose_name_plural': 'polohy'},
+            name="location",
+            options={"verbose_name": "poloha", "verbose_name_plural": "polohy"},
         ),
     ]

@@ -8,13 +8,17 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0071_auto_20200422_2319'),
+        ("home", "0071_auto_20200422_2319"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='moderatorconnection',
-            name='page',
-            field=modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='moderator_connections', to='home.Event'),
+            model_name="moderatorconnection",
+            name="page",
+            field=modelcluster.fields.ParentalKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="moderator_connections",
+                to="home.Event",
+            ),
         ),
     ]

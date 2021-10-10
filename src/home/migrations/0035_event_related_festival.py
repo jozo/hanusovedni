@@ -7,14 +7,20 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailcore', '0045_assign_unlock_grouppagepermission'),
-        ('home', '0034_auto_20200319_1358'),
+        ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
+        ("home", "0034_auto_20200319_1358"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='related_festival',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailcore.Page'),
+            model_name="event",
+            name="related_festival",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailcore.Page",
+            ),
         ),
     ]

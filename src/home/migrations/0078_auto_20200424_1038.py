@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0077_auto_20200424_0124'),
+        ("home", "0077_auto_20200424_0124"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='streampage',
-            name='stream_url',
+            model_name="streampage",
+            name="stream_url",
             field=models.URLField(blank=True),
         ),
     ]

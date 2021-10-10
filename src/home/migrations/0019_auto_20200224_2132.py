@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0018_event_show_in_frontpage'),
+        ("home", "0018_event_show_in_frontpage"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='event',
-            old_name='show_in_frontpage',
-            new_name='show_on_frontpage',
+            model_name="event",
+            old_name="show_in_frontpage",
+            new_name="show_on_frontpage",
         ),
     ]

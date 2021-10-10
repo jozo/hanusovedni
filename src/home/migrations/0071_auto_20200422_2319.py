@@ -8,29 +8,46 @@ import modelcluster.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0070_speaker_sort_order'),
+        ("home", "0070_speaker_sort_order"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='event',
-            name='moderators',
-        ),
-        migrations.RemoveField(
-            model_name='speaker',
-            name='sort_order',
-        ),
+        migrations.RemoveField(model_name="event", name="moderators",),
+        migrations.RemoveField(model_name="speaker", name="sort_order",),
         migrations.CreateModel(
-            name='ModeratorConnection',
+            name="ModeratorConnection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='moderators', to='home.Event')),
-                ('speaker', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='moderator_connections', to='home.Speaker')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="moderators",
+                        to="home.Event",
+                    ),
+                ),
+                (
+                    "speaker",
+                    models.ForeignKey(
+                        blank=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="moderator_connections",
+                        to="home.Speaker",
+                    ),
+                ),
             ],
-            options={
-                'ordering': ['sort_order'],
-                'abstract': False,
-            },
+            options={"ordering": ["sort_order"], "abstract": False,},
         ),
     ]

@@ -19,7 +19,9 @@ urlpatterns = [
     url(r"^admin/django/", admin.site.urls),
     url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
     url(r"^admin/i18n/", include("django.conf.urls.i18n")),
-    path("admin/choose-lang/<str:lang_code>/", views.choose_language, name="choose-lang"),
+    path(
+        "admin/choose-lang/<str:lang_code>/", views.choose_language, name="choose-lang"
+    ),
     url(r"^admin/", include(wagtailadmin_urls)),
     url(r"^recnici/(.*)/$", views.redirect_speakers),
     url(r"^archiv/(.*)/$", views.redirect_events),
