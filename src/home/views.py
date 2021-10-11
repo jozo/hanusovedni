@@ -19,6 +19,14 @@ def redirect_events(request, slug):
     return redirect(event.get_url(), permanent=True)
 
 
+def redirect_wagtail_events(request, slug):
+    return redirect(f"/bhd/events/{slug}")
+
+
+def redirect_wagtail_speakers(request, slug):
+    return redirect(f"/bhd/speakers/{slug}")
+
+
 def handler404(request, exception):
     # capture_message(f"Error 404 {request.path}")
     return page_not_found(request, exception)

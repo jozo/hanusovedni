@@ -26,7 +26,7 @@ services:
       - "traefik.http.routers.web-https-router.tls"
 
   redis:
-    image: redis:6.0-alpine
+    image: redis:6.2-alpine
     networks:
       - hanus-net
 
@@ -41,7 +41,7 @@ services:
       - "traefik.http.routers.nginx-https-router.tls"
 
   reverse-proxy:
-    image: traefik:v2.3
+    image: traefik:v2.5
     ports:
       - "80:80"
       - "443:443"

@@ -41,7 +41,7 @@
               <ul class="speakers">
                 {% for speaker_connection in page.speaker_connections.all %}
                   <li>
-                    <a href="{% pageurl speaker_connection.speaker %}">
+                    <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}">
                       {{ speaker_connection.speaker.title }}
                     </a>
                   </li>
@@ -55,7 +55,7 @@
                 <ul class="speakers">
                   {% for host_connection in page.host_connections.all %}
                     <li>
-                      <a href="{% pageurl host_connection.speaker %}">
+                      <a href="{{ host_connection.speaker.url|prefix_festival:request }}">
                         {{ host_connection.speaker.title }}
                       </a>
                     </li>
