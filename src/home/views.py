@@ -19,8 +19,8 @@ def redirect_events(request, slug):
     return redirect(event.get_url(), permanent=True)
 
 
-def redirect_wagtail_events(request, slug):
-    return redirect(f"/bhd/events/{slug}")
+def redirect_wagtail_events(request, event_id, slug):
+    return redirect(f"/bhd/events/{event_id}/{slug}")
 
 
 def redirect_wagtail_speakers(request, slug):
