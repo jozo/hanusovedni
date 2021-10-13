@@ -14,7 +14,7 @@
           <ul class="navbar-nav w-100 text-center">
             {% for page in festival.get_children.live.in_menu %}
               <li class="nav-item col p-0 d-flex justify-content-center align-items-center">
-                <a class="nav-link w-100" href="{{ page.url }}">{{ page.title }}</a>
+                <a class="nav-link w-100" href="{{ page.url }}">{{ page.specific.title_translated }}</a>
               </li>
             {% endfor %}
           </ul>
