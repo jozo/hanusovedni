@@ -915,6 +915,10 @@ class GenericPage(FixUrlMixin, Page):
     )
 
 
+class InvitonTicketsPage(GenericPage):
+    pass
+
+
 class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
     title_en = models.CharField(
         verbose_name=_("title"),

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block body_class %}template-generic{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+      <div class="row mx-n02">
+        <div class="col-12 px-02">
+          <article class="p-4">
+            {{ page.body | richtext }}
+          </article>
+        </div>
+      </div>
+
+      <div class="row mx-n02">
+        <div class="col-12 px-02 mb-1">
+          <article class="px-4 pb-4">
+            <div id="invitonApiWrap-12334auto" style="position:relative;" class="inviton-widget-root"><div style="text-align: center; padding-top: 60px;">Loading the <a href="https://www.inviton.eu/" target="_blank">Online ticket sales</a> widget, please wait...</div></div>
+            <style>.inviton-widget-root .its-wrap{}.inviton-widget-root .its-items-wrap{background-color:rgba(255,255,255,0.10);border:1px solid rgba(0, 0, 0, 0.2);border-radius:5px}.inviton-widget-root .its-item{background-color:transparent;padding-left:10px;padding-right:10px;box-sizing:border-box;}.inviton-widget-root .its-item:last-child{border-bottom:0}.inviton-widget-root .its-name,.inviton-widget-root .its-price-value,.inviton-widget-root .cf-control-label,.inviton-widget-root .inv-terms-itemwrap,.inviton-widget-root .payment-method-text{color:#fff}.inviton-widget-root .itf-discount-date {color: #fffddf;}.inviton-widget-root .its-powered-by > img { width:0px !important; height:0px !important; padding-left:80px; padding-right:80px; padding-top:10px; padding-bottom:10px; background: url(https://inviton-cdn.azureedge.net/assets/img/ticketing_by_inviton_white.png); background-size: cover; }.inviton-widget-root .its-vat-info { color: darkgrey; }</style>
+            <script>
+                (function (i, n, v, l, t, o, m) {
+                    if (!i['InvitonApiObject']) {
+                        var cq=[],ia={showLoading:function(d){function f(p,q){h+='<div class="'+p+'">'+(q?'</div>':'')}function g(p){f('rect'+p,!0)}var h='';f('holdon-content'),f('sk-rect');for(var j=1;6>j;j++)g(j);h+='</div></div>';var k=document.createElement('div');k.setAttribute('class','holdon-white holdon-overlay holdon-element'),k.innerHTML=h,d.appendChild(k)},pushCommand:function(d,f,g){null!=g&&null!=g.targetElement&&!1!=g.blockElem&&ia.showLoading(g.targetElement),cq.push([d,f,g])},getQueue:function(){return cq}},gcd=function(){var d=new Date,f=d.getMinutes();return 1==Math.abs(f%2)&&(d=new Date(d.getTime()-6e4)),d.setSeconds(0),d.setMilliseconds(0),d.getTime()};i.InvitonApiObject=ia,o=n.createElement('style'),o.innerHTML='.holdon-overlay{position:absolute;left:0;top:0;bottom:0;right:0;background:#000;background:rgba(0,0,0,.48);z-index:999;cursor:wait}.holdon-content{width:50px;height:57px;position:absolute;top:50%;left:50%;margin:-21px 0 0 -25px}.sk-rect{width:50px;height:40px;text-align:center;font-size:10px}.sk-rect>div{background-color:#b3b3b3;height:100%;width:6px;display:inline-block;-webkit-animation:sk-rect-anim 1.2s infinite ease-in-out;animation:sk-rect-anim 1.2s infinite ease-in-out;margin-left:2px}.sk-rect .rect2{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}.sk-rect .rect3{-webkit-animation-delay:-1s;animation-delay:-1s}.sk-rect .rect4{-webkit-animation-delay:-.9s;animation-delay:-.9s}.sk-rect .rect5{-webkit-animation-delay:-.8s;animation-delay:-.8s}@-webkit-keyframes sk-rect-anim{0%,100%,40%{-webkit-transform:scaleY(.4)}20%{-webkit-transform:scaleY(1)}}@keyframes sk-rect-anim{0%,100%,40%{transform:scaleY(.4);-webkit-transform:scaleY(.4)}20%{transform:scaleY(1);-webkit-transform:scaleY(1)}}.holdon-white.holdon-overlay{background:rgba(255,255,255,.9)}.holdon-white.holdon-overlay .sk-rect>div{background-color:#cecece}',n.head.appendChild(o),i[t]=function(d,f,g){ia.pushCommand(d,f,g)},o=n.createElement(v),m=n.getElementsByTagName(v)[0],o.async=1,o.src=l+'?v='+gcd(),m.parentNode.insertBefore(o,m);
+                    }
+                })(window, document, 'script', 'https://inviton-cdn.azureedge.net/clientside-api/js/api-loader', 'invitonApi');
+
+                invitonApi('ticketSelector', 'renderForIds', {
+                    language: 'auto', //sk, en, cs, de, pl, lv, auto [determines based on browser]
+                    eventIds: [12334],
+                    targetElement: document.getElementById('invitonApiWrap-12334auto')
+                })
+            </script>
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
