@@ -9,7 +9,8 @@
   <meta property="og:description" content="{{ self.short_overview|striptags|truncatewords:15 }}"/>
 {% endblock %}
 
-{% block og_image %}{% get_existing_og_image page as og_img_orig %}{% image og_img_orig original as og_photo %}
+{% block og_image %}{% get_existing_og_image page as og_img_orig %}
+  {% image og_img_orig original as og_photo %}
   {{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
 
 {% block title %}{{ page.title_translated }}{% endblock %}
@@ -50,8 +51,9 @@
 
               {% if page.host_connections.all %}
                 <strong>
-                  {% blocktranslate count counter=page.host_connections.all|length %}Host{% plural %}Hosts{% endblocktranslate %}:
-                  </strong>
+                  {% blocktranslate count counter=page.host_connections.all|length %}Host
+                    {% plural %}Hosts{% endblocktranslate %}:
+                </strong>
                 <ul class="speakers">
                   {% for host_connection in page.host_connections.all %}
                     <li>
@@ -105,25 +107,27 @@
                   {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
                 </a>
               {% endif %}
-              {#              {% if page.date_and_time.date >= today and page.ticket_url %}#}
-              <a href="{{ page.ticket_url }}" role="button" target="_blank"
-                 class="btn btn-primary btn-lg m-2 d-flex align-items-center">
-                {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
-              </a>
-              {% if page.ticket2_url %}
-                <a href="{{ page.ticket2_url }}" role="button" target="_blank"
-                   class="btn btn-primary btn-lg m-2 d-flex align-items-center">
-                  {{ settings.home.TranslationSettings.buy_ticket2_button|linebreaks }}
-                </a>
+              {% if today > festival.end_date %}
+                {% if page.ticket_url %}
+                  <a href="{{ page.ticket_url }}" role="button" target="_blank"
+                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
+                    {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
+                  </a>
+                {% endif %}
+                {% if page.ticket2_url %}
+                  <a href="{{ page.ticket2_url }}" role="button" target="_blank"
+                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
+                    {{ settings.home.TranslationSettings.buy_ticket2_button|linebreaks }}
+                  </a>
+                {% endif %}
+                {% if settings.home.TranslationSettings.season_ticket_url %}
+                  <a href="{{ settings.home.TranslationSettings.season_ticket_url }}"
+                     role="button" target="_blank"
+                     class="btn btn-success btn-lg m-2 d-flex align-items-center">
+                    {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
+                  </a>
+                {% endif %}
               {% endif %}
-              {% if settings.home.TranslationSettings.season_ticket_url %}
-                <a href="{{ settings.home.TranslationSettings.season_ticket_url }}"
-                   role="button" target="_blank"
-                   class="btn btn-success btn-lg m-2 d-flex align-items-center">
-                  {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
-                </a>
-              {% endif %}
-              {#              {% endif %}#}
             </div>
           </article>
         </div>
@@ -139,7 +143,8 @@
                 {% image speaker_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
-                <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}" class="speaker-heading">
+                <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}"
+                   class="speaker-heading">
                   <h4 class="mb-4">{{ speaker_connection.speaker.title }}</h4>
                 </a>
                 {{ speaker_connection.speaker.description|richtext }}
@@ -156,7 +161,8 @@
                 {% image host_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
               </div>
               <div class="m-5">
-                <a href="{{ host_connection.speaker.url|prefix_festival:request }}" class="speaker-heading">
+                <a href="{{ host_connection.speaker.url|prefix_festival:request }}"
+                   class="speaker-heading">
                   <h4 class="mb-4">{{ host_connection.speaker.title }}</h4>
                 </a>
                 {{ host_connection.speaker.description|richtext }}
