@@ -1,12 +1,13 @@
 from urllib.parse import urlsplit, urlunsplit
 
+from datetime import date
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
 
-from home.models import ArchiveQueryset, Event, Speaker, StreamPage
+from home.models import ArchiveQueryset, Event, Speaker, StreamPage, FestivalPage
 
 
 def redirect_speakers(request, slug):
@@ -20,11 +21,21 @@ def redirect_events(request, slug):
 
 
 def redirect_wagtail_events(request, event_id, slug):
-    return redirect(f"/bhd/events/{event_id}/{slug}")
+    today = date.today()
+    festival = FestivalPage.objects.filter(start_date__lt=today, end_date__gt=today).first()
+    if not festival:
+        festival = FestivalPage.objects.order_by("-end_date").first()
+    festival_slug = festival.slug
+    return redirect(f"/{festival_slug}/events/{event_id}/{slug}")
 
 
 def redirect_wagtail_speakers(request, slug):
-    return redirect(f"/bhd/speakers/{slug}")
+    today = date.today()
+    festival = FestivalPage.objects.filter(start_date__lt=today, end_date__gt=today).first()
+    if not festival:
+        festival = FestivalPage.objects.order_by("-end_date").first()
+    festival_slug = festival.slug
+    return redirect(f"/{festival_slug}/speakers/{slug}")
 
 
 def handler404(request, exception):
