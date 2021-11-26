@@ -18,7 +18,12 @@ RUN cd "/root/" && . "/opt/venv/bin/activate" && poetry install
 FROM python:3.10-slim AS runtime-image
 COPY --from=compile-image  /opt/venv /opt/venv
 
-RUN apt-get update && apt-get install -y --no-install-recommends libcairo2 libpq5 && apt-get clean
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+      libcairo2 \
+      libpq5 \
+      gettext \
+    && apt-get clean
 
 ENV PYTHONUNBUFFERED=1
 ENV VIRTUAL_ENV=/opt/venv

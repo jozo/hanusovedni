@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-08 12:27+0200\n"
+"POT-Creation-Date: 2021-11-26 10:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
 ">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
-#: hanusovedni/settings/base.py:154 hanusovedni/settings/base.py:158
+#: hanusovedni/settings/base.py:147 hanusovedni/settings/base.py:151
 msgid "English"
 msgstr "Angličtina"
 
-#: hanusovedni/settings/base.py:155 hanusovedni/settings/base.py:159
+#: hanusovedni/settings/base.py:148 hanusovedni/settings/base.py:152
 msgid "Slovak"
 msgstr "Slovenčina"
 
