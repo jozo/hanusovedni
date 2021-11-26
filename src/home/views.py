@@ -22,7 +22,9 @@ def redirect_events(request, slug):
 
 def redirect_wagtail_events(request, event_id, slug):
     today = date.today()
-    festival = FestivalPage.objects.filter(start_date__lt=today, end_date__gt=today).first()
+    festival = FestivalPage.objects.filter(
+        start_date__lt=today, end_date__gt=today
+    ).first()
     if not festival:
         festival = FestivalPage.objects.order_by("-end_date").first()
     festival_slug = festival.slug
@@ -31,7 +33,9 @@ def redirect_wagtail_events(request, event_id, slug):
 
 def redirect_wagtail_speakers(request, slug):
     today = date.today()
-    festival = FestivalPage.objects.filter(start_date__lt=today, end_date__gt=today).first()
+    festival = FestivalPage.objects.filter(
+        start_date__lt=today, end_date__gt=today
+    ).first()
     if not festival:
         festival = FestivalPage.objects.order_by("-end_date").first()
     festival_slug = festival.slug

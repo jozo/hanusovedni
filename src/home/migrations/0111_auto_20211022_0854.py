@@ -6,18 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0110_invitonticketspage'),
+        ("home", "0110_invitonticketspage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='ticket2_url',
-            field=models.URLField(blank=True, help_text='Používané pre iný druh lístka.', null=True),
+            model_name="event",
+            name="ticket2_url",
+            field=models.URLField(
+                blank=True, help_text="Používané pre iný druh lístka.", null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='ticket_url',
-            field=models.URLField(blank=True, help_text='Defaultne používané pre jednorázový lístok', null=True),
+            model_name="event",
+            name="ticket_url",
+            field=models.URLField(
+                blank=True,
+                help_text="Defaultne používané pre jednorázový lístok",
+                null=True,
+            ),
         ),
     ]

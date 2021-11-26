@@ -10,7 +10,9 @@ register = template.Library()
 def get_existing_og_image(page):
     cur_language = translation.get_language()
     try:
-        og_image = OpenGraphImage.objects.filter(page=page, lang_code=cur_language).last()
+        og_image = OpenGraphImage.objects.filter(
+            page=page, lang_code=cur_language
+        ).last()
         return og_image.image
     except OpenGraphImage.DoesNotExist:
         return None

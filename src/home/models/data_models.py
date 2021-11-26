@@ -15,9 +15,10 @@ from wagtail.admin.edit_handlers import (
     ObjectList,
     PageChooserPanel,
     TabbedInterface,
+    StreamFieldPanel,
 )
 from wagtail.core import blocks
-from wagtail.core.fields import RichTextField
+from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.images import get_image_model_string
 from wagtail.images.blocks import ImageChooserBlock
@@ -39,8 +40,8 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(max_length=255, blank=True, )
-    short_overview_en = models.CharField(max_length=255, blank=True, )
+    short_overview_sk = models.CharField(max_length=255, blank=True,)
+    short_overview_en = models.CharField(max_length=255, blank=True,)
     short_overview = TranslatedField("short_overview_sk", "short_overview_en")
     description_sk = RichTextField(blank=True)
     description_en = RichTextField(blank=True)
@@ -64,10 +65,28 @@ class Event(FixUrlMixin, Page):
             mark_safe("</a>"),
         ),
     )
-    ticket_url = models.URLField(null=True, blank=True,
-                                 help_text="Defaultne používané pre jednorázový lístok")
-    ticket2_url = models.URLField(null=True, blank=True,
-                                  help_text="Používané pre iný druh lístka.")
+    ticket_url = models.URLField(
+        null=True, blank=True, help_text="Defaultne používané pre jednorázový lístok"
+    )
+    ticket2_url = models.URLField(
+        null=True, blank=True, help_text="Používané pre iný druh lístka."
+    )
+    buttons = StreamField(
+        [
+            (
+                "button",
+                blocks.StructBlock(
+                    [
+                        ("url", blocks.URLBlock()),
+                        ("sk_text", blocks.CharBlock()),
+                        ("en_text", blocks.CharBlock()),
+                    ]
+                ),
+            ),
+        ],
+        blank=True,
+        help_text="Tlačidlá len pre toto podujatie. Zobrazia sa vedla tlačidiel pre lístky.",
+    )
     category = models.ForeignKey(
         "home.Category", null=True, blank=True, on_delete=models.SET_NULL,
     )
@@ -101,6 +120,7 @@ class Event(FixUrlMixin, Page):
                 FieldPanel("video_url"),
                 FieldPanel("ticket_url"),
                 FieldPanel("ticket2_url"),
+                StreamFieldPanel("buttons"),
             ],
             heading=_("description"),
         ),
@@ -148,7 +168,7 @@ class Event(FixUrlMixin, Page):
     def save(self, *args, **kwargs):
         if self.event_id is None:
             last_event_id = (
-                    Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
+                Event.objects.aggregate(Max("event_id"))["event_id__max"] or 0
             )
             self.event_id = last_event_id + 1
         return super().save(*args, **kwargs)
@@ -247,7 +267,7 @@ class Speaker(FixUrlMixin, Page):
     def save(self, *args, **kwargs):
         if self.speaker_id is None:
             last_speaker_id = (
-                    Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
+                Speaker.objects.aggregate(Max("speaker_id"))["speaker_id__max"] or 0
             )
             self.speaker_id = last_speaker_id + 1
         self.draft_title = f"{self.first_name} {self.last_name}".strip()
@@ -264,9 +284,9 @@ class Speaker(FixUrlMixin, Page):
             Event.objects.filter(
                 Q(speaker_connections__speaker=self) | Q(host_connections__speaker=self)
             )
-                .distinct()
-                .live()
-                .prefetch_related(
+            .distinct()
+            .live()
+            .prefetch_related(
                 Prefetch(
                     "icon__renditions",
                     queryset=Rendition.objects.filter(filter_spec="fill-65x65"),

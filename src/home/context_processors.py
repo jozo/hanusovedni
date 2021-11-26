@@ -11,7 +11,9 @@ def festival_finder(request):
         festival = FestivalPage.objects.get(slug=first_url_part)
     else:
         today = date.today()
-        festival = FestivalPage.objects.filter(start_date__lt=today, end_date__gt=today).first()
+        festival = FestivalPage.objects.filter(
+            start_date__lt=today, end_date__gt=today
+        ).first()
         if not festival:
             festival = FestivalPage.objects.order_by("-end_date").first()
     return {"festival": festival}

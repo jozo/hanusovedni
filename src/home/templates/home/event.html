@@ -51,7 +51,7 @@
 
               {% if page.host_connections.all %}
                 <strong>
-{% blocktranslate count counter=page.host_connections.all|length %}Host{% plural %}Hosts{% endblocktranslate %}:
+                  {% blocktranslate count counter=page.host_connections.all|length %}Host{% plural %}Hosts{% endblocktranslate %}:
                 </strong>
                 <ul class="speakers">
                   {% for host_connection in page.host_connections.all %}
@@ -126,6 +126,20 @@
                     {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
                   </a>
                 {% endif %}
+              {% endif %}
+              {% if page.buttons %}
+                {% for button in page.buttons %}
+                  <a href="{{ button.value.url }}"
+                     role="button" target="_blank"
+                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
+                    {% current_locale as lang %}
+                    {% if lang == "sk" %}
+                      {{ button.value.sk_text }}
+                    {% else %}
+                      {{ button.value.en_text }}
+                    {% endif %}
+                  </a>
+                {% endfor %}
               {% endif %}
             </div>
           </article>
