@@ -106,7 +106,7 @@
                   {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
                 </a>
               {% endif %}
-              {% if today < festival.end_date %}
+              {% if today <= festival.end_date %}
                 {% if page.ticket_url %}
                   <a href="{{ page.ticket_url }}" role="button" target="_blank"
                      class="btn btn-primary btn-lg m-2 d-flex align-items-center">
