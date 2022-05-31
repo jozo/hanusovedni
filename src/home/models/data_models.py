@@ -78,6 +78,7 @@ class Event(FixUrlMixin, Page):
                 blocks.StructBlock(
                     [
                         ("url", blocks.URLBlock()),
+                        ("color", blocks.CharBlock(required=False)),
                         ("sk_text", blocks.CharBlock()),
                         ("en_text", blocks.CharBlock()),
                     ]

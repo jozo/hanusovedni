@@ -131,7 +131,11 @@
                 {% for button in page.buttons %}
                   <a href="{{ button.value.url }}"
                      role="button" target="_blank"
-                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
+                     class="btn btn-primary btn-lg m-2 d-flex align-items-center"
+                     {% if button.value.color %}
+                     style="background-color: {{ button.value.color }}; border-color: {{ button.value.color }}"
+                     {% endif %}
+                  >
                     {% current_locale as lang %}
                     {% if lang == "sk" %}
                       {{ button.value.sk_text }}
