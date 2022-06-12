@@ -2,13 +2,13 @@ import os
 import textwrap
 from io import BytesIO
 
-from PIL import Image, ImageDraw, ImageFont
 from cairosvg import svg2png
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.dispatch import receiver
 from django.utils import translation
 from django.utils.formats import date_format
+from PIL import Image, ImageDraw, ImageFont
 from wagtail.core.signals import page_published
 from wagtail.images.models import Image as WagtailImage
 
@@ -128,7 +128,10 @@ class EventOGImage:
                 fill=self.title_bg_color,
             )
             draw.text(
-                [text_x_start, text_y_start], line, self.title_color, font=font,
+                [text_x_start, text_y_start],
+                line,
+                self.title_color,
+                font=font,
             )
 
         font = self.default_font(self.font_size * 2 // 3)
@@ -141,7 +144,8 @@ class EventOGImage:
 
     def default_font(self, size):
         return ImageFont.truetype(
-            os.path.join(settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"), size,
+            os.path.join(settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"),
+            size,
         )
 
     def draw_logo(self, image):

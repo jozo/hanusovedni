@@ -1,16 +1,14 @@
 from django.conf import settings
-from django.urls import include, path, re_path
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.urls import include, path, re_path
 from django.views.generic import TemplateView
-
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 from wagtailautocomplete.urls.admin import urlpatterns as autocomplete_admin_urls
 
 from home import views
-
 
 handler404 = views.handler404
 
@@ -50,9 +48,9 @@ urlpatterns += i18n_patterns(
 
 
 if settings.DEBUG:
+    import debug_toolbar
     from django.conf.urls.static import static
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-    import debug_toolbar
 
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()

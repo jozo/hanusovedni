@@ -10,8 +10,18 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="partner", name="logo",),
-        migrations.RemoveField(model_name="partner", name="page",),
-        migrations.DeleteModel(name="MediaPartner",),
-        migrations.DeleteModel(name="Partner",),
+        migrations.RemoveField(
+            model_name="partner",
+            name="logo",
+        ),
+        migrations.RemoveField(
+            model_name="partner",
+            name="page",
+        ),
+        migrations.DeleteModel(
+            name="MediaPartner",
+        ),
+        migrations.DeleteModel(
+            name="Partner",
+        ),
     ]

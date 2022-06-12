@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
             field=models.CharField(default="sk", max_length=2),
         ),
         migrations.AlterUniqueTogether(
-            name="opengraphimage", unique_together={("page", "image", "lang_code")},
+            name="opengraphimage",
+            unique_together={("page", "image", "lang_code")},
         ),
     ]

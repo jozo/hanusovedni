@@ -10,7 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="partnersection", name="page",),
-        migrations.DeleteModel(name="Partner2",),
-        migrations.DeleteModel(name="PartnerSection",),
+        migrations.RemoveField(
+            model_name="partnersection",
+            name="page",
+        ),
+        migrations.DeleteModel(
+            name="Partner2",
+        ),
+        migrations.DeleteModel(
+            name="PartnerSection",
+        ),
     ]

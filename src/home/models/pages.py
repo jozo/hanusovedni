@@ -786,7 +786,10 @@ class StreamPage(FixUrlMixin, Page):
     )
     popup_donation_button_url = models.URLField(blank=True, default="")
     background = models.ForeignKey(
-        "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL,
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     google_form_url = models.URLField(blank=True)
     donate_button_text_sk = models.CharField(max_length=100, null=True)
@@ -937,7 +940,9 @@ class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
     )
     content_panels = Page.content_panels + [
         FieldPanel("title_en", classname="full title", heading="Title EN"),
-        PageChooserPanel("mirrored_page",),
+        PageChooserPanel(
+            "mirrored_page",
+        ),
     ]
 
     def serve(self, request, *args, **kwargs):

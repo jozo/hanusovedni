@@ -10,5 +10,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="videoinvite", name="name",),
+        migrations.RemoveField(
+            model_name="videoinvite",
+            name="name",
+        ),
     ]

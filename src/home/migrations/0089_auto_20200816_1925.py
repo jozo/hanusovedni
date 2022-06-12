@@ -17,10 +17,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameModel(
-            old_name="Crowdfunding2Page", new_name="CrowdfundingStarsPage",
+            old_name="Crowdfunding2Page",
+            new_name="CrowdfundingStarsPage",
         ),
         migrations.AlterModelOptions(
-            name="crowdfundingpage", options={"verbose_name": "crowdfunding - rocket"},
+            name="crowdfundingpage",
+            options={"verbose_name": "crowdfunding - rocket"},
         ),
         migrations.AlterModelOptions(
             name="crowdfundingstarspage",

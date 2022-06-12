@@ -16,7 +16,9 @@ class Migration(migrations.Migration):
             new_name="formatted_title_sk",
         ),
         migrations.RenameField(
-            model_name="festivalpage", old_name="headline", new_name="headline_sk",
+            model_name="festivalpage",
+            old_name="headline",
+            new_name="headline_sk",
         ),
         migrations.RenameField(
             model_name="festivalpage",
@@ -24,9 +26,13 @@ class Migration(migrations.Migration):
             new_name="hero_buttons_sk",
         ),
         migrations.RenameField(
-            model_name="festivalpage", old_name="hero_text", new_name="hero_text_sk",
+            model_name="festivalpage",
+            old_name="hero_text",
+            new_name="hero_text_sk",
         ),
         migrations.RenameField(
-            model_name="festivalpage", old_name="video_text", new_name="video_text_sk",
+            model_name="festivalpage",
+            old_name="video_text",
+            new_name="video_text_sk",
         ),
     ]

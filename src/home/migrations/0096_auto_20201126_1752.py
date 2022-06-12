@@ -11,10 +11,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="streampage", old_name="body_en", new_name="popup_email_body_en",
+            model_name="streampage",
+            old_name="body_en",
+            new_name="popup_email_body_en",
         ),
         migrations.RenameField(
-            model_name="streampage", old_name="body_sk", new_name="popup_email_body_sk",
+            model_name="streampage",
+            old_name="body_sk",
+            new_name="popup_email_body_sk",
         ),
         migrations.RenameField(
             model_name="streampage",

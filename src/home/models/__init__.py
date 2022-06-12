@@ -3,12 +3,13 @@ from .data_models import (
     Event,
     HeroImage,
     Location,
+    PartnerSectionBlock,
     Speaker,
     VideoInvite,
-    PartnerSectionBlock,
 )
 from .pages import (
     AboutFestivalPage,
+    ArchiveQueryset,
     ContactPage,
     CrowdfundingPage,
     DonatePage,
@@ -19,5 +20,4 @@ from .pages import (
     ProgramIndexPage,
     SpeakerIndexPage,
     StreamPage,
-    ArchiveQueryset,
 )

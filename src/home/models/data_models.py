@@ -14,8 +14,8 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     ObjectList,
     PageChooserPanel,
-    TabbedInterface,
     StreamFieldPanel,
+    TabbedInterface,
 )
 from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
@@ -40,8 +40,14 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    short_overview_sk = models.CharField(max_length=255, blank=True,)
-    short_overview_en = models.CharField(max_length=255, blank=True,)
+    short_overview_sk = models.CharField(
+        max_length=255,
+        blank=True,
+    )
+    short_overview_en = models.CharField(
+        max_length=255,
+        blank=True,
+    )
     short_overview = TranslatedField("short_overview_sk", "short_overview_en")
     description_sk = RichTextField(blank=True)
     description_en = RichTextField(blank=True)
@@ -50,7 +56,10 @@ class Event(FixUrlMixin, Page):
         default=timezone.now, verbose_name=_("date and time")
     )
     location = models.ForeignKey(
-        "home.Location", null=True, blank=True, on_delete=models.SET_NULL,
+        "home.Location",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     video_url = models.URLField(
         null=True,
@@ -89,7 +98,10 @@ class Event(FixUrlMixin, Page):
         help_text="Tlačidlá len pre toto podujatie. Zobrazia sa vedla tlačidiel pre lístky.",
     )
     category = models.ForeignKey(
-        "home.Category", null=True, blank=True, on_delete=models.SET_NULL,
+        "home.Category",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
@@ -101,7 +113,9 @@ class Event(FixUrlMixin, Page):
     show_on_festivalpage = models.BooleanField(default=False)
     wordpress_url = models.CharField(max_length=255, unique=True, null=True, blank=True)
     related_festival = models.ForeignKey(
-        "home.FestivalPage", on_delete=models.PROTECT, related_name="+",
+        "home.FestivalPage",
+        on_delete=models.PROTECT,
+        related_name="+",
     )
 
     content_panels_sk = Page.content_panels + [

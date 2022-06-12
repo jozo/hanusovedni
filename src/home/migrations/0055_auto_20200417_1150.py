@@ -10,8 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="eventindexpage", name="intro",),
-        migrations.RemoveField(model_name="programindexpage", name="intro",),
+        migrations.RemoveField(
+            model_name="eventindexpage",
+            name="intro",
+        ),
+        migrations.RemoveField(
+            model_name="programindexpage",
+            name="intro",
+        ),
         migrations.AddField(
             model_name="aboutfestivalpage",
             name="title_en",

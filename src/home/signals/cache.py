@@ -14,10 +14,9 @@ from home.models.pages import (
     FestivalPage,
     HomePage,
     ProgramIndexPage,
-    StreamPage,
     SpeakerIndexPage,
+    StreamPage,
 )
-
 
 logger = logging.getLogger(__name__)
 

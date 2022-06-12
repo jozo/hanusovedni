@@ -16,5 +16,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RenameModel(old_name="SupportPage", new_name="DonatePage",),
+        migrations.RenameModel(
+            old_name="SupportPage",
+            new_name="DonatePage",
+        ),
     ]

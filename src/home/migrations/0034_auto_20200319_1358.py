@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="speaker", name="wordpress_id",),
+        migrations.RemoveField(
+            model_name="speaker",
+            name="wordpress_id",
+        ),
         migrations.AddField(
             model_name="event",
             name="wordpress_url",

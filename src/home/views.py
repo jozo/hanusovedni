@@ -1,13 +1,13 @@
+from datetime import date
 from urllib.parse import urlsplit, urlunsplit
 
-from datetime import date
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import check_for_language
 from django.views.defaults import page_not_found
 
-from home.models import ArchiveQueryset, Event, Speaker, StreamPage, FestivalPage
+from home.models import ArchiveQueryset, Event, FestivalPage, Speaker, StreamPage
 
 
 def redirect_speakers(request, slug):
