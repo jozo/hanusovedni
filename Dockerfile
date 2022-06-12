@@ -1,4 +1,4 @@
-FROM python:3.10-slim AS compile-image
+FROM python:3.10.5-slim AS compile-image
 LABEL maintainer="hi@jozo.io"
 
 RUN apt-get update \
@@ -8,14 +8,13 @@ RUN apt-get update \
     libpq-dev \
     && python -m venv "/opt/venv" \
     && . "/opt/venv/bin/activate" \
-    && pip install --upgrade pip \
-    && pip install poetry
+    && pip install --upgrade pip
 
-COPY ["src/pyproject.toml", "src/poetry.lock", "/root/"]
-RUN cd "/root/" && . "/opt/venv/bin/activate" && poetry install
+COPY ["src/requirements/development.txt", "/root/"]
+RUN cd "/root/" && . "/opt/venv/bin/activate" && pip install -r development.txt
 
 
-FROM python:3.10-slim AS runtime-image
+FROM python:3.10.5-slim AS runtime-image
 COPY --from=compile-image  /opt/venv /opt/venv
 
 RUN apt-get update \

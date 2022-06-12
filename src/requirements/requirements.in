@@ -1,0 +1,10 @@
+cairosvg
+django-extensions
+django-redis
+ipython
+psycopg2
+requests
+sentry-sdk
+uwsgi
+wagtail
+wagtail-autocomplete

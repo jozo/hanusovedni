@@ -19,7 +19,7 @@
                   d-flex flex-column justify-content-center">
           <h1>{{ festival.formatted_title|richtext }}</h1>
           <div>
-            {% ifequal festival.start_date.month festival.end_date.month %}
+            {% if festival.start_date.month == festival.end_date.month %}
               <time datetime="{{ festival.start_date|date:'c' }}">
                 {{ festival.start_date|date:'j.' }}
               </time>
@@ -35,7 +35,7 @@
               <time datetime="{{ festival.end_date|date:'c' }}">
                 {{ festival.end_date|date:'j. E Y' }}
               </time>
-            {% endifequal %}
+            {% endif %}
           </div>
           <div class="place">{{ festival.place|default_if_none:"" }}</div>
         </div>

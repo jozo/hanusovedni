@@ -1,8 +1,7 @@
 from django.conf import settings
-from django.conf.urls import include, url
+from django.urls import include, path, re_path
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.urls import path
 from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
@@ -16,21 +15,21 @@ from home import views
 handler404 = views.handler404
 
 urlpatterns = [
-    url(r"^admin/django/", admin.site.urls),
-    url(r"^admin/autocomplete/", include(autocomplete_admin_urls)),
-    url(r"^admin/i18n/", include("django.conf.urls.i18n")),
+    path("admin/django/", admin.site.urls),
+    path("admin/autocomplete/", include(autocomplete_admin_urls)),
+    path("admin/i18n/", include("django.conf.urls.i18n")),
     path(
         "admin/choose-lang/<str:lang_code>/", views.choose_language, name="choose-lang"
     ),
-    url(r"^admin/", include(wagtailadmin_urls)),
-    url(r"^recnici/(.*)/$", views.redirect_speakers),
-    url(r"^archiv/(.*)/$", views.redirect_events),
-    url(r"^program/(.*)/$", views.redirect_events),
+    path("admin/", include(wagtailadmin_urls)),
+    re_path(r"^recnici/(.*)/$", views.redirect_speakers),
+    re_path(r"^archiv/(.*)/$", views.redirect_events),
+    re_path(r"^program/(.*)/$", views.redirect_events),
     path("api/stream/", views.stream_api, name="api-stream"),
     path("api/archive/", views.archive_api, name="api-archive"),
-    url(r"^documents/", include(wagtaildocs_urls)),
-    url(
-        r"^robots\.txt/$",
+    path("documents/", include(wagtaildocs_urls)),
+    path(
+        "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
 ]
@@ -41,9 +40,9 @@ urlpatterns += i18n_patterns(
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    url(r"^events/(\d+)/(.*)/$", views.redirect_wagtail_events),
-    url(r"^speakers/(.*)/$", views.redirect_wagtail_speakers),
-    url(r"", include(wagtail_urls)),
+    re_path(r"^events/(\d+)/(.*)/$", views.redirect_wagtail_events),
+    re_path(r"^speakers/(.*)/$", views.redirect_wagtail_speakers),
+    path("", include(wagtail_urls)),
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
     #    url(r'^pages/', include(wagtail_urls)),
@@ -58,4 +57,4 @@ if settings.DEBUG:
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += [url(r"^__debug__/", include(debug_toolbar.urls))]
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
