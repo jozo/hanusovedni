@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   db:
@@ -11,20 +11,10 @@ services:
       - "5432:5432"
 
   web:
-    ports:
-      - "8000:8000"
+    build: .
+    #image: hn1
+    command: ./manage.py runserver 0:8000
     volumes:
       - ./src:/code:delegated
       - ./docker/static:/static_root:delegated
       - ./docker/media:/media_root:delegated
-    command: ./manage.py runserver 0:8000
-
-  nginx:
-    volumes:
-      - ./docker/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./docker/static:/usr/share/nginx/static:delegated
-      - ./docker/media:/usr/share/nginx/media:delegated
-
-  reverse-proxy:
-    volumes:
-      - ./docker/config/traefik.yml:/etc/traefik/traefik.yml:delegated

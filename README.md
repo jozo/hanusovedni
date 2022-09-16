@@ -52,3 +52,14 @@ Backup is created once a week with GitLab CI/CD Schedules.
 **Bundle elm:**  `elm make src/Main.elm --optimize --output=elm-bundle.js`
 
 Check wiki for more!
+
+
+
+docker run --restart unless-stopped \
+-v $PWD/docker/caddy/data:/data \
+-v $PWD/docker/caddy/config:/config \
+-v $PWD/Caddyfile:/etc/caddy/Caddyfile \
+-v /var/www/static:/var/www/static \
+-v /var/www/media:/var/www/media \
+--name caddy \
+--network host -e DOMAIN=sk -d caddy:2.5.2

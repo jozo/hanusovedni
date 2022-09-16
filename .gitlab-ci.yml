@@ -1,7 +1,5 @@
 stages:
   - build
-  - deploy staging
-  - purge cache staging
   - deploy production
   - purge cache production
 
@@ -42,16 +40,16 @@ build-image:
   variables:
     IMAGE: ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
     DOCKER_RUN: 'docker run --rm
-                  --network hanus-net
                   -v /var/www/static:/static_root
                   --env-file secrets.env
+                  --network hanusovedni_hanusnet
                   -e DJANGO_SETTINGS_MODULE="hanusovedni.settings.production"
                   ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}'
   script:
     - mkdir -p ~/.ssh
     - echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - scp -r docker-compose.yml docker-compose.prod.yml ./docker/config/* $SERVER:~/
+    - scp -r docker-compose.yml docker-compose.prod.yml Caddyfile $SERVER:~/
     - scp $SECRETS $SERVER:~/secrets.env
     - ssh $SERVER "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
     - ssh $SERVER "docker system prune --all --force"
@@ -79,22 +77,10 @@ build-image:
       echo "Timeout exceeded. Number of new containers: ${count}"
       exit 1
 
-
-.staging:
-  environment:
-    name: staging
-    url: https://test.hanusovedni.sk
-
 .production:
   environment:
     name: production
     url: https://hanusovedni.sk
-
-deploy:staging:
-  stage: deploy staging
-  extends:
-    - .deploy
-    - .staging
 
 deploy:production:
   stage: deploy production
@@ -118,19 +104,6 @@ deploy:production:
         --silent)"
     - echo $http_code && cat /tmp/out.txt && echo
     - if [[ "$http_code" -ne 200 ]] ; then exit 1; else exit 0 ; fi
-
-purge-cache:staging:
-  stage: purge cache staging
-  extends:
-    - .purge-cache
-    - .staging
-
-purge-cache:production:
-  stage: purge cache production
-  when: on_success
-  extends:
-    - .purge-cache
-    - .production
 
 
 build-image:on-schedule:
@@ -168,11 +141,6 @@ build-image:on-schedule:
           -v /tmp:/backup
           rclone/rclone copy
           /backup/$BACKUP_FILE dropbox:backup/hanusovedni/${CI_ENVIRONMENT_NAME}"'
-
-backup-db:staging:
-  extends:
-    - .backup-db
-    - .staging
 
 backup-db:production:
   extends:

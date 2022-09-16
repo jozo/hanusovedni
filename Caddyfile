@@ -1,0 +1,31 @@
+{
+    email   hi+hanusovedni@jozo.io
+}
+
+hanusovedni.{$DOMAIN:local} {
+    reverse_proxy 0.0.0.0:8000
+
+    handle_path /static/* {
+        file_server {
+            root /var/www/static/
+        }
+    }
+
+    handle_path /media/* {
+        file_server {
+            root /var/www/media/
+        }
+    }
+}
+
+www.hanusovedni.{$DOMAIN:local} {
+    redir https://hanusovedni.{$DOMAIN:local}{uri}
+}
+
+www.bhd.{$DOMAIN:local}, bhd.{$DOMAIN:local} {
+    redir https://hanusovedni.{$DOMAIN:local}/bhd{uri}
+}
+
+www.khd.{$DOMAIN:local}, khd.{$DOMAIN:local} {
+    redir https://hanusovedni.{$DOMAIN:local}/khd{uri}
+}

@@ -1,58 +1,50 @@
-version: "3"
+version: "3.8"
 
 services:
+  web:
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5).read()"
+      interval: 1m
+      timeout: 5s
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 300M
+      restart_policy:
+        condition: on-failure
+    networks:
+      - hanusnet
+    depends_on:
+      - db
+      - redis
+
   db:
     image: postgres:12.8-alpine
     environment:
       - POSTGRES_USER=hanusovedni
       - POSTGRES_DB=hanusovedni
       - PGDATA=/var/lib/postgresql/data/pgdata
+    deploy:
+      resources:
+        limits:
+          memory: 100M
     networks:
-      - hanus-net
-
-  web:
-    build: .
-    command: uwsgi uwsgi.ini
-    depends_on:
-      - db
-      - redis
-      - nginx
-    networks:
-      - hanus-net
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.web-router.rule=Host(`localhost`)"
-      - "traefik.http.routers.web-https-router.rule=Host(`localhost`)"
-      - "traefik.http.routers.web-https-router.tls"
+      - hanusnet
 
   redis:
     image: redis:6.2-alpine
+    deploy:
+      resources:
+        limits:
+          memory: 100M
     networks:
-      - hanus-net
-
-  nginx:
-    image: nginx:1.19-alpine
-    networks:
-      - hanus-net
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nginx-router.rule=Host(`localhost`) && PathPrefix(`/static/`, `/media/`)"
-      - "traefik.http.routers.nginx-https-router.rule=Host(`localhost`) && PathPrefix(`/static/`, `/media/`)"
-      - "traefik.http.routers.nginx-https-router.tls"
-
-  reverse-proxy:
-    image: traefik:v2.5
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - hanus-net
-
+      - hanusnet
 
 networks:
-  hanus-net:
-    external:
-      name: hanus-net
+  hanusnet:
+    driver: overlay
+    attachable: true
