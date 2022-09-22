@@ -1,4 +1,4 @@
-FROM python:3.10.5-slim AS compile-image
+FROM python:3.10.7-slim AS compile-image
 LABEL maintainer="hi@jozo.io"
 
 RUN apt-get update \
@@ -14,7 +14,7 @@ COPY ["src/requirements/development.txt", "/root/"]
 RUN cd "/root/" && . "/opt/venv/bin/activate" && pip install -r development.txt
 
 
-FROM python:3.10.5-slim AS runtime-image
+FROM python:3.10.7-slim AS runtime-image
 COPY --from=compile-image  /opt/venv /opt/venv
 
 RUN apt-get update \

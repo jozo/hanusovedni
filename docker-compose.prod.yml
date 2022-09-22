@@ -13,6 +13,18 @@ services:
     volumes:
       - /var/www/static:/static_root
       - /var/www/media:/media_root
+    healthcheck:
+      test: python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/', timeout=5).read()"
+      interval: 1m
+      timeout: 5s
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 300M
+      restart_policy:
+        condition: on-failure
 
 
   db:

@@ -21,6 +21,8 @@ WAGTAILFRONTENDCACHE = {
     },
 }
 
+WAGTAILADMIN_BASE_URL = "https://hanusovedni.sk"
+
 sentry_sdk.init(
     dsn=os.environ["SENTRY_DSN"],
     integrations=[DjangoIntegration()],

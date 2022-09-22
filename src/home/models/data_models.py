@@ -14,7 +14,6 @@ from wagtail.admin.edit_handlers import (
     MultiFieldPanel,
     ObjectList,
     PageChooserPanel,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.core import blocks
@@ -22,7 +21,6 @@ from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.images import get_image_model_string
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.models import Rendition
 from wagtail.snippets.models import register_snippet
 from wagtailautocomplete.edit_handlers import AutocompletePanel
@@ -96,6 +94,7 @@ class Event(FixUrlMixin, Page):
         ],
         blank=True,
         help_text="Tlačidlá len pre toto podujatie. Zobrazia sa vedla tlačidiel pre lístky.",
+        use_json_field=True,
     )
     category = models.ForeignKey(
         "home.Category",
@@ -125,7 +124,7 @@ class Event(FixUrlMixin, Page):
                 AutocompletePanel("location"),
                 FieldPanel("category"),
                 PageChooserPanel("related_festival", "home.FestivalPage"),
-                ImageChooserPanel("icon"),
+                FieldPanel("icon"),
             ]
         ),
         MultiFieldPanel(
@@ -135,7 +134,7 @@ class Event(FixUrlMixin, Page):
                 FieldPanel("video_url"),
                 FieldPanel("ticket_url"),
                 FieldPanel("ticket2_url"),
-                StreamFieldPanel("buttons"),
+                FieldPanel("buttons"),
             ],
             heading=_("description"),
         ),
@@ -256,7 +255,7 @@ class Speaker(FixUrlMixin, Page):
     parent_page_types = ["home.SpeakerIndexPage"]
     content_panels_sk = Page.content_panels + [
         FieldRowPanel([FieldPanel("first_name"), FieldPanel("last_name")]),
-        ImageChooserPanel("photo"),
+        FieldPanel("photo"),
         FieldPanel("description_sk"),
     ]
     content_panels_en = Page.content_panels + [
@@ -332,7 +331,7 @@ class HeroImage(Orderable):
     url = models.URLField()
 
     panels = [
-        ImageChooserPanel("image"),
+        FieldPanel("image"),
         FieldPanel("url"),
     ]
 

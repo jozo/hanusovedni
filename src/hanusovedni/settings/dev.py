@@ -16,6 +16,8 @@ DATABASES["default"]["PASSWORD"] = "hanusovedni"
 INSTALLED_APPS += ["debug_toolbar"]
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
+WAGTAILADMIN_BASE_URL = "https://hanusovedni.local"
+CSRF_TRUSTED_ORIGINS = ["https://hanusovedni.local"]
 
 def show_toolbar(request):
     return False

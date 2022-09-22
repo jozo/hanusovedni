@@ -16,7 +16,6 @@ from wagtail.admin.edit_handlers import (
     InlinePanel,
     ObjectList,
     PageChooserPanel,
-    StreamFieldPanel,
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
@@ -24,7 +23,6 @@ from wagtail.core import blocks
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.models import Rendition
 from wagtail.snippets.blocks import SnippetChooserBlock
 
@@ -91,6 +89,7 @@ class FestivalPage(FixUrlMixin, Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
     hero_buttons_en = StreamField(
         [
@@ -103,6 +102,7 @@ class FestivalPage(FixUrlMixin, Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
     hero_buttons = TranslatedField("hero_buttons_sk", "hero_buttons_en")
     video_text_sk = RichTextField(blank=True)
@@ -124,6 +124,7 @@ class FestivalPage(FixUrlMixin, Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
     headline_en = StreamField(
         [
@@ -141,10 +142,11 @@ class FestivalPage(FixUrlMixin, Page):
         ],
         null=True,
         blank=True,
+        use_json_field=True,
     )
     headline = TranslatedField("headline_sk", "headline_en")
     partner_sections = StreamField(
-        [("partner_section", PartnerSectionBlock())], blank=True
+        [("partner_section", PartnerSectionBlock())], blank=True, use_json_field=True,
     )
 
     content_panels_sk = [
@@ -159,18 +161,18 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("place"),
         FieldPanel("hero_text_sk", classname="full"),
         InlinePanel("hero_images", label="Hero images"),
-        StreamFieldPanel("hero_buttons_sk"),
+        FieldPanel("hero_buttons_sk"),
         FieldPanel("video_text_sk", classname="full"),
         InlinePanel("video_invites"),
-        StreamFieldPanel("headline_sk"),
-        StreamFieldPanel("partner_sections"),
+        FieldPanel("headline_sk"),
+        FieldPanel("partner_sections"),
     ]
     content_panels_en = [
         FieldPanel("formatted_title_en"),
         FieldPanel("hero_text_en", classname="full"),
-        StreamFieldPanel("hero_buttons_en"),
+        FieldPanel("hero_buttons_en"),
         FieldPanel("video_text_en", classname="full"),
-        StreamFieldPanel("headline_en"),
+        FieldPanel("headline_en"),
     ]
 
     edit_handler = TabbedInterface(
@@ -462,9 +464,9 @@ class ContactPage(FixUrlMixin, Page):
     right_text = TranslatedField("right_text_sk", "right_text_en")
 
     content_panels_sk = Page.content_panels + [
-        ImageChooserPanel("left_image"),
+        FieldPanel("left_image"),
         FieldPanel("left_text_sk", classname="full"),
-        ImageChooserPanel("right_image"),
+        FieldPanel("right_image"),
         FieldPanel("right_text_sk", classname="full"),
     ]
     content_panels_en = [
@@ -498,22 +500,24 @@ class AboutFestivalPage(FixUrlMixin, Page):
         [
             ("heading", blocks.CharBlock(classname="title")),
             ("paragraph", blocks.RichTextBlock()),
-        ]
+        ],
+        use_json_field=True,
     )
     body_en = StreamField(
         [
             ("heading", blocks.CharBlock(classname="title")),
             ("paragraph", blocks.RichTextBlock()),
-        ]
+        ],
+        use_json_field=True,
     )
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -537,22 +541,24 @@ class DonatePage(FixUrlMixin, Page):
         [
             ("heading", blocks.CharBlock(classname="title")),
             ("paragraph", blocks.RichTextBlock()),
-        ]
+        ],
+        use_json_field=True,
     )
     body_en = StreamField(
         [
             ("heading", blocks.CharBlock(classname="title")),
             ("paragraph", blocks.RichTextBlock()),
-        ]
+        ],
+        use_json_field=True,
     )
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -583,7 +589,8 @@ class PartnersPage(FixUrlMixin, Page):
                     ]
                 ),
             ),
-        ]
+        ],
+        use_json_field=True,
     )
     body_en = StreamField(
         [
@@ -596,16 +603,17 @@ class PartnersPage(FixUrlMixin, Page):
                     ]
                 ),
             ),
-        ]
+        ],
+        use_json_field=True,
     )
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -628,16 +636,16 @@ class CrowdfundingPage(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    body_sk = StreamField([("text", blocks.TextBlock())])
-    body_en = StreamField([("text", blocks.TextBlock())])
+    body_sk = StreamField([("text", blocks.TextBlock())], use_json_field=True)
+    body_en = StreamField([("text", blocks.TextBlock())], use_json_field=True)
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -665,16 +673,16 @@ class CrowdfundingStarsPage(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    body_sk = StreamField([("text", blocks.TextBlock())])
-    body_en = StreamField([("text", blocks.TextBlock())])
+    body_sk = StreamField([("text", blocks.TextBlock())], use_json_field=True)
+    body_en = StreamField([("text", blocks.TextBlock())], use_json_field=True)
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -703,17 +711,17 @@ class CrowdfundingRocket2Page(FixUrlMixin, Page):
     )
     target_amount = models.IntegerField()
     title_translated = TranslatedField("title", "title_en")
-    body_sk = StreamField([("text", blocks.TextBlock())])
-    body_en = StreamField([("text", blocks.TextBlock())])
+    body_sk = StreamField([("text", blocks.TextBlock())], use_json_field=True)
+    body_en = StreamField([("text", blocks.TextBlock())], use_json_field=True)
     body = TranslatedField("body_sk", "body_en")
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("target_amount"),
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -741,11 +749,11 @@ class CrowdfundingCandlePage(CrowdfundingRocket2Page):
     content_panels_sk = Page.content_panels + [
         FieldPanel("target_amount"),
         FieldPanel("feed_url"),
-        StreamFieldPanel("body_sk"),
+        FieldPanel("body_sk"),
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
-        StreamFieldPanel("body_en"),
+        FieldPanel("body_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -804,7 +812,7 @@ class StreamPage(FixUrlMixin, Page):
 
     content_panels_sk = Page.content_panels + [
         FieldPanel("stream_url"),
-        ImageChooserPanel("background"),
+        FieldPanel("background"),
         FieldPanel("popup_donation_body_sk"),
         FieldPanel("popup_donation_button_sk"),
         FieldPanel("popup_donation_button_url"),
@@ -866,7 +874,8 @@ class PodcastPage(FixUrlMixin, Page):
                     ]
                 ),
             ),
-        ]
+        ],
+        use_json_field=True,
     )
 
     content_panels = [
@@ -876,7 +885,7 @@ class PodcastPage(FixUrlMixin, Page):
         FieldPanel("description_en", classname="full"),
     ]
     episodes_panel = [
-        StreamFieldPanel("episodes"),
+        FieldPanel("episodes"),
     ]
 
     edit_handler = TabbedInterface(
