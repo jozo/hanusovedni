@@ -25,6 +25,7 @@ urlpatterns = [
     re_path(r"^program/(.*)/$", views.redirect_events),
     path("api/stream/", views.stream_api, name="api-stream"),
     path("api/archive/", views.archive_api, name="api-archive"),
+    path("api/health/", views.health_api, name="health-archive"),
     path("documents/", include(wagtaildocs_urls)),
     path(
         "robots.txt",

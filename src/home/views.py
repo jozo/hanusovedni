@@ -81,3 +81,7 @@ def archive_api(request):
     qs = ArchiveQueryset()
     events = str(qs.json())
     return HttpResponse(f"<html><body>{events}</body></html>")
+
+
+def health_api(request):
+    return JsonResponse({"status": "ok"})
