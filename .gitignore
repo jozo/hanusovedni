@@ -119,3 +119,5 @@ elm-stuff/
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+.tool-versions

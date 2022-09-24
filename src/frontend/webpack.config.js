@@ -1,8 +1,8 @@
 const path = require('path')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin");
 
 const config = {
   entry: {
@@ -20,7 +20,12 @@ const config = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'resolve-url-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
         ]
       },
       {
@@ -50,7 +55,7 @@ const config = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './elm/elm-bundle.js', to: 'elm-bundle.js' },
+        {from: './elm/elm-bundle.js', to: 'elm-bundle.js'},
       ],
     }),
   ],
@@ -58,8 +63,7 @@ const config = {
     proxy: {
       '/': 'http://localhost:8000',
     },
-    watchContentBase: true,
-    writeToDisk: true
+    hot: true
   }
 }
 
@@ -73,7 +77,7 @@ module.exports = (env, argv) => {
       minimize: true,
       minimizer: [
         `...`,
-        new UglifyJsPlugin(),
+        new TerserPlugin(),
         new CssMinimizerPlugin(),
       ],
     }

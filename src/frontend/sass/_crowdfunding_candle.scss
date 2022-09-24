@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .template-crowdfunding-candle {
   font-family: $font-special;
 
@@ -85,7 +87,7 @@
 
       @for $i from 0 through 8 {
         &.c-#{$i} {
-          left: $i / 9 * 100%;
+          left: math.div($i, 9) * 100%;
           .flame {
             display: none;
           }
