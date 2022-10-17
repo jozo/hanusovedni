@@ -84,7 +84,6 @@ build-image:
 
 deploy:production:
   stage: deploy production
-  when: manual
   allow_failure: false
   extends:
     - .deploy
