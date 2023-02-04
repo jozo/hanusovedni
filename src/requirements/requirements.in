@@ -1,10 +1,10 @@
 cairosvg
 django-extensions
 django-redis
+gunicorn
 ipython
 psycopg2
 requests
 sentry-sdk
-uwsgi
 wagtail
 wagtail-autocomplete

@@ -429,8 +429,6 @@ class ProgramIndexPage(FixUrlMixin, Page):
             k: list(v)
             for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
         }
-        if self.get_parent().slug == "bhd-online":
-            context["message_empty"] = "Program prvého BHD ONLINE už čoskoro…"
         return context
 
 

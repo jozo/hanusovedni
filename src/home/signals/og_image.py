@@ -40,7 +40,7 @@ def create_og_image_for_event(**kwargs):
                 title=event.title_translated,
                 sub_title=build_subtitle(event),
                 logo=event.related_festival.logo,
-                title_bg_color=event.category.color,
+                title_bg_color=event.category.color if event.category else "#72c7ab",
             ).save_to_memory()
             django_image = InMemoryUploadedFile(
                 buffer,
@@ -144,7 +144,7 @@ class EventOGImage:
 
     def default_font(self, size):
         return ImageFont.truetype(
-            os.path.join(settings.STATIC_ROOT, "fonts/AdelleBasic_Bold.otf"),
+            os.path.join(settings.PROJECT_DIR, "static/fonts/AdelleBasic_Bold.otf"),
             size,
         )
 
