@@ -6,8 +6,8 @@ $(document).ready(function () {
     Cookies.set('cookiesAccepted', 'yes', { expires: 365 * 10 })    // expires in 10 years
   })
 
-  if (Cookies.get('cookiesAccepted')) {
-    $('#cookiesAlert').hide()
+  if (!Cookies.get('cookiesAccepted')) {
+    $('#cookiesAlert').removeClass("d-none")
   }
 
   function userIsLoggedIn () {
