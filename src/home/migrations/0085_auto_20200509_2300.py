@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
         ("home", "0084_auto_20200509_2244"),

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailcore", "0045_assign_unlock_grouppagepermission"),
         ("home", "0075_remove_event_speakers"),

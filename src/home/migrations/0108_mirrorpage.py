@@ -8,7 +8,6 @@ import home.models.mixins
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailcore", "0060_fix_workflow_unique_constraint"),
         ("home", "0107_genericpage"),

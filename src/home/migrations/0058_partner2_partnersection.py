@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailimages", "0001_squashed_0021"),
         ("home", "0057_auto_20200418_1846"),

@@ -6,7 +6,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.urls import reverse
 from wagtail.contrib.frontend_cache.utils import PurgeBatch
-from wagtail.core.signals import page_published, page_unpublished
+from wagtail.signals import page_published, page_unpublished
 
 from home.models.data_models import Event, Speaker
 from home.models.pages import (

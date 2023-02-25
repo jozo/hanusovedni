@@ -4,12 +4,11 @@ import django.db.models.deletion
 import django.utils.timezone
 import modelcluster.fields
 import wagtail.contrib.routable_page.models
-import wagtail.core.fields
+import wagtail.fields
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wagtailimages", "0001_squashed_0021"),
         ("wagtailcore", "0041_group_collection_permissions_verbose_name_plural"),
@@ -51,7 +50,7 @@ class Migration(migrations.Migration):
                         to="wagtailcore.Page",
                     ),
                 ),
-                ("intro", wagtail.core.fields.RichTextField(blank=True)),
+                ("intro", wagtail.fields.RichTextField(blank=True)),
             ],
             options={
                 "verbose_name": "archív",
@@ -75,8 +74,8 @@ class Migration(migrations.Migration):
                         to="wagtailcore.Page",
                     ),
                 ),
-                ("hero_text", wagtail.core.fields.RichTextField(blank=True)),
-                ("video_text", wagtail.core.fields.RichTextField(blank=True)),
+                ("hero_text", wagtail.fields.RichTextField(blank=True)),
+                ("video_text", wagtail.fields.RichTextField(blank=True)),
             ],
             options={
                 "abstract": False,
@@ -97,7 +96,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "title",
-                    wagtail.core.fields.RichTextField(blank=True, verbose_name="názov"),
+                    wagtail.fields.RichTextField(blank=True, verbose_name="názov"),
                 ),
                 (
                     "url_to_map",
@@ -126,7 +125,7 @@ class Migration(migrations.Migration):
                         to="wagtailcore.Page",
                     ),
                 ),
-                ("intro", wagtail.core.fields.RichTextField(blank=True)),
+                ("intro", wagtail.fields.RichTextField(blank=True)),
             ],
             options={
                 "verbose_name": "program",
@@ -209,7 +208,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "description",
-                    wagtail.core.fields.RichTextField(blank=True, verbose_name="popis"),
+                    wagtail.fields.RichTextField(blank=True, verbose_name="popis"),
                 ),
                 (
                     "photo",
@@ -316,9 +315,7 @@ class Migration(migrations.Migration):
                 ("logo", models.FileField(null=True, upload_to="")),
                 (
                     "title",
-                    wagtail.core.fields.RichTextField(
-                        default="Bratislavské Hanusove dni"
-                    ),
+                    wagtail.fields.RichTextField(default="Bratislavské Hanusove dni"),
                 ),
                 ("start_date", models.DateField(default=django.utils.timezone.now)),
                 ("end_date", models.DateField(default=django.utils.timezone.now)),
@@ -361,7 +358,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "description",
-                    wagtail.core.fields.RichTextField(blank=True, verbose_name="popis"),
+                    wagtail.fields.RichTextField(blank=True, verbose_name="popis"),
                 ),
                 (
                     "date_and_time",

@@ -6,11 +6,11 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from wagtail.admin import messages
-from wagtail.admin.edit_handlers import FieldPanel, ObjectList, TabbedInterface
+from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.settings.models import BaseSetting
 from wagtail.contrib.settings.registry import register_setting
-from wagtail.core import hooks
+from wagtail import hooks
 
 from .fields import TranslatedField
 from .models import Event, Speaker

@@ -9,7 +9,6 @@ import wagtail.snippets.blocks
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("home", "0113_alter_event_buttons"),
     ]

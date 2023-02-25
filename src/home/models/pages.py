@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.translation import gettext as _
-from wagtail.admin.edit_handlers import (
+from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
     InlinePanel,
@@ -19,9 +19,9 @@ from wagtail.admin.edit_handlers import (
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail.core import blocks
-from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core.models import Page
+from wagtail import blocks
+from wagtail.fields import RichTextField, StreamField
+from wagtail.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Rendition
 from wagtail.snippets.blocks import SnippetChooserBlock
@@ -146,7 +146,9 @@ class FestivalPage(FixUrlMixin, Page):
     )
     headline = TranslatedField("headline_sk", "headline_en")
     partner_sections = StreamField(
-        [("partner_section", PartnerSectionBlock())], blank=True, use_json_field=True,
+        [("partner_section", PartnerSectionBlock())],
+        blank=True,
+        use_json_field=True,
     )
 
     content_panels_sk = [
