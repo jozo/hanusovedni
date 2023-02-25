@@ -44,6 +44,7 @@ defusedxml==0.7.1
     # via cairosvg
 django==4.1.7
     # via
+    #   django-csp
     #   django-debug-toolbar
     #   django-extensions
     #   django-filter
@@ -54,6 +55,8 @@ django==4.1.7
     #   django-treebeard
     #   djangorestframework
     #   wagtail
+django-csp==3.7
+    # via -r requirements.in
 django-debug-toolbar==3.8.1
     # via -r development.in
 django-extensions==3.2.1

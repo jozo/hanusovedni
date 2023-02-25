@@ -36,6 +36,7 @@ defusedxml==0.7.1
     # via cairosvg
 django==4.1.7
     # via
+    #   django-csp
     #   django-extensions
     #   django-filter
     #   django-modelcluster
@@ -45,6 +46,8 @@ django==4.1.7
     #   django-treebeard
     #   djangorestframework
     #   wagtail
+django-csp==3.7
+    # via -r requirements.in
 django-extensions==3.2.1
     # via -r requirements.in
 django-filter==22.1

@@ -30,6 +30,11 @@
 
   {# Global stylesheets #}
   <link rel="stylesheet" type="text/css" href="{% static "dist/bundle.css" %}">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/svg-with-js.min.css"
+      integrity="sha512-kykcz2VnxuCLnfiymkPqtsNceqEghEDiHWWYMa/nOwdutxeFGZsUi1+TEWT4MyesfxybNGpJNCVXzEPXSO8aKQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
 
   {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
@@ -43,28 +48,13 @@
 </div>
 
 
-{% if request.get_host == "test.hanusovedni.sk" %}
-  <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col-sm-6">
-        <div class="alert alert-danger text-center m-2" role="alert">
-          <strong>
-            Testovacia verzia stránky!
-            Prejsť na <a href="https://hanusovedni.sk/">oficiálnu verziu</a>.
-          </strong>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
-
 {% block header_content %}
   {% include "header.html" %}
 {% endblock %}
 
 {% block content %}{% endblock %}
 
-<div class="container-fluid position-absolute" style="top: 0; right: 15%">
+<div class="container-fluid position-absolute language-switcher">
   <div class="language-switcher-head">
     <div class="d-flex flex-row justify-content-end">
       <div class="link-group d-flex">
@@ -94,11 +84,15 @@
 
 {# Global javascript #}
 <script type="text/javascript" src="{% static "dist/index.js" %}"></script>
-<script defer src="https://kit.fontawesome.com/8a0d4a7b33.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
+        integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
+        crossorigin="anonymous"
+        data-auto-add-css="false"
+        referrerpolicy="no-referrer"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-30977387-1"></script>
-<script>
+<script nonce="{{request.csp_nonce}}">
   window.dataLayer = window.dataLayer || []
 
   function gtag () {dataLayer.push(arguments)}

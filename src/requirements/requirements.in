@@ -1,4 +1,5 @@
 cairosvg
+django-csp
 django-extensions
 django-redis
 gunicorn

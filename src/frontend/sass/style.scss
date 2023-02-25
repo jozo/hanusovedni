@@ -271,6 +271,11 @@ body > footer {
   }
 }
 
+.language-switcher {
+  top: 0;
+  right: 15%;
+}
+
 .language-switcher-head {
   font-size: 0.8rem;
   font-family: $font-special;
@@ -302,11 +307,6 @@ body > footer {
   }
 }
 
-
-#page-editing-bar {
-  // by default Wagtail's userbar is not displayed
-  display: none;
-}
 
 .template-generic {
   article {
