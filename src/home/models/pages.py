@@ -75,9 +75,6 @@ class FestivalPage(FixUrlMixin, Page):
     place = models.CharField(
         max_length=50, null=True, blank=True, verbose_name=_("place")
     )
-    hero_text_sk = RichTextField(blank=True)
-    hero_text_en = RichTextField(blank=True)
-    hero_text = TranslatedField("hero_text_sk", "hero_text_en")
     hero_buttons_sk = StreamField(
         [
             (
@@ -188,7 +185,6 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("logo"),
         FieldRowPanel([FieldPanel("start_date"), FieldPanel("end_date")]),
         FieldPanel("place"),
-        FieldPanel("hero_text_sk", classname="full"),
         InlinePanel("hero_images", label="Hero images"),
         # FieldPanel("hero_buttons_sk"),
         FieldPanel("video_text_sk", classname="full"),
@@ -198,7 +194,6 @@ class FestivalPage(FixUrlMixin, Page):
     ]
     content_panels_en = [
         FieldPanel("formatted_title_en"),
-        FieldPanel("hero_text_en", classname="full"),
         # FieldPanel("hero_buttons_en"),
         FieldPanel("video_text_en", classname="full"),
         FieldPanel("video_invites_en"),

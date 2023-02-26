@@ -16,14 +16,9 @@
   <main class="flex-grow-1">
     <div class="container">
       <section class="hero row mx-n02 mb-5">
-        <div class="col-lg-6 px-02 mb-1 d-flex">
-          <div class="p-md-5 p-4 hero-text flex-grow-1">
-            {{ page.hero_text|richtext }}
-          </div>
-        </div>
-        <div class="col-lg-6 px-02 mb-1 d-flex">
+        <div class="col px-02 mb-1 d-flex">
           <div class="hero-carousel d-flex flex-grow-1">
-            <div id="carouselHeroImages" class="carousel slide" data-ride="carousel">
+            <div id="carouselHeroImages" class="carousel slide w-100" data-ride="carousel">
               <ol class="carousel-indicators">
                 {% for hero_image in page.hero_images.all %}
                   <li data-target="#carouselHeroImagesIndicators" data-slide-to="0"
