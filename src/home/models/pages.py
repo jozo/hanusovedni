@@ -108,6 +108,33 @@ class FestivalPage(FixUrlMixin, Page):
     video_text_sk = RichTextField(blank=True)
     video_text_en = RichTextField(blank=True)
     video_text = TranslatedField("video_text_sk", "video_text_en")
+    video_invites_sk = StreamField(
+        [
+            (
+                "url",
+                blocks.URLBlock(
+                    help_text="Vlož sem link na YouTube alebo obdobné stránky"
+                ),
+            ),
+        ],
+        null=True,
+        blank=True,
+        use_json_field=True,
+    )
+    video_invites_en = StreamField(
+        [
+            (
+                "url",
+                blocks.URLBlock(
+                    help_text="Vlož sem link na YouTube alebo obdobné stránky"
+                ),
+            )
+        ],
+        null=True,
+        blank=True,
+        use_json_field=True,
+    )
+    video_invites = TranslatedField("video_invites_sk", "video_invites_en")
     headline_sk = StreamField(
         [
             (
@@ -165,7 +192,7 @@ class FestivalPage(FixUrlMixin, Page):
         InlinePanel("hero_images", label="Hero images"),
         # FieldPanel("hero_buttons_sk"),
         FieldPanel("video_text_sk", classname="full"),
-        InlinePanel("video_invites"),
+        FieldPanel("video_invites_sk"),
         FieldPanel("headline_sk"),
         FieldPanel("partner_sections"),
     ]
@@ -174,6 +201,7 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("hero_text_en", classname="full"),
         # FieldPanel("hero_buttons_en"),
         FieldPanel("video_text_en", classname="full"),
+        FieldPanel("video_invites_en"),
         FieldPanel("headline_en"),
     ]
 

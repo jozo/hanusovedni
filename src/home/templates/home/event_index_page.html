@@ -10,12 +10,10 @@
 {% block extra_js %}
   {% get_current_language as LANGUAGE_CODE %}
   <script type="text/javascript" src="{% static "dist/elm-bundle.js" %}"></script>
-  <script>
-    $(document).ready(function () {
-      Elm.Main.init({
-        node: document.getElementById('event-elm-app'),
-        flags: "{{ LANGUAGE_CODE }}",
-      })
+  <script defer>
+    Elm.Main.init({
+      node: document.getElementById('event-elm-app'),
+      flags: "{{ LANGUAGE_CODE }}",
     })
   </script>
 {% endblock %}

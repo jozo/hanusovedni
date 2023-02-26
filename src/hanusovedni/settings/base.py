@@ -219,8 +219,18 @@ LOGGING = {
 
 # Django CSP (Content Security Policy)
 CSP_DEFAULT_SRC = ["'self'"]
-CSP_SCRIPT_SRC = ["'self'", 'https://cdnjs.cloudflare.com', "https://www.googletagmanager.com"]
-CSP_IMG_SRC = ["'self'", "data:", 'https://*.youtube.com', 'https://youtube.com', 'https://www.google-analytics.com']
-CSP_FRAME_SRC = ["'self'", 'https://*.youtube.com', 'https://youtube.com']
-CSP_STYLE_SRC = ["'self'", 'https://cdnjs.cloudflare.com']
+CSP_SCRIPT_SRC = [
+    "'self'",
+    "https://cdnjs.cloudflare.com",
+    "https://www.googletagmanager.com",
+]
+CSP_IMG_SRC = [
+    "'self'",
+    "data:",
+    "https://*.youtube.com",
+    "https://youtube.com",
+    "https://www.google-analytics.com",
+]
+CSP_FRAME_SRC = ["'self'", "https://*.youtube.com", "https://youtube.com"]
+CSP_STYLE_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
 CSP_INCLUDE_NONCE_IN = ["script-src"]

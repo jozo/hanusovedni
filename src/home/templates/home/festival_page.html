@@ -15,7 +15,7 @@
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
-      <section class="hero row mx-n02">
+      <section class="hero row mx-n02 mb-5">
         <div class="col-lg-6 px-02 mb-1 d-flex">
           <div class="p-md-5 p-4 hero-text flex-grow-1">
             {{ page.hero_text|richtext }}
@@ -56,24 +56,24 @@
       </section>
     </div>
 
-    {% if page.video_invites.all %}
+    {% if page.video_invites %}
       <div class="container">
-        <section class="video-invites">
+        <section class="video-invites mb-5">
           <div class="row no-gutters">
             <div class="col-lg-8">
               <div class="video-invites-carousel">
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
-                    {% for invite in page.video_invites.all %}
+                    {% for invite in page.video_invites %}
                       <li data-target="#carouselExampleIndicators" data-slide-to="0"
                           class="{% if forloop.first %}active{% endif %}"></li>
                     {% endfor %}
                   </ol>
                   <div class="carousel-inner">
-                    {% for invite in page.video_invites.all %}
+                    {% for invite in page.video_invites %}
                       <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         <div class="embed-container">
-                          {% embed invite.url %}
+                          {% embed invite.value %}
                         </div>
                       </div>
                     {% endfor %}
@@ -105,8 +105,6 @@
     {% if page.headline %}
       <div class="container">
         <section id="headline">
-          <h2>{% trans "Headline" %}</h2>
-
           <div class="row mx-n02 justify-content-center">
             {% for headliner in page.headline %}
               <div class="col-md-6 col-lg-4 d-flex flex-column px-02 mb-1">
@@ -149,23 +147,6 @@
         </section>
       </div>
     {% endif %}
-
-    <div class="container">
-      <section class="social-media">
-        <h2>{% trans "Follow us on Facebook" %}</h2>
-
-        <div class="row mx-n02">
-          <div class="col-md-6 offset-md-3 px-02">
-            <a href="https://www.facebook.com/hanusovednifestival"
-               class="d-flex justify-content-center align-content-center mb-1 text-decoration-none"
-               target="_blank">
-              <i class="icon-arrow3 mr-2"></i>
-              Facebook
-            </a>
-          </div>
-        </div>
-      </section>
-    </div>
 
     <div class="container">
       <section class="partners">

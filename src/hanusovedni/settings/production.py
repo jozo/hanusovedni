@@ -41,8 +41,6 @@ EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
 
 CSRF_TRUSTED_ORIGINS = ["https://hanusovedni.sk"]
 
-SECURE_HSTS_SECONDS = 31536000      # 1 year
-
 # Django CSP (Content Security Policy)
 CSP_REPORT_URI = os.environ["CSP_REPORT_URI"]
 CSP_REPORT_ONLY = True

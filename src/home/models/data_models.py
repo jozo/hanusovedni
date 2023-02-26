@@ -98,9 +98,7 @@ class Event(FixUrlMixin, Page):
     )
     category = models.ForeignKey(
         "home.Category",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
     )
     icon = models.ForeignKey(
         "wagtailimages.Image",
@@ -332,17 +330,6 @@ class HeroImage(Orderable):
 
     panels = [
         FieldPanel("image"),
-        FieldPanel("url"),
-    ]
-
-
-class VideoInvite(Orderable):
-    page = ParentalKey(
-        "home.FestivalPage", on_delete=models.CASCADE, related_name="video_invites"
-    )
-    url = models.URLField()
-
-    panels = [
         FieldPanel("url"),
     ]
 

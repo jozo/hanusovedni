@@ -5,7 +5,6 @@ from .data_models import (
     Location,
     PartnerSectionBlock,
     Speaker,
-    VideoInvite,
 )
 from .pages import (
     AboutFestivalPage,

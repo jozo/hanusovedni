@@ -218,6 +218,12 @@ body > footer {
       }
     }
   }
+
+  .contact-map {
+    height: 400px;
+    filter: grayscale(0.8);
+    border: 0;
+  }
 }
 
 .embed-container {

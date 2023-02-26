@@ -193,6 +193,10 @@
     .headliner {
       height: 360px;
 
+      .stretched-link {
+        width: 101%;
+      }
+
       &:hover, &:active {
         .name, .description {
           transition: all 0.3s;
