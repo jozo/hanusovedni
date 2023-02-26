@@ -6,12 +6,14 @@ hanusovedni.{$DOMAIN:local} {
     reverse_proxy 0.0.0.0:8000
 
     handle_path /static/* {
+        header Cache-Control max-age=15552000
         file_server {
             root /var/www/static/
         }
     }
 
     handle_path /media/* {
+        header Cache-Control max-age=15552000
         file_server {
             root /var/www/media/
         }

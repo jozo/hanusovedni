@@ -5,8 +5,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=hanusovedni
     volumes:
-      - ./docker/pgdata:/var/lib/postgresql/data/pgdata:delegated
-      - ./:/code:delegated
+      - ./docker/pgdata:/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
 
@@ -16,5 +15,16 @@ services:
     command: ./manage.py runserver 0:8000
     volumes:
       - ./src:/code:delegated
-      - ./docker/static:/static_root:delegated
-      - ./docker/media:/media_root:delegated
+      - ./docker/static:/static_root
+      - ./docker/media:/media_root
+
+  caddy:
+    image: caddy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./docker/static:/var/www/static/
+      - ./docker/media:/var/www/media/
+    networks:
+      - hanusnet

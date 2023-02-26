@@ -163,7 +163,7 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("place"),
         FieldPanel("hero_text_sk", classname="full"),
         InlinePanel("hero_images", label="Hero images"),
-        FieldPanel("hero_buttons_sk"),
+        # FieldPanel("hero_buttons_sk"),
         FieldPanel("video_text_sk", classname="full"),
         InlinePanel("video_invites"),
         FieldPanel("headline_sk"),
@@ -172,7 +172,7 @@ class FestivalPage(FixUrlMixin, Page):
     content_panels_en = [
         FieldPanel("formatted_title_en"),
         FieldPanel("hero_text_en", classname="full"),
-        FieldPanel("hero_buttons_en"),
+        # FieldPanel("hero_buttons_en"),
         FieldPanel("video_text_en", classname="full"),
         FieldPanel("headline_en"),
     ]
