@@ -475,13 +475,6 @@ class ContactPage(FixUrlMixin, Page):
     left_text_sk = RichTextField(blank=True, null=True)
     left_text_en = RichTextField(blank=True, null=True)
     left_text = TranslatedField("left_text_sk", "left_text_en")
-    right_image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="r_img+",
-    )
     right_text_sk = RichTextField(blank=True, null=True)
     right_text_en = RichTextField(blank=True, null=True)
     right_text = TranslatedField("right_text_sk", "right_text_en")
@@ -489,7 +482,6 @@ class ContactPage(FixUrlMixin, Page):
     content_panels_sk = Page.content_panels + [
         FieldPanel("left_image"),
         FieldPanel("left_text_sk", classname="full"),
-        FieldPanel("right_image"),
         FieldPanel("right_text_sk", classname="full"),
     ]
     content_panels_en = [

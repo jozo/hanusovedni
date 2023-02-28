@@ -156,10 +156,10 @@
         <div class="row mx-n02">
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
-              <div class="photo align-self-center mt-3 mt-md-0">
-                {% image speaker_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
+              <div class="photo align-self-center mt-5 ml-5 mr-5 mb-0 mb-md-5">
+                {% image speaker_connection.speaker.photo min-350x350 format-jpeg class="rounded-circle" loading="lazy" %}
               </div>
-              <div class="m-5">
+              <div class="m-5 ml-md-0 align-self-center">
                 <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}"
                    class="speaker-heading">
                   <h4 class="mb-4">{{ speaker_connection.speaker.title }}</h4>
@@ -174,10 +174,10 @@
         <div class="row mx-n02">
           <div class="col-12 px-02 mb-1">
             <div class="speaker d-flex flex-md-row flex-column">
-              <div class="photo align-self-center mt-3 mt-md-0">
-                {% image host_connection.speaker.photo min-350x350 format-jpeg loading="lazy" %}
+              <div class="photo align-self-center mt-5 ml-5 mr-5 mb-0 mb-md-5">
+                {% image host_connection.speaker.photo min-350x350 format-jpeg class="rounded-circle" loading="lazy" %}
               </div>
-              <div class="m-5">
+              <div class="m-5 ml-md-0 align-self-center">
                 <a href="{{ host_connection.speaker.url|prefix_festival:request }}"
                    class="speaker-heading">
                   <h4 class="mb-4">{{ host_connection.speaker.title }}</h4>

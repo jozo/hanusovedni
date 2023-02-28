@@ -18,30 +18,22 @@
               </div>
             </section>
 
-            <section class="second d-flex justify-content-center">
+            <section class="third d-flex flex-column align-items-center">
               <div class="col-md-8">
                 <h2>{% include_block page.body.1 %}</h2>
                 {% include_block page.body.2 %}
                 <div class="orange">
                   {% include_block page.body.3 %}
                 </div>
+              </div>
 
-                <img src="{% static "img/ladislav-hanus.jpg" %}"
-                     alt="{% trans "Photo of Ladislav Hanus" %}"
-                     class="mt-5 mb-n4 hanus">
+              <img src="{% static "img/slh-spolocenstvo.jpg" %}"
+                   alt="{% trans "Photo of SLH fellowship" %}"
+                   class="mt-5 img-fluid">
+
+              <div class="col-md-8">
                 <h2>{% include_block page.body.4 %}</h2>
                 {% include_block page.body.5 %}
-              </div>
-            </section>
-
-            <img src="{% static "img/slh-spolocenstvo.jpg" %}"
-                 alt="{% trans "Photo of SLH fellowship" %}"
-                 class="mt-5 img-fluid">
-
-            <section class="third d-flex flex-column align-items-center">
-              <div class="col-md-8">
-                <h2>{% include_block page.body.6 %}</h2>
-                {% include_block page.body.7 %}
               </div>
 
               <img src="{% static "img/logo-slh.svg" %}" alt="{% trans "Logo SLH" %}"
@@ -51,6 +43,16 @@
                 <a href="https://slh.sk/" target="_blank" class="text-uppercase">
                   {% trans "more about SLH" %}
                 </a>
+              </div>
+            </section>
+
+            <section class="second d-flex justify-content-center pb-5">
+              <div class="col-md-8">
+                <img src="{% static "img/hanus.jpg" %}"
+                     alt="{% trans "Photo of Ladislav Hanus" %}"
+                     class="mt-5 mb-n4 hanus rounded-circle">
+                <h2>{% include_block page.body.6 %}</h2>
+                {% include_block page.body.7 %}
               </div>
             </section>
           </div>
