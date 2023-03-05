@@ -12,6 +12,8 @@ services:
   web:
     build: .
     #image: hn1
+    ports:
+      - "8000:8000"
     command: ./manage.py runserver 0:8000
     volumes:
       - ./src:/code:delegated

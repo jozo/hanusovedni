@@ -6,6 +6,13 @@
 {% block title %}{{ page.title_translated }}{% endblock %}
 
 {% block content %}
+  <style nonce="{{ request.csp_nonce }}">
+    {% for category in categories %}
+        .category-theme-{{ category.id }} {
+            background-color: {{ category.color }}
+        }
+    {% endfor %}
+  </style>
   <main class="flex-grow-1" id="main-div">
     <div class="container mb-1">
       <div class="row d-flex flex-row mb-1 mx-n02">
@@ -46,9 +53,7 @@
           <div class="row mx-n02 w-100">
             {% for episode in page.episodes %}
               <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 mb-1 overflow-hidden">
-                <article class="event d-flex flex-column"
-                         style="background-color: {{ episode.value.category.color }}">
-
+                <article class="event d-flex flex-column category-theme-{{ episode.value.category.id }}">
                   <div class="category">
                     <div class="name">
                       {{ episode.value.category.title }}

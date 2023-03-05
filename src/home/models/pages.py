@@ -27,7 +27,7 @@ from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from home.fields import TranslatedField
-from home.models import Event, PartnerSectionBlock, Speaker
+from home.models import Event, PartnerSectionBlock, Speaker, Category
 from home.models.mixins import FixUrlMixin
 
 # TODO - gettext vs ugettext_lazy
@@ -911,6 +911,11 @@ class PodcastPage(FixUrlMixin, Page):
             ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
         ]
     )
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["categories"] = Category.objects.values("id", "color")
+        return context
 
 
 class GenericPage(FixUrlMixin, Page):
