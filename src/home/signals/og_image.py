@@ -9,8 +9,8 @@ from django.dispatch import receiver
 from django.utils import translation
 from django.utils.formats import date_format
 from PIL import Image, ImageDraw, ImageFont
-from wagtail.signals import page_published
 from wagtail.images.models import Image as WagtailImage
+from wagtail.signals import page_published
 
 from home.models import Event
 from home.models.data_models import OpenGraphImage, Speaker

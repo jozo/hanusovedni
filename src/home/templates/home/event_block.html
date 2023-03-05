@@ -1,10 +1,15 @@
 {% load i18n_extra %}
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 
+<style nonce="{{request.csp_nonce}}">
+  .event-theme-{{ forloop.counter }} {
+      background-color: {{ event.category.color }}
+  }
+</style>
+
 <div class="col-lg-3 col-md-4 col-sm-6 col-12 d-flex px-02 mb-1 overflow-hidden">
   <a href="{{ event.url|prefix_festival:request }}" class="d-flex w-100 text-decoration-none">
-    <article class="event d-flex flex-column"
-             style="background-color: {{ event.category.color }}">
+    <article class="event d-flex flex-column event-theme-{{ forloop.counter }}">
       <div class="illustration d-flex justify-content-center align-items-center">
         {% for rendition in event.icon.renditions.all %}
           <img alt="{{ event.icon.title }}" src="{{ rendition.url }}" width="65" height="65" loading="lazy">

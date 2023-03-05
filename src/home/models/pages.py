@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.formats import date_format
 from django.utils.translation import gettext as _
+from wagtail import blocks
 from wagtail.admin.panels import (
     FieldPanel,
     FieldRowPanel,
@@ -19,11 +20,10 @@ from wagtail.admin.panels import (
     TabbedInterface,
 )
 from wagtail.contrib.routable_page.models import RoutablePageMixin, route
-from wagtail import blocks
 from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.models import Rendition
+from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from home.fields import TranslatedField

@@ -16,12 +16,17 @@
 {% block title %}{{ page.title_translated }}{% endblock %}
 
 {% block content %}
+  <style nonce="{{request.csp_nonce}}">
+  .event-color {
+      background-color: {{ page.category.color }}
+  }
+  </style>
+
   <main class="flex-grow-1">
     <div class="container">
       <div class="row mx-n02">
         <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
-          <article class="event d-flex flex-column w-100"
-                   style="background-color: {{ page.category.color }}">
+          <article class="event d-flex flex-column w-100 event-color">
             <div class="illustration d-flex justify-content-center align-items-center">
               {% image page.icon fill-65x65 loading="lazy" %}
             </div>
@@ -86,8 +91,7 @@
           </article>
         </div>
         <div class="col-md-6 col-12 d-flex px-02 mb-1">
-          <article class="event-detail d-flex flex-column justify-content-between p-4 w-100"
-                   style="background-color: {{ page.category.color }}">
+          <article class="event-detail event-color d-flex flex-column justify-content-between p-4 w-100">
             {% if page.video_url %}
               <div class="video mb-3">
                 <div class="embed-container">
@@ -129,12 +133,17 @@
               {% endif %}
               {% if page.buttons %}
                 {% for button in page.buttons %}
+                  <style nonce="{{request.csp_nonce}}">
+                    {% if button.value.color %}
+                    .btn-theme-{{ forloop.counter }} {
+                      background-color: {{ button.value.color }};
+                      border-color: {{ button.value.color }};
+                    }
+                    {% endif %}
+                  </style>
                   <a href="{{ button.value.url }}"
                      role="button" target="_blank"
-                     class="btn btn-primary btn-lg m-2 d-flex align-items-center"
-                     {% if button.value.color %}
-                     style="background-color: {{ button.value.color }}; border-color: {{ button.value.color }}"
-                     {% endif %}
+                     class="btn btn-primary btn-lg m-2 d-flex align-items-center btn-theme-{{ forloop.counter }}"
                   >
                     {% current_locale as lang %}
                     {% if lang == "sk" %}

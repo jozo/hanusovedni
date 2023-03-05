@@ -231,6 +231,18 @@ CSP_IMG_SRC = [
     "https://youtube.com",
     "https://www.google-analytics.com",
 ]
-CSP_FRAME_SRC = ["'self'", "https://*.youtube.com", "https://youtube.com"]
+CSP_FRAME_SRC = [
+    "'self'",
+    "https://*.youtube.com",
+    "https://youtube.com",
+    # Googla Maps
+    "https://maps.google.com",
+    "https://www.google.com",
+]
 CSP_STYLE_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
-CSP_INCLUDE_NONCE_IN = ["script-src"]
+CSP_CONNECT_SRC = [
+    "'self'",
+    "https://www.google-analytics.com",
+    "https://stats.g.doubleclick.net",
+]
+CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
