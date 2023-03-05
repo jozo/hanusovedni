@@ -27,9 +27,20 @@ services:
       restart_policy:
         condition: on-failure
 
-
   db:
     env_file:
       - secrets.env
     volumes:
       - /var/www/pgdata:/var/lib/postgresql/data/pgdata
+
+  caddy:
+    environment:
+      - DOMAIN=sk
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/caddy/data:/data
+      - ./docker/caddy/config:/config
+      - /var/www/static:/var/www/static
+      - /var/www/media:/var/www/media

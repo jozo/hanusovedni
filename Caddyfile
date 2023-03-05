@@ -3,7 +3,7 @@
 }
 
 hanusovedni.{$DOMAIN:local} {
-    reverse_proxy 0.0.0.0:8000
+    reverse_proxy web:8000
 
     handle_path /static/* {
         header Cache-Control max-age=15552000

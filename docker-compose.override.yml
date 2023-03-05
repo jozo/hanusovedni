@@ -19,12 +19,10 @@ services:
       - ./docker/media:/media_root
 
   caddy:
-    image: caddy
     ports:
+      - "80:80"
+      - "443:443"
       - "8080:80"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
       - ./docker/static:/var/www/static/
       - ./docker/media:/var/www/media/
-    networks:
-      - hanusnet
