@@ -1,3 +1,6 @@
+variables:
+  DOCKER_BUILDKIT: 1
+
 stages:
   - build
   - deploy production
@@ -20,10 +23,12 @@ build-image:
     - docker pull ${CI_REGISTRY_IMAGE}:latest || true
     # Build the compile stage:
     - "docker build --target compile-image \
+        --build-arg BUILDKIT_INLINE_CACHE=1 \
         --cache-from=${CI_REGISTRY_IMAGE}:compile-stage \
         --tag ${CI_REGISTRY_IMAGE}:compile-stage ."
     # Build the runtime stage, using cached compile stage:
     - "docker build --target runtime-image \
+        --build-arg BUILDKIT_INLINE_CACHE=1 \
         --cache-from=${CI_REGISTRY_IMAGE}:compile-stage \
         --cache-from=${CI_REGISTRY_IMAGE}:latest \
         --tag ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} \
@@ -106,7 +111,7 @@ deploy:production:
 
 
 build-image:on-schedule:
-  image: docker:19.03.8
+  image: docker:23.0.1
   stage: build
   services:
     - docker:dind

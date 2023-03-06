@@ -236,6 +236,7 @@ CSP_IMG_SRC = [
 ]
 CSP_FRAME_SRC = [
     "'self'",
+    "https://slh.darujme.sk",
     "https://*.youtube.com",
     "https://youtube.com",
     # Googla Maps
