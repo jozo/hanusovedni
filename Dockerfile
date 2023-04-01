@@ -21,6 +21,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       libcairo2 \
       libpq5 \
+    libffi-dev \
+    libpq-dev \
       gettext \
     && apt-get clean
 

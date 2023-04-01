@@ -2,5 +2,6 @@
 
 black
 django-debug-toolbar
+django-vite
 isort
 pip-tools

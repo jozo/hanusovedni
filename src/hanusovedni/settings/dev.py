@@ -19,6 +19,12 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 WAGTAILADMIN_BASE_URL = "https://hanusovedni.local"
 CSRF_TRUSTED_ORIGINS = ["https://hanusovedni.local"]
 
+DJANGO_VITE_DEV_MODE = True
+DJANGO_VITE_DEV_SERVER_PORT = 3000
+
+# To support fonts and other static files for vite paths
+STATICFILES_DIRS += [("@fs/home/jozo/d/hanusovedni/src", BASE_DIR)]
+
 
 def show_toolbar(request):
     return False

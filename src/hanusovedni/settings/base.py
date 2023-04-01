@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "taggit",
     "django_extensions",
     "wagtailautocomplete",
+    "django_vite",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -176,7 +177,10 @@ STATICFILES_FINDERS = [
 
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
+    os.path.join(BASE_DIR, "frontend", "static"),
 ]
+
+DJANGO_VITE_ASSETS_PATH = os.path.join(PROJECT_DIR, "static", "dist")
 
 # ManifestStaticFilesStorage is recommended in production, to prevent outdated
 # Javascript / CSS assets being served from cache (e.g. after a Wagtail upgrade).

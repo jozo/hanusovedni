@@ -1,0 +1,106 @@
+{
+  "../hanusovedni/static/fonts/AdelleBasic_Bold.otf": {
+    "file": "AdelleBasic_Bold-3b96c9dc.otf",
+    "src": "../hanusovedni/static/fonts/AdelleBasic_Bold.otf"
+  },
+  "../hanusovedni/static/fonts/AdelleBasic_BoldItalic.otf": {
+    "file": "AdelleBasic_BoldItalic-be455460.otf",
+    "src": "../hanusovedni/static/fonts/AdelleBasic_BoldItalic.otf"
+  },
+  "../hanusovedni/static/fonts/Enriqueta-Bold.ttf": {
+    "file": "Enriqueta-Bold-94597568.ttf",
+    "src": "../hanusovedni/static/fonts/Enriqueta-Bold.ttf"
+  },
+  "../hanusovedni/static/fonts/Enriqueta-Medium.ttf": {
+    "file": "Enriqueta-Medium-d894be5d.ttf",
+    "src": "../hanusovedni/static/fonts/Enriqueta-Medium.ttf"
+  },
+  "../hanusovedni/static/fonts/icons.svg": {
+    "file": "icons-6a5956b2.svg",
+    "src": "../hanusovedni/static/fonts/icons.svg"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf": {
+    "file": "fa-brands-400-2ef6fdde.ttf",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.ttf"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
+    "file": "fa-brands-400-f4617423.woff2",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf": {
+    "file": "fa-regular-400-12dea17b.ttf",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.ttf"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2": {
+    "file": "fa-regular-400-7ba24c41.woff2",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-regular-400.woff2"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf": {
+    "file": "fa-solid-900-67a880b4.ttf",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf"
+  },
+  "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2": {
+    "file": "fa-solid-900-e2c5cf54.woff2",
+    "src": "../node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2"
+  },
+  "img/bg-about.jpg": {
+    "file": "bg-about-7dd65265.jpg",
+    "src": "img/bg-about.jpg"
+  },
+  "img/bg-crowdfunding-stars-mobile.png": {
+    "file": "bg-crowdfunding-stars-mobile-d4d8614e.png",
+    "src": "img/bg-crowdfunding-stars-mobile.png"
+  },
+  "img/bg-crowdfunding-stars.png": {
+    "file": "bg-crowdfunding-stars-451a2682.png",
+    "src": "img/bg-crowdfunding-stars.png"
+  },
+  "img/bg-dots.png": {
+    "file": "bg-dots-e9ceb7ec.png",
+    "src": "img/bg-dots.png"
+  },
+  "img/bg-podcast.jpg": {
+    "file": "bg-podcast-27ceee2d.jpg",
+    "src": "img/bg-podcast.jpg"
+  },
+  "img/bg-stars.svg": {
+    "file": "bg-stars-716f4473.svg",
+    "src": "img/bg-stars.svg"
+  },
+  "img/icon-arrow-blue.svg": {
+    "file": "icon-arrow-blue-085c78cf.svg",
+    "src": "img/icon-arrow-blue.svg"
+  },
+  "main.css": {
+    "file": "main-2ad2a91e.css",
+    "src": "main.css"
+  },
+  "main.js": {
+    "assets": [
+      "AdelleBasic_Bold-3b96c9dc.otf",
+      "AdelleBasic_BoldItalic-be455460.otf",
+      "Enriqueta-Medium-d894be5d.ttf",
+      "Enriqueta-Bold-94597568.ttf",
+      "icons-6a5956b2.svg",
+      "bg-about-7dd65265.jpg",
+      "bg-dots-e9ceb7ec.png",
+      "icon-arrow-blue-085c78cf.svg",
+      "bg-crowdfunding-stars-451a2682.png",
+      "bg-crowdfunding-stars-mobile-d4d8614e.png",
+      "bg-podcast-27ceee2d.jpg",
+      "bg-stars-716f4473.svg",
+      "fa-brands-400-f4617423.woff2",
+      "fa-brands-400-2ef6fdde.ttf",
+      "fa-regular-400-7ba24c41.woff2",
+      "fa-regular-400-12dea17b.ttf",
+      "fa-solid-900-e2c5cf54.woff2",
+      "fa-solid-900-67a880b4.ttf"
+    ],
+    "css": [
+      "main-2ad2a91e.css"
+    ],
+    "file": "main-76099557.js",
+    "isEntry": true,
+    "src": "main.js"
+  }
+}

@@ -1,5 +1,6 @@
 {% load wagtailuserbar %}
 {% load static i18n i18n_extra %}
+{% load django_vite %}
 
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
@@ -29,20 +30,15 @@
   {% include "favicon.html" %}
 
   {# Global stylesheets #}
-  <link rel="stylesheet" type="text/css" href="{% static "dist/bundle.css" %}">
-  <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/svg-with-js.min.css"
-      integrity="sha512-kykcz2VnxuCLnfiymkPqtsNceqEghEDiHWWYMa/nOwdutxeFGZsUi1+TEWT4MyesfxybNGpJNCVXzEPXSO8aKQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
 
   {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
   {% endblock %}
+  {% vite_hmr_client %}
+  {% vite_asset 'main.js' %}
 </head>
 
 <body class="d-flex flex-column {% block body_class %}{% endblock %}">
-
 <div id="page-editing-bar">
   {% wagtailuserbar %}
 </div>
@@ -71,7 +67,7 @@
       </div>
 
       <div class="link-group d-flex ml-2">
-        <a href="/bhd/podcast/"><i class="fas fa-microphone-alt"></i> Podcast</a>
+        <a href="/bhd/podcast/"><i class="fa-solid fa-microphone-lines"></i> Podcast</a>
       </div>
       <div class="link-group d-flex ml-2">
         <a href="https://www.facebook.com/hanusovednifestival" target="_blank"
@@ -93,13 +89,6 @@
 {% endblock %}
 
 {# Global javascript #}
-<script type="text/javascript" src="{% static "dist/index.js" %}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
-        integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
-        crossorigin="anonymous"
-        data-auto-add-css="false"
-        defer
-        referrerpolicy="no-referrer"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-30977387-1"></script>
