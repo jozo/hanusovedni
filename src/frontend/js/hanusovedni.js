@@ -10,15 +10,8 @@ $(document).ready(function () {
     $('#cookiesAlert').removeClass("d-none")
   }
 
-  function userIsLoggedIn () {
-    return Cookies.get('user_logged_in') !== undefined
-  }
-
-  function showWagtailUserBar () {
-    if (userIsLoggedIn()) {
-      $('#page-editing-bar').show()
-    }
-  }
-
-  showWagtailUserBar()
+  // Display menu when clicked on button
+  $("#nav-btn").on("click", function () {
+    $("#nav-menu").toggleClass("hidden")
+  })
 })

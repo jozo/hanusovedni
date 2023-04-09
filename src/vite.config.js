@@ -21,7 +21,7 @@ export default defineConfig({
     }
   },
   plugins: [
-    FullReload(['hanusovedni/templates/**/*.html'])
+    // FullReload(['hanusovedni/templates/**/*.html'])
   ],
   build: {
     outDir: resolve('frontend/static'),

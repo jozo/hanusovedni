@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block body_class %}page-tickets-bhd-2023{% endblock %}
+
+{% block content %}
+  <main class="flex-grow-1">
+    <div class="container">
+
+      {# Carousel #}
+      {% if page.carousel %}
+        <div id="mainCarousel" class="flex grow max-h-[150px] sm:max-h-[250px] md:max-h-[350px] lg:max-h-[500px] mb-20 carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for block in page.carousel %}
+              <li data-target="#mainCarouselIndicators" data-slide-to="0" class="{% if forloop.first %}active{% endif %}"></li>
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner flex grow">
+            {% for block in page.carousel %}
+              <div class="carousel-item flex {% if forloop.first %}active{% endif %}">
+                <a href="{{ block.value.url }}" target="_blank" class="flex max-h-full">
+                  {% image block.value.image original format-jpeg as carouse_image %}
+                  <img class="object-cover max-h-full min-w-full" src="{{ carouse_image.url }}" alt="{{ carouse_image.alt }}"/>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans "previous" %}</span>
+          </a>
+          <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">{% trans "next" %}</span>
+          </a>
+        </div>
+      {% endif %}
+
+
+      {# Tickets description #}
+      <h2 class="mb-10 text-center uppercase font-bold">{{ page.body.0.value }}</h2>
+
+      <div class="flex lg:flex-row flex-col justify-center mb-14">
+        <div class="flex flex-col sm:flex-row justify-center items-center mb-4 lg:mr-4 text-center">
+          <a href="{{ page.body.1.value }}" class="group flex flex-col justify-center w-52 h-52 mb-3 sm:mb-0 p-4 rounded-lg
+                             bg-raspberry hover:drop-shadow font-bold text-white hover:no-underline transition-all">
+            <div class="group-hover:hidden mb-4 uppercase text-xl">{{ page.body.2.value }}</div>
+            <div class="group-hover:hidden text-5xl font-bold">
+              {% now "Y-m-d" as todays_date %}
+              {% if todays_date < '2023-05-01' %}
+                {{ page.body.3.value }}
+              {% elif todays_date < '2023-06-01' %}
+                {{ page.body.4.value }}
+              {% elif todays_date < '2023-06-15' %}
+                {{ page.body.5.value }}
+              {% else %}
+                {{ page.body.6.value }}
+              {% endif %}
+            </div>
+            <div class="hidden group-hover:block text-left leading-snug">
+              <ul class="mb-0 ml-3 list-disc">
+                <li class="mb-3">{{ page.body.7.value }}</li>
+                <li>{{ page.body.8.value }}</li>
+              </ul>
+            </div>
+          </a>
+          <div class="flex flex-col justify-center w-44 mx-4 border-spacing-2 text-right leading-8">
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date < '2023-05-01' %}bg-raspberry rounded{% endif %}">
+              <div class="flex-1">od 10.4.</div>
+              <div class="flex-1">{{ page.body.3.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-raspberry rounded{% endif %}">
+              <div class="flex-1">od 1.5.</div>
+              <div class="flex-1">{{ page.body.4.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-raspberry rounded{% endif %}">
+              <div class="flex-1">od 1.6.</div>
+              <div class="flex-1">{{ page.body.5.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-15' %}bg-raspberry rounded{% endif %}">
+              <div class="flex-1">na mieste</div>
+              <div class="flex-1">{{ page.body.6.value }}</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="flex flex-col sm:flex-row justify-center items-center mb-4 lg:mr-4 text-center">
+          <a href="{{ page.body.9.value }}" class="group flex flex-col justify-center w-52 h-52 mb-3 sm:mb-0 p-4 rounded-lg
+                             bg-bhd-orange hover:drop-shadow font-bold text-white hover:no-underline">
+            <div class="group-hover:hidden mb-4 uppercase text-xl">{{ page.body.10.value }}</div>
+            <div class="group-hover:hidden text-5xl font-bold">
+              {% if todays_date < '2023-05-01' %}
+                {{ page.body.11.value }}
+              {% elif todays_date < '2023-06-01' %}
+                {{ page.body.12.value }}
+              {% elif todays_date < '2023-06-15' %}
+                {{ page.body.13.value }}
+              {% else %}
+                {{ page.body.14.value }}
+              {% endif %}
+            </div>
+            <div class="hidden group-hover:block text-left leading-snug">
+              <ul class="mb-0 ml-3 list-disc">
+                <li class="mb-3">{{ page.body.15.value }}</li>
+                <li>{{ page.body.16.value }}</li>
+              </ul>
+            </div>
+          </a>
+          <div class="flex flex-col justify-center w-44 mx-4 border-spacing-2 text-right leading-8">
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date < '2023-05-01' %}bg-bhd-orange rounded{% endif %}">
+              <div class="flex-1">od 10.4.</div>
+              <div class="flex-1">{{ page.body.11.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-bhd-orange rounded{% endif %}">
+              <div class="flex-1">od 1.5.</div>
+              <div class="flex-1">{{ page.body.12.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-bhd-orange rounded{% endif %}">
+              <div class="flex-1">od 1.6.</div>
+              <div class="flex-1">{{ page.body.13.value }}</div>
+            </div>
+            <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-15' %}bg-bhd-orange rounded{% endif %}">
+              <div class="flex-1">na mieste</div>
+              <div class="flex-1">{{ page.body.14.value }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <h2 class="mb-10 text-center uppercase font-bold">{{ page.body.17.value }}</h2>
+      <div class="flex justify-center mb-3">
+        <p class="max-w-[800px] text-center">{{ page.body.18.value }}</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center mb-4 text-center">
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date < '2023-05-01' %}bg-raspberry{% endif %}">
+          <div>od 10.4.</div>
+          <div class="font-bold">{{ page.body.19.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-raspberry{% endif %}">
+          <div>od 1.5.</div>
+          <div class="font-bold">{{ page.body.20.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-raspberry{% endif %}">
+          <div>od 1.6.</div>
+          <div class="font-bold">{{ page.body.21.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-15' %}bg-raspberry{% endif %}">
+          <div>na mieste</div>
+          <div class="font-bold">{{ page.body.22.value }}</div>
+        </div>
+      </div>
+
+      <p class="text-sm text-center mb-5">{{ page.body.23.value }}</p>
+
+      <div class="flex justify-center mb-24">
+        <a href="{{ page.body.24.value }}"
+           class="py-3 px-5 rounded bg-raspberry font-bold uppercase text-white
+                  transition duration-300 hover:no-underline hover:bg-raspberry-700">
+          {{ page.body.25.value }}
+        </a>
+      </div>
+
+
+      <h2 class="mb-10 text-center uppercase font-bold">{{ page.body.26.value }}</h2>
+      <div class="flex justify-center mb-3">
+        <p class="max-w-[800px] text-center">{{ page.body.27.value }}</p>
+      </div>
+
+      <div class="flex flex-wrap justify-center mb-4 text-center">
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date < '2023-05-01' %}bg-bhd-orange{% endif %}">
+          <div>od 10.4.</div>
+          <div class="font-bold">{{ page.body.28.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-bhd-orange{% endif %}">
+          <div>od 1.5.</div>
+          <div class="font-bold">{{ page.body.29.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-bhd-orange{% endif %}">
+          <div>od 1.6.</div>
+          <div class="font-bold">{{ page.body.30.value }}</div>
+        </div>
+        <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-15' %}bg-bhd-orange{% endif %}">
+          <div>na mieste</div>
+          <div class="font-bold">{{ page.body.31.value }}</div>
+        </div>
+      </div>
+
+      <p class="text-sm text-center mb-5">{{ page.body.32.value }}</p>
+
+      <div class="flex justify-center mb-14">
+        <a href="{{ page.body.33.value }}" class="py-3 px-5 rounded bg-bhd-orange font-bold uppercase text-white
+                           transition duration-300 hover:no-underline hover:bg-bhd-orange-600">
+          {{ page.body.34.value }}
+        </a>
+      </div>
+    </div>
+  </main>
+{% endblock %}

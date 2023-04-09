@@ -5,7 +5,19 @@ module.exports = {
     "./hanusovedni/templates/**/**.html"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "raspberry": {
+          DEFAULT: "#852049",
+          500: "#9f2657",
+          700: "#6c1a3b"
+        },
+        "bhd-orange": {
+          DEFAULT: "#e2902e",
+          600: "#c88029",
+        }
+      }
+    },
   },
   plugins: [],
 }

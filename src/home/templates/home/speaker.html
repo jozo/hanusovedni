@@ -2,7 +2,8 @@
 
 {% load i18n wagtailcore_tags wagtailimages_tags %}
 
-{% block og_image %}{% image speaker.photo original format-jpeg as og_photo %}{{ self.get_url_parts.1 }}{{ og_photo.url }}{% endblock %}
+{% block og_image %}{% image speaker.photo original format-jpeg as og_photo %}{{ self.get_url_parts.1 }}
+  {{ og_photo.url }}{% endblock %}
 {% block extra_meta %}
   <meta property="og:description" content="{{ self.description|striptags|truncatewords:15 }}"/>
 {% endblock %}
@@ -12,22 +13,16 @@
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
-      <div class="row">
-        <div class="col-12 mb-1">
-          <div class="speaker d-flex flex-md-row flex-column">
-            <div class="photo align-self-center mt-3 mt-md-0">
-              {% image page.photo min-350x350 format-jpeg loading="lazy" %}
-            </div>
-            <div class="m-5">
-              <h4 class="mb-4 speaker-heading">{{ page.title }}</h4>
-              {{ page.description|richtext }}
-            </div>
-          </div>
+      <div class="flex flex-col lg:flex-row mb-1 p-12 bg-neutral-800">
+        <div class="mb-12 lg:mb-0 lg:mr-12 flex justify-center items-center">
+          {% image page.photo fill-300x300 format-jpeg loading="lazy" class="object-cover max-w-none rounded-full" %}
+        </div>
+        <div class="flex flex-col justify-center">
+          <h4 class="font-bold mb-6">{{ page.title }}</h4>
+          {{ page.description|richtext }}
         </div>
       </div>
-    </div>
 
-    <div class="container">
       <div class="row mx-n02">
         {% for event in events %}
           {% include "home/event_block.html" %}

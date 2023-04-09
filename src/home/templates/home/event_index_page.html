@@ -9,7 +9,7 @@
 
 {% block extra_js %}
   {% get_current_language as LANGUAGE_CODE %}
-  <script type="text/javascript" src="{% static "dist/elm-bundle.js" %}"></script>
+  <script type="text/javascript" src="{% static "elm-bundle.js" %}"></script>
   <script defer nonce="{{request.csp_nonce}}">
     Elm.Main.init({
       node: document.getElementById('event-elm-app'),

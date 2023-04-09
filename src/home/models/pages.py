@@ -995,6 +995,56 @@ class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
             return redirect(event.get_url(request))
 
 
+class TicketsPage(FixUrlMixin, Page):
+    """Tickets page for BHD 2023"""
+    class Meta:
+        verbose_name = "Tickets - created for BHD 2023"
+
+    title_en = models.CharField(
+        verbose_name=_("title"),
+        max_length=255,
+        blank=False,
+        help_text=_("The page title as you'd like it to be seen by the public"),
+    )
+    title_translated = TranslatedField("title", "title_en")
+    carousel_sk = StreamField([
+        ("item", blocks.StructBlock([
+            ("image", ImageChooserBlock()),
+            ("url", blocks.URLBlock()),
+        ]))
+    ], use_json_field=True, blank=True)
+    carousel_en = StreamField([
+        ("item", blocks.StructBlock([
+            ("image", ImageChooserBlock()),
+            ("url", blocks.URLBlock()),
+        ]))
+    ], use_json_field=True, blank=True)
+    carousel = TranslatedField("carousel_sk", "carousel_en")
+    body_sk = StreamField([("text", blocks.TextBlock())], use_json_field=True)
+    body_en = StreamField([("text", blocks.TextBlock())], use_json_field=True)
+    body = TranslatedField("body_sk", "body_en")
+
+    content_panels_sk = [
+        FieldPanel("title", classname="full title"),
+        FieldPanel("carousel_sk"),
+        FieldPanel("body_sk"),
+    ]
+    content_panels_en = [
+        FieldPanel("title_en", classname="full title"),
+        FieldPanel("carousel_en"),
+        FieldPanel("body_en"),
+    ]
+
+    edit_handler = TabbedInterface(
+        [
+            ObjectList(content_panels_sk, heading=_("Content SK")),
+            ObjectList(content_panels_en, heading=_("Content EN")),
+            ObjectList(Page.promote_panels, heading="Promote"),
+            ObjectList(Page.settings_panels, heading="Settings", classname="settings"),
+        ]
+    )
+
+
 def replace_tags_with_space(value):
     """Return the given HTML with spaces instead of tags."""
     return re.sub(r"</?\w+>", " ", str(value))

@@ -25,7 +25,7 @@
   <main class="flex-grow-1">
     <div class="container">
       <div class="row mx-n02">
-        <div class="col-md-6 col-12 d-flex px-02 mb-1 overflow-hidden">
+        <div class="col-md-6 col-12 d-flex px-02 overflow-hidden">
           <article class="event d-flex flex-column w-100 event-color">
             <div class="illustration d-flex justify-content-center align-items-center">
               {% image page.icon fill-65x65 loading="lazy" %}
@@ -69,7 +69,33 @@
                 </ul>
               {% endif %}
             </div>
+          </article>
+        </div>
+        <div class="col-md-6 col-12 d-flex px-02">
+          <article class="event-detail event-color d-flex flex-column justify-content-between p-4 w-100">
+            {% if page.video_url %}
+              <div class="video mb-3">
+                <div class="embed-container">
+                  {% embed page.video_url %}
+                </div>
+              </div>
+            {% endif %}
+            <div class="description">
+              {{ page.description|richtext }}
+            </div>
 
+            <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-end">
+              {% if page.video_url %}
+                <a href="{{ page.video_url }}" role="button" target="_blank"
+                   class="btn btn-warning btn-lg m-2 d-flex align-items-center">
+                  {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
+                </a>
+              {% endif %}
+            </div>
+          </article>
+        </div>
+        <div class="col-12 d-flex px-02 mb-1 overflow-hidden">
+          <article class="event no-top-p d-flex flex-column w-100 event-color">
             <footer>
               <time class="d-flex align-items-center" datetime="{{ page.date_and_time|date:'c' }}">
                 <i class="far fa-calendar-alt"></i>
@@ -90,110 +116,62 @@
             </footer>
           </article>
         </div>
-        <div class="col-md-6 col-12 d-flex px-02 mb-1">
-          <article class="event-detail event-color d-flex flex-column justify-content-between p-4 w-100">
-            {% if page.video_url %}
-              <div class="video mb-3">
-                <div class="embed-container">
-                  {% embed page.video_url %}
-                </div>
-              </div>
-            {% endif %}
-            <div class="description">
-              {{ page.description|richtext }}
-            </div>
-
-            <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-end">
-              {% if page.video_url %}
-                <a href="{{ page.video_url }}" role="button" target="_blank"
-                   class="btn btn-warning btn-lg m-2 d-flex align-items-center">
-                  {{ settings.home.TranslationSettings.watch_video_button|linebreaks }}
-                </a>
-              {% endif %}
-              {% if today <= festival.end_date %}
-                {% if page.ticket_url %}
-                  <a href="{{ page.ticket_url }}" role="button" target="_blank"
-                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
-                    {{ settings.home.TranslationSettings.buy_ticket_button|linebreaks }}
-                  </a>
-                {% endif %}
-                {% if page.ticket2_url %}
-                  <a href="{{ page.ticket2_url }}" role="button" target="_blank"
-                     class="btn btn-primary btn-lg m-2 d-flex align-items-center">
-                    {{ settings.home.TranslationSettings.buy_ticket2_button|linebreaks }}
-                  </a>
-                {% endif %}
-                {% if settings.home.TranslationSettings.season_ticket_url %}
-                  <a href="{{ settings.home.TranslationSettings.season_ticket_url }}"
-                     role="button" target="_blank"
-                     class="btn btn-success btn-lg m-2 d-flex align-items-center">
-                    {{ settings.home.TranslationSettings.season_ticket_button|linebreaks }}
-                  </a>
-                {% endif %}
-              {% endif %}
-              {% if page.buttons %}
-                {% for button in page.buttons %}
-                  <style nonce="{{request.csp_nonce}}">
-                    {% if button.value.color %}
-                    .btn-theme-{{ forloop.counter }} {
-                      background-color: {{ button.value.color }};
-                      border-color: {{ button.value.color }};
-                    }
-                    {% endif %}
-                  </style>
-                  <a href="{{ button.value.url }}"
-                     role="button" target="_blank"
-                     class="btn btn-primary btn-lg m-2 d-flex align-items-center btn-theme-{{ forloop.counter }}"
-                  >
-                    {% current_locale as lang %}
-                    {% if lang == "sk" %}
-                      {{ button.value.sk_text }}
-                    {% else %}
-                      {{ button.value.en_text }}
-                    {% endif %}
-                  </a>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </article>
-        </div>
       </div>
     </div>
 
     <div class="container">
+      <h3 class="my-12 text-center">Kúp si vstupenku!</h3>
+      {% current_locale as lang %}
+
+      {% if page.buttons %}
+        <div class="flex grow flex-wrap mb-12 text-center font-bold uppercase whitespace-nowrap">
+          <style nonce="{{request.csp_nonce}}">
+            {% for button in page.buttons %}
+              {% if button.value.color %}
+                .btn-theme-{{ forloop.counter }} {
+                    background-color: {{ button.value.color }};
+                }
+              {% endif %}
+            {% endfor %}
+          </style>
+          {% for button in page.buttons %}
+            <a href="{{ button.value.url }}" role="button" target="_blank"
+               class="flex-1 mb-1 mr-1 p-3 rounded text-white hover:no-underline hover:brightness-90 btn-theme-{{ forloop.counter }}">
+              {% if lang == "sk" %}
+                {{ button.value.sk_text }}
+              {% else %}
+                {{ button.value.en_text }}
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       {% for speaker_connection in page.speaker_connections.all %}
-        <div class="row mx-n02">
-          <div class="col-12 px-02 mb-1">
-            <div class="speaker d-flex flex-md-row flex-column">
-              <div class="photo align-self-center mt-5 ml-5 mr-5 mb-0 mb-md-5">
-                {% image speaker_connection.speaker.photo min-350x350 format-jpeg class="rounded-circle" loading="lazy" %}
-              </div>
-              <div class="m-5 ml-md-0 align-self-center">
-                <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}"
-                   class="speaker-heading">
-                  <h4 class="mb-4">{{ speaker_connection.speaker.title }}</h4>
-                </a>
-                {{ speaker_connection.speaker.description|richtext }}
-              </div>
-            </div>
+        <div class="flex flex-col lg:flex-row mb-1 p-12">
+          <div class="mb-12 lg:mb-0 lg:mr-12 flex items-center justify-center">
+            {% image speaker_connection.speaker.photo fill-300x300 format-jpeg loading="lazy" class="object-cover max-w-none rounded-full" %}
+          </div>
+          <div class="flex flex-col justify-center">
+            <a href="{{ speaker_connection.speaker.url|prefix_festival:request }}"
+               class="text-white">
+              <h4 class="font-bold mb-6">{{ speaker_connection.speaker.title }}</h4>
+            </a>
+            {{ speaker_connection.speaker.description|richtext }}
           </div>
         </div>
       {% endfor %}
       {% for host_connection in page.host_connections.all %}
-        <div class="row mx-n02">
-          <div class="col-12 px-02 mb-1">
-            <div class="speaker d-flex flex-md-row flex-column">
-              <div class="photo align-self-center mt-5 ml-5 mr-5 mb-0 mb-md-5">
-                {% image host_connection.speaker.photo min-350x350 format-jpeg class="rounded-circle" loading="lazy" %}
-              </div>
-              <div class="m-5 ml-md-0 align-self-center">
-                <a href="{{ host_connection.speaker.url|prefix_festival:request }}"
-                   class="speaker-heading">
-                  <h4 class="mb-4">{{ host_connection.speaker.title }}</h4>
-                </a>
-                {{ host_connection.speaker.description|richtext }}
-              </div>
-            </div>
+        <div class="flex flex-col lg:flex-row mb-1 p-12">
+          <div class="mb-12 lg:mb-0 lg:mr-12 flex items-center justify-center">
+            {% image host_connection.speaker.photo fill-300x300 format-jpeg loading="lazy" class="object-cover max-w-none rounded-full" %}
+          </div>
+          <div class="flex flex-col justify-center">
+            <a href="{{ host_connection.speaker.url|prefix_festival:request }}"
+               class="text-white">
+              <h4 class="font-bold mb-6">{{ host_connection.speaker.title }}</h4>
+            </a>
+            {{ host_connection.speaker.description|richtext }}
           </div>
         </div>
       {% endfor %}

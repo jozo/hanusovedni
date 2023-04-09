@@ -18,6 +18,10 @@
 
   background-image: url("../img/bg-polka-dots.png");
 
+  &.no-top-p {
+    padding-top: 0;
+  }
+
   &:hover {
     box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.05);
   }

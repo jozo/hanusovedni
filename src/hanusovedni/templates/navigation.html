@@ -1,25 +1,17 @@
-{% load i18n_extra %}
-
 <div class="container">
-  <div class="row">
-    <div class="col-12">
-      <nav class="navbar navbar-expand-lg navbar-dark p-0 mb-1">
-        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-          <ul class="navbar-nav w-100 text-center">
-            {% for page in festival.get_children.live.in_menu %}
-              <li class="nav-item col p-0 d-flex justify-content-center align-items-center">
-                <a class="nav-link w-100" href="{{ page.url }}">{{ page.specific.title_translated }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </nav>
-    </div>
+  <div class="flex justify-end">
+    <button id="nav-btn" class="block rounded bg-gray-700 p-2.5 mb-4 text-white lg:hidden">
+      <span class="sr-only">Toggle menu</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </div>
+  <nav id="nav-menu" class="flex hidden lg:flex flex-col lg:flex-row flex-wrap my-1 text-center uppercase font-bold">
+    {% for page in festival.get_children.live.in_menu %}
+      <a href="{{ page.url }}" class="flex-auto py-1 px-2">
+        {{ page.specific.title_translated }}
+      </a>
+    {% endfor %}
+  </nav>
 </div>

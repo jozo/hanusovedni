@@ -178,6 +178,7 @@ STATICFILES_FINDERS = [
 STATICFILES_DIRS = [
     os.path.join(PROJECT_DIR, "static"),
     os.path.join(BASE_DIR, "frontend", "static"),
+    os.path.join(BASE_DIR, "frontend", "elm"),
 ]
 
 DJANGO_VITE_ASSETS_PATH = os.path.join(PROJECT_DIR, "static", "dist")

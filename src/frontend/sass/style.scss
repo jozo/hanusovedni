@@ -77,100 +77,30 @@ a {
   }
 }
 
-header .navbar {
-  text-transform: uppercase;
-  font-weight: bold;
+header nav a {
+  @apply text-gray-50 leading-10 transition duration-200
+    hover:no-underline  hover:text-gray-700
+    [&:nth-child(1)]:hover:bg-sky-300
+    [&:nth-child(2)]:hover:bg-violet-300
+    [&:nth-child(3)]:hover:bg-rose-300
+    [&:nth-child(4)]:hover:bg-orange-300
+    [&:nth-child(5)]:hover:bg-green-300
+    [&:nth-child(6)]:hover:bg-amber-300
+    [&:nth-child(7)]:hover:bg-teal-300
+    [&:nth-child(8)]:hover:bg-red-300
+    [&:nth-child(9)]:hover:bg-fuchsia-300
+    [&:nth-child(10)]:hover:bg-yellow-300
 
-  li.nav-item {
-    background-color: $c-menu-bg;
-    border-right: 2px solid black;
-
-    &:last-child {
-      border-right: none !important;
-    }
-
-    &:hover {
-      background-color: red;
-      transition: all 0.5s;
-
-      &:nth-child(1) {
-        a {
-          color: #32393a;
-        }
-
-        background-color: #d4f2f9;
-      }
-
-      &:nth-child(2) {
-        a {
-          color: #2f2f3b;
-        }
-
-        background-color: #cbc7ff;
-      }
-
-      &:nth-child(3) {
-        a {
-          color: #392b2d;
-        }
-
-        background-color: #f4b8c3;
-      }
-
-      &:nth-child(4) {
-        a {
-          color: #3b332a;
-        }
-
-        background-color: #f9d9b7;
-      }
-
-      &:nth-child(5) {
-        a {
-          color: #393624;
-        }
-
-        background-color: #f4e59a;
-      }
-
-      &:nth-child(6) {
-        a {
-          color: #383926;
-        }
-
-        background-color: #ecf2a5;
-      }
-
-      &:nth-child(7) {
-        a {
-          color: #272D38;
-        }
-
-        background-color: #ABC4F4;
-      }
-
-      &:nth-child(8) {
-        a {
-          color: #2A382B;
-        }
-
-        background-color: #B8F4BB;
-      }
-
-      &:nth-child(9) {
-        a {
-          color: #32393a;
-        }
-
-        background-color: #d4f2f9;
-      }
-    }
-
-    a.nav-link {
-      color: $c-menu-text;
-      word-break: break-word;
-    }
-  }
+    [&:nth-child(1)]:active:bg-sky-400
+    [&:nth-child(2)]:active:bg-violet-400
+    [&:nth-child(3)]:active:bg-rose-400
+    [&:nth-child(4)]:active:bg-orange-400
+    [&:nth-child(5)]:active:bg-green-400
+    [&:nth-child(6)]:active:bg-amber-400
+    [&:nth-child(7)]:active:bg-teal-400
+    [&:nth-child(8)]:active:bg-red-400
+    [&:nth-child(9)]:active:bg-fuchsia-400
+    [&:nth-child(10)]:active:bg-yellow-400;
 }
 
 body > footer {
