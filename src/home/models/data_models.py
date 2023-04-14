@@ -38,6 +38,37 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
+    carousel_sk = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+    carousel_en = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+    carousel = TranslatedField("carousel_sk", "carousel_en")
     short_overview_sk = models.CharField(
         max_length=255,
         blank=True,
@@ -71,12 +102,6 @@ class Event(FixUrlMixin, Page):
             _("other websites"),
             mark_safe("</a>"),
         ),
-    )
-    ticket_url = models.URLField(
-        null=True, blank=True, help_text="Defaultne používané pre jednorázový lístok"
-    )
-    ticket2_url = models.URLField(
-        null=True, blank=True, help_text="Používané pre iný druh lístka."
     )
     buttons = StreamField(
         [
@@ -116,6 +141,7 @@ class Event(FixUrlMixin, Page):
     )
 
     content_panels_sk = Page.content_panels + [
+        FieldPanel("carousel_sk"),
         MultiFieldPanel(
             [
                 FieldPanel("date_and_time"),
@@ -130,8 +156,6 @@ class Event(FixUrlMixin, Page):
                 FieldPanel("short_overview_sk"),
                 FieldPanel("description_sk"),
                 FieldPanel("video_url"),
-                FieldPanel("ticket_url"),
-                FieldPanel("ticket2_url"),
                 FieldPanel("buttons"),
             ],
             heading=_("description"),
@@ -141,6 +165,7 @@ class Event(FixUrlMixin, Page):
     ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
+        FieldPanel("carousel_en"),
         MultiFieldPanel(
             [FieldPanel("short_overview_en"), FieldPanel("description_en")],
             heading=_("description"),

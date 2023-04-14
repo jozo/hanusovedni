@@ -9,6 +9,9 @@
 {% block content %}
   <main class="flex-grow-1">
     <div class="container">
+      {# Carousel #}
+      {% include "home/carousel.html" %}
+
       {% for day, events in grouped_events.items %}
         <div class="row">
           <h2 class="col-12 event-index-header">

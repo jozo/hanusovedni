@@ -27,7 +27,7 @@ from wagtail.models import Page
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 from home.fields import TranslatedField
-from home.models import Event, PartnerSectionBlock, Speaker, Category
+from home.models import Category, Event, PartnerSectionBlock, Speaker
 from home.models.mixins import FixUrlMixin
 
 # TODO - gettext vs ugettext_lazy
@@ -75,33 +75,37 @@ class FestivalPage(FixUrlMixin, Page):
     place = models.CharField(
         max_length=50, null=True, blank=True, verbose_name=_("place")
     )
-    hero_buttons_sk = StreamField(
+    carousel_sk = StreamField(
         [
             (
-                "hero_buttons",
+                "item",
                 blocks.StructBlock(
-                    [("title", blocks.CharBlock()), ("link", blocks.CharBlock())]
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
                 ),
-            ),
+            )
         ],
-        null=True,
-        blank=True,
         use_json_field=True,
+        blank=True,
     )
-    hero_buttons_en = StreamField(
+    carousel_en = StreamField(
         [
             (
-                "hero_buttons",
+                "item",
                 blocks.StructBlock(
-                    [("title", blocks.CharBlock()), ("link", blocks.CharBlock())]
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
                 ),
-            ),
+            )
         ],
-        null=True,
-        blank=True,
         use_json_field=True,
+        blank=True,
     )
-    hero_buttons = TranslatedField("hero_buttons_sk", "hero_buttons_en")
+    carousel = TranslatedField("carousel_sk", "carousel_en")
     video_text_sk = RichTextField(blank=True)
     video_text_en = RichTextField(blank=True)
     video_text = TranslatedField("video_text_sk", "video_text_en")
@@ -185,8 +189,8 @@ class FestivalPage(FixUrlMixin, Page):
         FieldPanel("logo"),
         FieldRowPanel([FieldPanel("start_date"), FieldPanel("end_date")]),
         FieldPanel("place"),
+        FieldPanel("carousel_sk"),
         InlinePanel("hero_images", label="Hero images"),
-        # FieldPanel("hero_buttons_sk"),
         FieldPanel("video_text_sk", classname="full"),
         FieldPanel("video_invites_sk"),
         FieldPanel("headline_sk"),
@@ -194,7 +198,7 @@ class FestivalPage(FixUrlMixin, Page):
     ]
     content_panels_en = [
         FieldPanel("formatted_title_en"),
-        # FieldPanel("hero_buttons_en"),
+        FieldPanel("carousel_en"),
         FieldPanel("video_text_en", classname="full"),
         FieldPanel("video_invites_en"),
         FieldPanel("headline_en"),
@@ -420,10 +424,44 @@ class ProgramIndexPage(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
+    carousel_sk = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+    carousel_en = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+    carousel = TranslatedField("carousel_sk", "carousel_en")
 
-    content_panels_sk = Page.content_panels
+    content_panels_sk = Page.content_panels + [
+        FieldPanel("carousel_sk"),
+    ]
     content_panels_en = [
         FieldPanel("title_en", classname="full title"),
+        FieldPanel("carousel_en"),
     ]
     edit_handler = TabbedInterface(
         [
@@ -997,6 +1035,7 @@ class MirrorPage(RoutablePageMixin, FixUrlMixin, Page):
 
 class TicketsPage(FixUrlMixin, Page):
     """Tickets page for BHD 2023"""
+
     class Meta:
         verbose_name = "Tickets - created for BHD 2023"
 
@@ -1007,18 +1046,36 @@ class TicketsPage(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
-    carousel_sk = StreamField([
-        ("item", blocks.StructBlock([
-            ("image", ImageChooserBlock()),
-            ("url", blocks.URLBlock()),
-        ]))
-    ], use_json_field=True, blank=True)
-    carousel_en = StreamField([
-        ("item", blocks.StructBlock([
-            ("image", ImageChooserBlock()),
-            ("url", blocks.URLBlock()),
-        ]))
-    ], use_json_field=True, blank=True)
+    carousel_sk = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
+    carousel_en = StreamField(
+        [
+            (
+                "item",
+                blocks.StructBlock(
+                    [
+                        ("image", ImageChooserBlock()),
+                        ("url", blocks.URLBlock()),
+                    ]
+                ),
+            )
+        ],
+        use_json_field=True,
+        blank=True,
+    )
     carousel = TranslatedField("carousel_sk", "carousel_en")
     body_sk = StreamField([("text", blocks.TextBlock())], use_json_field=True)
     body_en = StreamField([("text", blocks.TextBlock())], use_json_field=True)

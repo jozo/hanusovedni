@@ -1,44 +1,18 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags i18n %}
+{% load wagtailcore_tags i18n_extra %}
 
 {% block title %}{{ page.title_translated }}{% endblock %}
 
 {% block body_class %}page-tickets-bhd-2023{% endblock %}
 
 {% block content %}
+  {% current_locale as lang %}
+
   <main class="flex-grow-1">
     <div class="container">
-
       {# Carousel #}
-      {% if page.carousel %}
-        <div id="mainCarousel" class="flex grow max-h-[150px] sm:max-h-[250px] md:max-h-[350px] lg:max-h-[500px] mb-20 carousel slide" data-ride="carousel">
-          <ol class="carousel-indicators">
-            {% for block in page.carousel %}
-              <li data-target="#mainCarouselIndicators" data-slide-to="0" class="{% if forloop.first %}active{% endif %}"></li>
-            {% endfor %}
-          </ol>
-          <div class="carousel-inner flex grow">
-            {% for block in page.carousel %}
-              <div class="carousel-item flex {% if forloop.first %}active{% endif %}">
-                <a href="{{ block.value.url }}" target="_blank" class="flex max-h-full">
-                  {% image block.value.image original format-jpeg as carouse_image %}
-                  <img class="object-cover max-h-full min-w-full" src="{{ carouse_image.url }}" alt="{{ carouse_image.alt }}"/>
-                </a>
-              </div>
-            {% endfor %}
-          </div>
-          <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">{% trans "previous" %}</span>
-          </a>
-          <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">{% trans "next" %}</span>
-          </a>
-        </div>
-      {% endif %}
-
+      {% include "home/carousel.html" %}
 
       {# Tickets description #}
       <h2 class="mb-10 text-center uppercase font-bold">{{ page.body.0.value }}</h2>
@@ -69,19 +43,19 @@
           </a>
           <div class="flex flex-col justify-center w-44 mx-4 border-spacing-2 text-right leading-8">
             <div class="flex px-3 pt-1 pb-2 {% if todays_date < '2023-05-01' %}bg-raspberry rounded{% endif %}">
-              <div class="flex-1">od 10.4.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 10.4.{% else %}from 4/10{% endif %}</div>
               <div class="flex-1">{{ page.body.3.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-raspberry rounded{% endif %}">
-              <div class="flex-1">od 1.5.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 1.5.{% else %}from 5/1{% endif %}</div>
               <div class="flex-1">{{ page.body.4.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-raspberry rounded{% endif %}">
-              <div class="flex-1">od 1.6.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 1.6.{% else %}from 6/1{% endif %}</div>
               <div class="flex-1">{{ page.body.5.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-15' %}bg-raspberry rounded{% endif %}">
-              <div class="flex-1">na mieste</div>
+              <div class="flex-1">{% if lang == "sk" %}na mieste{% else %}at&nbsp;the&nbsp;gate{% endif %}</div>
               <div class="flex-1">{{ page.body.6.value }}</div>
             </div>
           </div>
@@ -112,19 +86,19 @@
           </a>
           <div class="flex flex-col justify-center w-44 mx-4 border-spacing-2 text-right leading-8">
             <div class="flex px-3 pt-1 pb-2 {% if todays_date < '2023-05-01' %}bg-bhd-orange rounded{% endif %}">
-              <div class="flex-1">od 10.4.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 10.4.{% else %}from 4/10{% endif %}</div>
               <div class="flex-1">{{ page.body.11.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-bhd-orange rounded{% endif %}">
-              <div class="flex-1">od 1.5.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 1.5.{% else %}from 5/1{% endif %}</div>
               <div class="flex-1">{{ page.body.12.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-bhd-orange rounded{% endif %}">
-              <div class="flex-1">od 1.6.</div>
+              <div class="flex-1">{% if lang == "sk" %}od 1.6.{% else %}from 6/1{% endif %}</div>
               <div class="flex-1">{{ page.body.13.value }}</div>
             </div>
             <div class="flex px-3 pt-1 pb-2 {% if todays_date >= '2023-06-15' %}bg-bhd-orange rounded{% endif %}">
-              <div class="flex-1">na mieste</div>
+              <div class="flex-1">{% if lang == "sk" %}na mieste{% else %}at&nbsp;the&nbsp;gate{% endif %}</div>
               <div class="flex-1">{{ page.body.14.value }}</div>
             </div>
           </div>
@@ -139,19 +113,19 @@
 
       <div class="flex flex-wrap justify-center mb-4 text-center">
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date < '2023-05-01' %}bg-raspberry{% endif %}">
-          <div>od 10.4.</div>
+          <div>{% if lang == "sk" %}od 10.4.{% else %}from 4/10{% endif %}</div>
           <div class="font-bold">{{ page.body.19.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-raspberry{% endif %}">
-          <div>od 1.5.</div>
+          <div>{% if lang == "sk" %}od 1.5.{% else %}from 5/1{% endif %}</div>
           <div class="font-bold">{{ page.body.20.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-raspberry{% endif %}">
-          <div>od 1.6.</div>
+          <div>{% if lang == "sk" %}od 1.6.{% else %}from 6/1{% endif %}</div>
           <div class="font-bold">{{ page.body.21.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-15' %}bg-raspberry{% endif %}">
-          <div>na mieste</div>
+          <div>{% if lang == "sk" %}na mieste{% else %}at&nbsp;the&nbsp;gate{% endif %}</div>
           <div class="font-bold">{{ page.body.22.value }}</div>
         </div>
       </div>
@@ -174,19 +148,19 @@
 
       <div class="flex flex-wrap justify-center mb-4 text-center">
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date < '2023-05-01' %}bg-bhd-orange{% endif %}">
-          <div>od 10.4.</div>
+          <div>{% if lang == "sk" %}od 10.4.{% else %}from 4/10{% endif %}</div>
           <div class="font-bold">{{ page.body.28.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-05-01' and todays_date < '2023-06-01' %}bg-bhd-orange{% endif %}">
-          <div>od 1.5.</div>
+          <div>{% if lang == "sk" %}od 1.5.{% else %}from 5/1{% endif %}</div>
           <div class="font-bold">{{ page.body.29.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-01' and todays_date < '2023-06-15' %}bg-bhd-orange{% endif %}">
-          <div>od 1.6.</div>
+          <div>{% if lang == "sk" %}od 1.6.{% else %}from 6/1{% endif %}</div>
           <div class="font-bold">{{ page.body.30.value }}</div>
         </div>
         <div class="flex flex-col mx-2 p-2 rounded leading-9 {% if todays_date >= '2023-06-15' %}bg-bhd-orange{% endif %}">
-          <div>na mieste</div>
+          <div>{% if lang == "sk" %}na mieste{% else %}at&nbsp;the&nbsp;gate{% endif %}</div>
           <div class="font-bold">{{ page.body.31.value }}</div>
         </div>
       </div>
