@@ -38,6 +38,13 @@ class Event(FixUrlMixin, Page):
         help_text=_("The page title as you'd like it to be seen by the public"),
     )
     title_translated = TranslatedField("title", "title_en")
+    image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="+",
+    )
     carousel_sk = StreamField(
         [
             (
@@ -105,12 +112,16 @@ class Event(FixUrlMixin, Page):
     )
     buttons = StreamField(
         [
+            ("heading", blocks.StructBlock([
+                ("sk_text", blocks.CharBlock(default="Kúp si vstupenku!")),
+                ("en_text", blocks.CharBlock(default="Buy a ticket!"))
+            ])),
             (
                 "button",
                 blocks.StructBlock(
                     [
                         ("url", blocks.URLBlock()),
-                        ("color", blocks.CharBlock(required=False)),
+                        ("color", blocks.CharBlock()),
                         ("sk_text", blocks.CharBlock()),
                         ("en_text", blocks.CharBlock()),
                     ]
@@ -141,6 +152,7 @@ class Event(FixUrlMixin, Page):
     )
 
     content_panels_sk = Page.content_panels + [
+        FieldPanel("image"),
         FieldPanel("carousel_sk"),
         MultiFieldPanel(
             [
@@ -338,25 +350,6 @@ class Speaker(FixUrlMixin, Page):
 
     def delete(self, *args, **kwargs):
         self.unpublish(user=kwargs.get("user"))
-
-
-class HeroImage(Orderable):
-    page = ParentalKey(
-        "home.FestivalPage", on_delete=models.CASCADE, related_name="hero_images"
-    )
-    image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
-    )
-    url = models.URLField()
-
-    panels = [
-        FieldPanel("image"),
-        FieldPanel("url"),
-    ]
 
 
 class LocationManager(models.Manager):

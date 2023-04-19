@@ -1,7 +1,6 @@
 from .data_models import (
     Category,
     Event,
-    HeroImage,
     Location,
     PartnerSectionBlock,
     Speaker,

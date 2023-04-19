@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags i18n i18n_extra %}
+
+{% block title %}{{ page.title_translated }}{% endblock %}
+
+{% block body_class %}template-program{% endblock %}
+
+{% block content %}
+  <main class="flex justify-center">
+    <div class="container px-0">
+      {# Carousel #}
+      {% include "home/carousel.html" %}
+
+      {% for day, events in grouped_events.items %}
+        <h2 class="my-10 text-2xl text-center font-bold">
+          <time datetime="{{ day|date:'c' }}">
+            {{ day|date:'l'|upper }}
+            &nbsp;&mdash;&nbsp;
+            {{ day|date:'j. E' }}
+          </time>
+        </h2>
+
+        <style nonce="{{request.csp_nonce}}">
+          {% for event in events %}
+            .event-theme-{{ event.pk }} {
+              background-color: {{ event.category.color }}
+            }
+          {% endfor %}
+        </style>
+        <div class="flex flex-wrap justify-center">
+          {% for event in events %}
+            <a href="{{ event.url|prefix_festival:request }}"
+               class="flex flex-column grow sm:max-w-[50%] md:max-w-[33.3%] hover:no-underline hover:brightness-110">
+              <div class="flex flex-column grow mx-3 md:mx-6 mb-4 text-white">
+                {% image event.image fill-400x400 format-jpeg loading="lazy" class="h-60 object-cover min-w-full" %}
+                <div class="flex grow justify-between p-3 event-theme-{{ event.pk }}">
+                  <div class="self-center text-lg font-bold">{{ event.title }}</div>
+                  <div class="ml-2 -mr-0.5 shrink text-sm text-right font-bold">{{ event.date_and_time|date:'G:i' }}</div>
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% empty %}
+        <div class="row">
+          <div class="col-8 mx-auto text-center">
+            <div class="alert alert-warning mt-3" role="alert">
+              {% if message_empty %}
+                {{ message_empty }}
+              {% else %}
+                {% trans "We are working on this..." %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}

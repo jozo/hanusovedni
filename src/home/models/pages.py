@@ -190,7 +190,6 @@ class FestivalPage(FixUrlMixin, Page):
         FieldRowPanel([FieldPanel("start_date"), FieldPanel("end_date")]),
         FieldPanel("place"),
         FieldPanel("carousel_sk"),
-        InlinePanel("hero_images", label="Hero images"),
         FieldPanel("video_text_sk", classname="full"),
         FieldPanel("video_invites_sk"),
         FieldPanel("headline_sk"),
@@ -493,6 +492,11 @@ class ProgramIndexPage(FixUrlMixin, Page):
             for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
         }
         return context
+
+
+class ProgramIndexPage2(ProgramIndexPage):
+    class Meta:
+        verbose_name = "Program index page - created for BHD 2023"
 
 
 class ContactPage(FixUrlMixin, Page):

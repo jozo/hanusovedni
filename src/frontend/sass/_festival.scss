@@ -41,41 +41,6 @@
     }
   }
 
-  .hero-carousel {
-    // Pattern visible before images from carousel are loaded
-    // https://codepen.io/edmundojr/pen/xOYJGw
-    // Colors
-    $bg-color: $c-bg;
-    $dot-color: lighten($c-bg, 10);
-    max-height: 500px;
-
-    // Dimensions
-    $dot-size: 2px;
-    $dot-space: 22px;
-
-    background: linear-gradient(90deg, $bg-color ($dot-space - $dot-size), transparent 1%) center,
-    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
-    $dot-color;
-    background-size: $dot-space $dot-space;
-
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .carousel-control-prev, .carousel-control-next {
-      visibility: hidden;
-    }
-
-    &:hover {
-      .carousel-control-prev, .carousel-control-next {
-        visibility: visible;
-      }
-    }
-  }
-
   section.call-to-action {
     margin-left: -1px;
     margin-right: -1px;
