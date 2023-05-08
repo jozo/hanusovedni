@@ -35,7 +35,7 @@
               <div class="flex flex-column grow mx-3 md:mx-6 mb-4 text-white">
                 {% image event.image fill-400x400 format-jpeg loading="lazy" class="h-60 object-cover min-w-full" %}
                 <div class="flex grow justify-between p-3 event-theme-{{ event.pk }}">
-                  <div class="self-center text-lg font-bold">{{ event.title }}</div>
+                  <div class="text-lg font-bold">{{ event.title_translated }}</div>
                   <div class="ml-2 -mr-0.5 shrink text-sm text-right font-bold">{{ event.date_and_time|date:'G:i' }}</div>
                 </div>
               </div>
