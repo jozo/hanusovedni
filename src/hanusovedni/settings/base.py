@@ -237,7 +237,7 @@ CSP_IMG_SRC = [
     "https://*.youtube.com",
     "https://youtube.com",
     "https://i.ytimg.com",
-    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
     "https://www.googletagmanager.com",
 ]
 CSP_FRAME_SRC = [
@@ -253,7 +253,7 @@ CSP_STYLE_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
 CSP_CONNECT_SRC = [
     "'self'",
     "https://releases.wagtail.org/latest.txt",
-    "https://www.google-analytics.com",
+    "https://*.google-analytics.com",
     "https://stats.g.doubleclick.net",
 ]
 CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
