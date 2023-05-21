@@ -215,7 +215,7 @@ class FestivalPage(FixUrlMixin, Page):
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
         context["header_festival"] = self
-        context["events"] = (
+        events = (
             ArchiveQueryset()
             .events()
             .filter(
@@ -225,6 +225,10 @@ class FestivalPage(FixUrlMixin, Page):
             )
             .order_by("date_and_time")
         )
+        context["grouped_events"] = {
+            k: list(v)
+            for k, v in itertools.groupby(events, lambda e: e.date_and_time.date())
+        }
 
         return context
 

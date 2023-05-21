@@ -97,32 +97,43 @@
       </div>
     {% endif %}
 
-    {% if events %}
+    {% if grouped_events %}
       <div class="container">
         <section class="events">
           <h2>{% trans "Programme" %}</h2>
 
-          <style nonce="{{request.csp_nonce}}">
-            {% for event in events %}
-              .event-theme-{{ event.pk }} {
-                background-color: {{ event.category.color }}
-              }
-            {% endfor %}
-          </style>
-          <div class="flex flex-wrap justify-center">
-            {% for event in events %}
-              <a href="{{ event.url|prefix_festival:request }}"
-                 class="flex flex-column grow sm:max-w-[50%] md:max-w-[33.3%] hover:no-underline hover:brightness-110">
-                <div class="flex flex-column grow mx-3 md:mx-6 mb-4 text-white">
-                  {% image event.image fill-400x400 format-jpeg loading="lazy" class="h-60 object-cover min-w-full" %}
-                  <div class="flex grow justify-between p-3 event-theme-{{ event.pk }}">
-                    <div class="text-lg font-bold">{{ event.title_translated }}</div>
-                    <div class="ml-2 -mr-0.5 shrink text-sm text-right font-bold">{{ event.date_and_time|date:'G:i' }}</div>
+          {% for day, events in grouped_events.items %}
+            <h3 class="my-8 text-lg text-center">
+              <time datetime="{{ day|date:'c' }}">
+                {{ day|date:'l'|upper }}
+                &nbsp;&mdash;&nbsp;
+                {{ day|date:'j. E' }}
+              </time>
+            </h3>
+
+            <style nonce="{{request.csp_nonce}}">
+              {% for event in events %}
+                  .event-theme-{{ event.pk }} {
+                      background-color: {{ event.category.color }}
+                  }
+              {% endfor %}
+            </style>
+
+            <div class="flex flex-wrap justify-center">
+              {% for event in events %}
+                <a href="{{ event.url|prefix_festival:request }}"
+                   class="flex flex-column grow sm:max-w-[50%] md:max-w-[33.3%] hover:no-underline hover:brightness-110">
+                  <div class="flex flex-column grow mx-3 md:mx-6 mb-4 text-white">
+                    {% image event.image fill-400x400 format-jpeg loading="lazy" class="h-60 object-cover min-w-full" %}
+                    <div class="flex grow justify-between p-3 event-theme-{{ event.pk }}">
+                      <div class="text-lg font-bold">{{ event.title_translated }}</div>
+                      <div class="ml-2 -mr-0.5 shrink text-sm text-right font-bold">{{ event.date_and_time|date:'G:i' }}</div>
+                    </div>
                   </div>
-                </div>
-              </a>
-            {% endfor %}
-          </div>
+                </a>
+              {% endfor %}
+            </div>
+          {% endfor %}
         </section>
       </div>
     {% endif %}
