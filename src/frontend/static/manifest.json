@@ -72,7 +72,7 @@
     "src": "img/icon-arrow-blue.svg"
   },
   "main.css": {
-    "file": "main-6a2e24f6.css",
+    "file": "main-866cd019.css",
     "src": "main.css"
   },
   "main.js": {
@@ -97,9 +97,9 @@
       "fa-solid-900-67a880b4.ttf"
     ],
     "css": [
-      "main-6a2e24f6.css"
+      "main-866cd019.css"
     ],
-    "file": "main-4292f47b.js",
+    "file": "main-7c2783c8.js",
     "isEntry": true,
     "src": "main.js"
   }

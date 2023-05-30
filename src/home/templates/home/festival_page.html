@@ -69,28 +69,38 @@
       <div class="container">
         <section id="headline">
           <div class="row mx-n02 justify-content-center">
-            {% for headliner in page.headline %}
-              <div class="col-md-6 col-lg-4 d-flex flex-column px-02 mb-1">
-                <div class="headliner overflow-hidden">
-                  {% image headliner.value.photo fill-360x360 format-jpeg as tmp_photo %}
-                  <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
-                  <a href="{{ headliner.value.link.specific.url|prefix_festival:request }}" class="stretched-link d-block">
-                    <div class="name px-4 d-flex flex-column justify-content-center">
-                      <div class="d-flex flex-row">
-                        <i class="icon-arrow3 float-left mr-2"></i>
-                        <h4>
-                          {{ headliner.value.name }}
-                        </h4>
-                      </div>
-                    </div>
-                    <div class="description px-4 pb-4">
-                      <div class="overflow-hidden">
-                        {{ headliner.value.description|richtext }}
-                      </div>
-                    </div>
-                  </a>
+            {% for block in page.headline %}
+              {% if block.block_type == "heading" %}
+                <div class="col-12 flex justify-center">
+                  <h2>
+                    {% if lang == "sk" %}{{ block.value.sk }}{% else %}{{ block.value.en }}{% endif %}
+                  </h2>
                 </div>
-              </div>
+              {% else %}
+                <div class="col-md-6 col-lg-4 d-flex flex-column px-02 mb-1">
+                  <div class="headliner overflow-hidden">
+                    <a href="{{ block.value.link.specific.url|prefix_festival:request }}" class="stretched-link d-block">
+                      {% image block.value.photo fill-360x360 format-jpeg as tmp_photo %}
+                      <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"/>
+                      {% if block.value.name and block.value.description %}
+                        <div class="name px-4 d-flex flex-column justify-content-center">
+                          <div class="d-flex flex-row">
+                            <i class="icon-arrow3 float-left mr-2"></i>
+                            <h4>
+                              {{ block.value.name }}
+                            </h4>
+                          </div>
+                        </div>
+                        <div class="description px-4 pb-4">
+                          <div class="overflow-hidden">
+                            {{ block.value.description|richtext }}
+                          </div>
+                        </div>
+                      {% endif %}
+                    </a>
+                  </div>
+                </div>
+              {% endif %}
             {% endfor %}
           </div>
         </section>

@@ -138,14 +138,18 @@ class FestivalPage(FixUrlMixin, Page):
     video_invites = TranslatedField("video_invites_sk", "video_invites_en")
     headline_sk = StreamField(
         [
+            ("heading", blocks.StructBlock([
+                ("sk", blocks.CharBlock()),
+                ("en", blocks.CharBlock()),
+            ])),
             (
                 "headliner",
                 blocks.StructBlock(
                     [
-                        ("name", blocks.CharBlock()),
+                        ("name", blocks.CharBlock(required=False)),
                         ("photo", ImageChooserBlock()),
                         ("link", blocks.PageChooserBlock()),
-                        ("description", blocks.RichTextBlock()),
+                        ("description", blocks.RichTextBlock(required=False)),
                     ]
                 ),
             ),

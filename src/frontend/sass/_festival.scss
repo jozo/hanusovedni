@@ -1,5 +1,5 @@
 .template-festival {
-  section > h2 {
+  section h2 {
     margin-bottom: 2rem;
     margin-top: 3rem;
     font-size: 1.2rem;
@@ -174,7 +174,7 @@
 
       .name, .description {
         background: $c-bg;
-        transform: translateY(-80px);
+        transform: translateY(-90px);
       }
 
       .description > div {
