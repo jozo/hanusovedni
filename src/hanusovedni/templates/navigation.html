@@ -1,3 +1,5 @@
+{% load i18n_extra %}
+
 <div class="container">
   <div class="flex justify-end">
     <button id="nav-btn" class="block rounded bg-gray-700 p-2.5 mb-4 text-white lg:hidden">
@@ -13,5 +15,9 @@
         {{ page.specific.title_translated }}
       </a>
     {% endfor %}
+    <a href="https://www.donio.sk/bhd2023" class="flex-auto py-1 px-2" target="_blank">
+      {% current_locale as lang %}
+      {% if lang == "sk" %}Podporiť{% else %}Donate{% endif %}
+    </a>
   </nav>
 </div>

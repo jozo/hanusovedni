@@ -134,6 +134,11 @@
               {% endfor %}
             </div>
           {% endfor %}
+          <div class="flex justify-center">
+            <a href="program" class="my-10 py-6 px-10 bg-sky-500 hover:bg-sky-400 hover:no-underline text-lg text-white uppercase font-bold">
+              {% if lang == "sk" %}Objav celý program...{% else %}Show all events...{% endif %}
+            </a>
+          </div>
         </section>
       </div>
     {% endif %}
