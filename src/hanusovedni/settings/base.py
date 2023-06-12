@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "csp.middleware.CSPMiddleware",
+    # "csp.middleware.CSPMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -224,37 +224,37 @@ LOGGING = {
 }
 
 # Django CSP (Content Security Policy)
-CSP_DEFAULT_SRC = ["'self'"]
-CSP_SCRIPT_SRC = [
-    "'self'",
-    "https://cdnjs.cloudflare.com",
-    "https://www.googletagmanager.com",
-]
-CSP_IMG_SRC = [
-    "'self'",
-    "data:",
-    "https://www.gravatar.com",
-    "https://*.youtube.com",
-    "https://youtube.com",
-    "https://i.ytimg.com",
-    "https://*.google-analytics.com",
-    "https://www.googletagmanager.com",
-]
-CSP_FRAME_SRC = [
-    "'self'",
-    "https://slh.darujme.sk",
-    "https://*.youtube.com",
-    "https://youtube.com",
-    # Googla Maps
-    "https://maps.google.com",
-    "https://www.google.com",
-]
-CSP_STYLE_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
-CSP_CONNECT_SRC = [
-    "'self'",
-    "https://releases.wagtail.org/latest.txt",
-    "https://*.google-analytics.com",
-    "https://stats.g.doubleclick.net",
-]
-CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
-CSP_MANIFEST_SRC = ["'self'"]
+# CSP_DEFAULT_SRC = ["'self'"]
+# CSP_SCRIPT_SRC = [
+#     "'self'",
+#     "https://cdnjs.cloudflare.com",
+#     "https://www.googletagmanager.com",
+# ]
+# CSP_IMG_SRC = [
+#     "'self'",
+#     "data:",
+#     "https://www.gravatar.com",
+#     "https://*.youtube.com",
+#     "https://youtube.com",
+#     "https://i.ytimg.com",
+#     "https://*.google-analytics.com",
+#     "https://www.googletagmanager.com",
+# ]
+# CSP_FRAME_SRC = [
+#     "'self'",
+#     "https://slh.darujme.sk",
+#     "https://*.youtube.com",
+#     "https://youtube.com",
+#     # Googla Maps
+#     "https://maps.google.com",
+#     "https://www.google.com",
+# ]
+# CSP_STYLE_SRC = ["'self'", "https://cdnjs.cloudflare.com"]
+# CSP_CONNECT_SRC = [
+#     "'self'",
+#     "https://releases.wagtail.org/latest.txt",
+#     "https://*.google-analytics.com",
+#     "https://stats.g.doubleclick.net",
+# ]
+# CSP_INCLUDE_NONCE_IN = ["script-src", "style-src"]
+# CSP_MANIFEST_SRC = ["'self'"]
