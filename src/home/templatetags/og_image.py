@@ -13,6 +13,8 @@ def get_existing_og_image(page):
         og_image = OpenGraphImage.objects.filter(
             page=page, lang_code=cur_language
         ).last()
+        if not og_image:
+            return None
         return og_image.image
     except OpenGraphImage.DoesNotExist:
         return None
