@@ -1,5 +1,7 @@
 variables:
   DOCKER_BUILDKIT: 1
+  DOCKER_IMAGE: docker:26
+  IMAGE_SSH_CLIENT: kroniak/ssh-client:3.19
 
 stages:
   - build
@@ -8,7 +10,7 @@ stages:
 
 build-image:
   stage: build
-  image: docker:23.0.1
+  image: ${DOCKER_IMAGE}
   services:
     - docker:dind
   except:
@@ -22,13 +24,15 @@ build-image:
     - docker pull ${CI_REGISTRY_IMAGE}:compile-stage || true
     - docker pull ${CI_REGISTRY_IMAGE}:latest || true
     # Build the compile stage:
-    - "docker build --target compile-image \
+    - "docker buildx build --target compile-image \
         --build-arg BUILDKIT_INLINE_CACHE=1 \
+        --platform linux/arm64 \
         --cache-from=${CI_REGISTRY_IMAGE}:compile-stage \
         --tag ${CI_REGISTRY_IMAGE}:compile-stage ."
     # Build the runtime stage, using cached compile stage:
-    - "docker build --target runtime-image \
+    - "docker buildx build --target runtime-image \
         --build-arg BUILDKIT_INLINE_CACHE=1 \
+        --platform linux/arm64 \
         --cache-from=${CI_REGISTRY_IMAGE}:compile-stage \
         --cache-from=${CI_REGISTRY_IMAGE}:latest \
         --tag ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID} \
@@ -39,7 +43,7 @@ build-image:
     - docker push ${CI_REGISTRY_IMAGE}:latest
 
 .deploy:
-  image: kroniak/ssh-client:3.9
+  image: ${IMAGE_SSH_CLIENT}
   except:
     - schedules
   variables:
@@ -47,7 +51,7 @@ build-image:
     DOCKER_RUN: 'docker run --rm
                   -v /var/www/static:/static_root
                   --env-file secrets.env
-                  --network hanusovedni_hanusnet
+                  --network hanusnet
                   -e DJANGO_SETTINGS_MODULE="hanusovedni.settings.production"
                   ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}'
   script:
@@ -56,20 +60,26 @@ build-image:
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
     - scp -r docker-compose.yml docker-compose.prod.yml Caddyfile $SERVER:~/
     - scp $SECRETS $SERVER:~/secrets.env
-    - ssh $SERVER "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
     - ssh $SERVER "docker system prune --all --force"
-    - ssh $SERVER "$DOCKER_RUN python manage.py migrate --no-input"
-    - ssh $SERVER "$DOCKER_RUN python manage.py collectstatic --no-input"
+    - ssh $SERVER "sudo mkdir -m 777 /var/www/static || true"
+    - ssh $SERVER "sudo mkdir -m 777 /var/www/media || true"
+    - ssh $SERVER "sudo mkdir -m 777 /var/www/pgdata || true"
+    - ssh $SERVER "sudo mkdir -p -m 777 ~/docker/caddy/data || true"
+    - ssh $SERVER "sudo mkdir -p -m 777 ~/docker/caddy/config || true"
+    - ssh $SERVER "echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} --password-stdin ${CI_REGISTRY}"
+    - ssh $SERVER "docker network create --driver overlay --attachable hanusnet || true"
     - 'ssh $SERVER "WEB_IMAGE=$IMAGE ENVIRONMENT=$CI_ENVIRONMENT_NAME
         docker stack deploy
         -c docker-compose.yml
         -c docker-compose.prod.yml
-        --with-registry-auth hanusovedni"'
+        --with-registry-auth hd"'
+    - ssh $SERVER "$DOCKER_RUN python manage.py collectstatic --no-input"
+    - ssh $SERVER "$DOCKER_RUN python manage.py migrate --no-input"
     - echo Waiting for containers to be running and healthy
     - |
       for i in $(seq 60); do
         echo second ${i}
-        containers=$(ssh $SERVER "docker ps -f 'status=running' -f 'health=healthy' -f 'name=hanusovedni_web' --format '{{.Image}}'")
+        containers=$(ssh $SERVER "docker ps -f 'status=running' -f 'health=healthy' -f 'name=hd_web' --format '{{.Image}}'")
         echo Current containers: ${containers}
         count=$(echo $containers | tr " " "\n" | grep -c $IMAGE || true)
         echo New healthy containers: ${count}
@@ -95,7 +105,7 @@ deploy:production:
     - .production
 
 .purge-cache:
-  image: curlimages/curl:7.69.1
+  image: curlimages/curl:8.6.0
   except:
     - schedules
   script:
@@ -111,7 +121,7 @@ deploy:production:
 
 
 build-image:on-schedule:
-  image: docker:23.0.1
+  image: ${DOCKER_IMAGE}
   stage: build
   services:
     - docker:dind
@@ -127,7 +137,7 @@ build-image:on-schedule:
     - docker push ${CI_REGISTRY_IMAGE}:compile-stage
 
 .backup-db:
-  image: kroniak/ssh-client:3.9
+  image: ${IMAGE_SSH_CLIENT}
   stage: build
   only:
     - schedules

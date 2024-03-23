@@ -1,7 +1,5 @@
 # Docker-compose file used on production
 
-version: "3.8"
-
 services:
   web:
     image: ${WEB_IMAGE}

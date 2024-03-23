@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   web:
     networks:
@@ -9,7 +7,7 @@ services:
       - redis
 
   db:
-    image: postgres:12.8-alpine
+    image: postgres:16.2
     environment:
       - POSTGRES_USER=hanusovedni
       - POSTGRES_DB=hanusovedni
@@ -17,21 +15,21 @@ services:
     deploy:
       resources:
         limits:
-          memory: 100M
+          memory: 200M
     networks:
       - hanusnet
 
   redis:
-    image: redis:6.2-alpine
+    image: redis:7.2-alpine
     deploy:
       resources:
         limits:
-          memory: 300M
+          memory: 200M
     networks:
       - hanusnet
 
   caddy:
-    image: caddy:2.6.4
+    image: caddy:2.7.6
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
     networks:
@@ -41,3 +39,4 @@ networks:
   hanusnet:
     driver: overlay
     attachable: true
+    external: true
