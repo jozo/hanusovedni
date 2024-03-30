@@ -112,10 +112,15 @@ class Event(FixUrlMixin, Page):
     )
     buttons = StreamField(
         [
-            ("heading", blocks.StructBlock([
-                ("sk_text", blocks.CharBlock(default="Kúp si vstupenku!")),
-                ("en_text", blocks.CharBlock(default="Buy a ticket!"))
-            ])),
+            (
+                "heading",
+                blocks.StructBlock(
+                    [
+                        ("sk_text", blocks.CharBlock(default="Kúp si vstupenku!")),
+                        ("en_text", blocks.CharBlock(default="Buy a ticket!")),
+                    ]
+                ),
+            ),
             (
                 "button",
                 blocks.StructBlock(

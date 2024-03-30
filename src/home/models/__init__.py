@@ -1,10 +1,4 @@
-from .data_models import (
-    Category,
-    Event,
-    Location,
-    PartnerSectionBlock,
-    Speaker,
-)
+from .data_models import Category, Event, Location, PartnerSectionBlock, Speaker
 from .pages import (
     AboutFestivalPage,
     ArchiveQueryset,

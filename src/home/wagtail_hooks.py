@@ -9,8 +9,8 @@ from wagtail import hooks
 from wagtail.admin import messages
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
 from wagtail.contrib.settings.models import BaseSiteSetting
-from wagtail_modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.settings.registry import register_setting
+from wagtail_modeladmin.options import ModelAdmin, modeladmin_register
 
 from .fields import TranslatedField
 from .models import Event, Speaker

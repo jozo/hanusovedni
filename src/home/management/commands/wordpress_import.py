@@ -123,9 +123,9 @@ class Command(BaseCommand):
                     category=Category.objects.get(title=row["topic"]),
                     icon=illustration,
                     speakers=Speaker.objects.filter(
-                        wordpress_id__in=row["speakers"].split(",")
-                        if row["speakers"]
-                        else []
+                        wordpress_id__in=(
+                            row["speakers"].split(",") if row["speakers"] else []
+                        )
                     ).all(),
                 )
                 events_page.add_child(instance=e)

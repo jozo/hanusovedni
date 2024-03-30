@@ -173,13 +173,13 @@ class Command(BaseCommand):
                         ticket_url=row["ticket_url"],
                         show_on_festivalpage=row["show_on_festivalpage"],
                         icon=self.icon(row["icon"]),
-                        related_festival=bhd
-                        if row["related_festival"] == "bhd"
-                        else khd,
+                        related_festival=(
+                            bhd if row["related_festival"] == "bhd" else khd
+                        ),
                         speakers=Speaker.objects.filter(
-                            speaker_id__in=row["speakers"].split(",")
-                            if row["speakers"]
-                            else []
+                            speaker_id__in=(
+                                row["speakers"].split(",") if row["speakers"] else []
+                            )
                         ),
                         wordpress_url=row["wordpress_url"],
                         short_overview=row["short_overview"],

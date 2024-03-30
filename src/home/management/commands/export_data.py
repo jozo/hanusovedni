@@ -97,9 +97,11 @@ class Command(BaseCommand):
                         "title": speaker.title,
                         "first_name": speaker.first_name,
                         "last_name": speaker.last_name,
-                        "photo": os.path.basename(speaker.photo.file.path)
-                        if speaker.photo
-                        else None,
+                        "photo": (
+                            os.path.basename(speaker.photo.file.path)
+                            if speaker.photo
+                            else None
+                        ),
                         "wordpress_url": speaker.wordpress_url,
                         "description": speaker.description,
                     }
@@ -111,7 +113,8 @@ class Command(BaseCommand):
 
     def export_events(self, options):
         self.stdout.write(self.style.SUCCESS("Export events started"))
-        bhd = FestivalPage.objects.order_by("pk").all()[0]
+        bhd = FestivalPage.objects.live().filter(slug="bhd").first()
+        khd = FestivalPage.objects.live().filter(slug="khd").first()
         path = os.path.join(options["output_dir"], "events.csv")
         with open(path, "w", newline="") as file:
             writer = csv.DictWriter(
@@ -138,6 +141,12 @@ class Command(BaseCommand):
             for i, event in enumerate(
                 Event.objects.order_by("event_id").iterator(), start=1
             ):
+                if event.related_festival == bhd:
+                    festival = "bhd"
+                elif event.related_festival == khd:
+                    festival = "khd"
+                else:
+                    festival = "rhd"
                 writer.writerow(
                     {
                         "event_id": event.event_id,
@@ -149,9 +158,7 @@ class Command(BaseCommand):
                         "ticket_url": event.ticket_url,
                         "show_on_festivalpage": event.show_on_festivalpage,
                         "icon": event.icon.title + ".png" if event.icon else None,
-                        "related_festival": "bhd"
-                        if event.related_festival == bhd
-                        else "khd",
+                        "related_festival": festival,
                         "speakers": ",".join(
                             str(s.speaker_id) for s in event.speakers.all()
                         ),
