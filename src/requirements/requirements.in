@@ -4,8 +4,9 @@ django-extensions
 django-redis
 gunicorn
 ipython
-psycopg2
+psycopg[binary]
 requests
 sentry-sdk
 wagtail
 wagtail-autocomplete
+wagtail-modeladmin

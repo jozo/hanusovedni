@@ -1,11 +1,10 @@
-version: "3.8"
-
 services:
   db:
     environment:
       - POSTGRES_PASSWORD=hanusovedni
     volumes:
       - ./docker/pgdata:/var/lib/postgresql/data/pgdata
+      - .:/code
     ports:
       - "5432:5432"
 
@@ -28,3 +27,8 @@ services:
     volumes:
       - ./docker/static:/var/www/static/
       - ./docker/media:/var/www/media/
+
+networks:
+  hanusnet:
+    driver: overlay
+    attachable: true

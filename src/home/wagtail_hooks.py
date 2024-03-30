@@ -8,8 +8,8 @@ from django.utils.translation import gettext as _
 from wagtail import hooks
 from wagtail.admin import messages
 from wagtail.admin.panels import FieldPanel, ObjectList, TabbedInterface
-from wagtail.contrib.modeladmin.options import ModelAdmin, modeladmin_register
-from wagtail.contrib.settings.models import BaseSetting
+from wagtail.contrib.settings.models import BaseSiteSetting
+from wagtail_modeladmin.options import ModelAdmin, modeladmin_register
 from wagtail.contrib.settings.registry import register_setting
 
 from .fields import TranslatedField
@@ -68,7 +68,7 @@ modeladmin_register(SpeakerAdmin)
 
 
 @register_setting
-class TranslationSettings(BaseSetting):
+class TranslationSettings(BaseSiteSetting):
     watch_video_button_sk = models.TextField(blank=True)
     watch_video_button_en = models.TextField(blank=True)
     watch_video_button = TranslatedField(
